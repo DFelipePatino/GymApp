@@ -1,0 +1,190 @@
+.profilesection {
+
+    background-image: linear-gradient(to bottom right, #924141, #924141, #d9d9d9);
+    width: 100%;
+    height: 300%;
+
+}
+
+
+h1 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 100px;
+    color: white;
+    font-size: 100px;
+    font-family: 'Courier New', Courier, monospace;
+    width: 100%;
+    z-index: 1;
+}
+
+
+
+
+.firsthalf {
+    position: relative;
+}
+
+.profilepic {
+    width: 350px;
+    height: 350px;
+    border-radius: 50%;
+    margin: 0 auto;
+    display: block;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+
+
+.minombre {
+    border: #D9D9D9 3px solid;
+    display: inline-block;
+    border-radius: 30px;
+    padding: 5px 15% 5px 5px;
+    position: relative;
+}
+
+.minombre h3 {
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+    color: white;
+    position: absolute;
+    bottom: 75px
+}
+
+.miemail {
+    border: #D9D9D9 3px solid;
+    display: inline-block;
+    border-radius: 30px;
+    padding: 5px 6% 5px 5px;
+    position: relative;
+    top: 40px;
+}
+
+.miemail h3 {
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+    color: white;
+    position: absolute;
+    bottom: 75px
+}
+
+.miedad {
+    border: #D9D9D9 3px solid;
+    display: inline-block;
+    border-radius: 30px;
+    padding: 5px 180px 5px 5px;
+    position: relative;
+    top: 80px;
+}
+
+.miedad h3 {
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+    color: white;
+    position: absolute;
+    bottom: 75px
+}
+
+.secondhalf {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: column;
+    align-content: flex-end;
+    position: absolute;
+    left: 55%;
+    top: 05%;
+}
+
+.misalud {
+    border: #D9D9D9 3px solid;
+    display: inline-block;
+    border-radius: 30px;
+    height: 300px;
+    width: 400px;
+    position: relative;
+    top: 120px;
+    left: 3%;
+}
+
+.misalud h3 {
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+    color: white;
+    position: absolute;
+    bottom: 310px
+}
+
+.misobjetivos {
+    border: #D9D9D9 3px solid;
+    display: inline-block;
+    border-radius: 30px;
+    height: 300px;
+    width: 400px;
+    margin-top: 40px;
+    position: relative;
+    top: 140px;
+    left: 3%;
+}
+
+.misobjetivos h3 {
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+    color: white;
+    position: absolute;
+    bottom: 310px
+}
+
+.midieta {
+    border: #D9D9D9 3px solid;
+    display: inline-block;
+    border-radius: 30px;
+    height: 300px;
+    width: 400px;
+    margin-top: 20px;
+
+    top: 0px;
+}
+
+.midieta h3 {
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+    color: white;
+    position: absolute;
+    bottom: 640px
+}
+
+.planentrenamiento {
+    border: #D9D9D9 3px solid;
+    display: inline-block;
+    border-radius: 30px;
+    height: 300px;
+    width: 400px;
+    margin-top: 20px;
+    position: relative;
+    top: 50px;
+}
+
+
+.planentrenamiento h3 {
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+    color: white;
+    position: absolute;
+    bottom: 310px
+}
+
+.editbutton {
+    position: absolute;
+    top: 110%;
+    left: 45%
+}

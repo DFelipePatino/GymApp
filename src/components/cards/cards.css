@@ -1,10 +1,10 @@
-section.results ul {
+.results {
     position: absolute;
     top: 90%;
     left: 10%;
-    display: flex;
+    /* display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    margin-top: 20px;
-    border: blue 3px solid;
+    margin-top: 20px; */
+    /* border: blue 3px solid; */
 }

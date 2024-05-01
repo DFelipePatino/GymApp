@@ -193,6 +193,12 @@ section.filter div {
     margin-top: 20px;
 }
 
+/* .MuiContainer-root MuiContainer-maxWidthLg results css-1oqqzyl-MuiContainer-root {
+    position: absolute;
+    top: 82%;
+    left: 5%;
+} */
+
 
 section.results ul {
     position: absolute;

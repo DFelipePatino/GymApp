@@ -7,6 +7,7 @@ import LogIn from './components/LogIn/LogIn';
 import HomePage from './components/HomePage/HomePage';
 import Perfil from './components/Perfil/Perfil';
 import Test from './components/test/test';
+import Cards from './components/cards/cards';
 
 function App() {
 
@@ -22,6 +23,7 @@ function App() {
         <Route path='/home' element={<HomePage />} />
         <Route path='/perfil' element={<Perfil />} />
         <Route path='/test' element={<Test />} />
+        <Route path='/cards' element={<Cards />} />
       </Routes>
     </>
   );

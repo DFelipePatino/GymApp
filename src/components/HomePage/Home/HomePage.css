@@ -1,197 +1,24 @@
 div.home {
-    background-image: linear-gradient(to bottom right, #924141, #924141, #d9d9d9);
     width: 100%;
-    height: 300%;
+    height: 280%;
+    background-image: url(/public/Gym_background.png);
 }
 
-section.background img {
-    position: relative;
-    width: 100%;
-    height: 3345px;
-    opacity: 0.1;
-}
-
-section.welcome {
-    position: absolute;
-    top: 5%;
-    left: 10%;
-    font-size: 50px;
-    z-index: 1;
-    width: 500px;
-}
-
-section.welcome h1 {
-    position: absolute;
-    font-size: 50px;
-    width: 500px;
-    font-family: Georgia, 'Times New Roman', Times, serif;
-}
-
-section.nav ul {
-    position: absolute;
-    top: 15%;
-    left: 6%;
-    display: flex;
-    justify-content: space-around;
-    gap: 20px;
-    list-style: none;
-}
-
-section.nav ul li {
-    font-size: 20px;
-    display: inline-block;
-    padding: 5px 10px;
-    background-color: #D9D9D9;
-    border: none;
-    border-radius: 15px;
-    cursor: pointer;
-}
-
-section.nav a {
-    color: black;
-    text-decoration: none;
-}
-
-section.banner {
-    position: absolute;
-    overflow: hidden;
-    top: 23%;
-    left: 10%;
+.welcome {
+    margin: 0;
+    padding: 0;
     display: flex;
     justify-content: center;
-    border-radius: 20px;
-    width: 500px;
-    height: 200px;
-    background-color: #426E92;
 }
 
-.carousel {
-    position: absolute;
-    /* left: -1px; */
-    overflow: hidden;
-    display: flex;
-    justify-content: space-around;
-    border-radius: 20px;
-    width: 100%;
-    height: 200px;
-    background-color: #426E92;
-}
-
-
-
-.carousel .slide {
-    position: relative;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: auto;
-}
-
-.paper {
-    margin: 0 10px;
-    position: relative;
-    background-color: #426E92;
-    color: black;
-    font-size: 30px;
-
-    border: none;
-    border-radius: 15px;
-    cursor: pointer;
-}
-
-.paper h2 {
+.welcome h1 {
     font-size: 50px;
     font-family: Georgia, 'Times New Roman', Times, serif;
-}
-
-.paper p {
-    color: black;
-    text-decoration: none;
-}
-
-.paper img {
-    width: 500px;
-    height: 200px;
-    padding: none;
-    margin: none;
-}
-
-section.filter {
-    position: absolute;
-    top: 45%;
-    left: 10%;
     display: flex;
-    justify-content: space-around;
-    gap: 20px;
-    list-style: none;
-}
-
-section.filter ul {
-    position: absolute;
-    top: 15%;
-    left: 6%;
-    display: flex;
-    justify-content: space-around;
-    gap: 20px;
-    list-style: none;
-}
-
-section.filter ul li {
-    font-size: 20px;
-    height: 80px;
-    width: 80px;
-    display: flex;
-    justify-content: flex-end;
-    padding-top: 5px;
-    padding-left: 10px;
-    padding-bottom: 40px;
-    padding-right: 30px;
-    border: none;
-    border-radius: 15px;
-    cursor: pointer;
-    align-content: space-around;
-    flex-wrap: wrap;
-    flex-direction: row-reverse;
-}
-
-section.filter ul li img {
-    width: 50px;
-    height: 50px;
-    opacity: 0.8;
-    border-radius: 15px;
-}
-
-.pilates {
-    background-color: #545454
-}
-
-.pesas {
-    background-color: #D9D9D9;
-}
-
-.cardio {
-    background-color: #9F8A88;
-}
-
-section.filter div {
-    color: black;
-    text-decoration: none;
-    padding-top: 10px;
-    font-size: 22px;
-    background-color: transparent;
-    border: none;
-    cursor: default;
-}
-
-.cards {
-    position: absolute;
-    top: 90%;
-    left: 10%;
-    display: flex;
-    flex-wrap: wrap;
     justify-content: center;
-    margin-top: 20px;
 }
+
+
 
 /* .MuiContainer-root MuiContainer-maxWidthLg results css-1oqqzyl-MuiContainer-root {
     position: absolute;
@@ -222,6 +49,16 @@ section.results ul li {
     list-style: none;
 }
 
+@media screen and (max-width: 730px) and (max-width: 935px) {
+    .welcome h1 {
+        font-size: 25px;
+        font-family: Georgia, 'Times New Roman', Times, serif;
+        display: flex;
+        justify-content: center;
+    }
+}
+
+/* 
 
 @media screen and (min-width: 1400px) and (min-width: 900px) {
     section.background img {
@@ -331,6 +168,8 @@ section.results ul li {
 }
 
 /* Media Queries */
+
+/*
 @media screen and (max-width: 730px) and (max-width: 935px) {
 
     section.welcome {
@@ -474,6 +313,7 @@ section.results ul li {
     }
 } */
 
+/*
 @media screen and (max-width: 378px) and (max-width: 668px) {
 
 
@@ -567,4 +407,4 @@ section.results ul li {
         font-size: 13px;
 
     }
-}
+} */

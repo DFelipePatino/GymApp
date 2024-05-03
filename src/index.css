@@ -36,7 +36,7 @@ html {
 
 body {
   margin: 0;
-  width: 100%;
+  width: 150%;
 }
 
 /**
@@ -398,10 +398,10 @@ template {
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: #fdc858;
+  background-color: #924141;
   border-radius: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background-color: #fdc858;
+  background-color: #924141;
 }

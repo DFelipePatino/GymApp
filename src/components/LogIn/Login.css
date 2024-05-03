@@ -21,11 +21,10 @@ div.login {
     height: 100%;
 }
 
-/* section.background img {
-    width: 100%;
-    height: 0;
-    opacity: 0.5;
-} */
+.welcome h1 {
+    display: flex;
+    justify-content: center;
+}
 
 section.logoimage {
     display: flex;

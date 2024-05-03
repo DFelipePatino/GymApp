@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './LogIn.css';
+import './Login.css';
 
 function LogIn() {
     const navigate = useNavigate();
@@ -32,7 +32,7 @@ function LogIn() {
                 <img src="onegym.jpeg" alt="one gym logo" />
             </section>
 
-            <header>
+            <header className='welcome'>
                 <h1>Welcome</h1>
             </header>
 

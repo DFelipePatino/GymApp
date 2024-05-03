@@ -1,0 +1,59 @@
+section.filter {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+}
+
+section.filter ul {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    list-style: none;
+    margin: 10px;
+    padding-left: 0;
+}
+
+section.filter ul li {
+    font-size: 20px;
+    display: flex;
+    justify-content: flex-end;
+    padding-top: 5px;
+    padding-left: 10px;
+    padding-bottom: 40px;
+    padding-right: 30px;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    align-content: space-around;
+    flex-wrap: wrap;
+    flex-direction: row-reverse;
+}
+
+section.filter ul li img {
+    width: 50px;
+    height: 50px;
+    opacity: 0.8;
+    border-radius: 15px;
+}
+
+.pilates {
+    background-color: #545454
+}
+
+.pesas {
+    background-color: #D9D9D9;
+}
+
+.cardio {
+    background-color: #9F8A88;
+}
+
+section.filter div {
+    color: black;
+    text-decoration: none;
+    padding-top: 10px;
+    font-size: 22px;
+    background-color: transparent;
+    border: none;
+    cursor: default;
+}

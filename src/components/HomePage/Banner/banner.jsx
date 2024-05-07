@@ -38,8 +38,8 @@ function banner() {
             image: "banner3.jpg",
             // name: "Random Name #3",
             // description: "Hello World!"
-        }
-    ];
+        },
+         ];
 
 
 
@@ -52,17 +52,17 @@ function banner() {
                 navButtonsProps={{          // Change the order of the buttons
                     style: {
                         backgroundColor: 'transparent',
-                        color: 'black'
+                        color: 'white'
                     }
                 }}
-            // navButtonsWrapperProps={{
-            //     // style: {
-            //     //     bottom: '0',
-            //     //     top: '0',
-            //     //     transform: 'none',
-            //     //     height: '100%'
-            //     // }
-            // }}
+            navButtonsWrapperProps={{
+                style: {
+                    bottom: '0',
+                    top: '0',
+                    transform: 'none',
+                    height: '100%'
+                }
+            }}
             >
                 {
                     items.map((item, i) => <Item key={i} item={item} />)

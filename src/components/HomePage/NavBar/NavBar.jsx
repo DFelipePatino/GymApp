@@ -5,7 +5,29 @@ import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import './NavBar.css';
 
+// import { makeStyles } from '@mui/styles';
+
+
+// const useStyles = makeStyles({
+//     button: {
+//         borderRadius: '60px',
+//         backgroundColor: '#e0e0e0',
+//     }
+// })
+
 function NavBar() {
+
+    // const classes = useStyles();
+
+const ButtonStyle = {
+    borderRadius: '20px',
+    backgroundColor: '#e0e0e0',
+    color: 'black',
+    margin: 4,
+    padding: 6,
+      };
+
+
 
     const navigate = useNavigate();
 
@@ -28,68 +50,46 @@ function NavBar() {
         },
     }
 
-
-
     return (
-        <Container style={{
-            display: 'flex', justifyContent: 'center', margin: 0,
-            padding: 0
-        }} className='nav'>
+        <Container className='nav'>
+
             <Stack spacing={1} direction="row" justifyContent="center" margin={4}>
 
                 <Button
+                    // className={classes.button}
                     variant="contained"
                     onClick={Navs.navprofile}
-                    style={{
-                        borderRadius: '20px',
-                        backgroundColor: '#D9D9D9',
-                        color: 'black',
-                        margin: 4,
-                        padding: 4
-                    }}>
+                    style={ButtonStyle}
+                >
                     Profile
                 </Button>
 
                 <Button
                     variant="contained"
                     onClick={Navs.navworkouts}
-                    style={{
-                        borderRadius: '20px',
-                        backgroundColor: '#D9D9D9',
-                        color: 'black',
-                        margin: 4,
-                        padding: 4
-                    }}>
+                    style={ButtonStyle}
+                >
                     Workouts
                 </Button>
 
                 <Button
                     variant="contained"
                     onClick={Navs.navchat}
-                    style={{
-                        borderRadius: '20px',
-                        backgroundColor: '#D9D9D9',
-                        color: 'black',
-                        margin: 4,
-                        padding: 4
-                    }}>
+                    style={ButtonStyle}
+                >
                     Chat
                 </Button>
 
                 <Button
                     variant="contained"
                     onClick={Navs.navlogout}
-                    style={{
-                        borderRadius: '20px',
-                        backgroundColor: '#D9D9D9',
-                        color: 'black',
-                        margin: 4,
-                        padding: 4
-                    }}>
+                    style={ButtonStyle}
+                >
                     Log Out
                 </Button>
 
             </Stack>
+
         </Container>
     )
 }

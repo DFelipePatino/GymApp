@@ -20,24 +20,21 @@ function cards() {
     //     dispatch(getCardio());
     // }, [dispatch]);
 
+    console.log(results.category, "this is the category");
 
     return (
-
+        
         <Container className='results'>
-
+            <h3 className='resultsTitle'>{results?.category}</h3>
             <Grid container>
-                {results.map((result, index) => (
-                    <Grid item key={index} xs={6} md={6} lg={4}>
-
-                        <img className='imageresult' src={result} alt={`Result ${index}`} />
-
+                {results?.images?.map((image, index) => (
+                    <Grid item key={index} xs={6} md={4} lg={2}>
+                        <img className='imageresult' src={image} />
                     </Grid>
                 ))}
             </Grid>
-
-
         </Container>
-    )
+    );
 }
 
 export default cards

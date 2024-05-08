@@ -4,24 +4,26 @@
     justify-content: center;
     border-radius: 20px;
     width: 500px;
-    height: 200px;
+    height: 100px;
     background-color: #426e9200;
-    margin-top: 40px;
+  
+    margin-top: 0px;
 }
 
+
 .carousel2 Button {
-    border-radius: 30px;
-    background: linear-gradient(to bottom right, #426E92);
+    border-radius: 25%;
     /* #426E92 D9D9D9 */
+    /* background: linear-gradient(to bottom right, #426E92); */
+    background: linear-gradient(to bottom right, #D9D9D9, #D9D9D9);
     color: black;
     margin: 0 10px;
     display: flex;
     font-size: 15px;
     flex-direction: column-reverse;
     align-items: flex-start;
-    margin-bottom: 90px;
-    width: 150px;
-    height: 120px;
+    width: 110px;
+    height: 100px;
     /* box-shadow: rgba(16, 14, 18, 0.5) 6px 7px 3px; */
 }
 
@@ -41,7 +43,7 @@ body .css-1m9128y {
 @media screen and (max-width: 730px) and (max-width: 935px) {
     .carousel2 {
         width: 100%;
-    }
+        }
 
     .carousel2 Button {
         /* padding: 10px; */

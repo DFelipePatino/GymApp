@@ -16,17 +16,22 @@ import {
     GET_CARDIO,
     GET_PESAS,
     GET_PILATES,
-    GET_CROSSFIT
+    GET_CROSSFIT,
+    GET_BOXING,
+    GET_USER
 } from "./action-types";
 
 export const getCardio = () => {
     return (dispatch) => {
-        const data = [
-            image10,
-            image11,
-            image6,
-            image7,
-        ]
+        const data = {
+            category: 'Cardio',
+            images: [
+                image10,
+                image11,
+                image6,
+                image7,
+            ]
+        }
         dispatch({ type: GET_CARDIO, payload: data });
 
     }
@@ -34,10 +39,13 @@ export const getCardio = () => {
 
 export const getPesas = () => {
     return (dispatch) => {
-        const data = [
-            image8,
-            image9,
-        ];
+        const data = {
+            category: 'Pesas',
+            images: [
+                image8,
+                image9,
+            ],
+        }
         dispatch({ type: GET_PESAS, payload: data });
 
     }
@@ -45,27 +53,64 @@ export const getPesas = () => {
 
 export const getPilates = () => {
     return (dispatch) => {
-        const data = [
-            image1,
-            image2,
-            image3,
-            image4,
-            image5,
+        const data = {
+            category: "Pilates",
+            images: [
+                image1,
+                image2,
+                image3,
+                image4,
+                image5,
 
-        ]
+            ]
+        }
         dispatch({ type: GET_PILATES, payload: data });
 
     }
 }
 export const getCrossfit = () => {
     return (dispatch) => {
-        const data = [
-            image1,
-            image2,
-            image3,
-            image4, ,
-            image5
-        ];
+        const data = {
+            category: "Crossfit",
+            images: [
+                image1,
+                image2,
+                image3,
+                image4, ,
+                image5
+            ]
+        }
         dispatch({ type: GET_CROSSFIT, payload: data });
     }
+}
+
+export const getBoxing = () => {
+    return (dispatch) => {
+        const data = {
+            category: 'Kick Boxing',
+            images: [
+                image10,
+                image11,
+                image6,
+                image7,
+                image8,
+                image9,
+                image1,
+                image2,
+                image3,
+                image4,
+                image5
+            ]
+        }
+        dispatch({ type: GET_BOXING, payload: data });
+
+    }
+}
+
+    export const getUser = (username) => {
+        return (dispatch) => {
+            const data = username;
+            dispatch({ type: GET_USER, payload: data });
+    
+        }
 }

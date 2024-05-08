@@ -3,30 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
+import { ButtonStyle } from './NavBarStyles';
 import './NavBar.css';
 
-// import { makeStyles } from '@mui/styles';
-
-
-// const useStyles = makeStyles({
-//     button: {
-//         borderRadius: '60px',
-//         backgroundColor: '#e0e0e0',
-//     }
-// })
-
 function NavBar() {
-
-    // const classes = useStyles();
-
-const ButtonStyle = {
-    borderRadius: '20px',
-    backgroundColor: '#e0e0e0',
-    color: 'black',
-    margin: 4,
-    padding: 6,
-      };
-
 
 
     const navigate = useNavigate();
@@ -50,10 +30,11 @@ const ButtonStyle = {
         },
     }
 
+
     return (
         <Container className='nav'>
 
-            <Stack spacing={1} direction="row" justifyContent="center" margin={4}>
+            <Stack spacing={1} direction="row" justifyContent="center" margin={2}>
 
                 <Button
                     // className={classes.button}

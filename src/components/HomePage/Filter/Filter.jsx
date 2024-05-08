@@ -1,6 +1,6 @@
 import React from 'react'
 import { useDispatch } from 'react-redux';
-import { getCardio, getPesas, getPilates } from '../../../redux/actions';
+import { getCardio, getPesas, getPilates, getCrossfit } from '../../../redux/actions';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
@@ -10,8 +10,11 @@ import SelfImprovementIcon from '@mui/icons-material/SelfImprovement';
 import SportsGymnasticsIcon from '@mui/icons-material/SportsGymnastics';
 import SportsHandballIcon from '@mui/icons-material/SportsHandball';
 import SportsKabaddiIcon from '@mui/icons-material/SportsKabaddi';
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import './Filter.css';
 import Carousel from 'react-material-ui-carousel';
+import { navButtonsWrapperProps2, navButtonsProps2, containerStyles, leftArrowStyles, rightArrowStyles, iconStyles } from './filerStyles';
 
 function Filter() {
 
@@ -40,24 +43,12 @@ function Filter() {
         },
 
         loadCrossfit: () => {
-            dispatch(getCardio());
+            dispatch(getCrossfit());
         },
 
     }
 
-
     function Item(props) {
-
-        // const ButtonStyles = {
-        //     borderRadius: '20px',
-        //     backgroundColor: '#D9D9D9',
-        //     color: 'black',
-        //     margin: '0 10px',
-        //     paddingBottom: '70px',
-        //     paddingRight: '120px',
-        //     display: 'flex',
-        //     justifyContent: 'space-between',
-        // }
 
         return (
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -83,38 +74,39 @@ function Filter() {
 
     const items = [
         {
-            icon: <FitnessCenterIcon />,
+            icon: <FitnessCenterIcon style={iconStyles.iconStyle1} />,
             click: loadFns.loadPilates,
             name: "Pilates",
             // description: "Probably the most random thing you have ever seen!"
         },
         {
-            icon: <DirectionsBikeIcon />,
+            icon: <DirectionsBikeIcon style={iconStyles.iconStyle2} />,
             click: loadFns.loadPesas,
             name: "Cardio",
             // description: "Hello World!"
         },
         {
-            icon: <SelfImprovementIcon />,
+            icon: <SelfImprovementIcon style={iconStyles.iconStyle3} />,
             click: loadFns.loadCardio,
             name: "Yoga",
             // description: "Hello World!"
         },
         {
-            icon: <SportsGymnasticsIcon />,
+            icon: <SportsGymnasticsIcon style={iconStyles.iconStyle1} />,
             click: loadFns.loadContacto,
             name: "Contacto",
-            // description: "Hello World!"
         },
+        // description: "Hello World!"
+
         {
-            icon: <SportsKabaddiIcon style={{ backgroundColor: 'red' }} />,
+            icon: <SportsKabaddiIcon style={iconStyles.iconStyle2} />,
             click: loadFns.loadKickBoxing,
-            name: "Kick Boxing",
+            name: "Boxing",
         },
-            // description: "Hello World!"
-        
+        // description: "Hello World!"
+
         {
-            icon: <SportsHandballIcon />,
+            icon: <SportsHandballIcon style={iconStyles.iconStyle3} />,
             click: loadFns.loadCrossfit,
             name: "Crossfit",
             // description: "Hello World!"
@@ -135,38 +127,32 @@ function Filter() {
     }, [])
 
 
-
-
-
     return (
-        <Container style={{ display: 'flex', justifyContent: 'center' }} >
-            <Carousel className="carousel2"
+        <Container
+            className='filter'
+            style={containerStyles} >
+
+            <ArrowBackIosNewIcon style={leftArrowStyles} />
+
+            <Carousel
+
+                className="carousel2"
                 navButtonsAlwaysVisible={true}
                 navButtonsAlwaysInvisible={false}
                 animation="slide"
                 autoPlay={false}
-                navButtonsProps={{          
-                    style: {
-                        backgroundColor: 'transparent',
-                        color: 'black',
-                    }
-                }}
-                // itemPadding={[5]} // Add a gap between items
-                navButtonsWrapperProps={{
-                    style: {
-                        bottom: '0',
-                        top: '0',
-                        transform: 'none',
-                        height: '100%',
-                        position: "relative"
-                    }
-                }}
+
+                navButtonsProps={navButtonsProps2}
+                navButtonsWrapperProps={navButtonsWrapperProps2}
             >
 
                 {
                     chunkedItems.map((itemGroup, i) => <Item key={i} items={itemGroup} />)
                 }
             </Carousel>
+
+            <ArrowForwardIosIcon style={rightArrowStyles} />
+
         </Container >
     )
 }

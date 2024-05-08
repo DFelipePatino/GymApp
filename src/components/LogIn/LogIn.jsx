@@ -19,12 +19,9 @@ function LogIn() {
     };
 
     return (
-        <div className='login'>
+        <div className='loginn'>
 
 
-            {/* <section className='background'>
-                <img src="onegym.jpeg" alt="background" />
-            </section> */}
             <section className='titanimage'>
                 <img src="titan.png" alt="titan" />
             </section>
@@ -38,7 +35,9 @@ function LogIn() {
 
             <section className='formsection'>
 
-                <form onSubmit={handleSubmit}>
+                <form
+                    className='form'
+                    onSubmit={handleSubmit}>
                     <label>
                         <input className='user name' type="text" value={username} placeholder='Usuario' onChange={(e) => setUsername(e.target.value)} />
                     </label>

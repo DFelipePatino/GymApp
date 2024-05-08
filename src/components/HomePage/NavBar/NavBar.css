@@ -8,10 +8,31 @@
     padding-left: 0;
 } */
 
-.nav {
+/* .nav {
     position: sticky;
     top: -0px;
     z-index: 2;
+} */
+
+@media screen and (max-width: 730px) and (max-width: 935px) {
+    body .css-1ifb285-MuiStack-root {
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-flex-direction: row;
+        -ms-flex-direction: row;
+        flex-direction: row;
+        -webkit-box-pack: center;
+        margin-left: -10px;
+        margin-top: 5px;
+        -ms-flex-pack: center;
+        margin-bottom: 30px;
+        -webkit-justify-content: center;
+        /* margin: 16px; */
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+    }
 }
 
 /* section.nav ul li {

@@ -28,7 +28,9 @@ function cards() {
             <Grid container>
                 {results.map((result, index) => (
                     <Grid item key={index} xs={6} md={6} lg={4}>
-                        <Paper >{result}</Paper>
+
+                        <img className='imageresult' src={result} alt={`Result ${index}`} />
+
                     </Grid>
                 ))}
             </Grid>

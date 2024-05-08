@@ -15,6 +15,29 @@
     flex-wrap: wrap;
     justify-content: center;
     gap: 20px;
-    margin: 0px;
-    margin-left: 0px;
+      /* background-color: aqua; */
 }
+
+@media (min-width: 600px) {
+
+    body .css-1oqqzyl-MuiContainer-root {
+        padding-left: 80px;
+        padding-right: 24px;
+        /* height: 300px; */
+
+    }
+}
+
+.resultsTitle {
+    margin-top: 30px;
+    margin-bottom: 4px;
+    display: flex;
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+    /* justify-content: center; */
+    font-size: 30px;
+    font-weight: bold;
+    /* position: sticky; */
+    top: 150px;
+    margin-left: 5%;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+   }

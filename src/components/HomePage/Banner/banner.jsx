@@ -42,9 +42,6 @@ function banner() {
         },
     ];
 
-
-
-
     return (
         <Container
             style={containerStyles} >

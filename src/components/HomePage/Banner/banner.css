@@ -8,6 +8,8 @@
     width: 500px;
     height: 200px;
     background-color: #426E92;
+    box-shadow: rgba(16, 14, 18, 0.5) 5px 4px 4px;
+    margin-bottom: 40px;
 }
 
 @media screen and (max-width: 730px) and (max-width: 935px) {

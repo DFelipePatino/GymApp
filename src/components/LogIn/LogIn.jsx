@@ -1,17 +1,36 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { getUser } from '../../redux/actions';
 import './Login.css';
 
 function LogIn() {
+
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    const onlyPassword = '1234';
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
+    // const setUser = (username) => {
+    //     if (username) {
+    //         dispatch(getUser(username));
+    //     }
+    // }
+
     const handleSubmit = (event) => {
         event.preventDefault();
         console.log(`Username: ${username}, Password: ${password}`);
-        navigate('/home');
+        if (password !== onlyPassword) {
+            alert('Password incorrecto');
+            return;
+        }
+        else if (password === onlyPassword) {
+            dispatch(getUser(username));
+            navigate('/home');
+        }
 
         // Reset username and password fields
         setUsername('');

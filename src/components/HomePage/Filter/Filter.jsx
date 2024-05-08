@@ -1,6 +1,6 @@
 import React from 'react'
 import { useDispatch } from 'react-redux';
-import { getCardio, getPesas, getPilates, getCrossfit } from '../../../redux/actions';
+import { getCardio, getPesas, getPilates, getCrossfit, getBoxing } from '../../../redux/actions';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
@@ -39,7 +39,7 @@ function Filter() {
         },
 
         loadKickBoxing: () => {
-            dispatch(getCardio());
+            dispatch(getBoxing());
         },
 
         loadCrossfit: () => {
@@ -56,15 +56,14 @@ function Filter() {
                     <Button
                         variant='contained'
                         key={index}
-                        onClick={item.click}
-                        // style={ButtonStyles}
+                        onClick={() => {
+                            item.click();
+                            window.scrollTo({ top: 400, behavior: 'smooth' });
+                        }}
                         className="button"
                     >
-
                         <p>{item.name}</p>
-                        <br />
                         <icon>{item.icon}</icon>
-
                         {/* <p>{item.description}</p> */}
                     </Button>
                 ))}
@@ -81,7 +80,7 @@ function Filter() {
         },
         {
             icon: <DirectionsBikeIcon style={iconStyles.iconStyle2} />,
-            click: loadFns.loadPesas,
+            click: loadFns.loadCardio,
             name: "Cardio",
             // description: "Hello World!"
         },
@@ -129,18 +128,19 @@ function Filter() {
 
     return (
         <Container
-            className='filter'
             style={containerStyles} >
 
-            <ArrowBackIosNewIcon style={leftArrowStyles} />
+            {/* <ArrowBackIosNewIcon style={leftArrowStyles} /> */}
 
             <Carousel
 
                 className="carousel2"
-                navButtonsAlwaysVisible={true}
-                navButtonsAlwaysInvisible={false}
+                navButtonsAlwaysVisible={false}
+                navButtonsAlwaysInvisible={true}
                 animation="slide"
-                autoPlay={false}
+                autoPlay={true}
+                stopAutoPlayOnHover={true}
+                interval={8000}
 
                 navButtonsProps={navButtonsProps2}
                 navButtonsWrapperProps={navButtonsWrapperProps2}
@@ -151,7 +151,7 @@ function Filter() {
                 }
             </Carousel>
 
-            <ArrowForwardIosIcon style={rightArrowStyles} />
+            {/* <ArrowForwardIosIcon style={rightArrowStyles} /> */}
 
         </Container >
     )

@@ -1,24 +1,19 @@
-html {
-    height: 80%;
+/* html {
+    height: 100%;
+} */
+
+
+div.loginn {
+    background-image: linear-gradient(to bottom right, #924141, #924141, #d9d9d9);
+    /* height: 100%;
+    width: 100%; */
+    /* font-family: "Roboto", "Helvetica", "Arial", sans-serif; */
 }
 
-div.login {
-    background-image: linear-gradient(to bottom right, #924141, #924141, #d9d9d9);
-    /* background-image: linear-gradient(to right, #924141, #d9d9d9); */
-    /* background-image: linear-gradient(to top, #924141, #d9d9d9); */
-    /* background-image: linear-gradient(to left, #924141, #d9d9d9); */
-    /* background-image: linear-gradient(to bottom right, #924141, #d9d9d9); */
-    /* background-image: linear-gradient(to bottom left, #924141, #d9d9d9); */
-    /* background-image: linear-gradient(to top right, #924141, #d9d9d9); */
-    /* background-image: linear-gradient(to top left, #924141, #d9d9d9); */
-    /* background-image: radial-gradient(circle, #924141, #d9d9d9); */
-    /* background-image: radial-gradient(ellipse, #924141, #d9d9d9); */
-    /* background-image: radial-gradient(closest-side, #924141, #d9d9d9); */
-    /* background-image: radial-gradient(farthest-side, #924141, #d9d9d9); */
-    /* background-image: radial-gradient(closest-corner, #924141, #d9d9d9); */
-    /* background-image: radial-gradient(farthest-corner, #924141, #d9d9d9); */
-    width: 100%;
-    height: 100%;
+.loading {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
 }
 
 .welcome h1 {
@@ -53,9 +48,9 @@ section.ropeimage img {
     width: 200px;
     height: 200px;
     margin-left: 38%;
-    border-radius: 800px 20px 30px 40px;
+    border-radius: 800px 0px 00px 0px;
     position: absolute;
-    top: 86%;
+    top: 50%;
     bottom: 1px;
     right: 0px;
     opacity: 0.5;
@@ -70,7 +65,7 @@ h1 {
     color: white;
 }
 
-form {
+.form {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -78,7 +73,16 @@ form {
     margin-top: 50px;
 }
 
-form input.user {
+.username {
+    width: 200px;
+    height: 20px;
+    margin: 10px;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+}
+
+.userpassword {
     width: 200px;
     height: 20px;
     margin: 10px;
@@ -99,9 +103,11 @@ form input.LogInB {
 
 section.formsection {
     text-align: center;
-    padding: 10px 20px;
+    /* padding: 10px 20px; */
+    padding-top: -10px;
     color: white;
     position: relative;
+    padding-bottom: 52%;
 }
 
 section.formsection a {
@@ -121,444 +127,41 @@ button.register {
     cursor: pointer;
 }
 
-@media screen and (min-width: 1400px) and (min-width: 900px) {
-    section.logoimage img {
-        width: 200px;
-        height: 200px;
-        margin-top: 70px;
-    }
-
-    section.titanimage img {
-        width: 300px;
-        height: 300px;
-        opacity: 0.5;
-    }
-
-    section.ropeimage img {
-        width: 300px;
-        height: 300px;
-        margin-left: 38%;
-        top: 50%;
-        bottom: 1px;
-        right: 0px;
-        opacity: 0.5;
-    }
-
-    form input.user {
-        width: 300px;
-        height: 30px;
-        margin: 10px;
-        padding: 10px;
-        border: none;
-        border-radius: 5px;
-    }
-
-    form input.LogInB {
-        background: #426E92;
-        color: white;
-        border: none;
-        border-radius: 40px;
-        padding: 10px;
-        width: 150px;
-        height: 70px;
-        cursor: pointer;
-    }
-
-    section.formsection {
-        text-align: center;
-        padding: 10px 20px;
-        color: white;
-        position: relative;
-    }
-
-    section.formsection form {
-        margin-top: 10px;
-    }
-
-    section.formsection a {
-        color: white;
-        text-decoration: none;
-        font-size: 20px;
-    }
-
-    p {
-        font-size: 20px;
-    }
-
-    button.register {
-        background: #426E92;
-        color: white;
-        border: none;
-        border-radius: 40px;
-        padding: 10px;
-        width: 150px;
-        height: 70px;
-        cursor: pointer;
-    }
+.footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* background-color: #426E92; */
+    color: white;
+    height: 50px;
+    width: 100%;
+    /* position: fixed; */
+    margin-top: 0px;
 
 }
 
 
-@media screen and (max-width: 2561px) and (max-height: 930px) {
-    section.logoimage img {
-        width: 250px;
-        height: 250px;
-        margin-top: 70px;
+@media screen and (max-width: 432px) and (max-height: 935px) {
+
+    div.loginn {
+        height: 120%;
+        width: 100%;
     }
 
-    section.titanimage img {
-        width: 380px;
-        height: 380px;
-        opacity: 0.5;
+    .welcome h1 {
+        margin-bottom: -24px;
     }
 
-    section.ropeimage img {
-        width: 380px;
-        height: 380px;
-        margin-left: 38%;
-        top: 35%;
-        bottom: 1px;
-        right: 0px;
-        opacity: 0.5;
-    }
-
-
-    form input.user {
-        width: 300px;
-        height: 20px;
-        margin: 10px;
-        padding: 10px;
-        border: none;
-        border-radius: 5px;
-    }
-
-    form input.LogInB {
-        background: #426E92;
-        color: white;
-        border: none;
-        border-radius: 20px;
-        padding: 10px;
-        width: 100px;
-        cursor: pointer;
-    }
-
-    section.formsection {
-        text-align: center;
-        padding: 10px 20px;
-        color: white;
-        position: relative;
-    }
-
-    section.formsection form {
-        margin-top: 10px;
-    }
-
-    section.formsection a {
-        color: white;
-        text-decoration: none;
-    }
-
-    button.register {
-        background: #426E92;
-        color: white;
-        border: none;
-        border-radius: 20px;
-        padding: 10px;
-        width: 100px;
-        cursor: pointer;
-    }
-
-}
-
-@media screen and (max-width: 1700px) and (max-height: 686px) {
-    section.logoimage img {
-        width: 150px;
-        height: 150px;
-        margin-top: 70px;
-    }
-
-    section.titanimage img {
-        width: 280px;
-        height: 280px;
-        opacity: 0.5;
-    }
-
-    section.ropeimage img {
-        width: 280px;
-        height: 280px;
-        margin-left: 38%;
-        top: 28%;
-        bottom: 1px;
-        right: 0px;
-        opacity: 0.5;
-    }
-
-    form input.user {
-        width: 200px;
-        height: 20px;
-        margin: 10px;
-        padding: 10px;
-        border: none;
-        border-radius: 5px;
-    }
-
-    form input.LogInB {
-        background: #426E92;
-        color: white;
-        border: none;
-        border-radius: 20px;
-        padding: 10px;
-        width: 100px;
-        cursor: pointer;
-    }
-
-    section.formsection {
-        text-align: center;
-        padding: 10px 20px;
-        color: white;
-        position: relative;
-    }
-
-    section.formsection form {
-        margin-top: 10px;
-    }
-
-    section.formsection a {
-        color: white;
-        text-decoration: none;
-    }
-
-    button.register {
-        background: #426E92;
-        color: white;
-        border: none;
-        border-radius: 20px;
-        padding: 10px;
-        width: 100px;
-        cursor: pointer;
-    }
-
-}
-
-@media screen and (max-width: 600px) and (max-height: 844px) {
-    section.logoimage img {
-        width: 100px;
-        height: 100px;
-        margin-top: 130px;
-    }
-
-    section.titanimage img {
-        width: 180px;
-        height: 180px;
-        opacity: 0.5;
-    }
-
-    section.ropeimage img {
-        width: 180px;
-        height: 180px;
-        margin-left: 38%;
-        top: 82%;
-        bottom: 1px;
-        right: 0px;
-        opacity: 0.5;
-    }
-
-    form input.user {
-        width: 100px;
-        height: 20px;
-        margin: 10px;
-        padding: 10px;
-        border: none;
-        border-radius: 5px;
-    }
-
-    form input.LogInB {
-        background: #426E92;
-        color: white;
-        border: none;
-        border-radius: 20px;
-        padding: 10px;
-        width: 100px;
-        cursor: pointer;
-    }
-
-    section.formsection {
-        text-align: center;
-        padding: 10px 20px;
-        color: white;
-        position: relative;
-    }
-
-    section.formsection form {
-        margin-top: 10px;
-    }
-
-    section.formsection a {
-        color: white;
-        text-decoration: none;
-    }
-
-    button.register {
-        background: #426E92;
-        color: white;
-        border: none;
-        border-radius: 20px;
-        padding: 10px;
-        width: 100px;
-        cursor: pointer;
-    }
-
-}
-
-@media screen and (max-width: 468px) and (max-height: 897px) {
-
-    section.logoimage img {
-        width: 100px;
-        height: 100px;
-        margin-top: 150px;
-    }
-
-    section.titanimage img {
-        width: 180px;
-        height: 180px;
-        opacity: 0.5;
-    }
-
-    section.ropeimage img {
-        width: 180px;
-        height: 180px;
-        margin-left: 38%;
-        top: 100%;
-        bottom: 1px;
-        right: 0px;
-        opacity: 0.5;
-    }
-
-    header h1 {
-        margin-bottom: 0;
-    }
-
-    form input.user {
-        width: 100px;
-        height: 20px;
-        margin: 10px;
-        padding: 10px;
-        border: none;
-        border-radius: 5px;
-    }
-
-    form input.LogInB {
-        background: #426E92;
-        color: white;
-        border: none;
-        border-radius: 20px;
-        padding: 10px;
-        width: 100px;
-        cursor: pointer;
-    }
-
-    section.formsection {
-        text-align: center;
-        padding: 10px 20px;
-        color: white;
-        position: relative;
-    }
-
-    section.formsection form {
-        margin-top: 0px;
-    }
-
-    section.formsection a {
-        color: white;
-        text-decoration: none;
-    }
-
-    button.register {
-        background: #426E92;
-        color: white;
-        border: none;
-        border-radius: 20px;
-        padding: 10px;
-        width: 100px;
-        cursor: pointer;
-    }
-
-}
-
-@media screen and (max-width: 376px) and (max-height: 668px) {
-    /* html {
-        height: 20%;
+    /* section.ropeimage img {
+        margin-left: 50%;
     } */
 
     section.logoimage img {
-        width: 100px;
-        height: 100px;
-        margin-top: 150px;
+        margin-top: 100px;
+
     }
 
-    section.titanimage img {
-        width: 180px;
-        height: 180px;
-        opacity: 0.5;
+    .form {
+        margin-top: 10px;
     }
-
-    section.ropeimage img {
-        width: 120px;
-        height: 120px;
-        margin-left: 38%;
-        top: 66.5%;
-        bottom: 0px;
-        right: 0px;
-        opacity: 0.5;
-    }
-
-    header h1 {
-        margin-bottom: 0;
-    }
-
-    form input.user {
-        width: 100px;
-        height: 20px;
-        margin: 10px;
-        padding: 10px;
-        border: none;
-        border-radius: 5px;
-    }
-
-    form input.LogInB {
-        background: #426E92;
-        color: white;
-        border: none;
-        border-radius: 20px;
-        padding: 10px;
-        width: 100px;
-        cursor: pointer;
-    }
-
-    section.formsection {
-        text-align: center;
-        padding: 10px 20px;
-        color: white;
-        position: relative;
-    }
-
-    section.formsection form {
-        margin-top: 0px;
-    }
-
-    section.formsection a {
-        color: white;
-        text-decoration: none;
-    }
-
-    button.register {
-        background: #426E92;
-        color: white;
-        border: none;
-        border-radius: 20px;
-        padding: 10px;
-        width: 100px;
-        cursor: pointer;
-    }
-
 }

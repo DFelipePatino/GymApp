@@ -4,6 +4,7 @@ import { Paper } from '@mui/material';
 import { Link } from 'react-router-dom';
 import Container from '@mui/material/Container';
 import './banner.css';
+import { navButtonsWrapperProps1, containerStyles, navButtonsProps1 } from './bannerStyles';
 
 
 
@@ -38,31 +39,23 @@ function banner() {
             image: "banner3.jpg",
             // name: "Random Name #3",
             // description: "Hello World!"
-        }
+        },
     ];
 
-
-
     return (
-        <Container style={{ display: 'flex', justifyContent: 'center' }} >
-            <Carousel className="carousel"
+        <Container
+            style={containerStyles} >
+
+            <Carousel
+                className="carousel"
                 navButtonsAlwaysVisible={true}
                 navButtonsAlwaysInvisible={false}
                 animation="slide"
-                navButtonsProps={{          // Change the order of the buttons
-                    style: {
-                        backgroundColor: 'transparent',
-                        color: 'black'
-                    }
-                }}
-            // navButtonsWrapperProps={{
-            //     // style: {
-            //     //     bottom: '0',
-            //     //     top: '0',
-            //     //     transform: 'none',
-            //     //     height: '100%'
-            //     // }
-            // }}
+                stopAutoPlayOnHover={true}
+                interval={4000}
+
+                navButtonsProps={navButtonsProps1}
+                navButtonsWrapperProps={navButtonsWrapperProps1}
             >
                 {
                     items.map((item, i) => <Item key={i} item={item} />)

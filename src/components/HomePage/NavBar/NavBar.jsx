@@ -3,16 +3,18 @@ import { useNavigate } from 'react-router-dom';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
+import { ButtonStyle } from './NavBarStyles';
 import './NavBar.css';
 
 function NavBar() {
+
 
     const navigate = useNavigate();
 
     const Navs = {
 
         navprofile: () => {
-            navigate("/perfil");
+            navigate("/profile");
         },
 
         navworkouts: () => {
@@ -20,76 +22,56 @@ function NavBar() {
         },
 
         navchat: () => {
-            navigate("/chat");
+            navigate("/profileCard");
         },
 
         navlogout: () => {
+            localStorage.clear()
             navigate("/");
         },
     }
 
 
-
     return (
-        <Container style={{
-            display: 'flex', justifyContent: 'center', margin: 0,
-            padding: 0
-        }} className='nav'>
-            <Stack spacing={1} direction="row" justifyContent="center" margin={4}>
+        <Container className='nav'>
+
+            <Stack spacing={1} direction="row" justifyContent="center" margin={2}>
 
                 <Button
+                    // className={classes.button}
                     variant="contained"
                     onClick={Navs.navprofile}
-                    style={{
-                        borderRadius: '20px',
-                        backgroundColor: '#D9D9D9',
-                        color: 'black',
-                        margin: 4,
-                        padding: 4
-                    }}>
+                    style={ButtonStyle}
+                >
                     Profile
                 </Button>
 
                 <Button
                     variant="contained"
                     onClick={Navs.navworkouts}
-                    style={{
-                        borderRadius: '20px',
-                        backgroundColor: '#D9D9D9',
-                        color: 'black',
-                        margin: 4,
-                        padding: 4
-                    }}>
+                    style={ButtonStyle}
+                >
                     Workouts
                 </Button>
 
                 <Button
                     variant="contained"
                     onClick={Navs.navchat}
-                    style={{
-                        borderRadius: '20px',
-                        backgroundColor: '#D9D9D9',
-                        color: 'black',
-                        margin: 4,
-                        padding: 4
-                    }}>
+                    style={ButtonStyle}
+                >
                     Chat
                 </Button>
 
                 <Button
                     variant="contained"
                     onClick={Navs.navlogout}
-                    style={{
-                        borderRadius: '20px',
-                        backgroundColor: '#D9D9D9',
-                        color: 'black',
-                        margin: 4,
-                        padding: 4
-                    }}>
+                    style={ButtonStyle}
+                >
                     Log Out
                 </Button>
 
             </Stack>
+
         </Container>
     )
 }

@@ -63,7 +63,7 @@ function Filter() {
                         className="button"
                     >
                         <p>{item.name}</p>
-                        <icon>{item.icon}</icon>
+                        <div>{item.icon}</div>
                         {/* <p>{item.description}</p> */}
                     </Button>
                 ))}

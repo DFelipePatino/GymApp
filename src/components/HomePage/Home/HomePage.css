@@ -14,17 +14,17 @@ div.home {
     background-repeat: no-repeat;
     background-position: center;
     margin-top: 45px;
+    /* font-family: "Roboto", "Helvetica", "Arial", sans-serif; */
+    /* font-family: Georgia, 'Times New Roman', Times, serif; */
     /* background: linear-gradient(to bottom, #924141, #D9D9D9); */
 }
 
-.welcome {
+.welcomeUser {
     display: flex;
 }
 
-.welcome h1 {
+.welcomeUser h1 {
     font-size: 50px;
-    /* font-family: Georgia, 'Times New Roman', Times, serif; */
-    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
     display: flex;
     justify-content: center;
     margin-bottom: 0;
@@ -107,9 +107,8 @@ section.results ul li {
 
 @media screen and (max-width: 730px) and (max-width: 935px) {
 
-    .welcome h1 {
+    .welcomeUser h1 {
         font-size: 30px;
-        font-family: Georgia, 'Times New Roman', Times, serif;
         display: flex;
         justify-content: flex-end;
         padding: 4px;

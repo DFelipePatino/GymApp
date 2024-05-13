@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { getUser } from '../../redux/actions';
+import Box from '@mui/material/Box';
+import LinearProgress from '@mui/material/LinearProgress';
 import './Login.css';
 
 function LogIn() {
@@ -9,16 +11,23 @@ function LogIn() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
+    const localUser = localStorage.getItem("localUserName")
+
+    const setLocalUser = () => {
+        // if (localUser !== "") {
+        dispatch(getUser(localUser));
+        // }
+    }
+    setLocalUser();
+
     const onlyPassword = '1234';
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
-    // const setUser = (username) => {
-    //     if (username) {
-    //         dispatch(getUser(username));
-    //     }
-    // }
+    const [isLoading, setIsLoading] = useState(false)
+
+
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -26,13 +35,22 @@ function LogIn() {
         if (password !== onlyPassword) {
             alert('Password incorrecto');
             return;
-        }
-        else if (password === onlyPassword) {
-            dispatch(getUser(username));
-            navigate('/home');
+        } else if (password === onlyPassword) {
+            localStorage.setItem("localUserName", username);
+
+            console.log(localStorage.getItem("localUserName"), "has been set");
+
+            setIsLoading(true)
         }
 
-        // Reset username and password fields
+        const localUser = localStorage.getItem("localUserName")
+
+        if (localUser) {
+            setTimeout(() => {
+                navigate('/home');
+            }, 5000);
+        }
+
         setUsername('');
         setPassword('');
     };
@@ -52,36 +70,66 @@ function LogIn() {
                 <h1>Welcome</h1>
             </header>
 
-            <section className='formsection'>
-
-                <form
-                    className='form'
-                    onSubmit={handleSubmit}>
-                    <label>
-                        <input className='user name' type="text" value={username} placeholder='Usuario' onChange={(e) => setUsername(e.target.value)} />
-                    </label>
+            {isLoading ?
+                <div className='loading'>
                     <br />
-                    <label>
-                        <input className='user password' type="password" value={password} placeholder='Contraseña' onChange={(e) => setPassword(e.target.value)} />
-                    </label>
                     <br />
-                    <input className="LogInB" type="submit" value="Log In" />
+                    Loading...
                     <br />
-                    <a href=''>¿Olvidaste tu contraseña?</a>
-                </form>
+                    <br />
+                    <p>
+                        Preparate para una gran experiencia!
+                    </p>
+                    <Box sx={{ width: '60%' }}>
+                        <LinearProgress />
+                    </Box>
+                </div> :
 
-                <br />
-                <button className='register'>Registrate</button>
-                <p>¿Aun no tienes cuenta?</p>
+                <section className='formsection'>
 
 
-                <section className='ropeimage'>
-                    <img src="rope.jpeg" alt="rope guy" />
+
+                    <form
+                        className='form'
+                        onSubmit={handleSubmit}>
+                        <label>
+                            <input className='username' type="text" value={username} placeholder='Usuario' onChange={(e) => setUsername(e.target.value)} />
+                        </label>
+                        <br />
+                        <label>
+                            <input className='userpassword' type="password" value={password} placeholder='Contraseña' onChange={(e) => setPassword(e.target.value)} />
+                        </label>
+                        <br />
+                        <input
+                            className="LogInB"
+                            type="submit"
+                            value="Log In"
+                            onClick={() => {
+                                window.scrollTo({ top: 1, behavior: 'smooth' });
+                            }}
+                        />
+                        <br />
+                        <a href='/form'>¿Olvidaste tu contraseña?</a>
+                    </form>
+
+
+                    <br />
+                    <button className='register'>Registrate</button>
+                    <p>¿Aun no tienes cuenta?</p>
+
+
+
                 </section>
 
+            }
+
+            <section className='ropeimage'>
+                <img src="rope.jpeg" alt="rope guy" />
             </section>
 
         </div>
+
+
 
     );
 }

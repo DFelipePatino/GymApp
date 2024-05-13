@@ -14,7 +14,7 @@ function NavBar() {
     const Navs = {
 
         navprofile: () => {
-            navigate("/perfil");
+            navigate("/profile");
         },
 
         navworkouts: () => {
@@ -22,10 +22,11 @@ function NavBar() {
         },
 
         navchat: () => {
-            navigate("/chat");
+            navigate("/profileCard");
         },
 
         navlogout: () => {
+            localStorage.clear()
             navigate("/");
         },
     }

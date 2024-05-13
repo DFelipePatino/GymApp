@@ -107,10 +107,10 @@ export const getBoxing = () => {
     }
 }
 
-    export const getUser = (username) => {
-        return (dispatch) => {
-            const data = username;
-            dispatch({ type: GET_USER, payload: data });
-    
-        }
+export const getUser = (username) => {
+    return (dispatch) => {
+        const data = username;
+        dispatch({ type: GET_USER, payload: data });
+
+    }
 }

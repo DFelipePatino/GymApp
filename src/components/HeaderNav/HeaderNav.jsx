@@ -15,16 +15,16 @@ const HeaderNav = ({ localUser }) => {
     const user = useSelector((state) => state.user);
     console.log(user, "user at navbar");
 
-    const userInitials = localUser.split(' ').map((n) => n ? n[0].toUpperCase() : '').join('');
+    const userInitials = localUser?.split(' ').map((n) => n ? n[0].toUpperCase() : '').join('');
 
     // const [userInitials, setUserInitials] = useState('')
 
     // useEffect((localUser) => {
-        // if (localUser !== null) {
-        //     navigate("/")
-        //     console.log(userInitials, "initials")
-        // } else {
-            // setUserInitials(localUser.split(' ').map((n) => n ? n[0].toUpperCase() : '').join(''));
+    // if (localUser !== null) {
+    //     navigate("/")
+    //     console.log(userInitials, "initials")
+    // } else {
+    // setUserInitials(localUser.split(' ').map((n) => n ? n[0].toUpperCase() : '').join(''));
     //     }
     // }, [localUser]);
 

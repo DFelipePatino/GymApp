@@ -58,7 +58,7 @@ function Filter() {
                         key={index}
                         onClick={() => {
                             item.click();
-                            window.scrollTo({ top: 400, behavior: 'smooth' });
+                            window.scrollTo({ top: 370, behavior: 'smooth' });
                         }}
                         className="button"
                     >
@@ -140,7 +140,7 @@ function Filter() {
                 animation="slide"
                 autoPlay={true}
                 stopAutoPlayOnHover={true}
-                interval={8000}
+                interval={10000}
 
                 navButtonsProps={navButtonsProps2}
                 navButtonsWrapperProps={navButtonsWrapperProps2}

@@ -66,9 +66,7 @@ function LogIn() {
                 <img src="onegym.jpeg" alt="one gym logo" />
             </section>
 
-            <header className='welcome'>
-                <h1>Welcome</h1>
-            </header>
+
 
             {isLoading ?
                 <div className='loading'>
@@ -80,52 +78,68 @@ function LogIn() {
                     <p>
                         Preparate para una gran experiencia!
                     </p>
-                    <Box sx={{ width: '60%' }}>
+                    <Box sx={{ width: '60%', paddingBottom: "104%" }}>
                         <LinearProgress />
                     </Box>
                 </div> :
 
-                <section className='formsection'>
+                <div>
+
+                    <header className='welcome'>
+                        <h1>Welcome</h1>
+                    </header>
+
+                    <section className='formsection'>
 
 
 
-                    <form
-                        className='form'
-                        onSubmit={handleSubmit}>
-                        <label>
-                            <input className='username' type="text" value={username} placeholder='Usuario' onChange={(e) => setUsername(e.target.value)} />
-                        </label>
+                        <form
+                            className='form'
+                            onSubmit={handleSubmit}>
+                            <label>
+                                <input className='username' type="text" value={username} placeholder='Usuario' onChange={(e) => setUsername(e.target.value)} />
+                            </label>
+                            <br />
+                            <label>
+                                <input className='userpassword' type="password" value={password} placeholder='Contraseña' onChange={(e) => setPassword(e.target.value)} />
+                            </label>
+                            <br />
+                            <input
+                                className="LogInB"
+                                type="submit"
+                                value="Log In"
+                                onClick={() => {
+                                    window.scrollTo({ top: 1, behavior: 'smooth' });
+                                }}
+                            />
+                            <br />
+                            <a href='/form'>¿Olvidaste tu contraseña?</a>
+                        </form>
+
+
                         <br />
-                        <label>
-                            <input className='userpassword' type="password" value={password} placeholder='Contraseña' onChange={(e) => setPassword(e.target.value)} />
-                        </label>
-                        <br />
-                        <input
-                            className="LogInB"
-                            type="submit"
-                            value="Log In"
-                            onClick={() => {
-                                window.scrollTo({ top: 1, behavior: 'smooth' });
-                            }}
-                        />
-                        <br />
-                        <a href='/form'>¿Olvidaste tu contraseña?</a>
-                    </form>
+                        <button className='register'>Registrate</button>
+                        <p>¿Aun no tienes cuenta?</p>
 
 
-                    <br />
-                    <button className='register'>Registrate</button>
-                    <p>¿Aun no tienes cuenta?</p>
+                        <section className='ropeimage'>
+                            <img src="rope.jpeg" alt="rope guy" />
+                        </section>
+
+
+                        {/* <footer className='footer'>
+                            <p>OneGym 2024 </p>
+                        </footer> */}
+
+
+                    </section>
 
 
 
-                </section>
+                </div>
 
             }
 
-            <section className='ropeimage'>
-                <img src="rope.jpeg" alt="rope guy" />
-            </section>
 
         </div>
 

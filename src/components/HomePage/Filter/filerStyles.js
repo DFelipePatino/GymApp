@@ -6,8 +6,8 @@ export const containerStyles = {
     display: 'flex',
     justifyContent: 'center',
     position: 'sticky',
-    top: "50px",
-    backdropFilter: 'blur(2px)',   
+    top: "10px",
+    backdropFilter: 'blur(2px)',
     WebkitBackdropFilter: 'blur(2px)',
 
     // '@media screen and (max-width: 730px) and (max-width: 935px)': {
@@ -15,8 +15,8 @@ export const containerStyles = {
     //     top: "2px",
     // },
 
-  
-        
+
+
 }
 
 export const navButtonsWrapperProps2 = {

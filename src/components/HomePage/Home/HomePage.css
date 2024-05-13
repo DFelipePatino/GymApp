@@ -13,7 +13,7 @@ div.home {
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
-    margin-top: 45px;
+    /* margin-top: 45px; */
     /* font-family: "Roboto", "Helvetica", "Arial", sans-serif; */
     /* font-family: Georgia, 'Times New Roman', Times, serif; */
     /* background: linear-gradient(to bottom, #924141, #D9D9D9); */
@@ -75,10 +75,10 @@ section.results ul li {
 
 .backToTop {
     position: fixed;
-    bottom: 20px;
-    right: 5px;
+    bottom: 15px;
+    right: 0px;
     /* background-color: #D9D9D9; */
-    color: grey;
+    color: #426E92;
     text-decoration: none;
     font-size: 40px;
     border: none;
@@ -93,9 +93,9 @@ section.results ul li {
 
 .backToTop2 {
     position: fixed;
-    bottom: -5px;
-    right: 5px;
-    color: grey;
+    bottom: -10px;
+    right: 0px;
+    color: #426E92;
     text-decoration: none;
     font-size: 15px;
     border: none;
@@ -112,7 +112,8 @@ section.results ul li {
         display: flex;
         justify-content: flex-end;
         padding: 4px;
-        padding-left: 20px;
+        padding-bottom: 25px;
+        padding-left: 6%;
         flex-direction: row-reverse;
         text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
     }

@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { getUser } from '../../../redux/actions';
+import { getUser, getCrossfit } from '../../../redux/actions';
 import HeaderNav from '../../HeaderNav/HeaderNav';
 import NavBar from '../NavBar/NavBar';
 import Cards from '../../cards/cards'
@@ -41,6 +41,8 @@ function HomePage() {
         }
         verifyLogin(localUser);
 
+        dispatch(getCrossfit());
+
         window.scrollTo(0, 0);
 
     }, [navigate]);
@@ -55,7 +57,7 @@ function HomePage() {
                 <h1>Bienvenido {userFisrtName}</h1>
             </div>
 
-            <NavBar />
+            {/* <NavBar /> */}
 
             <Banner />
 

@@ -2,10 +2,11 @@
     height: 100%;
 } */
 
+
 div.loginn {
     background-image: linear-gradient(to bottom right, #924141, #924141, #d9d9d9);
-    height: 100%;
-    width: 100%;
+    /* height: 100%;
+    width: 100%; */
     /* font-family: "Roboto", "Helvetica", "Arial", sans-serif; */
 }
 
@@ -47,9 +48,9 @@ section.ropeimage img {
     width: 200px;
     height: 200px;
     margin-left: 38%;
-    border-radius: 800px 20px 30px 40px;
+    border-radius: 800px 0px 00px 0px;
     position: absolute;
-    top: 86%;
+    top: 50%;
     bottom: 1px;
     right: 0px;
     opacity: 0.5;
@@ -106,6 +107,7 @@ section.formsection {
     padding-top: -10px;
     color: white;
     position: relative;
+    padding-bottom: 52%;
 }
 
 section.formsection a {
@@ -123,6 +125,19 @@ button.register {
     padding: 10px;
     width: 100px;
     cursor: pointer;
+}
+
+.footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* background-color: #426E92; */
+    color: white;
+    height: 50px;
+    width: 100%;
+    /* position: fixed; */
+    margin-top: 0px;
+
 }
 
 

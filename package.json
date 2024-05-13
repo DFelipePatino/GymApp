@@ -14,10 +14,10 @@
     "@mui/material": "^5.15.15",
     "@mui/styles": "^5.15.16",
     "axios": "^1.6.5",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
     "react-material-ui-carousel": "^3.4.2",
-    "react-redux": "^9.0.4",
+    "react-redux": "^7.2.6",
     "react-router-dom": "^6.21.1",
     "redux": "^5.0.1",
     "redux-thunk": "^3.1.0"

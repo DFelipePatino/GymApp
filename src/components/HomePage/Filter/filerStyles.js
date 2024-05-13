@@ -6,9 +6,9 @@ export const containerStyles = {
     display: 'flex',
     justifyContent: 'center',
     position: 'sticky',
-    top: "46px",
+    top: "50px",
     backdropFilter: 'blur(2px)',   
-    webkitBackdropFilter: 'blur(2px)',
+    WebkitBackdropFilter: 'blur(2px)',
 
     // '@media screen and (max-width: 730px) and (max-width: 935px)': {
     //     position: 'sticky',
@@ -37,28 +37,6 @@ export const navButtonsProps2 = {
         color: 'black',
     }
 }
-
-
-export const leftArrowStyles = {
-    position: 'absolute',
-    top: "50%",
-    left: "7%",
-    zIndex: "2",
-    color: "grey",
-    fontSize: "16px",
-}
-
-export const rightArrowStyles = {
-    position: 'absolute',
-    top: "50%",
-    right: "7%",
-    zIndex: "2",
-    color: "grey",
-    fontSize: "16px",
-}
-
-
-
 
 
 
@@ -97,5 +75,39 @@ export const iconStyles = {
         padding: '5px',
         // boxShadow: 'rgba(16, 14, 18, 0.5) 5px 4px 4px',
     }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//Not in use
+
+
+export const leftArrowStyles = {
+    position: 'absolute',
+    top: "50%",
+    left: "7%",
+    zIndex: "2",
+    color: "grey",
+    fontSize: "16px",
+}
+
+export const rightArrowStyles = {
+    position: 'absolute',
+    top: "50%",
+    right: "7%",
+    zIndex: "2",
+    color: "grey",
+    fontSize: "16px",
 }
 

@@ -1,6 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { getUser } from '../../../redux/actions';
 import HeaderNav from '../../HeaderNav/HeaderNav';
 import NavBar from '../NavBar/NavBar';
 import Cards from '../../cards/cards'
@@ -14,28 +17,41 @@ import './HomePage.css';
 
 function HomePage() {
 
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const [userFisrtName, setUserFirstName] = useState("")
+
     const user = useSelector((state) => state.user);
-
-    const userFisrtName = user.split(' ')[0];
-
-    const cardsR = useSelector((state) => state.results);
-    console.log(cardsR, "this are the cardR");
-
     console.log(user, "this is the user");
 
-    useEffect(() => {
-        window.scrollTo(0, 0);
-    }, []); // Added closing parenthesis after the empty dependency array
 
-    // Rest of the code...
+    useEffect(() => {
+
+        const localUser = localStorage.getItem("localUserName")
+        console.log(localUser, "lu en home");
+
+        const verifyLogin = (localUser) => {
+            if (!localUser) {
+                navigate("/");
+
+            } else
+                setUserFirstName(localUser.split(' ')[0]);
+
+        }
+        verifyLogin(localUser);
+
+        window.scrollTo(0, 0);
+
+    }, [navigate]);
 
 
     return (
         <div className="home">
 
-            <HeaderNav className="headerNav" />
+            {/* <HeaderNav className="headerNav" localUser={localUser}/> */}
 
-            <div className='welcome' >
+            <div className='welcomeUser' >
                 <h1>Bienvenido {userFisrtName}</h1>
             </div>
 
@@ -47,13 +63,13 @@ function HomePage() {
 
             <Cards />
 
-            <KeyboardArrowUpIcon 
-            className='backToTop' 
-            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} 
-            /> 
+            <KeyboardArrowUpIcon
+                className='backToTop'
+                onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            />
             <p className='backToTop2'>Top</p>
-            
-                {/* // <a className='backToTop' href="#top">^</a> */}
+
+            {/* // <a className='backToTop' href="#top">^</a> */}
             {/* )} */}
 
         </div>

@@ -1,7 +1,13 @@
 import React, { useState } from 'react';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Perfil.css';
 
 function Perfil() {
+
+    const navigate = useNavigate();
+
+
     const [isEditing, setIsEditing] = useState(false);
     const [user, setUser] = useState({
         name: 'John Doe',
@@ -9,6 +15,22 @@ function Perfil() {
         edad: "31 años"
         // Add more fields as needed
     });
+
+    useEffect(() => {
+
+        const localUser = localStorage.getItem("localUserName")
+        console.log(localUser, "lu en profile");
+
+        const verifyLogin = (localUser) => {
+            if (!localUser) {
+                navigate("/");
+            }
+        }
+        verifyLogin(localUser);
+
+        window.scrollTo(0, 0);
+
+    }, [navigate]);
 
     console.log(user, "user");
 

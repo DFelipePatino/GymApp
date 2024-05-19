@@ -111,7 +111,7 @@ function Layout({ children, localUser }) {
                 </Typography>
                 {userInitials === "" ? (
                     <AccountCircleIcon style={ACI} />
-                ) : <a className='initials' href='/profile'>{userInitials}</a>}
+                ) : <a className='initials' href='/profile2'>{userInitials}</a>}
             </Toolbar>
 
             <Drawer

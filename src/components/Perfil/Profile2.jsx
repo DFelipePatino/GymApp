@@ -4,6 +4,10 @@ import './Profile2.css';
 
 
 function Profile2({ name, dob, age, email, profilePicture, goals, healthStatus }) {
+
+    const test = ""
+
+
     return (
         <Card
             style={{

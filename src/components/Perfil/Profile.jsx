@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './Perfil.css';
+import './Profile.css';
 
-function Perfil() {
+function Profile() {
 
     const navigate = useNavigate();
 
@@ -12,7 +12,7 @@ function Perfil() {
     const [user, setUser] = useState({
         name: 'John Doe',
         email: 'john.doe@example.com',
-        edad: "31 años"
+        edad: "31"
         // Add more fields as needed
     });
 
@@ -42,12 +42,13 @@ function Perfil() {
     };
 
     const handleEditClick = () => {
-        setIsEditing(!isEditing);
+        // setIsEditing(!isEditing);
+        navigate("/profileedit")
     };
 
-    const editphoto = () => {
-        alert("Editar foto");
-    };
+    // const editphoto = () => {
+    //     alert("Editar foto");
+    // };
 
     return (
         <div className='profilesection'>
@@ -103,7 +104,9 @@ function Perfil() {
                     <section className='secondhalf'>
 
 
-                        <section className='profilepicsec' onClick={editphoto}>
+                        <section className='profilepicsec'
+                        // onClick={editphoto}
+                        >
                             <img className='profilepic' src="Perfil.png" alt="perfil" />
                         </section>
 
@@ -193,7 +196,9 @@ function Perfil() {
 
                     <section className='secondhalf'>
 
-                        <section className='profilepicsec' onClick={editphoto}>
+                        <section className='profilepicsec'
+                        // onClick={editphoto}
+                        >
                             <img className='profilepic' src="Perfil.png" alt="perfil" />
                         </section>
 
@@ -225,7 +230,7 @@ function Perfil() {
     );
 }
 
-export default Perfil;
+export default Profile;
 
 
 

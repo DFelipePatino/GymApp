@@ -66,7 +66,7 @@ function Layout({ children, localUser }) {
             <List>
                 {[
                     { text: 'Home', icon: <HomeIcon />, route: '/home' },
-                    { text: 'Workouts', icon: <FitnessCenterIcon />, route: '/workouts' },
+                    { text: 'Profile Card', icon: <FitnessCenterIcon />, route: '/profileCard' },
                     { text: 'Chat', icon: <ChatIcon />, route: '/chat' },
                     { text: 'Log Out', icon: <LogoutIcon />, route: '/', shouldClearLocal: true }
                 ].map((item, index) => (

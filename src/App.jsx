@@ -10,6 +10,7 @@ import HomePage from './components/HomePage/Home/HomePage';
 import Profile from './components/Perfil/Profile.jsx';
 import Profile2 from './components/Perfil/Profile2.jsx'
 import ProfileEdit from './components/Perfil/ProfileEdit';
+import Registro from './components/LogIn/Registro/Registro.jsx';
 import Test from './components/test/test';
 import Cards from './components/cards/cards';
 import ProfileCard from './components/Perfil/profileCard';
@@ -52,10 +53,12 @@ function App() {
   return (
     <>
 
-      {location.pathname !== "/" && <Layout localUser={localUser} />}
+      {location.pathname !== "/" && location.pathname !== "/registro" && <Layout localUser={localUser} />}
 
       <Routes>
         <Route path='/' element={<LogIn />} />
+        <Route path='/registro' element={<Registro
+            BackToTopButton={BackToTopButton} />} />
 
         <Route path='/home' element={<HomePage
           BackToTopButton={BackToTopButton}

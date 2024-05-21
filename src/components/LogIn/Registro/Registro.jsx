@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import './ProfileEdit.css';
+// import './Registro.css';
 import EditIcon from '@mui/icons-material/Edit';
 import Swal from 'sweetalert2'
 import {
-    Typography, Avatar, Grid, Box, Container, TextField, Button,
-    colors
+    Typography, Avatar, Grid, Box, Container, TextField, Button
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 
-function ProfileEdit({ localUser, BackToTopButton, profilePicture }) {
+function Registro({ BackToTopButton }) {
 
     const navigate = useNavigate();
 
@@ -61,7 +60,7 @@ function ProfileEdit({ localUser, BackToTopButton, profilePicture }) {
                     style={typographyStyle}
                     variant="h4"
                     align="center">
-                    {localUser}
+                    Bienvenido!
                     <br />
                     <EditIcon
                         onClick={() => window.scrollTo({ top: 220, behavior: 'smooth' })} />
@@ -76,7 +75,7 @@ function ProfileEdit({ localUser, BackToTopButton, profilePicture }) {
 
                     }}
                     onClick={() => alert('Futuro cambio de imagen')}
-                    src={profilePicture} />
+                />
 
                 <Container
                     style={{
@@ -292,23 +291,50 @@ function ProfileEdit({ localUser, BackToTopButton, profilePicture }) {
                                         }).then((result) => {
                                             if (result.isConfirmed) {
                                                 Swal.fire(
-                                                    'Guardado!',
-                                                    'Tu perfil ha sido actualizado',
+                                                    'Bienvenido!',
+                                                    'Tu perfil ha sido creado con exito!',
                                                     'success'
                                                 )
-                                                    .finally(() => navigate('/profile2'));
+                                                    .finally(() => navigate('/'));
                                             }
                                             if (result.isDismissed) {
                                                 Swal.fire(
                                                     'Cancelado!',
-                                                    'Tu perfil no ha sido actualizado',
-                                                    'error'
+                                                    'Tu perfil no ha sido creado aun, continua con el proceso de registro!',
+                                                    'success'
                                                 )
+                                                // .finally(() => navigate('/'));
                                             }
                                         })
                                     }}
                                 >
                                     Guardar
+                                </Button>
+                                <br />
+                                <br />
+                                <Button
+                                    fullWidth
+                                    variant="contained"
+                                    color="secondary"
+                                    type="submit"
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        Swal.fire({
+                                            title: 'Estas seguro?',
+                                            text: "Perderas los cambios no guardados!",
+                                            icon: 'warning',
+                                            showCancelButton: true,
+                                            confirmButtonColor: '#3085d6',
+                                            cancelButtonColor: '#d33',
+                                            confirmButtonText: 'Si, estoy seguro!'
+                                        }).then((result) => {
+                                            if (result.isConfirmed) {
+                                                navigate('/');
+                                            }
+                                        });
+                                    }}
+                                >
+                                    Volver
                                 </Button>
                             </Grid>
 
@@ -321,4 +347,4 @@ function ProfileEdit({ localUser, BackToTopButton, profilePicture }) {
     );
 }
 
-export default ProfileEdit;
+export default Registro;

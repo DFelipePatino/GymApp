@@ -15,6 +15,7 @@ import Cards from './components/cards/cards';
 import ProfileCard from './components/Perfil/profileCard';
 import HeaderNav from './components/HeaderNav/HeaderNav';
 import Layout from './components/Layout/Layout'
+import BackToTopButton from './components/backToTopButton/BackToTopButton.jsx';
 
 
 function App() {
@@ -24,6 +25,26 @@ function App() {
 
   const localUser = localStorage.getItem("localUserName")
   console.log(localUser, "lu en app");
+
+  const userForTesting = {
+    dob: "1990-01-01",
+    age: "31",
+    email: "email@gmail.com",
+    profilePicture: "/Perfil.png",
+    goals: "Run a marathon",
+    healthStatus: "Healthy",
+    height: "180cm",
+    weight: "75kg",
+    gender: "Male",
+    bloodType: "O+",
+    hairColor: "Brown",
+    eyeColor: "Blue",
+    skinColor: "Fair",
+    bodyType: "Athletic",
+    shoeSize: "10",
+    clothingSize: "Medium",
+    dietPlan: "/plandedieta.pdf"
+  }
 
 
 
@@ -35,19 +56,23 @@ function App() {
 
       <Routes>
         <Route path='/' element={<LogIn />} />
-        <Route path='/home' element={<HomePage localUser={localUser} />} />
+
+        <Route path='/home' element={<HomePage
+          BackToTopButton={BackToTopButton}
+          localUser={localUser} />} />
+
         <Route path='/profile' element={<Profile localUser={localUser} />} />
 
         <Route path='/profile2' element={<Profile2
-          name="John Doe"
-          dob="1990-01-01"
-          age="31"
-          email="email@gmail.com"
-          profilePicture="url_to_profile_picture"
-          goals="Run a marathon"
-          healthStatus="Healthy" />} />
+          BackToTopButton={BackToTopButton}
+          name={localUser}
+          userForTesting={userForTesting} />} />
 
-        <Route path='/profileedit' element={<ProfileEdit localUser={localUser} />} />
+        <Route path='/profileedit' element={<ProfileEdit
+          BackToTopButton={BackToTopButton}
+          profilePicture="/Perfil.png"
+          localUser={localUser} />} />
+
         <Route path='/test' element={<Test />} />
         <Route path='/cards' element={<Cards />} />
         <Route path='/profileCard' element={<ProfileCard />} />

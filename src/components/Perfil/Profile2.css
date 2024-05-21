@@ -1,3 +1,31 @@
 body .MuiTypography-colorTextSecondary {
-    color: rgba(0, 0, 0, 0.54);
+    /* color: rgba(0, 0, 0, 0.54); */
+    /* dont delete */
+}
+
+.profile2div {
+    /* display: flex;
+    justify-content: center;
+    align-items: center; */
+    height: auto;
+    /* width: 150%; */
+
+}
+
+.MuiCardHeader-root {
+    box-sizing: border-box;
+}
+
+.cardContent {
+    display: flex;
+    box-sizing: border-box;
+
+    p {
+        color: rgb(255, 255, 255);
+        margin-top: -28px;
+    }
+}
+
+.css-11lq3yg-MuiGrid-root {
+    justify-content: space-evenly;
 }

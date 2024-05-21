@@ -24,7 +24,7 @@ function ProfileEdit({ localUser, BackToTopButton, profilePicture }) {
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
-    const typographyStyle = windowWidth >= 380 ? { marginTop: '50px', color: '#ffffff' } : { color: '#ffffff' };
+    const typographyStyle = windowWidth >= 375 ? { marginTop: '50px', color: '#ffffff' } : { color: '#ffffff' };
 
     const [dob, setDob] = useState(''); // Initialize state variable for dob
 
@@ -63,8 +63,9 @@ function ProfileEdit({ localUser, BackToTopButton, profilePicture }) {
                     align="center">
                     {localUser}
                     <br />
-                    <EditIcon
-                        onClick={() => window.scrollTo({ top: 220, behavior: 'smooth' })} />
+
+                    <p> <EditIcon
+                        onClick={() => window.scrollTo({ top: 220, behavior: 'smooth' })} />Edita tu Perfil</p>
                 </Typography>
 
                 <Avatar

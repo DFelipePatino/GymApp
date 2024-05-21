@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { getUser } from '../../redux/actions';
@@ -7,6 +7,10 @@ import LinearProgress from '@mui/material/LinearProgress';
 import './Login.css';
 
 function LogIn() {
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    });
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -118,7 +122,10 @@ function LogIn() {
 
 
                         <br />
-                        <button className='register'>Registrate</button>
+                        <button
+                            className='register'
+                            onClick={() => { navigate('/registro'); }}
+                        >Registrate</button>
                         <p>¿Aun no tienes cuenta?</p>
 
 

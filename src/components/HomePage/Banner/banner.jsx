@@ -14,11 +14,11 @@ function banner() {
     function Item(props) {
         return (
             <Paper className="paper">
-                <Link to={props.item.link}>
+                <Link to={props.item.link} target="blank">
                     <img src={props.item.image} alt={props.item.name} />
                 </Link>
                 {/* <h2>{props.item.name}</h2>
-                <p>{props.item.description}</p> */}
+            <p>{props.item.description}</p> */}
             </Paper>
         );
     }
@@ -40,6 +40,12 @@ function banner() {
             // name: "Random Name #3",
             // description: "Hello World!"
         },
+        {
+            image: "banner4.jpg",
+            link: "https://www.instagram.com/one_by_bt?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==",
+            // name: "Random Name #4",
+            // description: "Hello World!"
+        },
     ];
 
     return (
@@ -51,6 +57,7 @@ function banner() {
                 navButtonsAlwaysVisible={true}
                 navButtonsAlwaysInvisible={false}
                 animation="slide"
+                autoPlay={false}
                 stopAutoPlayOnHover={true}
                 interval={4000}
 

@@ -140,7 +140,7 @@ function Filter() {
                 animation="slide"
                 autoPlay={true}
                 stopAutoPlayOnHover={true}
-                interval={10000}
+                interval={6000}
 
                 navButtonsProps={navButtonsProps2}
                 navButtonsWrapperProps={navButtonsWrapperProps2}

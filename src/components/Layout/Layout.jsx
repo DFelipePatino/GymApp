@@ -104,7 +104,7 @@ function Layout({ children, localUser }) {
                     <MenuIcon />
                 </IconButton>
                 <Typography
-                    cursor='pointer'
+                    style={{ cursor: 'pointer' }}
                     onClick={() => window.location.href = "/home"}
                     variant="h6" noWrap component="div">
                     One Gym

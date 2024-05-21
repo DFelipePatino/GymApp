@@ -15,7 +15,7 @@ import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import './HomePage.css';
 
-function HomePage() {
+function HomePage({ BackToTopButton }) {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -65,14 +65,7 @@ function HomePage() {
 
             <Cards />
 
-            <KeyboardArrowUpIcon
-                className='backToTop'
-                onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-            />
-            <p className='backToTop2'>Top</p>
-
-            {/* // <a className='backToTop' href="#top">^</a> */}
-            {/* )} */}
+            <BackToTopButton />
 
         </div>
     );

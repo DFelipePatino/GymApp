@@ -15,7 +15,7 @@
     flex-wrap: wrap;
     justify-content: center;
     gap: 20px;
-      /* background-color: aqua; */
+    /* background-color: aqua; */
 }
 
 @media (min-width: 600px) {
@@ -29,7 +29,7 @@
 }
 
 .resultsTitle {
-    margin-top: 30px;
+    margin-top: 20px;
     margin-bottom: 4px;
     display: flex;
     font-family: "Roboto", "Helvetica", "Arial", sans-serif;
@@ -40,4 +40,4 @@
     top: 150px;
     margin-left: 5%;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-   }
+}

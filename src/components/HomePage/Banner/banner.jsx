@@ -57,7 +57,7 @@ function banner() {
                 navButtonsAlwaysVisible={true}
                 navButtonsAlwaysInvisible={false}
                 animation="slide"
-                autoPlay={false}
+                autoPlay={true}
                 stopAutoPlayOnHover={true}
                 interval={4000}
 

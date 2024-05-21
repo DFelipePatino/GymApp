@@ -18,8 +18,23 @@ import {
     GET_PILATES,
     GET_CROSSFIT,
     GET_BOXING,
-    GET_USER
+    GET_USER,
+    SET_HOME_CONTENT,
+    GET_DEFAULT
 } from "./action-types";
+
+export const getDefault = () => {
+    return (dispatch) => {
+        const data = {
+            category: 'Explora tu contenido aqui!',
+            images: [
+
+            ]
+        }
+        dispatch({ type: GET_DEFAULT, payload: data });
+
+    }
+}
 
 export const getCardio = () => {
     return (dispatch) => {
@@ -37,13 +52,27 @@ export const getCardio = () => {
     }
 }
 
-export const getPesas = () => {
+export const getContacto = () => {
     return (dispatch) => {
         const data = {
-            category: 'Pesas',
+            category: 'Contacto',
             images: [
                 image8,
                 image9,
+            ],
+        }
+        dispatch({ type: GET_PESAS, payload: data });
+
+    }
+}
+
+export const getYoga = () => {
+    return (dispatch) => {
+        const data = {
+            category: 'Yoga',
+            images: [
+                image1,
+                image2,
             ],
         }
         dispatch({ type: GET_PESAS, payload: data });
@@ -56,11 +85,11 @@ export const getPilates = () => {
         const data = {
             category: "Pilates",
             images: [
-                image1,
-                image2,
-                image3,
                 image4,
                 image5,
+                image10,
+                image11,
+                image6,
 
             ]
         }
@@ -112,5 +141,14 @@ export const getUser = (username) => {
         const data = username;
         dispatch({ type: GET_USER, payload: data });
 
+    }
+}
+
+
+export const setHomeContent = (content) => {
+    console.log(content, "content in action");
+    return (dispatch) => {
+        const data = content;
+        dispatch({ type: SET_HOME_CONTENT, payload: data });
     }
 }

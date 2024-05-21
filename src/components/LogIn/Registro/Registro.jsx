@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 // import './Registro.css';
-import EditIcon from '@mui/icons-material/Edit';
+import FileUploadIcon from '@mui/icons-material/FileUpload';
 import Swal from 'sweetalert2'
 import {
     Typography, Avatar, Grid, Box, Container, TextField, Button
@@ -23,7 +23,7 @@ function Registro({ BackToTopButton }) {
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
-    const typographyStyle = windowWidth >= 380 ? { marginTop: '50px', color: '#ffffff' } : { color: '#ffffff' };
+    const typographyStyle = windowWidth >= 360 ? { marginTop: '50px', color: '#ffffff' } : { color: '#ffffff' };
 
     const [dob, setDob] = useState(''); // Initialize state variable for dob
 
@@ -60,22 +60,36 @@ function Registro({ BackToTopButton }) {
                     style={typographyStyle}
                     variant="h4"
                     align="center">
-                    Bienvenido!
-                    <br />
-                    <EditIcon
-                        onClick={() => window.scrollTo({ top: 220, behavior: 'smooth' })} />
+                    Bienvenido
                 </Typography>
+                {/* <p>Ayudanos con unos datos para conocerte mejor</p> */}
 
+                {/* <FileUploadIcon
+                    style={{
+                        height: '50px',
+                        width: '50px',
+                        top: '65px',
+                        right: '19%',
+                        position: 'fixed',
+                        color: '#426E92',
+                        zIndex: '1',
+                    }}
+                    onClick={() => alert('Futuro cambio de imagen')}
+                /> */}
                 <Avatar
                     style={{
                         width: '150px',
                         height: '150px',
                         cursor: 'pointer',
-                        border: '3px solid #426E92'
-
+                        border: '3px solid #426E92',
+                        position: 'relative',
+                        // filter: 'blur(1px)'
                     }}
                     onClick={() => alert('Futuro cambio de imagen')}
-                />
+                >
+                    <FileUploadIcon />
+                </Avatar>
+
 
                 <Container
                     style={{
@@ -313,9 +327,9 @@ function Registro({ BackToTopButton }) {
                                 <br />
                                 <br />
                                 <Button
+                                    style={{ backgroundColor: '#924141' }}
                                     fullWidth
                                     variant="contained"
-                                    color="secondary"
                                     type="submit"
                                     onClick={(e) => {
                                         e.preventDefault();

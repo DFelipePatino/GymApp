@@ -14,6 +14,7 @@ import Registro from './components/LogIn/Registro/Registro.jsx';
 import Test from './components/test/test';
 import Cards from './components/cards/cards';
 import ProfileCard from './components/Perfil/profileCard';
+import Chat from './components/Chat/Chat.jsx';
 import HeaderNav from './components/HeaderNav/HeaderNav';
 import Layout from './components/Layout/Layout'
 import BackToTopButton from './components/backToTopButton/BackToTopButton.jsx';
@@ -58,7 +59,7 @@ function App() {
       <Routes>
         <Route path='/' element={<LogIn />} />
         <Route path='/registro' element={<Registro
-            BackToTopButton={BackToTopButton} />} />
+          BackToTopButton={BackToTopButton} />} />
 
         <Route path='/home' element={<HomePage
           BackToTopButton={BackToTopButton}
@@ -79,6 +80,7 @@ function App() {
         <Route path='/test' element={<Test />} />
         <Route path='/cards' element={<Cards />} />
         <Route path='/profileCard' element={<ProfileCard />} />
+        <Route path='/chat' element={<Chat />} />
       </Routes>
     </>
   );

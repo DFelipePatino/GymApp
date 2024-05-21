@@ -1,6 +1,6 @@
 import React from 'react'
 import { useDispatch } from 'react-redux';
-import { getCardio, getPesas, getPilates, getCrossfit, getBoxing } from '../../../redux/actions';
+import { getCardio, getContacto, getPilates, getCrossfit, getBoxing, getYoga } from '../../../redux/actions';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
@@ -26,8 +26,8 @@ function Filter() {
             dispatch(getCardio());
         },
 
-        loadPesas: () => {
-            dispatch(getPesas());
+        loadYoga: () => {
+            dispatch(getYoga());
         },
 
         loadPilates: () => {
@@ -35,7 +35,7 @@ function Filter() {
         },
 
         loadContacto: () => {
-            dispatch(getCardio());
+            dispatch(getContacto());
         },
 
         loadKickBoxing: () => {
@@ -58,7 +58,7 @@ function Filter() {
                         key={index}
                         onClick={() => {
                             item.click();
-                            window.scrollTo({ top: 370, behavior: 'smooth' });
+                            window.scrollTo({ top: 380, behavior: 'smooth' });
                         }}
                         className="button"
                     >
@@ -86,7 +86,7 @@ function Filter() {
         },
         {
             icon: <SelfImprovementIcon style={iconStyles.iconStyle3} />,
-            click: loadFns.loadCardio,
+            click: loadFns.loadYoga,
             name: "Yoga",
             // description: "Hello World!"
         },

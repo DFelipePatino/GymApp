@@ -1,0 +1,83 @@
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    background-color: #333;
+    color: white;
+    padding: 3px 0;
+    z-index: 2;
+}
+
+.initials {
+    color: white;
+    text-decoration: none;
+    background-color: grey;
+    border-radius: 50%;
+    height: 40px;
+    width: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    margin-right: 5%;
+    border: white solid 1px;
+}
+
+.extra {
+    color: #333;
+    text-decoration: none;
+    cursor: none;
+}
+
+.navImage {
+    width: 75px;
+    height: 40px;
+    margin: 0;
+    padding: 0;
+    margin-left: 10%;
+    /* border-radius: 50%; */
+    border: white solid 1px;
+}
+
+
+@media screen and (max-width: 730px) and (max-width: 935px) {
+
+    .navImage {
+        margin-left: 3%;
+    }
+
+}
+
+.initials {
+    margin-right: 2%;
+}
+
+
+
+/*  this is so that the navbar on top is bigger */
+
+/* @media screen and (min-width: 600px) and (max-width: 1024px) {
+
+    .navbar {
+    height: 50px;
+    }
+
+    .initials {
+    height: 50px;
+    width: 50px;
+}
+
+.navImage {
+    width: 80px;
+    height: 50px;
+    margin: 0;
+    padding: 0;
+    margin-left: 10%;
+    /* border-radius: 50%; */
+/* } */
+    
+/* } */ 
+
+
+

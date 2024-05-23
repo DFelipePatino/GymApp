@@ -1,15 +1,29 @@
 import {
     GET_CARDIO,
     GET_PESAS,
-    GET_PILATES
+    GET_PILATES,
+    GET_CROSSFIT,
+    GET_BOXING,
+    GET_USER,
+    SET_HOME_CONTENT,
+    GET_DEFAULT
 } from "./action-types";
 const initialState = {
-    results: [],
+    results: {},
+    user: '',
+    homeContent: ''
 
 }
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
+
+
+        case GET_DEFAULT:
+            return {
+                ...state,
+                results: action.payload,
+            }
 
         case GET_CARDIO:
             return {
@@ -27,6 +41,30 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 results: action.payload,
+            }
+
+        case GET_CROSSFIT:
+            return {
+                ...state,
+                results: action.payload,
+            }
+
+        case GET_BOXING:
+            return {
+                ...state,
+                results: action.payload,
+            }
+
+        case GET_USER:
+            return {
+                ...state,
+                user: action.payload,
+            }
+
+        case SET_HOME_CONTENT:
+            return {
+                ...state,
+                homeContent: action.payload,
             }
 
         default:

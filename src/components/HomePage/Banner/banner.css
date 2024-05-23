@@ -5,16 +5,12 @@
     display: flex;
     justify-content: center;
     border-radius: 20px;
-    width: 80%;
+    width: 500px;
     height: 200px;
     background-color: #426E92;
-}
+    box-shadow: rgba(16, 14, 18, 0.5) 5px 4px 4px;
+    margin-bottom: 40px;
 
-
-
-.carousel .slide {
-    width: 100%;
-    height: auto;
 }
 
 .paper {
@@ -27,19 +23,61 @@
     cursor: pointer;
 }
 
-.paper h2 {
-    font-size: 50px;
-    font-family: Georgia, 'Times New Roman', Times, serif;
-}
-
-.paper p {
-    color: black;
-    text-decoration: none;
-}
-
 .paper img {
-    width: 500px;
-    height: 200px;
+    width: 510px;
+    height: 210px;
+    margin-left: -16px;
     padding: none;
     margin: none;
+}
+
+@media screen and (max-width: 935px) {
+    .carousel {
+        width: 400px;
+    }
+
+
+    /* .carousel .slide {
+        width: 100%;
+        height: auto;
+    } */
+
+
+
+    .paper h2 {
+        font-size: 50px;
+        font-family: Georgia, 'Times New Roman', Times, serif;
+    }
+
+    .paper p {
+        color: black;
+        text-decoration: none;
+    }
+
+    /* .carousel {} */
+
+    .paper img {
+        width: 400px;
+        height: 210px;
+        margin-left: -12px;
+    }
+
+}
+
+@media screen and (max-width: 430px) {
+    .carousel {
+        width: 100%;
+    }
+
+    .paper img {
+        width: 400px;
+
+    }
+}
+
+@media screen and (max-width: 375px) {
+    .paper img {
+        width: 350px;
+
+    }
 }

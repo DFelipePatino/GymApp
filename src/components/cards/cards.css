@@ -1,8 +1,43 @@
-.results {
+.imageresult {
+    width: 80%;
+    height: 80%;
+    object-fit: cover;
+    border-radius: 10px;
+    box-shadow: rgba(16, 14, 18, 0.5) 6px 7px 3px;
+    transition: transform 0.2s;
+    cursor: pointer;
+    margin: 10px;
+    gap: 20px;
+}
 
-    /* display: flex;
+.results {
+    display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    margin-top: 20px; */
-    /* border: blue 3px solid; */
+    gap: 20px;
+    /* background-color: aqua; */
+}
+
+@media (min-width: 600px) {
+
+    body .css-1oqqzyl-MuiContainer-root {
+        padding-left: 80px;
+        padding-right: 24px;
+        /* height: 300px; */
+
+    }
+}
+
+.resultsTitle {
+    margin-top: 20px;
+    margin-bottom: 4px;
+    display: flex;
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+    /* justify-content: center; */
+    font-size: 30px;
+    font-weight: bold;
+    /* position: sticky; */
+    top: 150px;
+    margin-left: 5%;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }

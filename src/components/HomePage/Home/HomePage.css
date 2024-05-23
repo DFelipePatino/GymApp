@@ -1,31 +1,55 @@
+:root {
+    color-scheme: light dark;
+}
+
+/* .headerNav{
+    z-index: -1;
+} */
+
 div.home {
     width: 100%;
-    height: 280%;
-    background-image: url(/public/Gym_background.png);
+    height: 260%;
+    background-image: url(back.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    /* margin-top: 45px; */
+    /* font-family: "Roboto", "Helvetica", "Arial", sans-serif; */
+    /* font-family: Georgia, 'Times New Roman', Times, serif; */
+    /* background: linear-gradient(to bottom, #924141, #D9D9D9); */
 }
 
-.welcome {
-    margin: 0;
-    padding: 0;
+.welcomeUser {
     display: flex;
-    justify-content: center;
 }
 
-.welcome h1 {
+.welcomeUser h1 {
     font-size: 50px;
-    font-family: Georgia, 'Times New Roman', Times, serif;
     display: flex;
     justify-content: center;
+    margin-bottom: 0;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    /* color:  #D9D9D9; */
+}
+
+.dotContainer {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
 }
 
 
+.dotContainer2 {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: -6px;
+}
 
 /* .MuiContainer-root MuiContainer-maxWidthLg results css-1oqqzyl-MuiContainer-root {
     position: absolute;
     top: 82%;
     left: 5%;
 } */
-
 
 section.results ul {
     position: absolute;
@@ -49,14 +73,55 @@ section.results ul li {
     list-style: none;
 }
 
+
+
 @media screen and (max-width: 730px) and (max-width: 935px) {
-    .welcome h1 {
-        font-size: 25px;
-        font-family: Georgia, 'Times New Roman', Times, serif;
+
+    .welcomeUser h1 {
+        font-size: 30px;
         display: flex;
-        justify-content: center;
+        justify-content: flex-end;
+        padding: 4px;
+        padding-bottom: 25px;
+        padding-left: 6%;
+        flex-direction: row-reverse;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
     }
+
 }
+
+/* @media (prefers-color-scheme : dark) {
+   .welcome h1{
+        color:  #B6B6B6; */
+
+
+/* 
+        #1B1A32
+        #426E92
+        #9F8A88
+        #D9D9D9
+        #924141
+        #545454
+        #539BE0
+
+
+        #0F0E1C
+        #2C4E6B
+        #726A68
+        #B6B6B6
+        #6D3131
+        #3C3C3C
+        #3A6EAA */
+/* } */
+
+
+
+/* div.home {
+        background: linear-gradient(to bottom, #6D3131, #B6B6B6);
+    }
+} */
+
+
 
 /* 
 

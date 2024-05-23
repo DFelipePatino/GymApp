@@ -1,5 +1,6 @@
 import React from 'react'
 import Box from '@mui/material/Box';
+import { toggleDrawer } from '../HomePage/CardDrawer/CardDrawer';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import Container from '@mui/material/Container';
@@ -8,6 +9,8 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { getCardio } from '../../redux/actions';
 import './cards.css';
+import SwipeableEdgeDrawer from '../HomePage/CardDrawer/CardDrawer';
+import { Button } from '@mui/material';
 
 function cards() {
 
@@ -20,22 +23,29 @@ function cards() {
     //     dispatch(getCardio());
     // }, [dispatch]);
 
+    console.log(results.category, "this is the category");
+
+
 
     return (
 
         <Container className='results'>
-
+            <h3 className='resultsTitle'>{results?.category}</h3>
             <Grid container>
-                {results.map((result, index) => (
-                    <Grid item key={index} xs={6} md={6} lg={4}>
-                        <Paper >{result}</Paper>
+                {results?.images?.map((image, index) => (
+                    // <Button xs={6} md={4} lg={2}
+
+                    // >
+                    <Grid item key={index} xs={6} md={4} lg={2}
+                        onClick={toggleDrawer(true)}>
+                        <img className='imageresult' src={image} />
                     </Grid>
+                    // </Button>
                 ))}
             </Grid>
-
-
+            <SwipeableEdgeDrawer />
         </Container>
-    )
+    );
 }
 
 export default cards

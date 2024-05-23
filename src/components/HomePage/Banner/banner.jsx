@@ -4,6 +4,7 @@ import { Paper } from '@mui/material';
 import { Link } from 'react-router-dom';
 import Container from '@mui/material/Container';
 import './banner.css';
+import { navButtonsWrapperProps1, containerStyles, navButtonsProps1 } from './bannerStyles';
 
 
 
@@ -13,11 +14,11 @@ function banner() {
     function Item(props) {
         return (
             <Paper className="paper">
-                <Link to={props.item.link}>
+                <Link to={props.item.link} target="blank">
                     <img src={props.item.image} alt={props.item.name} />
                 </Link>
                 {/* <h2>{props.item.name}</h2>
-                <p>{props.item.description}</p> */}
+            <p>{props.item.description}</p> */}
             </Paper>
         );
     }
@@ -38,31 +39,30 @@ function banner() {
             image: "banner3.jpg",
             // name: "Random Name #3",
             // description: "Hello World!"
-        }
+        },
+        {
+            image: "banner4.jpg",
+            link: "https://www.instagram.com/one_by_bt?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==",
+            // name: "Random Name #4",
+            // description: "Hello World!"
+        },
     ];
 
-
-
     return (
-        <Container style={{ display: 'flex', justifyContent: 'center' }} >
-            <Carousel className="carousel"
+        <Container
+            style={containerStyles} >
+
+            <Carousel
+                className="carousel"
                 navButtonsAlwaysVisible={true}
                 navButtonsAlwaysInvisible={false}
                 animation="slide"
-                navButtonsProps={{          // Change the order of the buttons
-                    style: {
-                        backgroundColor: 'transparent',
-                        color: 'black'
-                    }
-                }}
-            // navButtonsWrapperProps={{
-            //     // style: {
-            //     //     bottom: '0',
-            //     //     top: '0',
-            //     //     transform: 'none',
-            //     //     height: '100%'
-            //     // }
-            // }}
+                autoPlay={true}
+                stopAutoPlayOnHover={true}
+                interval={4000}
+
+                navButtonsProps={navButtonsProps1}
+                navButtonsWrapperProps={navButtonsWrapperProps1}
             >
                 {
                     items.map((item, i) => <Item key={i} item={item} />)

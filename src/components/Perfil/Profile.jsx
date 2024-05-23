@@ -1,14 +1,36 @@
 import React, { useState } from 'react';
-import './Perfil.css';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import './Profile.css';
 
-function Perfil() {
+function Profile() {
+
+    const navigate = useNavigate();
+
+
     const [isEditing, setIsEditing] = useState(false);
     const [user, setUser] = useState({
         name: 'John Doe',
         email: 'john.doe@example.com',
-        edad: "31 años"
+        edad: "31"
         // Add more fields as needed
     });
+
+    useEffect(() => {
+
+        const localUser = localStorage.getItem("localUserName")
+        console.log(localUser, "lu en profile");
+
+        const verifyLogin = (localUser) => {
+            if (!localUser) {
+                navigate("/");
+            }
+        }
+        verifyLogin(localUser);
+
+        window.scrollTo(0, 0);
+
+    }, [navigate]);
 
     console.log(user, "user");
 
@@ -20,12 +42,13 @@ function Perfil() {
     };
 
     const handleEditClick = () => {
-        setIsEditing(!isEditing);
+        // setIsEditing(!isEditing);
+        navigate("/profileedit")
     };
 
-    const editphoto = () => {
-        alert("Editar foto");
-    };
+    // const editphoto = () => {
+    //     alert("Editar foto");
+    // };
 
     return (
         <div className='profilesection'>
@@ -81,7 +104,9 @@ function Perfil() {
                     <section className='secondhalf'>
 
 
-                        <section className='profilepicsec' onClick={editphoto}>
+                        <section className='profilepicsec'
+                        // onClick={editphoto}
+                        >
                             <img className='profilepic' src="Perfil.png" alt="perfil" />
                         </section>
 
@@ -171,7 +196,9 @@ function Perfil() {
 
                     <section className='secondhalf'>
 
-                        <section className='profilepicsec' onClick={editphoto}>
+                        <section className='profilepicsec'
+                        // onClick={editphoto}
+                        >
                             <img className='profilepic' src="Perfil.png" alt="perfil" />
                         </section>
 
@@ -203,7 +230,7 @@ function Perfil() {
     );
 }
 
-export default Perfil;
+export default Profile;
 
 
 

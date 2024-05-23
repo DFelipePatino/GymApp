@@ -1,0 +1,47 @@
+.container{
+    width: 350px;
+    margin: 20px;
+    border-radius: 4px;
+    padding-bottom: 20px;
+    background: white;
+ }
+ .gradiant{
+     background-image: linear-gradient(to bottom, #1a1dd2, #3c7b7f);
+     height: 125px;
+     border-radius: 4px 4px 0px 0px;
+ }
+ .profile img{
+    height: 150px;
+    border-radius: 100px;
+    margin-top: -75px;
+    padding: 5px;
+    background: white;
+    margin-left: 25%;
+ }
+ .name{
+     /* margin: 20px; */
+     font-size: 36px;
+     font-weight: 600;
+     display: flex;
+     justify-content: center;
+     color: black;
+ }
+ .description{
+  padding: 20px 40px;
+  font-size: 16px;
+  color: black;
+ }
+ .contact{
+  font-size: 16px;
+  background: #3c7b7f;
+  margin: 10px 100px;
+  padding-top: 8px;
+  padding-bottom: 10px;
+  border-radius: 40px;
+  display: flex;
+  justify-content: center;
+  }
+  .button{
+     text-decoration: none;
+     color: white;
+  }

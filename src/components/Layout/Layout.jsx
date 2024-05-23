@@ -127,7 +127,7 @@ function Layout({ children, localUser }) {
                 <Toolbar />
                 <List>
                     {[
-                        // { text: 'Home', icon: <HomeIcon />, fn: "clear", route: '/home' },
+                        { text: 'Home', icon: <HomeIcon />, fn: "clear", route: '/home' },
                         // { text: 'Profile Card', icon: <AccountCircleIcon />, route: '/profileCard' },
 
                         { text: 'Pilates', icon: <FitnessCenterIcon />, fn: 'homePilates', route: '/home' },
@@ -206,7 +206,7 @@ function Layout({ children, localUser }) {
                 }}
                 sx={{
                     display: { xs: 'block', sm: 'block' },
-                    '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+                    '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth, height: '100%' },
                 }}
             >
                 {drawer}

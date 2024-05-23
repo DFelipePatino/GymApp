@@ -49,7 +49,8 @@ function App() {
   }
 
 
-
+  const locpath = location.pathname;
+  console.log(locpath, "locpath en app");
 
   return (
     <>

@@ -19,110 +19,66 @@ function Profile2({ userForTesting, BackToTopButton, name }) {
 
     return (
         <div
-            className='profile2div'>
-            <Card
-                style={profile2divCardStyle}>
+            style={profile2divCardStyle}>
+            {/* // className='profile2div'> */}
+            {/* <Card */}
+            {/* style={profile2divCardStyle}> */}
 
-                <CardHeader
-                    style={cardHeaderStyle}
-                    avatar={
-                        <Avatar
-                            alt={name} src={userForTesting.profilePicture}
-                            style={avatarStyle}
-                        />
-                    }
-                    title={name}
-                    subheader={`${userForTesting.email}`}
-                    titleTypographyProps={{ variant: 'h5', color: 'white' }}
-                    subheaderTypographyProps={{ variant: 'h7', color: 'white' }}
-                />
+            <CardHeader
+                style={cardHeaderStyle}
+                avatar={
+                    <Avatar
+                        alt={name} src={userForTesting.profilePicture}
+                        style={avatarStyle}
+                    />
+                }
+                title={name}
+                subheader={`${userForTesting.email}`}
+                titleTypographyProps={{ variant: 'h5', color: 'white' }}
+                subheaderTypographyProps={{ variant: 'h7', color: 'white' }}
+            />
 
-                <Card />
+            {/* <Card /> */}
 
-                <div className='cardContent'>
-                    <Card
-                        style={cardContentCard}>
-                        <Grid container spacing={0}>
-                            <Grid item xs={5} md={8} lg={4}
-                                style={infoCardsStyle}>
-                                <p>DOB</p>
-                                {userForTesting.dob}
-                            </Grid>
-                            <Grid item xs={5} md={8} lg={4}
-                                style={infoCardsStyle}>
-                                <p> Age: </p>
-                                {userForTesting.age}
-                            </Grid>
-                            <Grid item xs={5} md={8} lg={4} style={infoCardsStyle}>
-                                <p>Goals</p>
-                                {userForTesting.goals}
-                            </Grid>
-                            <Grid item xs={5} md={8} lg={4} style={infoCardsStyle}>
-                                <p>Health Status</p>
-                                {userForTesting.healthStatus}
-                            </Grid>
-                            <Grid item xs={5} md={8} lg={4} style={infoCardsStyle}>
-                                <p>Height</p>
-                                {userForTesting.height}
-                            </Grid>
-                            <Grid item xs={5} md={8} lg={4} style={infoCardsStyle}>
-                                <p>Weight</p>
-                                {userForTesting.weight}
-                            </Grid>
-                            <Grid item xs={5} md={8} lg={4} style={infoCardsStyle}>
-                                <p>Gender</p>
-                                {userForTesting.gender}
-                            </Grid>
-                            <Grid item xs={5} md={8} lg={4} style={infoCardsIconStyle}>
-                                <p>Diet Plan</p>
-                                <a href="/plandedieta.pdf" target="blank" >
-                                    <PictureAsPdfTwoToneIcon style={{ color: '#426E92' }} />
-                                </a>
-                            </Grid>
-                            <Grid item xs={5} md={8} lg={4} style={infoCardsStyle}>
-                                <p>Blood Type</p>
-                                {userForTesting.bloodType}
-                            </Grid>
-                            <Grid item xs={5} md={8} lg={4} style={infoCardsStyle}>
-                                <p>Hair Color</p>
-                                {userForTesting.hairColor}
-                            </Grid>
-                            <Grid item xs={5} md={8} lg={4} style={infoCardsStyle}>
-                                <p>Eye Color</p>
-                                {userForTesting.eyeColor}
-                            </Grid>
-                            <Grid item xs={5} md={8} lg={4} style={infoCardsStyle}>
-                                <p>Skin Color</p>
-                                {userForTesting.skinColor}
-                            </Grid>
-                            <Grid item xs={5} md={8} lg={4} style={infoCardsStyle}>
-                                <p>Body Type</p>
-                                {userForTesting.bodyType}
-                            </Grid>
-                            <Grid item xs={5} md={8} lg={4} style={infoCardsStyle}>
-                                <p>Shoe Size</p>
-                                {userForTesting.shoeSize}
-                            </Grid>
-                            <Grid item xs={5} md={8} lg={4} style={infoCardsStyle}>
-                                <p>Clothing Size</p>
-                                {userForTesting.clothingSize}
-                            </Grid>
-
-                        </Grid>
-                    </Card>
-                </div>
-
-                <Button
-                    style={buttonStyle}
-                    variant='contained'
-                    onClick={() => navigate('/profileedit')}>
-                    Editar
-                    <br />
-                    <EditIcon/>
-                </Button>
-                <BackToTopButton />
-
+            {/* <div className='cardContent'> */}
+            <Card style={cardContentCard}>
+                <Grid container spacing={0}>
+                    {Object.entries(userForTesting).map(([key, value], index) => {
+                        if (key !== 'dietPlan') {
+                            return (
+                                <Grid item xs={5} md={4} lg={6} style={infoCardsStyle} key={index}>
+                                    <p><strong>{key}:</strong> {value}</p>
+                                </Grid>
+                            );
+                        }
+                        return null;
+                    })}
+                </Grid>
             </Card>
+
+            <Card style={infoCardsIconStyle}>
+                <PictureAsPdfTwoToneIcon />
+                <Link to={userForTesting.dietPlan} target='blank'>
+                    <Button
+                        style={{ color: 'black' }}
+                    >
+                        Plan de dieta
+                    </Button>
+                </Link>
+            </Card>
+
+            {/* </div> */}
+            <Button
+                style={buttonStyle}
+                variant='contained'
+                onClick={() => navigate('/profileedit')}>
+                Editar
+                <br />
+                <EditIcon />
+            </Button>
+            <BackToTopButton />
+
+            {/* </Card> */}
         </div>
     );
 }

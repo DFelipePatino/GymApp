@@ -1,6 +1,6 @@
 export const profile2divCardStyle = {
     backgroundImage: 'linear-gradient(to bottom right, #924141, #924141, #d9d9d9)',
-    height: '100%',
+    // height: '100%',
     color: 'white',
     display: 'flex',
     justifyContent: 'flex-start',

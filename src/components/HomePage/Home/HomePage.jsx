@@ -14,6 +14,7 @@ import Grid from '@mui/material/Grid';
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import './HomePage.css';
+import SwipeableEdgeDrawer from '../CardDrawer/CardDrawer';
 
 function HomePage({ BackToTopButton }) {
 
@@ -76,6 +77,7 @@ function HomePage({ BackToTopButton }) {
             window.scrollTo({ top: 380, behavior: 'smooth' });
         }
         else if (!homeContent) {
+            dispatch(getCrossfit());
             window.scrollTo(0, 0);
         }
 
@@ -98,6 +100,8 @@ function HomePage({ BackToTopButton }) {
             <Filter />
 
             <Cards />
+
+            {/* <SwipeableEdgeDrawer /> */}
 
             <BackToTopButton />
 

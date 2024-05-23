@@ -7,7 +7,7 @@ body .MuiTypography-colorTextSecondary {
     /* display: flex;
     justify-content: center;
     align-items: center; */
-    height: auto;
+    height: 100vh;
     /* width: 150%; */
 
 }
@@ -22,7 +22,7 @@ body .MuiTypography-colorTextSecondary {
 
     p {
         color: rgb(255, 255, 255);
-        margin-top: -28px;
+        /* margin-top: -28px; */
     }
 }
 

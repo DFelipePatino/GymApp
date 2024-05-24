@@ -48,7 +48,7 @@ function ProfileEdit({ localUser, BackToTopButton, profilePicture }) {
     return (
         <Box
             style={{
-                backgroundImage: 'linear-gradient(to bottom right, #924141, #924141, #d9d9d9)'
+                backgroundImage: 'linear-gradient(to bottom right, #924141, #924141, #d9d9d9)', marginTop: '56px'
             }}
         >
 
@@ -317,7 +317,7 @@ function ProfileEdit({ localUser, BackToTopButton, profilePicture }) {
                     </form>
                 </Container>
             </Grid>
-            <BackToTopButton />
+            {/* <BackToTopButton /> */}
         </Box>
     );
 }

@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
@@ -28,6 +29,8 @@ import { Button, Divider } from '@mui/material';
 // }));
 
 export default function CardItem() {
+
+    const navigate = useNavigate();
     const [expanded, setExpanded] = React.useState(false);
 
     const handleExpandClick = () => {
@@ -42,11 +45,21 @@ export default function CardItem() {
                 //         R
                 //     </Avatar>
                 // }
-                // action={
-                //     <IconButton aria-label="settings">
-                //         <MoreVertIcon />
-                //     </IconButton>
-                // }
+                action={
+                    <div>
+                        <IconButton aria-label="add to favorites"
+                        // onClick={() => navigate('/profile2')}
+                        >
+                            <FavoriteIcon />
+                        </IconButton>
+                        <IconButton aria-label="share"
+                        // onClick={() => navigate('/profile2')}
+                        >
+                            <ShareIcon />
+                        </IconButton>
+                    </div>
+                }
+
                 title="Ejercicios de Cardio"
                 subheader="Quema de grasas"
                 subheaderTypographyProps={{ style: { color: 'white' } }}
@@ -72,14 +85,14 @@ export default function CardItem() {
                 <Button variant="contained" style={{ backgroundColor: '#f0c14b', color: 'black' }}>En el Gym</Button>
             </div>
 
-            <CardActions disableSpacing>
+            {/* <CardActions disableSpacing>
                 <IconButton aria-label="add to favorites">
                     <FavoriteIcon />
                 </IconButton>
                 <IconButton aria-label="share">
                     <ShareIcon />
-                </IconButton>
-                {/* <ExpandMore
+                </IconButton> */}
+            {/* <ExpandMore
                     expand={expanded}
                     onClick={handleExpandClick}
                     aria-expanded={expanded}
@@ -87,7 +100,7 @@ export default function CardItem() {
                 >
                     <ExpandMoreIcon />
                 </ExpandMore> */}
-            </CardActions>
+            {/* </CardActions> */}
             {/* <Collapse in={expanded} timeout="auto" unmountOnExit>
                 <CardContent>
                     <Typography paragraph>Method:</Typography>

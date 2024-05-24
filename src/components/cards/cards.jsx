@@ -1,48 +1,62 @@
 import React from 'react'
 import Box from '@mui/material/Box';
-import { toggleDrawer } from '../HomePage/CardDrawer/CardDrawer';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
+import { Button } from '@mui/material';
+import { toggleDrawer } from '../HomePage/CardDrawer/CardDrawer';
 import Container from '@mui/material/Container';
 import { useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { getCardio } from '../../redux/actions';
-import './cards.css';
 import SwipeableEdgeDrawer from '../HomePage/CardDrawer/CardDrawer';
-import { Button } from '@mui/material';
+import './cards.css';
+import { Grow } from '@mui/material';
+import { TrainRounded } from '@mui/icons-material';
 
-function cards() {
+function cards({ inOutStatus, setInOutStatus }) {
 
+    const [checked, setChecked] = React.useState(true);
 
     const dispatch = useDispatch();
     const results = useSelector((state) => state.results);
     console.log(results, "this are the results");
 
     // useEffect(() => {
-    //     dispatch(getCardio());
-    // }, [dispatch]);
+    //     setChecked(prevChecked => !prevChecked);
+    //     setTimeout(() => {
+    //         setChecked(prevChecked => !prevChecked);
+    //     }, 500);
+    // }, [inOutStatus]);
 
     console.log(results.category, "this is the category");
-
-
 
     return (
 
         <Container className='results'>
-            <h3 className='resultsTitle'>{results?.category}</h3>
-            <Grid container>
-                {results?.images?.map((image, index) => (
-                    // <Button xs={6} md={4} lg={2}
-
-                    // >
-                    <Grid item key={index} xs={6} md={4} lg={2}
-                        onClick={toggleDrawer(true)}>
-                        <img className='imageresult' src={image} />
-                    </Grid>
-                    // </Button>
-                ))}
-            </Grid>
+            <Grow
+                in={inOutStatus}
+                // out={checked}
+                style={{ transformOrigin: '0 0 0' }}
+                {...(checked ? { timeout: 400 } : {})}
+            >
+                <h3 className='resultsTitle'>{results?.category}</h3>
+            </Grow>
+            <Grow
+                in={inOutStatus}
+                // out={checked}
+                style={{ transformOrigin: '0 0 0' }}
+                {...(checked ? { timeout: 400 } : {})}
+            >
+                <Grid container>
+                    {results?.images?.map((image, index) => (
+                        <Grid item key={index} xs={6} md={4} lg={2}
+                            onClick={toggleDrawer(true)}>
+                            <img className='imageresult' src={image} />
+                        </Grid>
+                    ))}
+                </Grid>
+            </Grow>
             <SwipeableEdgeDrawer />
         </Container>
     );

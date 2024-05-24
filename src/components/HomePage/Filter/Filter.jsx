@@ -1,6 +1,6 @@
 import React from 'react'
 import { useDispatch } from 'react-redux';
-import { getCardio, getContacto, getPilates, getCrossfit, getBoxing, getYoga } from '../../../redux/actions';
+import { getCardio, getContacto, getPilates, getCrossfit, getBoxing, getYoga, emptyState } from '../../../redux/actions';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
@@ -16,7 +16,7 @@ import './Filter.css';
 import Carousel from 'react-material-ui-carousel';
 import { navButtonsWrapperProps2, navButtonsProps2, containerStyles, leftArrowStyles, rightArrowStyles, iconStyles } from './filerStyles';
 
-function Filter() {
+function Filter({ inOutStatus, setInOutStatus }) {
 
     const dispatch = useDispatch();
 
@@ -57,8 +57,15 @@ function Filter() {
                         variant='contained'
                         key={index}
                         onClick={() => {
-                            item.click();
-                            window.scrollTo({ top: 380, behavior: 'smooth' });
+                            window.scrollTo({ top: 315, behavior: 'smooth' });
+                            setInOutStatus(previnOutStatus => !previnOutStatus)
+                            setTimeout(() => {
+                                setInOutStatus(previnOutStatus => !previnOutStatus)
+                            }, 500);
+                            setTimeout(() => {
+                                item.click();
+                            }, 400);
+
                         }}
                         className="button"
                     >

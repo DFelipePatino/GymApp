@@ -1,25 +1,73 @@
-import React from 'react'
-import './test.css'
+import * as React from 'react';
+import Box from '@mui/material/Box';
+import Switch from '@mui/material/Switch';
+import Paper from '@mui/material/Paper';
+import Grow from '@mui/material/Grow';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import { useSelector } from 'react-redux';
+import { Button } from '@mui/material';
+import { getCardio } from '../../redux/actions';
+import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
 
-function test() {
+// const icon = (
+//     <Paper sx={{ m: 1, width: 100, height: 100 }} elevation={4}>
+//         <p>hello</p>
+//     </Paper>
+// );
+
+export default function SimpleGrow() {
+
+    const dispatch = useDispatch();
+
+    const results = useSelector((state) => state.results);
+    console.log(results, "this are the results");
+
+    const [checked, setChecked] = React.useState(false);
+
+    // const handleChange = () => {
+    //     setChecked((prev) => !prev);
+    // };
+
+
+
+    useEffect(() => {
+        if (Object.keys(results).length !== 0) {
+            setChecked(true);
+        }
+        else {
+            setChecked(false);
+        }
+    }, [results]);
+
+
     return (
-        <body>
-            <div class="w-layout-blockcontainer w-container">
-                <section>
-                    <h1>Heading</h1>
-                </section>
-                <a href="#" class="w-button">Button Text</a>
-                <div>
-                    <p class="paragraph">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat. Aenean faucibus nibh et justo cursus id rutrum lorem imperdiet. Nunc ut sem vitae risus tristique posuere.</p>
-                </div>
-            </div>
-            <script src="https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=662fe7407e12b92ea27baa50" type="text/javascript" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
-            <script src="js/webflow.js" type="text/javascript"></script>
-        </body>
+        // <Box sx={{ height: 180, margin: '70px', backgroundColor: 'white' }}>
+        //     <FormControlLabel
+        //         control={<Switch checked={checked} onChange={handleChange} />}
+        //         label="Show"
+        //     />
+        // </Box>
 
-    )
+        <Box sx={{ display: 'flex', backgroundColor: 'white', margin: '70px' }}>
+            <Button onClick={() => { dispatch(getCardio()) }}>Click</Button>
+            <FormControlLabel
+                control={<Switch checked={checked}
+                // onChange={handleChange} 
+                />}
+                label="Show"
+            />
+            {/* <Grow in={checked}>{icon}</Grow> */}
+            {/* Conditionally applies the timeout prop to change the entry speed. */}
+            <Grow
+                in={checked}
+                style={{ transformOrigin: '0 0 0' }}
+                {...(checked ? { timeout: 1000 } : {})}
+            >
+                <Paper sx={{ m: 1, width: 100, height: 100 }} elevation={4}>
+                    <p>hello</p>
+                </Paper>
+            </Grow>
+        </Box>
+    );
 }
-
-export default test
-
-

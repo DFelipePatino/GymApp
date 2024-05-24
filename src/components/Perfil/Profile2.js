@@ -6,6 +6,7 @@ export const profile2divCardStyle = {
     justifyContent: 'flex-start',
     alignItems: 'center',
     flexDirection: 'column',
+    marginTop: '56px',
 }
 
 export const cardHeaderStyle = {
@@ -28,9 +29,9 @@ export const cardContentCard = {
 
 
 export const infoCardsStyle = {
-    marginTop: '20px',
+    // marginTop: '20px',
     border: '2px solid #426E92',
-    // margin: '2px',
+    margin: '2px',
     borderRadius: '20px',
     padding: '10px',
     backgroundColor: '#D9D9D9',

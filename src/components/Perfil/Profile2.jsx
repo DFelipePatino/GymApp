@@ -34,8 +34,8 @@ function Profile2({ userForTesting, BackToTopButton, name }) {
                 }
                 title={name}
                 subheader={`${userForTesting.email}`}
-                titleTypographyProps={{ variant: 'h5', color: 'white' }}
-                subheaderTypographyProps={{ variant: 'h7', color: 'white' }}
+                titleTypographyProps={{ variant: 'h5', color: 'inherit' }}
+                subheaderTypographyProps={{ variant: 'subtitle1', color: 'inherit' }}
             />
 
             {/* <Card /> */}
@@ -44,9 +44,17 @@ function Profile2({ userForTesting, BackToTopButton, name }) {
             <Card style={cardContentCard}>
                 <Grid container spacing={0}>
                     {Object.entries(userForTesting).map(([key, value], index) => {
-                        if (key !== 'dietPlan') {
+                        if (key !== 'dietPlan' && key !== 'profilePicture') {
                             return (
                                 <Grid item xs={5} md={4} lg={6} style={infoCardsStyle} key={index}>
+                                    {/* <Card>
+                                        <CardHeader
+                                            subheader={key}>
+                                        </CardHeader>
+                                        <CardContent>
+                                            <Typography variant='body1'>{value}</Typography>
+                                        </CardContent>
+                                    </Card> */}
                                     <p><strong>{key}:</strong> {value}</p>
                                 </Grid>
                             );
@@ -76,7 +84,7 @@ function Profile2({ userForTesting, BackToTopButton, name }) {
                 <br />
                 <EditIcon />
             </Button>
-            <BackToTopButton />
+            {/* <BackToTopButton /> */}
 
             {/* </Card> */}
         </div>

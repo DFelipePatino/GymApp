@@ -78,14 +78,17 @@ function Layout({ localUser }) {
         if (fn === 'homeCrossfit') { localStorage.setItem("homeContent", "Crossfit"), dispatch(getCrossfit()) }
 
         if (location.pathname !== '/home') {
-            window.location.href = route;
+            navigate(route);
+            handleDrawerClose()
         } else if (location.pathname === '/home' && !fn) {
-            window.location.href = route;
+            navigate(route);
+            handleDrawerClose()
         }
 
         if (shouldClearLocal) {
             localStorage.clear();
-            window.location.href = route;
+            navigate(route);
+            handleDrawerClose()
         }
 
     };

@@ -24,22 +24,20 @@ function HomePage({ BackToTopButton }) {
 
     const [userFisrtName, setUserFirstName] = useState("")
 
+    const [headerLoad, setHeaderLoad] = useState(false)
+
     const user = useSelector((state) => state.user);
     console.log(user, "this is the user");
 
-    // const homeContent = useSelector((state) => state.homeContent);
-    // console.log(homeContent, "this is the home content");
 
     const homeContent = localStorage.getItem("homeContent")
     console.log(homeContent, "this is the home content");
 
     useEffect(() => {
 
-
-        // setInOutStatus(previnOutStatus => !previnOutStatus)
-        // setTimeout(() => {
-        //     setInOutStatus(previnOutStatus => !previnOutStatus)
-        // }, 700);
+        setTimeout(() => {
+        setHeaderLoad(true)
+        }, 800);
 
         const localUser = localStorage.getItem("localUserName")
         console.log(localUser, "lu en home");
@@ -102,9 +100,9 @@ function HomePage({ BackToTopButton }) {
             {/* <HeaderNav className="headerNav" localUser={localUser}/> */}
 
             <Grow
-                in={true}
+                in={headerLoad}
                 style={{ transformOrigin: '1 1 1' }}
-                {...(true ? { timeout: 1500 } : {})}
+                {...(headerLoad ? { timeout: 1200 } : {})}
             >
                 <div className='welcomeUser' >
                     <h1>Bienvenido {userFisrtName}</h1>

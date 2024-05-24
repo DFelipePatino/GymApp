@@ -15,6 +15,7 @@ import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import './HomePage.css';
 import SwipeableEdgeDrawer from '../CardDrawer/CardDrawer';
+import { Grow } from '@mui/material';
 
 function HomePage({ BackToTopButton }) {
 
@@ -35,6 +36,11 @@ function HomePage({ BackToTopButton }) {
     useEffect(() => {
 
 
+        // setInOutStatus(previnOutStatus => !previnOutStatus)
+        // setTimeout(() => {
+        //     setInOutStatus(previnOutStatus => !previnOutStatus)
+        // }, 700);
+
         const localUser = localStorage.getItem("localUserName")
         console.log(localUser, "lu en home");
 
@@ -48,33 +54,38 @@ function HomePage({ BackToTopButton }) {
         }
         verifyLogin(localUser);
 
-        if (!homeContent) {
-            dispatch(getDefault());
-            // window.scrollTo({ top: 380, behavior: 'smooth' });
+        const scrolling = () => {
+            window.scrollTo({ top: 315, behavior: 'smooth' });
+            setInOutStatus(previnOutStatus => !previnOutStatus)
+            setTimeout(() => {
+                setInOutStatus(previnOutStatus => !previnOutStatus)
+            }, 700);
         }
+
+
         if (homeContent === "Pilates") {
             dispatch(getPilates());
-            window.scrollTo({ top: 380, behavior: 'smooth' });
+            scrolling()
         }
         if (homeContent === "Crossfit") {
             dispatch(getCrossfit());
-            window.scrollTo({ top: 380, behavior: 'smooth' });
+            scrolling()
         }
         if (homeContent === "Boxing") {
             dispatch(getBoxing());
-            window.scrollTo({ top: 380, behavior: 'smooth' });
+            scrolling()
         }
         if (homeContent === "Yoga") {
             dispatch(getYoga());
-            window.scrollTo({ top: 380, behavior: 'smooth' });
+            scrolling()
         }
         if (homeContent === "Cardio") {
             dispatch(getCardio());
-            window.scrollTo({ top: 380, behavior: 'smooth' });
+            scrolling()
         }
         if (homeContent === "Contacto") {
             dispatch(getContacto());
-            window.scrollTo({ top: 380, behavior: 'smooth' });
+            scrolling()
         }
         else if (!homeContent) {
             dispatch(getCrossfit());
@@ -83,27 +94,34 @@ function HomePage({ BackToTopButton }) {
 
     }, [navigate, homeContent]);
 
+    const [inOutStatus, setInOutStatus] = useState(true);
 
     return (
         <div className="home">
 
             {/* <HeaderNav className="headerNav" localUser={localUser}/> */}
 
-            <div className='welcomeUser' >
-                <h1>Bienvenido {userFisrtName}</h1>
-            </div>
+            <Grow
+                in={true}
+                style={{ transformOrigin: '1 1 1' }}
+                {...(true ? { timeout: 1500 } : {})}
+            >
+                <div className='welcomeUser' >
+                    <h1>Bienvenido {userFisrtName}</h1>
+                </div>
+            </Grow>
 
             {/* <NavBar /> */}
 
             <Banner />
 
-            <Filter />
+            <Filter setInOutStatus={setInOutStatus} />
 
-            <Cards />
+            <Cards inOutStatus={inOutStatus} />
 
             {/* <SwipeableEdgeDrawer /> */}
 
-            <BackToTopButton />
+            {/* <BackToTopButton /> */}
 
         </div>
     );

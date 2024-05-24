@@ -6,7 +6,7 @@ export const containerStyles = {
     display: 'flex',
     justifyContent: 'center',
     position: 'sticky',
-    top: "10px",
+    top: "65px",
     backdropFilter: 'blur(2px)',
     WebkitBackdropFilter: 'blur(2px)',
 

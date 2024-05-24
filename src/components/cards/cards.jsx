@@ -45,7 +45,7 @@ function cards({ inOutStatus, setInOutStatus }) {
             <Grow
                 in={inOutStatus}
                 // out={checked}
-                style={{ transformOrigin: '0 0 0' }}
+                style={{ transformOrigin: '1 1 1' }}
                 {...(checked ? { timeout: 400 } : {})}
             >
                 <Grid container>

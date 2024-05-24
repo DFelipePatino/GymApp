@@ -174,7 +174,18 @@ function Layout({ localUser }) {
             style={{ position: 'fixed', top: 0, width: '100%', zIndex: 1000 }}
         >
 
-            <Toolbar>
+            <Toolbar
+                style={{
+                    backgroundColor: '#426E92',
+                    color: 'white',
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    /* position: sticky;
+                    top: 10px; */
+                    alignItems: 'center',
+                    padding: '0 20px',
+                }}
+            >
                 <IconButton
                     color="inherit"
                     aria-label="open drawer"

@@ -1,20 +1,32 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Card, CardHeader, CardContent, Typography, Avatar } from '@material-ui/core';
 import './Profile2.css';
-import { Button, Grid } from '@mui/material';
+import { Button, Fade, Grid, Grow, Slide } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
 import PictureAsPdfTwoToneIcon from '@mui/icons-material/PictureAsPdfTwoTone';
 import EditIcon from '@mui/icons-material/Edit';
 import { infoCardsStyle, profile2divCardStyle, cardHeaderStyle, avatarStyle, buttonStyle, cardContentCard, infoCardsIconStyle } from './Profile2'
+import { Troubleshoot } from '@mui/icons-material';
 
 
 function Profile2({ userForTesting, BackToTopButton, name }) {
 
     const navigate = useNavigate();
 
+    const [headerMountIn, setHeaderMountIn] = useState(false)
+    const [contentMountIn, setContentMountIn] = useState(false)
+
     useEffect(() => {
         window.scrollTo(0, 0);
+        setTimeout(() => {
+            setHeaderMountIn(true)
+        }, 300);
+        setTimeout(() => {
+            setContentMountIn(true)
+        }, 500);
     })
+
+
 
 
     return (
@@ -24,30 +36,49 @@ function Profile2({ userForTesting, BackToTopButton, name }) {
             {/* <Card */}
             {/* style={profile2divCardStyle}> */}
 
-            <CardHeader
-                style={cardHeaderStyle}
-                avatar={
-                    <Avatar
-                        alt={name} src={userForTesting.profilePicture}
-                        style={avatarStyle}
+            <div
+                style={cardHeaderStyle}>
+                <Slide
+                    direction="right"
+                    in={headerMountIn}
+                    timeout={500}
+                    mountOnEnter unmountOnExit>
+
+                    <CardHeader
+                        // style={cardHeaderStyle}
+                        avatar={
+                            <Avatar
+                                alt={name} src={userForTesting.profilePicture}
+                                style={avatarStyle}
+                            />
+                        }
+                        title={name}
+                        subheader={`${userForTesting.email}`}
+                        titleTypographyProps={{ variant: 'h5', color: 'inherit' }}
+                        subheaderTypographyProps={{ variant: 'subtitle1', color: 'inherit' }}
                     />
-                }
-                title={name}
-                subheader={`${userForTesting.email}`}
-                titleTypographyProps={{ variant: 'h5', color: 'inherit' }}
-                subheaderTypographyProps={{ variant: 'subtitle1', color: 'inherit' }}
-            />
+                </Slide>
 
-            {/* <Card /> */}
+            </div>
 
-            {/* <div className='cardContent'> */}
-            <Card style={cardContentCard}>
-                <Grid container spacing={0}>
-                    {Object.entries(userForTesting).map(([key, value], index) => {
-                        if (key !== 'dietPlan' && key !== 'profilePicture') {
-                            return (
-                                <Grid item xs={5} md={4} lg={6} style={infoCardsStyle} key={index}>
-                                    {/* <Card>
+            <Slide
+                direction="right"
+                in={contentMountIn}
+                timeout={500}
+                mountOnEnter unmountOnExit>
+
+                <div>
+
+                    {/* <Card /> */}
+
+                    {/* <div className='cardContent'> */}
+                    <Card style={cardContentCard}>
+                        <Grid container spacing={0}>
+                            {Object.entries(userForTesting).map(([key, value], index) => {
+                                if (key !== 'dietPlan' && key !== 'profilePicture') {
+                                    return (
+                                        <Grid item xs={5} md={4} lg={6} style={infoCardsStyle} key={index}>
+                                            {/* <Card>
                                         <CardHeader
                                             subheader={key}>
                                         </CardHeader>
@@ -55,14 +86,29 @@ function Profile2({ userForTesting, BackToTopButton, name }) {
                                             <Typography variant='body1'>{value}</Typography>
                                         </CardContent>
                                     </Card> */}
-                                    <p><strong>{key}:</strong> {value}</p>
-                                </Grid>
-                            );
-                        }
-                        return null;
-                    })}
-                </Grid>
-            </Card>
+                                            <p><strong>{key}:</strong> {value}</p>
+                                        </Grid>
+                                    );
+                                }
+                                return null;
+                            })}
+                        </Grid>
+                    </Card>
+
+
+
+
+
+
+                </div>
+
+            </Slide>
+
+            <Fade
+            in={contentMountIn}
+            >
+
+            <div>
 
             <Card style={infoCardsIconStyle}>
                 <PictureAsPdfTwoToneIcon />
@@ -87,6 +133,12 @@ function Profile2({ userForTesting, BackToTopButton, name }) {
             {/* <BackToTopButton /> */}
 
             {/* </Card> */}
+
+            </div>
+            </Fade>
+
+
+
         </div>
     );
 }

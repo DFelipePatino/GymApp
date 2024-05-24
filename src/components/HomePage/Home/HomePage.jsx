@@ -23,8 +23,11 @@ function HomePage({ BackToTopButton }) {
     const navigate = useNavigate();
 
     const [userFisrtName, setUserFirstName] = useState("")
+    const [lastNameLetter , setLastLetterName] = useState('')
 
     const [headerLoad, setHeaderLoad] = useState(false)
+    const [bannerLoad, setBannerload]= useState(false)
+    const [folterLoad, setFilterLoad]= useState(false)
 
     const user = useSelector((state) => state.user);
     console.log(user, "this is the user");
@@ -36,11 +39,23 @@ function HomePage({ BackToTopButton }) {
     useEffect(() => {
 
         setTimeout(() => {
-        setHeaderLoad(true)
-        }, 800);
+            setHeaderLoad(true)
+        }, 500);
+        setTimeout(() => {
+            setBannerload(true)
+        }, 200);
+        setTimeout(() => {
+            setFilterLoad(true)
+        }, 200);
 
         const localUser = localStorage.getItem("localUserName")
         console.log(localUser, "lu en home");
+
+        if (localUser.split(' ')[0].endsWith('a')) {
+            setLastLetterName('a');
+        } else {
+            setLastLetterName('o');
+        }
 
         const verifyLogin = (localUser) => {
             if (!localUser) {
@@ -102,18 +117,36 @@ function HomePage({ BackToTopButton }) {
             <Grow
                 in={headerLoad}
                 style={{ transformOrigin: '1 1 1' }}
-                {...(headerLoad ? { timeout: 1200 } : {})}
+                {...(headerLoad ? { timeout: 800 } : {})}
             >
                 <div className='welcomeUser' >
-                    <h1>Bienvenido {userFisrtName}</h1>
+                    <h1>Bienvenid{lastNameLetter} {userFisrtName}</h1>
                 </div>
             </Grow>
 
             {/* <NavBar /> */}
 
-            <Banner />
+            <Grow
+                in={bannerLoad}
+                style={{ transformOrigin: '1 1 1' }}
+                {...(bannerLoad ? { timeout: 600 } : {})}
+            >
+                <div  >
+                    <Banner />
+                </div>
+            </Grow>
 
-            <Filter setInOutStatus={setInOutStatus} />
+            <Grow
+                in={folterLoad}
+                style={{ transformOrigin: '1 1 1' }}
+                {...(folterLoad ? { timeout: 600 } : {})}
+            >
+                <div  >
+                    <Filter setInOutStatus={setInOutStatus} />
+                </div>
+            </Grow>
+
+
 
             <Cards inOutStatus={inOutStatus} />
 

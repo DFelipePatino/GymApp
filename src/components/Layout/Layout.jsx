@@ -1,5 +1,5 @@
 import React from 'react'
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Drawer, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import { getCardio, getContacto, getPilates, getCrossfit, getBoxing, getYoga } from '../../redux/actions';
@@ -34,10 +34,11 @@ import { setHomeContent } from '../../redux/actions';
 const drawerWidth = "50%";
 
 
-function Layout({ children, localUser }) {
+function Layout({ localUser }) {
 
     const dispatch = useDispatch();
     const location = useLocation();
+    const navigate = useNavigate();
 
     const user = useSelector((state) => state.user);
     console.log(user, "user at drawer");
@@ -119,8 +120,8 @@ function Layout({ children, localUser }) {
             </div>
         );
     }
-    else if (location.pathname !== "/home") {
 
+    else if (location.pathname !== "/home") {
 
         drawer = (
             <div>
@@ -129,6 +130,7 @@ function Layout({ children, localUser }) {
                     {[
                         { text: 'Home', icon: <HomeIcon />, fn: "clear", route: '/home' },
                         // { text: 'Profile Card', icon: <AccountCircleIcon />, route: '/profileCard' },
+                        <Divider />,
 
                         { text: 'Pilates', icon: <FitnessCenterIcon />, fn: 'homePilates', route: '/home' },
                         { text: 'Cardio', icon: <DirectionsBikeIcon />, fn: 'homeCardio', route: '/home' },
@@ -140,8 +142,6 @@ function Layout({ children, localUser }) {
                         <Divider />,
 
                         { text: 'Chat', icon: <ChatIcon />, route: '/chat' },
-
-                        <Divider />,
 
                         { text: 'Log Out', icon: <LogoutIcon />, route: '/', shouldClearLocal: true }
 
@@ -170,7 +170,10 @@ function Layout({ children, localUser }) {
     }
 
     return (
-        <div>
+        <div
+            style={{ position: 'fixed', top: 0, width: '100%', zIndex: 1000 }}
+        >
+
             <Toolbar>
                 <IconButton
                     color="inherit"
@@ -185,14 +188,21 @@ function Layout({ children, localUser }) {
                     style={{ cursor: 'pointer' }}
                     onClick={() => {
                         localStorage.removeItem("homeContent");
-                        window.location.href = "/home";
+                        if (location.pathname !== '/home') {
+                            navigate("/home");
+                        } else if (location.pathname === '/home') {
+                            window.scrollTo({ top: 0, behavior: 'smooth' });
+                        }
                     }}
                     variant="h6" noWrap component="div">
                     One Gym
                 </Typography>
                 {userInitials === "" ? (
                     <AccountCircleIcon style={ACI} />
-                ) : <a className='initials' href='/profile2'>{userInitials}</a>}
+                ) :
+                    // <a className='initials' href='/profile2'>{userInitials}</a>
+                    <button className='initials' onClick={() => navigate('/profile2')} >{userInitials}</button>
+                }
             </Toolbar>
 
             <Drawer
@@ -212,8 +222,9 @@ function Layout({ children, localUser }) {
                 {drawer}
             </Drawer>
 
-            <div>{children}</div>
-        </div>
+            {/* <div>{children}</div> */}
+
+        </div >
     )
 }
 

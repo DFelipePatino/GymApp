@@ -14,14 +14,22 @@ import image11 from '/Screenshot7.png'
 
 import {
     GET_CARDIO,
-    GET_PESAS,
+    GET_CONTACTO,
     GET_PILATES,
     GET_CROSSFIT,
     GET_BOXING,
+    GET_YOGA,
     GET_USER,
     SET_HOME_CONTENT,
-    GET_DEFAULT
+    GET_DEFAULT,
+    EMPTY_STATE
 } from "./action-types";
+
+export const emptyState = () => {
+    return {
+        type: EMPTY_STATE,
+    };
+};
 
 export const getDefault = () => {
     return (dispatch) => {
@@ -61,7 +69,7 @@ export const getContacto = () => {
                 image9,
             ],
         }
-        dispatch({ type: GET_PESAS, payload: data });
+        dispatch({ type: GET_CONTACTO, payload: data });
 
     }
 }
@@ -75,7 +83,7 @@ export const getYoga = () => {
                 image2,
             ],
         }
-        dispatch({ type: GET_PESAS, payload: data });
+        dispatch({ type: GET_YOGA, payload: data });
 
     }
 }

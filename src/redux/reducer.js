@@ -1,12 +1,14 @@
 import {
     GET_CARDIO,
-    GET_PESAS,
+    GET_CONTACTO,
     GET_PILATES,
     GET_CROSSFIT,
     GET_BOXING,
+    GET_YOGA,
     GET_USER,
     SET_HOME_CONTENT,
-    GET_DEFAULT
+    GET_DEFAULT,
+    EMPTY_STATE
 } from "./action-types";
 const initialState = {
     results: {},
@@ -25,13 +27,25 @@ const reducer = (state = initialState, action) => {
                 results: action.payload,
             }
 
+        case EMPTY_STATE:
+            return {
+                ...state,
+                results: null
+            }
+
         case GET_CARDIO:
             return {
                 ...state,
                 results: action.payload,
             }
 
-        case GET_PESAS:
+        case GET_CONTACTO:
+            return {
+                ...state,
+                results: action.payload,
+            }
+
+        case GET_YOGA:
             return {
                 ...state,
                 results: action.payload,

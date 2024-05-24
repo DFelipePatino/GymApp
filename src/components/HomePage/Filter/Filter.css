@@ -6,7 +6,7 @@
     width: 500px;
     height: 100px;
     background-color: #426e9200;
-  
+
     margin-top: 0px;
 }
 
@@ -43,7 +43,7 @@ body .css-1m9128y {
 @media screen and (max-width: 730px) and (max-width: 935px) {
     .carousel2 {
         width: 100%;
-        }
+    }
 
     .carousel2 Button {
         /* padding: 10px; */

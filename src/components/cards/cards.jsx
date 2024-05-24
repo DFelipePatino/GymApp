@@ -14,7 +14,7 @@ import './cards.css';
 import { Grow } from '@mui/material';
 import { TrainRounded } from '@mui/icons-material';
 
-function cards({ inOutStatus, setInOutStatus }) {
+function cards({ inOutStatus }) {
 
     const [checked, setChecked] = React.useState(true);
 
@@ -50,7 +50,7 @@ function cards({ inOutStatus, setInOutStatus }) {
             >
                 <Grid container>
                     {results?.images?.map((image, index) => (
-                        <Grid item key={index} xs={6} md={4} lg={2}
+                        <Grid item key={index} xs={6} md={4} lg={4}
                             onClick={toggleDrawer(true)}>
                             <img className='imageresult' src={image} />
                         </Grid>

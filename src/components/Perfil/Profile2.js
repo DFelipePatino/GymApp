@@ -2,7 +2,7 @@ import { width } from "@mui/system"
 
 export const profile2divCardStyle = {
     backgroundImage: 'linear-gradient(to bottom right, #924141, #924141, #d9d9d9)',
-    height: '150%',
+    height: '170%',
     color: 'white',
     display: 'flex',
     justifyContent: 'flex-start',
@@ -59,4 +59,4 @@ export const buttonStyle = {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-  }
+}

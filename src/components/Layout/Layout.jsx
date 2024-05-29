@@ -34,7 +34,7 @@ import { setHomeContent } from '../../redux/actions';
 const drawerWidth = "50%";
 
 
-function Layout({ localUser }) {
+function Layout({ localUser, setPlayerLoad, playerLoad }) {
 
     const dispatch = useDispatch();
     const location = useLocation();
@@ -201,13 +201,24 @@ function Layout({ localUser }) {
                 <Typography
                     style={{ cursor: 'pointer' }}
                     onClick={() => {
+
+                        if (location.pathname === '/player') {
+                            setPlayerLoad(false);
+                            setTimeout(() => {
+                                navigate("/home");
+                            }, 200);
+                        }
+
                         localStorage.removeItem("homeContent");
-                        if (location.pathname !== '/home') {
+                        if (location.pathname !== '/home' && location.pathname !== '/player') {
                             navigate("/home");
-                        } else if (location.pathname === '/home') {
+                        }
+
+                        else if (location.pathname === '/home') {
                             window.scrollTo({ top: 0, behavior: 'smooth' });
                         }
-                    }}
+                    }
+                    }
                     variant="h6" noWrap component="div">
                     One Gym
                 </Typography>

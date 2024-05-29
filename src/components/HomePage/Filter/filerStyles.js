@@ -4,9 +4,9 @@ import { backdropClasses } from "@mui/material"
 
 export const containerStyles = {
     display: 'flex',
-    justifyContent: 'center',
+    flexDirection: 'column',
     position: 'sticky',
-    top: "65px",
+    top: '65px',
     backdropFilter: 'blur(2px)',
     WebkitBackdropFilter: 'blur(2px)',
 

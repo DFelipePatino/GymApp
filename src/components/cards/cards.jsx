@@ -14,13 +14,12 @@ import './cards.css';
 import { Grow } from '@mui/material';
 import { TrainRounded } from '@mui/icons-material';
 
-function cards({ inOutStatus }) {
+function cards({ inOutStatus, setHeaderLoad, setBannerload, setFilterLoad }) {
 
     const [checked, setChecked] = React.useState(true);
 
     const dispatch = useDispatch();
     const results = useSelector((state) => state.results);
-    console.log(results, "this are the results");
 
     // useEffect(() => {
     //     setChecked(prevChecked => !prevChecked);
@@ -28,8 +27,6 @@ function cards({ inOutStatus }) {
     //         setChecked(prevChecked => !prevChecked);
     //     }, 500);
     // }, [inOutStatus]);
-
-    console.log(results.category, "this is the category");
 
     return (
 
@@ -57,7 +54,7 @@ function cards({ inOutStatus }) {
                     ))}
                 </Grid>
             </Grow>
-            <SwipeableEdgeDrawer />
+            <SwipeableEdgeDrawer setHeaderLoad={setHeaderLoad} setBannerload={setBannerload} setFilterLoad={setFilterLoad} />
         </Container>
     );
 }

@@ -1,9 +1,18 @@
+/* .filterContainer {
+    display: flex;
+    justify-content: center;
+    position: sticky;
+    top: 0px;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+} */
+
 .carousel2 {
     /* overflow: hidden; */
     /*  display: flex; */
     justify-content: center;
     border-radius: 20px;
-    width: 1000px;
+    /* width: 1000px; */
     height: 100px;
     background-color: #426e9200;
 

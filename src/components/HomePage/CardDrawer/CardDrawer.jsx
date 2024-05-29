@@ -40,9 +40,12 @@ export const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
 };
 
-function SwipeableEdgeDrawer(props) {
-    const { window } = props;
+function SwipeableEdgeDrawer({ inOutStatus, setHeaderLoad, setBannerload, setFilterLoad }) {
+
+
     [open, setOpen] = React.useState(false);
+    console.log(open, "open at drawer");
+
 
     // This is used only for the example
     // const container = window !== undefined ? () => window().document.body : undefined;
@@ -53,7 +56,7 @@ function SwipeableEdgeDrawer(props) {
             <Global
                 styles={{
                     '.MuiDrawer-root > .MuiPaper-root': {
-                        height: `calc(90% - ${drawerBleeding}px)`,
+                        height: `calc(92% - ${drawerBleeding}px)`,
                         overflow: 'visible',
                     },
                 }}
@@ -101,7 +104,8 @@ function SwipeableEdgeDrawer(props) {
                     }}
                 >
 
-                    <CardItem />
+                    <CardItem toggleDrawer={toggleDrawer} setHeaderLoad={setHeaderLoad} setBannerload={setBannerload} setFilterLoad={setFilterLoad} />
+
                     {/* <Skeleton variant="rectangular" height="100%" /> */}
                     {/* <Typography sx={{ p: 2, color: 'text.secondary' }}>Hola</Typography> */}
                 </StyledBox>

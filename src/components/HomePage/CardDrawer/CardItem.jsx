@@ -54,7 +54,7 @@ export default function CardItem({ setHeaderLoad, setBannerload, setFilterLoad }
         }, 400);
         setTimeout(() => {
             (navigate('/player'));
-        }, 600);
+        }, 500);
     }
 
     const handleExpandClick = () => {
@@ -108,35 +108,11 @@ export default function CardItem({ setHeaderLoad, setBannerload, setFilterLoad }
 
             <div style={{ display: 'flex', justifyContent: 'space-around', marginBottom: '0px' }}>
                 <Button variant="contained" style={{ backgroundColor: 'lightblue', color: 'black' }}
-
-                    // onClick={toggleDrawer(false)}
-
-                    // onClick={() => {
-
-                    //     setTimeout(() => {
-                    //         navigate('/player');
-                    //     }, 500);
-                    // }}
-
-                    // onClick={() => { navigate('/player') }}
-
                     onClick={toggleNavigate}
-
-                // onClick={toggleDrawer(false);
-                //     setTimeout(() => {
-                //                 navigate('/player');
-                //             }, 2000);
-                // }
-
-
-                // onClick={() => {
-                //     toggleDrawer(false).then(navigate('/player'));
-                // }}
-
                 > En Casa</Button>
 
                 <Button variant="contained" style={{ backgroundColor: '#f0c14b', color: 'black' }}
-                    onClick={() => navigate('/player')}
+                    onClick={toggleNavigate}
                 > En el Gym</Button>
             </div>
 

@@ -92,53 +92,59 @@ function HomePage({ BackToTopButton }) {
 
 
         if (homeContent === "Pilates") {
+            localStorage.setItem("category", "Pilates");
             dispatch(getPilates());
             scrolling()
         }
         if (homeContent === "Crossfit") {
+            localStorage.setItem("category", "Crossfit");
             dispatch(getCrossfit());
             scrolling()
         }
         if (homeContent === "Boxing") {
+            localStorage.setItem("category", "Boxing");
             dispatch(getBoxing());
             scrolling()
         }
         if (homeContent === "Yoga") {
+            localStorage.setItem("category", "Yoga");
             dispatch(getYoga());
             scrolling()
         }
         if (homeContent === "Cardio") {
+            localStorage.setItem("category", "Cardio");
             dispatch(getCardio());
             scrolling()
         }
         if (homeContent === "Contacto") {
+            localStorage.setItem("category", "Contacto");
             dispatch(getContacto());
             scrolling()
         }
 
         if (homeContent === "goBack") {
             switch (categoryToDispatch) {
-                case 'getContacto':
+                case 'Contacto':
                     dispatch(getContacto());
                     scrolling()
                     break;
-                case 'getCardio':
+                case 'Cardio':
                     dispatch(getCardio());
                     scrolling()
                     break;
-                case 'getYoga':
+                case 'Yoga':
                     dispatch(getYoga());
                     scrolling()
                     break;
-                case 'getPilates':
+                case 'Pilates':
                     dispatch(getPilates());
                     scrolling()
                     break;
-                case 'getCrossfit':
+                case 'Crossfit':
                     dispatch(getCrossfit());
                     scrolling()
                     break;
-                case 'getBoxing':
+                case 'Boxing':
                     dispatch(getBoxing());
                     scrolling()
                     break;
@@ -148,7 +154,7 @@ function HomePage({ BackToTopButton }) {
         }
         else if (!homeContent) {
             dispatch(getCrossfit());
-            window.scrollTo(0, 0);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
     }, [navigate, homeContent]);

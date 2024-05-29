@@ -1,6 +1,8 @@
 import * as React from 'react';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
+import { toggleDrawer } from '../CardDrawer/CardDrawer';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardMedia from '@mui/material/CardMedia';
@@ -16,6 +18,7 @@ import ShareIcon from '@mui/icons-material/Share';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { Button, Divider } from '@mui/material';
+import { emptyState } from '../../../redux/actions'
 
 // const ExpandMore = styled((props) => {
 //     const { expand, ...other } = props;
@@ -28,14 +31,37 @@ import { Button, Divider } from '@mui/material';
 //     }),
 // }));
 
-export default function CardItem() {
+export default function CardItem({ setHeaderLoad, setBannerload, setFilterLoad }) {
+
+    const dispatch = useDispatch();
 
     const navigate = useNavigate();
     const [expanded, setExpanded] = React.useState(false);
 
+    const toggleNavigate = async () => {
+        toggleDrawer(false)();
+        dispatch(emptyState());
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+
+        setTimeout(() => {
+            setHeaderLoad(false);
+        }, 200);
+        setTimeout(() => {
+            setBannerload(false);
+        }, 300);
+        setTimeout(() => {
+            setFilterLoad(false);
+        }, 400);
+        setTimeout(() => {
+            (navigate('/player'));
+        }, 600);
+    }
+
     const handleExpandClick = () => {
         setExpanded(!expanded);
     };
+
+    const category = localStorage.getItem("category");
 
     return (
         <Card sx={{ maxWidth: 850, backgroundColor: '#9e4d4d', color: 'white', marginTop: '40px' }}>
@@ -60,7 +86,7 @@ export default function CardItem() {
                     </div>
                 }
 
-                title="Ejercicios de Cardio"
+                title={`Ejercicios de ${category}`}
                 subheader="Quema de grasas"
                 subheaderTypographyProps={{ style: { color: 'white' } }}
             />
@@ -81,8 +107,37 @@ export default function CardItem() {
             </CardContent>
 
             <div style={{ display: 'flex', justifyContent: 'space-around', marginBottom: '0px' }}>
-                <Button variant="contained" style={{ backgroundColor: 'lightblue', color: 'black' }}>En Casa</Button>
-                <Button variant="contained" style={{ backgroundColor: '#f0c14b', color: 'black' }}>En el Gym</Button>
+                <Button variant="contained" style={{ backgroundColor: 'lightblue', color: 'black' }}
+
+                    // onClick={toggleDrawer(false)}
+
+                    // onClick={() => {
+
+                    //     setTimeout(() => {
+                    //         navigate('/player');
+                    //     }, 500);
+                    // }}
+
+                    // onClick={() => { navigate('/player') }}
+
+                    onClick={toggleNavigate}
+
+                // onClick={toggleDrawer(false);
+                //     setTimeout(() => {
+                //                 navigate('/player');
+                //             }, 2000);
+                // }
+
+
+                // onClick={() => {
+                //     toggleDrawer(false).then(navigate('/player'));
+                // }}
+
+                > En Casa</Button>
+
+                <Button variant="contained" style={{ backgroundColor: '#f0c14b', color: 'black' }}
+                    onClick={() => navigate('/player')}
+                > En el Gym</Button>
             </div>
 
             {/* <CardActions disableSpacing>
@@ -130,6 +185,6 @@ export default function CardItem() {
                     </Typography>
                 </CardContent>
             </Collapse> */}
-        </Card>
+        </Card >
     );
 }

@@ -1,6 +1,6 @@
-export const containerStyles = {
+export const bannerContainerStyles = {
     display: 'flex',
-    justifyContent: 'center'
+    justifyContent: 'center',
 }
 
 export const navButtonsProps1 = {

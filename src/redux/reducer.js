@@ -14,7 +14,6 @@ const initialState = {
     results: {},
     user: '',
     homeContent: ''
-
 }
 
 const reducer = (state = initialState, action) => {
@@ -30,7 +29,7 @@ const reducer = (state = initialState, action) => {
         case EMPTY_STATE:
             return {
                 ...state,
-                results: null
+                results: action.payload,
             }
 
         case GET_CARDIO:

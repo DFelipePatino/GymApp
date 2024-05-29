@@ -24,26 +24,32 @@ function Filter({ inOutStatus, setInOutStatus }) {
 
         loadCardio: () => {
             dispatch(getCardio());
+            localStorage.setItem("category", "Cardio");
         },
 
         loadYoga: () => {
             dispatch(getYoga());
+            localStorage.setItem("category", "Yoga");
         },
 
         loadPilates: () => {
             dispatch(getPilates());
+            localStorage.setItem("category", "Pilates");
         },
 
         loadContacto: () => {
             dispatch(getContacto());
+            localStorage.setItem("category", "Contacto");
         },
 
         loadKickBoxing: () => {
             dispatch(getBoxing());
+            localStorage.setItem("category", "Boxing");
         },
 
         loadCrossfit: () => {
             dispatch(getCrossfit());
+            localStorage.setItem("category", "Crossfit");
         },
 
     }
@@ -57,7 +63,7 @@ function Filter({ inOutStatus, setInOutStatus }) {
                         variant='contained'
                         key={index}
                         onClick={() => {
-                            window.scrollTo({ top: 315, behavior: 'smooth' });
+                            window.scrollTo({ top: 320, behavior: 'smooth' });
                             setInOutStatus(previnOutStatus => !previnOutStatus)
                             setTimeout(() => {
                                 setInOutStatus(previnOutStatus => !previnOutStatus)
@@ -135,7 +141,7 @@ function Filter({ inOutStatus, setInOutStatus }) {
 
     return (
         <Container
-            style={containerStyles} >
+        >
 
             {/* <ArrowBackIosNewIcon style={leftArrowStyles} /> */}
 

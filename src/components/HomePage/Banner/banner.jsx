@@ -4,7 +4,7 @@ import { Paper } from '@mui/material';
 import { Link } from 'react-router-dom';
 import Container from '@mui/material/Container';
 import './banner.css';
-import { navButtonsWrapperProps1, containerStyles, navButtonsProps1 } from './bannerStyles';
+import { navButtonsWrapperProps1, navButtonsProps1, bannerContainerStyles } from './bannerStyles';
 
 
 
@@ -50,7 +50,8 @@ function banner() {
 
     return (
         <Container
-            style={containerStyles} >
+            style={bannerContainerStyles}
+        >
 
             <Carousel
                 className="carousel"

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import LogIn from './components/LogIn/LogIn.jsx';
@@ -14,10 +14,13 @@ import Chat from './components/Chat/Chat.jsx';
 import Layout from './components/Layout/Layout';
 import SimpleGrow from './components/test/test.jsx';
 import BackToTopButton from './components/backToTopButton/BackToTopButton.jsx';
+import ContentPlayer from './components/HomePage/Home/ContentPlayer/ContentPlayer.jsx';
 
 function App() {
   const dispatch = useDispatch();
   const location = useLocation();
+
+  const [playerLoad, setPlayerLoad] = useState(false)
 
   const localUser = localStorage.getItem("localUserName");
   const userForTesting = {
@@ -42,12 +45,13 @@ function App() {
 
   return (
     <>
-      {location.pathname !== "/" && location.pathname !== "/registro" && <Layout localUser={localUser} />}
+      {location.pathname !== "/" && location.pathname !== "/registro" && <Layout localUser={localUser} setPlayerLoad={setPlayerLoad} playerLoad={playerLoad} />}
       <Routes>
         <Route path='/test' element={<SimpleGrow />} />
         <Route path='/' element={<LogIn />} />
         <Route path='/registro' element={<Registro BackToTopButton={BackToTopButton} />} />
         <Route path='/home' element={<HomePage BackToTopButton={BackToTopButton} localUser={localUser} />} />
+        <Route path='/player' element={<ContentPlayer setPlayerLoad={setPlayerLoad} playerLoad={playerLoad} />} />
         <Route path='/profile' element={<Profile localUser={localUser} />} />
         <Route path='/profile2' element={<Profile2 BackToTopButton={BackToTopButton} name={localUser} userForTesting={userForTesting} />} />
         <Route path='/profileedit' element={<ProfileEdit BackToTopButton={BackToTopButton} profilePicture="/Perfil.png" localUser={localUser} />} />

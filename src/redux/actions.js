@@ -26,10 +26,17 @@ import {
 } from "./action-types";
 
 export const emptyState = () => {
-    return {
-        type: EMPTY_STATE,
-    };
-};
+    return (dispatch) => {
+        const data = {
+            category: '',
+            images: [
+
+            ]
+        }
+        dispatch({ type: EMPTY_STATE, payload: data });
+
+    }
+}
 
 export const getDefault = () => {
     return (dispatch) => {

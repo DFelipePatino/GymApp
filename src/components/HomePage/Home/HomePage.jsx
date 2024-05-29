@@ -15,7 +15,9 @@ import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import './HomePage.css';
 import SwipeableEdgeDrawer from '../CardDrawer/CardDrawer';
-import { Grow } from '@mui/material';
+import { Fade, Grow, LinearProgress } from '@mui/material';
+import { Box } from '@mui/system';
+import { containerStyles } from '../Filter/filerStyles';
 
 function HomePage({ BackToTopButton }) {
 
@@ -23,11 +25,13 @@ function HomePage({ BackToTopButton }) {
     const navigate = useNavigate();
 
     const [userFisrtName, setUserFirstName] = useState("")
-    const [lastNameLetter , setLastLetterName] = useState('')
+    const [lastNameLetter, setLastLetterName] = useState('')
 
+    const [fadeLoad, setfadeLoad] = useState(true)
     const [headerLoad, setHeaderLoad] = useState(false)
-    const [bannerLoad, setBannerload]= useState(false)
-    const [folterLoad, setFilterLoad]= useState(false)
+    const [bannerLoad, setBannerload] = useState(false)
+    const [folterLoad, setFilterLoad] = useState(false)
+
 
     const user = useSelector((state) => state.user);
     console.log(user, "this is the user");
@@ -36,17 +40,28 @@ function HomePage({ BackToTopButton }) {
     const homeContent = localStorage.getItem("homeContent")
     console.log(homeContent, "this is the home content");
 
+    const lastCategory = localStorage.getItem("category")
+
+    const categoryToDispatch = localStorage.getItem("categorytoDispatch")
+    console.log(categoryToDispatch, "this is the category to dispatch");
+
+
+
+
     useEffect(() => {
 
         setTimeout(() => {
+            setfadeLoad(false)
+        }, 900);
+        setTimeout(() => {
             setHeaderLoad(true)
-        }, 500);
+        }, 600);
         setTimeout(() => {
             setBannerload(true)
-        }, 200);
+        }, 500);
         setTimeout(() => {
             setFilterLoad(true)
-        }, 200);
+        }, 300);
 
         const localUser = localStorage.getItem("localUserName")
         console.log(localUser, "lu en home");
@@ -68,7 +83,7 @@ function HomePage({ BackToTopButton }) {
         verifyLogin(localUser);
 
         const scrolling = () => {
-            window.scrollTo({ top: 315, behavior: 'smooth' });
+            window.scrollTo({ top: 320, behavior: 'smooth' });
             setInOutStatus(previnOutStatus => !previnOutStatus)
             setTimeout(() => {
                 setInOutStatus(previnOutStatus => !previnOutStatus)
@@ -100,6 +115,37 @@ function HomePage({ BackToTopButton }) {
             dispatch(getContacto());
             scrolling()
         }
+
+        if (homeContent === "goBack") {
+            switch (categoryToDispatch) {
+                case 'getContacto':
+                    dispatch(getContacto());
+                    scrolling()
+                    break;
+                case 'getCardio':
+                    dispatch(getCardio());
+                    scrolling()
+                    break;
+                case 'getYoga':
+                    dispatch(getYoga());
+                    scrolling()
+                    break;
+                case 'getPilates':
+                    dispatch(getPilates());
+                    scrolling()
+                    break;
+                case 'getCrossfit':
+                    dispatch(getCrossfit());
+                    scrolling()
+                    break;
+                case 'getBoxing':
+                    dispatch(getBoxing());
+                    scrolling()
+                    break;
+                default:
+                    console.log('Unknown category:', categoryToDispatch);
+            }
+        }
         else if (!homeContent) {
             dispatch(getCrossfit());
             window.scrollTo(0, 0);
@@ -110,9 +156,19 @@ function HomePage({ BackToTopButton }) {
     const [inOutStatus, setInOutStatus] = useState(true);
 
     return (
+
+
         <div className="home">
 
             {/* <HeaderNav className="headerNav" localUser={localUser}/> */}
+
+            <Fade in={fadeLoad} timeout={600}>
+
+                <Box sx={{ width: '100%' }}>
+                    <LinearProgress />
+                </Box>
+
+            </Fade>
 
             <Grow
                 in={headerLoad}
@@ -124,6 +180,7 @@ function HomePage({ BackToTopButton }) {
                 </div>
             </Grow>
 
+
             {/* <NavBar /> */}
 
             <Grow
@@ -131,7 +188,7 @@ function HomePage({ BackToTopButton }) {
                 style={{ transformOrigin: '1 1 1' }}
                 {...(bannerLoad ? { timeout: 600 } : {})}
             >
-                <div  >
+                <div>
                     <Banner />
                 </div>
             </Grow>
@@ -141,14 +198,15 @@ function HomePage({ BackToTopButton }) {
                 style={{ transformOrigin: '1 1 1' }}
                 {...(folterLoad ? { timeout: 600 } : {})}
             >
-                <div  >
+                <div
+                    style={containerStyles}  >
                     <Filter setInOutStatus={setInOutStatus} />
                 </div>
             </Grow>
 
 
 
-            <Cards inOutStatus={inOutStatus} />
+            <Cards inOutStatus={inOutStatus} setHeaderLoad={setHeaderLoad} setBannerload={setBannerload} setFilterLoad={setFilterLoad} />
 
             {/* <SwipeableEdgeDrawer /> */}
 

@@ -26,7 +26,7 @@ function banner() {
     const items = [
         {
             image: "banner1.jpg",
-            link: "/profile"
+            // link: "/profile"
             // name: "Random Name #1",
             // description: "Probably the most random thing you have ever seen!"
         },

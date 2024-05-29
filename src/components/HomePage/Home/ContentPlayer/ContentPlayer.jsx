@@ -17,8 +17,6 @@ function ContentPlayer({ setPlayerLoad, playerLoad }) {
     const location = useLocation();
     const navigate = useNavigate();
 
-    const [userFisrtName, setUserFirstName] = useState("")
-    const [lastNameLetter, setLastLetterName] = useState('')
 
     const [fadeLoad, setfadeLoad] = useState(true)
     const [headerLoad, setHeaderLoad] = useState(false)
@@ -31,63 +29,31 @@ function ContentPlayer({ setPlayerLoad, playerLoad }) {
     const lastCategory = localStorage.getItem("category")
     console.log(lastCategory, "this is the last category");
 
-    const categoryDispatch = `get${lastCategory.charAt(0).toUpperCase() + lastCategory.slice(1)}`;
-    console.log(categoryDispatch, "this is the category dispatch");
-
-
     const homeContent = localStorage.getItem("homeContent")
     console.log(homeContent, "this is the home content");
 
     useEffect(() => {
-
-
-
         setTimeout(() => {
             setfadeLoad(false)
         }, 900);
-        // setTimeout(() => {
-        //     setHeaderLoad(true)
-        // }, 600);
         setTimeout(() => {
             setPlayerLoad(true)
-        }, 500);
-        // setTimeout(() => {
-        //     setFilterLoad(true)
-        // }, 300);
+        }, 350);
 
         const localUser = localStorage.getItem("localUserName")
         // console.log(localUser, "lu en home");
 
-        if (localUser.split(' ')[0].endsWith('a')) {
-            setLastLetterName('a');
-        } else {
-            setLastLetterName('o');
-        }
-
         const verifyLogin = (localUser) => {
             if (!localUser) {
                 navigate("/");
-
-            } else
-                setUserFirstName(localUser.split(' ')[0]);
-
+            }
         }
         verifyLogin(localUser);
-
-        const scrolling = () => {
-            window.scrollTo({ top: 315, behavior: 'smooth' });
-            setInOutStatus(previnOutStatus => !previnOutStatus)
-            setTimeout(() => {
-                setInOutStatus(previnOutStatus => !previnOutStatus)
-            }, 700);
-        }
 
 
         window.scrollTo(0, 0);
 
     }, [navigate, homeContent]);
-
-    const [inOutStatus, setInOutStatus] = useState(true);
 
     const category = localStorage.getItem("category");
 
@@ -96,8 +62,6 @@ function ContentPlayer({ setPlayerLoad, playerLoad }) {
 
         <div className="contenthome">
 
-            {/* <HeaderNav className="headerNav" localUser={localUser}/> */}
-
             <Fade in={fadeLoad} timeout={600}>
 
                 <Box sx={{ width: '100%' }}>
@@ -105,20 +69,6 @@ function ContentPlayer({ setPlayerLoad, playerLoad }) {
                 </Box>
 
             </Fade>
-
-            {/* <Grow
-                in={headerLoad}
-                style={{ transformOrigin: '1 1 1' }}
-                {...(headerLoad ? { timeout: 800 } : {})}
-            >
-                <div className='playerTitle' >
-                    {/* <h1>Bienvenid{lastNameLetter} {userFisrtName}</h1> */}
-            {/* <h1>Ejercicios de Pierna</h1>
-                </div> */}
-            {/* </Grow> */}
-
-
-            {/* <NavBar /> */}
 
             <Grow
                 in={playerLoad}
@@ -143,7 +93,7 @@ function ContentPlayer({ setPlayerLoad, playerLoad }) {
                                         style={{ fontSize: '0.8rem' }}
                                         onClick={() => {
                                             localStorage.setItem("homeContent", "goBack");
-                                            localStorage.setItem("categorytoDispatch", `${categoryDispatch}`);
+                                            localStorage.setItem("categorytoDispatch", `${lastCategory}`);
                                             // aqui debe ir la categoria anterior
                                             setPlayerLoad(false)
                                             setTimeout(() => {
@@ -242,18 +192,6 @@ function ContentPlayer({ setPlayerLoad, playerLoad }) {
                     </Card>
                 </div>
             </Grow>
-
-
-            {/* <Grow
-                in={folterLoad}
-                style={{ transformOrigin: '1 1 1' }}
-                {...(folterLoad ? { timeout: 600 } : {})}
-            >
-                <div  >
-                    <Filter setInOutStatus={setInOutStatus} />
-                </div>
-            </Grow> */}
-
 
         </div>
     );

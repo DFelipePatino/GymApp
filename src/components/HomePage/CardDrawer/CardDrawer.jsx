@@ -40,15 +40,10 @@ export const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
 };
 
-function SwipeableEdgeDrawer({ inOutStatus, setHeaderLoad, setBannerload, setFilterLoad }) {
+function CardDrawer({ inOutStatus, setHeaderLoad, setBannerload, setFilterLoad }) {
 
 
     [open, setOpen] = React.useState(false);
-    console.log(open, "open at drawer");
-
-
-    // This is used only for the example
-    // const container = window !== undefined ? () => window().document.body : undefined;
 
     return (
         <Root>
@@ -114,12 +109,5 @@ function SwipeableEdgeDrawer({ inOutStatus, setHeaderLoad, setBannerload, setFil
     );
 }
 
-SwipeableEdgeDrawer.propTypes = {
-    /**
-     * Injected by the documentation to work in an iframe.
-     * You won't need it on your project.
-     */
-    window: PropTypes.func,
-};
 
-export default SwipeableEdgeDrawer;
+export default CardDrawer;

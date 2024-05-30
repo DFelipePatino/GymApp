@@ -89,7 +89,9 @@ function Profile2({ userForTesting, BackToTopButton, name, headerMountIn, conten
                 timeout={500}
                 mountOnEnter unmountOnExit>
 
-                <div>
+                <div
+                    className='userInfoDiv'
+                >
 
                     {/* <Card /> */}
 

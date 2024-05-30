@@ -6,6 +6,7 @@ import Box from '@mui/material/Box';
 import LinearProgress from '@mui/material/LinearProgress';
 import './Login.css';
 import { Grow } from '@mui/material';
+import Swal from 'sweetalert2'
 
 function LogIn() {
 
@@ -31,24 +32,23 @@ function LogIn() {
     const [password, setPassword] = useState('');
 
     const [isLoading, setIsLoading] = useState(false)
-    console.log(isLoading, "is loading");
-
     const [formShown, setFormShown] = useState(true);
-    console.log(formShown, "form shown");
-
     const [loadingShown, setLoadingShown] = useState(false);
-    console.log(loadingShown, "loading shown");
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log(`Username: ${username}, Password: ${password}`);
+
         if (password !== onlyPassword) {
-            alert('Password incorrecto');
+            Swal.fire({
+                title: 'Error!',
+                text: 'Contraseña incorrecta.',
+                icon: 'error',
+            });
             return;
         } else if (password === onlyPassword) {
             localStorage.setItem("localUserName", username);
 
-            console.log(localStorage.getItem("localUserName"), "has been set");
+            // console.log(localStorage.getItem("localUserName"), "has been set");
 
             setFormShown(false)
 
@@ -64,17 +64,12 @@ function LogIn() {
         if (localUser) {
             setTimeout(() => {
                 navigate('/home');
-            }, 5000);
+            }, 3500);
         }
 
         setUsername('');
         setPassword('');
     };
-
-
-
-
-
 
     return (
 

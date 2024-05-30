@@ -1,25 +1,34 @@
-/* body .css-10botns-MuiInputBase-input-MuiFilledInput-input {
-    font: inherit;
-    letter-spacing: inherit;
-    color: currentColor;
-    padding: 4px 0 5px;
-    border: 0;
-    box-sizing: content-box;
-    background: none;
-    height: 1.4375em;
-    margin: 0;
-    -webkit-tap-highlight-color: transparent;
-    display: block;
-    min-width: 0;
-    width: 100%;
-    -webkit-animation-name: mui-auto-fill-cancel;
-    animation-name: mui-auto-fill-cancel;
-    -webkit-animation-duration: 10ms;
-    animation-duration: 10ms;
-    padding-top: 25px;
-    padding-right: 12px;
-    padding-bottom: 8px;
-    padding-left: 12px;
-    background-color: #D9D9D9;
-    border-radius: 20px;
-} */
+.profileEditDiv {
+    background-image: url(/public/back.jpg);
+    /* background-color: lightgrey; */
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    margin-top: 56px;
+}
+
+@media screen and (max-width: 825px) {
+
+    .profileEditDiv {
+
+        height: 260%;
+
+    }
+
+}
+
+
+@media screen and (max-width: 600px) {
+
+    .profileEditDiv {
+        margin-top: 56px;
+    }
+
+}
+
+@media screen and (orientation: landscape) {
+    .profileEditDiv {
+        height: 370%;
+        /* Add your styles for landscape orientation here */
+    }
+}

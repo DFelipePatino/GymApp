@@ -14,12 +14,12 @@ import Grid from '@mui/material/Grid';
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import './HomePage.css';
-import SwipeableEdgeDrawer from '../CardDrawer/CardDrawer';
+import CardDrawer from '../CardDrawer/CardDrawer';
 import { Fade, Grow, LinearProgress } from '@mui/material';
 import { Box } from '@mui/system';
 import { containerStyles } from '../Filter/filerStyles';
 
-function HomePage({ BackToTopButton }) {
+function HomePage({ BackToTopButton, headerLoad, bannerLoad, filterLoad, setHeaderLoad, setBannerload, setFilterLoad }) {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -28,25 +28,15 @@ function HomePage({ BackToTopButton }) {
     const [lastNameLetter, setLastLetterName] = useState('')
 
     const [fadeLoad, setfadeLoad] = useState(true)
-    const [headerLoad, setHeaderLoad] = useState(false)
-    const [bannerLoad, setBannerload] = useState(false)
-    const [folterLoad, setFilterLoad] = useState(false)
+
 
 
     const user = useSelector((state) => state.user);
-    console.log(user, "this is the user");
-
 
     const homeContent = localStorage.getItem("homeContent")
-    console.log(homeContent, "this is the home content");
-
     const lastCategory = localStorage.getItem("category")
 
     const categoryToDispatch = localStorage.getItem("categorytoDispatch")
-    console.log(categoryToDispatch, "this is the category to dispatch");
-
-
-
 
     useEffect(() => {
 
@@ -64,7 +54,6 @@ function HomePage({ BackToTopButton }) {
         }, 300);
 
         const localUser = localStorage.getItem("localUserName")
-        console.log(localUser, "lu en home");
 
         if (localUser.split(' ')[0].endsWith('a')) {
             setLastLetterName('a');
@@ -153,7 +142,7 @@ function HomePage({ BackToTopButton }) {
             }
         }
         else if (!homeContent) {
-            dispatch(getCrossfit());
+            dispatch(getDefault());
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
@@ -200,9 +189,9 @@ function HomePage({ BackToTopButton }) {
             </Grow>
 
             <Grow
-                in={folterLoad}
+                in={filterLoad}
                 style={{ transformOrigin: '1 1 1' }}
-                {...(folterLoad ? { timeout: 600 } : {})}
+                {...(filterLoad ? { timeout: 600 } : {})}
             >
                 <div
                     style={containerStyles}  >

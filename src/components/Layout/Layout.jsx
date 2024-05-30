@@ -30,19 +30,18 @@ import Toolbar from '@mui/material/Toolbar';
 import "./Layout.css"
 import { useDispatch, useSelector } from 'react-redux';
 import { setHomeContent } from '../../redux/actions';
+import Swal from 'sweetalert2'
 
 const drawerWidth = "50%";
 
 
-function Layout({ localUser, setPlayerLoad, playerLoad }) {
+function Layout({ localUser, setPlayerLoad, playerLoad, headerLoad, bannerLoad, filterLoad, setHeaderLoad, setBannerload, setFilterLoad, headerMountIn, contentMountIn, setHeaderMountIn, setContentMountIn, navigateAway, setNavigateAway }) {
 
     const dispatch = useDispatch();
     const location = useLocation();
     const navigate = useNavigate();
 
     const user = useSelector((state) => state.user);
-    console.log(user, "user at drawer");
-    console.log(localUser, "lu en drawer");
 
     const userInitials = localUser?.split(' ').map((n) => n ? n[0].toUpperCase() : '').join('');
 
@@ -68,7 +67,7 @@ function Layout({ localUser, setPlayerLoad, playerLoad }) {
 
     const handleMenuClick = (fn, route, shouldClearLocal = false) => {
 
-        if (fn === 'clear') { localStorage.removeItem("homeContent") }
+        if (fn === 'clear') { localStorage.clear() }
 
         if (fn === 'homePilates') { localStorage.setItem("homeContent", "Pilates"), dispatch(getPilates()) }
         if (fn === 'homeCardio') { localStorage.setItem("homeContent", "Cardio"), dispatch(getCardio()) }
@@ -104,13 +103,13 @@ function Layout({ localUser, setPlayerLoad, playerLoad }) {
                         // { text: 'Home', icon: <HomeIcon />, fn: "clear", route: '/home' },
                         // { text: 'Profile Card', icon: <AccountCircleIcon />, route: '/profileCard' },
 
-                        { text: 'Chat', icon: <ChatIcon />, route: '/chat' },
+                        { text: 'Chat', icon: <ChatIcon />, route: '/chat', id: '1' },
 
 
-                        { text: 'Log Out', icon: <LogoutIcon />, route: '/', shouldClearLocal: true }
+                        { text: 'Log Out', icon: <LogoutIcon />, route: '/', shouldClearLocal: true, id: '2' }
 
                     ].map((item, index) => (
-                        <ListItem key={item.text} disablePadding>
+                        <ListItem key={item.id} disablePadding>
                             <ListItemButton onClick={() => handleMenuClick(item.fn, item.route, item.shouldClearLocal)}>
                                 <ListItemIcon>
                                     {item.icon}
@@ -124,42 +123,100 @@ function Layout({ localUser, setPlayerLoad, playerLoad }) {
         );
     }
 
-    else if (location.pathname !== "/home") {
+    if (location.pathname !== "/home" && location.pathname !== "/profileedit") {
 
         drawer = (
             <div>
                 <Toolbar />
                 <List>
                     {[
-                        { text: 'Home', icon: <HomeIcon />, fn: "clear", route: '/home' },
-                        // { text: 'Profile Card', icon: <AccountCircleIcon />, route: '/profileCard' },
-                        <Divider />,
+                        { text: 'Home', icon: <HomeIcon />, fn: "clear", route: '/home', id: '1' },
 
-                        { text: 'Pilates', icon: <FitnessCenterIcon />, fn: 'homePilates', route: '/home' },
-                        { text: 'Cardio', icon: <DirectionsBikeIcon />, fn: 'homeCardio', route: '/home' },
-                        { text: 'Yoga', icon: <SelfImprovementIcon />, fn: 'homeYoga', route: '/home' },
-                        { text: 'Contacto', icon: <SportsGymnasticsIcon />, fn: 'homeContacto', route: '/home' },
-                        { text: 'Boxing', icon: <SportsKabaddiIcon />, fn: 'homeBoxing', route: '/home' },
-                        { text: 'Crossfit', icon: <SportsHandballIcon />, fn: 'homeCrossfit', route: '/home' },
+                        { type: 'divider', id: 'divider-1' },
 
-                        <Divider />,
+                        { text: 'Pilates', icon: <FitnessCenterIcon />, fn: 'homePilates', route: '/home', id: '2' },
+                        { text: 'Cardio', icon: <DirectionsBikeIcon />, fn: 'homeCardio', route: '/home', id: '3' },
+                        { text: 'Yoga', icon: <SelfImprovementIcon />, fn: 'homeYoga', route: '/home', id: '4' },
+                        { text: 'Contacto', icon: <SportsGymnasticsIcon />, fn: 'homeContacto', route: '/home', id: '5' },
+                        { text: 'Boxing', icon: <SportsKabaddiIcon />, fn: 'homeBoxing', route: '/home', id: '6' },
+                        { text: 'Crossfit', icon: <SportsHandballIcon />, fn: 'homeCrossfit', route: '/home', id: '7' },
 
-                        { text: 'Chat', icon: <ChatIcon />, route: '/chat' },
+                        { type: 'divider', id: 'divider-2' },
 
-                        { text: 'Log Out', icon: <LogoutIcon />, route: '/', shouldClearLocal: true }
-
+                        { text: 'Chat', icon: <ChatIcon />, route: '/chat', id: '8' },
+                        { text: 'Log Out', icon: <LogoutIcon />, route: '/', shouldClearLocal: true, id: '9' }
                     ].map((item, index) => (
-                        <ListItem key={item.text} disablePadding>
-                            <ListItemButton onClick={() => handleMenuClick(item.fn, item.route, item.shouldClearLocal)}>
-                                <ListItemIcon>
-                                    {item.icon}
-                                </ListItemIcon>
-                                <ListItemText primary={item.text} />
-                            </ListItemButton>
-                        </ListItem>
+                        item.type === 'divider' ?
+                            <Divider key={item.id} component="li" aria-hidden="true"
+                                style={{
+                                    height: '10px', margin: '10px 0'
+                                }}
+                            /> :
+                            <ListItem key={item.id} disablePadding>
+                                <ListItemButton onClick={() => handleMenuClick(item.fn, item.route, item.shouldClearLocal)}>
+                                    <ListItemIcon>
+                                        {item.icon}
+                                    </ListItemIcon>
+                                    <ListItemText primary={item.text} />
+                                </ListItemButton>
+                            </ListItem>
                     ))}
                 </List>
             </div>
+        );
+    }
+
+    else if (location.pathname === "/profileedit") {
+        drawer = (
+            <div>
+                <Toolbar />
+                <List>
+
+
+
+
+                    <Divider
+                        style={{
+                            height: '10px', margin: '10px 0'
+                        }} />
+                    Guarda tus cambios antes de abandonar esta pagina!
+                    <Divider
+                        style={{
+                            height: '10px', margin: '10px 0'
+                        }} />
+
+                    <ListItemButton onClick={() => {
+                        handleDrawerClose()
+                        Swal.fire({
+                            title: 'Estas seguro que deseas cerrar sesion?',
+                            text: "Perderas los cambios no guardados!",
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                            confirmButtonText: 'Log Out!'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                localStorage.clear();
+                                navigate('/');
+                            }
+                        });
+
+                    }}>
+                        <ListItemIcon>
+                            <LogoutIcon />
+                        </ListItemIcon>
+                        <ListItemText primary="Log Out" />
+                    </ListItemButton>
+                    {/* 
+                <IconButton>
+                    <LogoutIcon />
+                    <ListItemText primary="Log Out" />
+
+                </IconButton> */}
+
+                </List>
+            </div >
         );
     }
 
@@ -202,6 +259,8 @@ function Layout({ localUser, setPlayerLoad, playerLoad }) {
                     style={{ cursor: 'pointer' }}
                     onClick={() => {
 
+                        localStorage.removeItem("homeContent");
+
                         if (location.pathname === '/player') {
                             setPlayerLoad(false);
                             setTimeout(() => {
@@ -209,10 +268,36 @@ function Layout({ localUser, setPlayerLoad, playerLoad }) {
                             }, 200);
                         }
 
-                        localStorage.removeItem("homeContent");
-                        if (location.pathname !== '/home' && location.pathname !== '/player') {
-                            navigate("/home");
+                        if (location.pathname === '/profileedit') {
+                            Swal.fire({
+                                title: 'Estas seguro?',
+                                text: "Perderas los cambios no guardados!",
+                                icon: 'warning',
+                                showCancelButton: true,
+                                confirmButtonColor: '#3085d6',
+                                cancelButtonColor: '#d33',
+                                confirmButtonText: 'Confirmar!'
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    navigate('/home')
+                                }
+                            });
                         }
+
+                        if (location.pathname === '/profile2') {
+                            setNavigateAway(true);
+                            setTimeout(() => {
+                                setHeaderMountIn(false);
+                            }, 200);
+                            setTimeout(() => {
+                                setContentMountIn(false)
+                            }, 300);
+
+                            setTimeout(() => {
+                                navigate('/home')
+                            }, 500);
+                        }
+
 
                         else if (location.pathname === '/home') {
                             window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -226,7 +311,61 @@ function Layout({ localUser, setPlayerLoad, playerLoad }) {
                     <AccountCircleIcon style={ACI} />
                 ) :
                     // <a className='initials' href='/profile2'>{userInitials}</a>
-                    <button className='initials' onClick={() => navigate('/profile2')} >{userInitials}</button>
+                    <button
+                        className='initials'
+                        onClick={() => {
+                            window.scrollTo({ top: 0, behavior: 'smooth' });
+                            if (location.pathname === '/home') {
+                                setNavigateAway(false);
+                                setTimeout(() => {
+                                    setHeaderLoad(false);
+                                }, 200);
+                                setTimeout(() => {
+                                    setBannerload(false);
+                                }, 300);
+                                setTimeout(() => {
+                                    setFilterLoad(false);
+                                }, 400);
+                                setTimeout(() => {
+                                    navigate('/profile2')
+                                }, 600);
+                            }
+                            if (location.pathname === '/player') {
+                                setNavigateAway(false);
+                                setPlayerLoad(false);
+                                setTimeout(() => {
+                                    navigate('/profile2')
+                                }, 200);
+                            }
+
+                            if (location.pathname === '/profileedit') {
+                                Swal.fire({
+                                    title: 'Estas seguro?',
+                                    text: "Perderas los cambios no guardados!",
+                                    icon: 'warning',
+                                    showCancelButton: true,
+                                    confirmButtonColor: '#3085d6',
+                                    cancelButtonColor: '#d33',
+                                    confirmButtonText: 'Confirmar!'
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        setNavigateAway(false);
+                                        setTimeout(() => {
+                                            setHeaderMountIn(false)
+                                        }, 200);
+                                        setTimeout(() => {
+                                            setContentMountIn(false)
+                                        }, 300);
+                                        setTimeout(() => {
+                                            navigate('/profile2')
+                                        }, 500);
+                                    }
+                                });
+                            }
+                        }}
+                    >
+                        {userInitials}
+                    </button>
                 }
             </Toolbar>
 

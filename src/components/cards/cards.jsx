@@ -9,7 +9,7 @@ import { useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { getCardio } from '../../redux/actions';
-import SwipeableEdgeDrawer from '../HomePage/CardDrawer/CardDrawer';
+import CardDrawer from '../HomePage/CardDrawer/CardDrawer';
 import './cards.css';
 import { Grow } from '@mui/material';
 import { TrainRounded } from '@mui/icons-material';
@@ -54,7 +54,7 @@ function cards({ inOutStatus, setHeaderLoad, setBannerload, setFilterLoad }) {
                     ))}
                 </Grid>
             </Grow>
-            <SwipeableEdgeDrawer setHeaderLoad={setHeaderLoad} setBannerload={setBannerload} setFilterLoad={setFilterLoad} />
+            <CardDrawer setHeaderLoad={setHeaderLoad} setBannerload={setBannerload} setFilterLoad={setFilterLoad} />
         </Container>
     );
 }

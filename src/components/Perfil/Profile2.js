@@ -1,14 +1,19 @@
 import { width } from "@mui/system"
 
 export const profile2divCardStyle = {
-    backgroundImage: 'linear-gradient(to bottom right, #924141, #924141, #d9d9d9)',
-    height: '170%',
-    color: 'white',
-    display: 'flex',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-    flexDirection: 'column',
-    marginTop: '56px',
+    // backgroundImage: 'linear-gradient(to bottom right, #924141, #924141, #d9d9d9)',
+    backgroundImage: 'url(/public/back.jpg)',
+    // backgroundSize: 'cover',
+    // backgroundRepeat: 'no-repeat',
+    // backgroundPosition: 'center',
+    marginTop: '64px',
+    // height: '170%',
+    // color: 'white',
+    // display: 'flex',
+    // justifyContent: 'flex-start',
+    // alignItems: 'center',
+    // flexDirection: 'column',
+    // marginTop: '56px',
 }
 
 export const cardHeaderStyle = {

@@ -67,7 +67,7 @@ function Layout({ localUser, setPlayerLoad, playerLoad, headerLoad, bannerLoad, 
 
     const handleMenuClick = (fn, route, shouldClearLocal = false) => {
 
-        if (fn === 'clear') { localStorage.clear() }
+        if (fn === 'clear') { localStorage.removeItem("homeContent") }
 
         if (fn === 'homePilates') { localStorage.setItem("homeContent", "Pilates"), dispatch(getPilates()) }
         if (fn === 'homeCardio') { localStorage.setItem("homeContent", "Cardio"), dispatch(getCardio()) }

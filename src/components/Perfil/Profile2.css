@@ -1,6 +1,10 @@
-body .MuiTypography-colorTextSecondary {
+/* body .MuiTypography-colorTextSecondary {
     /* color: rgba(0, 0, 0, 0.54); */
-    /* dont delete */
+/* dont delete */
+
+
+.css-11lq3yg-MuiGrid-root {
+    justify-content: space-evenly;
 }
 
 .profile2div {
@@ -53,9 +57,6 @@ body .MuiTypography-colorTextSecondary {
     }
 }
 
-.css-11lq3yg-MuiGrid-root {
-    justify-content: space-evenly;
-}
 
 .lastDiv {
     display: flex;

@@ -161,7 +161,7 @@ export const getUser = (username) => {
 
 
 export const setHomeContent = (content) => {
-    console.log(content, "content in action");
+    // console.log(content, "content in action");
     return (dispatch) => {
         const data = content;
         dispatch({ type: SET_HOME_CONTENT, payload: data });

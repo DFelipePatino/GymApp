@@ -19,7 +19,6 @@ function Profile() {
     useEffect(() => {
 
         const localUser = localStorage.getItem("localUserName")
-        console.log(localUser, "lu en profile");
 
         const verifyLogin = (localUser) => {
             if (!localUser) {
@@ -32,7 +31,7 @@ function Profile() {
 
     }, [navigate]);
 
-    console.log(user, "user");
+    // console.log(user, "user");
 
     const handleInputChange = (event) => {
         setUser({

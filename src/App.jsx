@@ -27,25 +27,6 @@ function App() {
   const [contentMountIn, setContentMountIn] = useState(false)
   const [navigateAway, setNavigateAway] = useState(false)
 
-
-
-  // headerMountIn = { headerMountIn }
-  // contentMountIn = { contentMountIn }
-  // setHeaderMountIn = { setHeaderMountIn }
-  // setContentMountIn = { setContentMountIn }
-
-
-
-  // headerLoad = { headerLoad }
-  // bannerLoad = { bannerLoad }
-  // filterLoad = { filterLoad }
-
-  // setHeaderLoad = { setHeaderLoad }
-  // setBannerload = { setBannerload }
-  // setFilterLoad = { setFilterLoad }
-
-  // headerLoad, bannerLoad, filterLoad
-
   const [playerLoad, setPlayerLoad] = useState(false)
 
   const localUser = localStorage.getItem("localUserName");

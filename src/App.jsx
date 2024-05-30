@@ -8,7 +8,6 @@ import Profile2 from './components/Perfil/Profile2.jsx';
 import ProfileEdit from './components/Perfil/ProfileEdit';
 import Registro from './components/LogIn/Registro/Registro.jsx';
 import Test from './components/test/test';
-import Cards from './components/cards/cards';
 import ProfileCard from './components/Perfil/profileCard';
 import Chat from './components/Chat/Chat.jsx';
 import Layout from './components/Layout/Layout';
@@ -20,9 +19,37 @@ function App() {
   const dispatch = useDispatch();
   const location = useLocation();
 
+  const [headerLoad, setHeaderLoad] = useState(false)
+  const [bannerLoad, setBannerload] = useState(false)
+  const [filterLoad, setFilterLoad] = useState(false)
+
+  const [headerMountIn, setHeaderMountIn] = useState(false)
+  const [contentMountIn, setContentMountIn] = useState(false)
+  const [navigateAway, setNavigateAway] = useState(false)
+
+
+
+  // headerMountIn = { headerMountIn }
+  // contentMountIn = { contentMountIn }
+  // setHeaderMountIn = { setHeaderMountIn }
+  // setContentMountIn = { setContentMountIn }
+
+
+
+  // headerLoad = { headerLoad }
+  // bannerLoad = { bannerLoad }
+  // filterLoad = { filterLoad }
+
+  // setHeaderLoad = { setHeaderLoad }
+  // setBannerload = { setBannerload }
+  // setFilterLoad = { setFilterLoad }
+
+  // headerLoad, bannerLoad, filterLoad
+
   const [playerLoad, setPlayerLoad] = useState(false)
 
   const localUser = localStorage.getItem("localUserName");
+
   const userForTesting = {
     dob: "1990-01-01",
     age: "31",
@@ -43,20 +70,60 @@ function App() {
     dietPlan: "/plandedieta.pdf"
   };
 
+  const [open, setOpen] = React.useState(false);
+
+  const toggleDrawer = (newOpen) => () => {
+    setOpen(newOpen);
+  };
+
   return (
     <>
-      {location.pathname !== "/" && location.pathname !== "/registro" && <Layout localUser={localUser} setPlayerLoad={setPlayerLoad} playerLoad={playerLoad} />}
+      {location.pathname !== "/" && location.pathname !== "/registro" &&
+        <Layout
+          headerLoad={headerLoad}
+          bannerLoad={bannerLoad}
+          filterLoad={filterLoad}
+          setHeaderLoad={setHeaderLoad}
+          setBannerload={setBannerload}
+          setFilterLoad={setFilterLoad}
+
+          setPlayerLoad={setPlayerLoad}
+          playerLoad={playerLoad}
+
+          headerMountIn={headerMountIn}
+          contentMountIn={contentMountIn}
+          setHeaderMountIn={setHeaderMountIn}
+          setContentMountIn={setContentMountIn}
+          navigateAway={navigateAway}
+          setNavigateAway={setNavigateAway}
+
+
+          localUser={localUser} />}
+
       <Routes>
         <Route path='/test' element={<SimpleGrow />} />
         <Route path='/' element={<LogIn />} />
         <Route path='/registro' element={<Registro BackToTopButton={BackToTopButton} />} />
-        <Route path='/home' element={<HomePage BackToTopButton={BackToTopButton} localUser={localUser} />} />
+        <Route path='/home' element={<HomePage headerLoad={headerLoad} bannerLoad={bannerLoad} filterLoad={filterLoad} setHeaderLoad={setHeaderLoad}
+          setBannerload={setBannerload}
+          setFilterLoad={setFilterLoad} BackToTopButton={BackToTopButton} localUser={localUser} />} />
         <Route path='/player' element={<ContentPlayer setPlayerLoad={setPlayerLoad} playerLoad={playerLoad} />} />
         <Route path='/profile' element={<Profile localUser={localUser} />} />
-        <Route path='/profile2' element={<Profile2 BackToTopButton={BackToTopButton} name={localUser} userForTesting={userForTesting} />} />
-        <Route path='/profileedit' element={<ProfileEdit BackToTopButton={BackToTopButton} profilePicture="/Perfil.png" localUser={localUser} />} />
+        <Route path='/profile2' element={<Profile2
+          headerMountIn={headerMountIn}
+          contentMountIn={contentMountIn}
+          setHeaderMountIn={setHeaderMountIn}
+          setContentMountIn={setContentMountIn}
+          navigateAway={navigateAway}
+          setNavigateAway={setNavigateAway}
+          BackToTopButton={BackToTopButton} name={localUser} userForTesting={userForTesting} />} />
+        <Route path='/profileedit' element={<ProfileEdit
+          headerMountIn={headerMountIn}
+          contentMountIn={contentMountIn}
+          setHeaderMountIn={setHeaderMountIn}
+          setContentMountIn={setContentMountIn}
+          BackToTopButton={BackToTopButton} profilePicture="/Perfil.png" localUser={localUser} />} />
         <Route path='/test' element={<Test />} />
-        <Route path='/cards' element={<Cards />} />
         <Route path='/profileCard' element={<ProfileCard />} />
         <Route path='/chat' element={<Chat />} />
       </Routes>

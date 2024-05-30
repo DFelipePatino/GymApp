@@ -4,12 +4,39 @@ body .MuiTypography-colorTextSecondary {
 }
 
 .profile2div {
-    /* display: flex;
-    justify-content: center;
-    align-items: center; */
-    height: 100vh;
-    /* width: 150%; */
+    background-image: url(/public/back.jpg);
+    /* background-color: lightgrey; */
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    margin-top: 56px;
 
+}
+
+@media screen and (max-width: 825px) {
+
+    .profile2div {
+
+        height: 260%;
+
+    }
+
+}
+
+
+@media screen and (max-width: 600px) {
+
+    .profile2div {
+        margin-top: 56px;
+    }
+
+}
+
+@media screen and (orientation: landscape) {
+    .profile2div {
+        height: 370%;
+        /* Add your styles for landscape orientation here */
+    }
 }
 
 .MuiCardHeader-root {
@@ -28,4 +55,12 @@ body .MuiTypography-colorTextSecondary {
 
 .css-11lq3yg-MuiGrid-root {
     justify-content: space-evenly;
+}
+
+.lastDiv {
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+    align-items: center;
+
 }

@@ -7,17 +7,17 @@ import {
     colors,
     Grow,
     Fade,
-    Slide
+    Slide,
+    LinearProgress
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 
-function ProfileEdit({ localUser, BackToTopButton, profilePicture }) {
+function ProfileEdit({ localUser, BackToTopButton, profilePicture, headerMountIn, contentMountIn, setHeaderMountIn, setContentMountIn }) {
 
     const navigate = useNavigate();
 
-    const [headerMountIn, setHeaderMountIn] = useState(false)
-    const [contentMountIn, setContentMountIn] = useState(false)
+    const [fadeLoad, setfadeLoad] = useState(true)
 
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
@@ -25,6 +25,9 @@ function ProfileEdit({ localUser, BackToTopButton, profilePicture }) {
         const handleResize = () => setWindowWidth(window.innerWidth);
         window.addEventListener('resize', handleResize);
         window.scrollTo(0, 0);
+        setTimeout(() => {
+            setfadeLoad(false)
+        }, 900);
         setTimeout(() => {
             setHeaderMountIn(true)
         }, 300);
@@ -59,10 +62,16 @@ function ProfileEdit({ localUser, BackToTopButton, profilePicture }) {
 
     return (
         <div
-            style={{
-                backgroundImage: 'linear-gradient(to bottom right, #924141, #924141, #d9d9d9)', marginTop: '56px'
-            }}
+            className='profileEditDiv'
         >
+
+            <Fade in={fadeLoad} timeout={600}>
+
+                <Box sx={{ width: '100%' }}>
+                    <LinearProgress />
+                </Box>
+
+            </Fade>
 
             <Slide
                 direction="right"
@@ -105,8 +114,8 @@ function ProfileEdit({ localUser, BackToTopButton, profilePicture }) {
                             {localUser}
                             <br />
 
-                            <p> <EditIcon
-                                onClick={() => window.scrollTo({ top: 220, behavior: 'smooth' })} />Edita tu Perfil</p>
+                            <p>Guarda tus cambios <br /> antes de salir! <br /> <EditIcon
+                                onClick={() => window.scrollTo({ top: 600, behavior: 'smooth' })} /></p>
                         </Typography>
 
 

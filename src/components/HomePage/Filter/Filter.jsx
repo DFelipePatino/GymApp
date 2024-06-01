@@ -60,6 +60,7 @@ function Filter({ inOutStatus, setInOutStatus }) {
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 {props.items.map((item, index) => (
                     <Button
+                        className="button"
                         variant='contained'
                         key={index}
                         onClick={() => {
@@ -71,9 +72,7 @@ function Filter({ inOutStatus, setInOutStatus }) {
                             setTimeout(() => {
                                 item.click();
                             }, 400);
-
                         }}
-                        className="button"
                     >
                         <p>{item.name}</p>
                         <div>{item.icon}</div>

@@ -76,8 +76,8 @@ function Profile2({ userForTesting, BackToTopButton, name, headerMountIn, conten
                         }
                         title={name}
                         subheader={`${userForTesting.email}`}
-                        titleTypographyProps={{ variant: 'h5', color: 'inherit' }}
-                        subheaderTypographyProps={{ variant: 'subtitle1', color: 'inherit' }}
+                        titleTypographyProps={{ variant: 'h5', style: { color: 'rgb(146, 144, 144)' } }}
+                        subheaderTypographyProps={{ variant: 'subtitle1', style: { color: 'rgb(146, 144, 144)' } }}
                     />
                 </Slide>
 

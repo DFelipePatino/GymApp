@@ -26,7 +26,7 @@ export const cardHeaderStyle = {
 export const avatarStyle = {
     width: '120px',
     height: '120px',
-    border: '3px solid #426E92'
+    border: '3px solid rgb(159, 28, 23)',
 }
 
 export const cardContentCard = {
@@ -37,31 +37,34 @@ export const cardContentCard = {
 
 export const infoCardsStyle = {
     // marginTop: '20px',
-    border: '2px solid #426E92',
+    border: '2px solid rgb(159, 28, 23)',
     margin: '2px',
     borderRadius: '20px',
     padding: '10px',
-    backgroundColor: '#D9D9D9',
+    backgroundColor: 'rgb(146, 144, 144)',
     color: 'black'
 }
 
 export const infoCardsIconStyle = {
     marginTop: '20px',
-    border: '2px solid #426E92',
+    border: '2px solid rgb(159, 28, 23)',
     // margin: '2px',
     borderRadius: '20px',
     padding: '10px',
-    backgroundColor: '#D9D9D9',
+    backgroundColor: 'rgb(146, 144, 144)',
     color: 'black',
     display: 'flex',
-    justifyContent: 'flex-start'
+    justifyContent: 'flex-start',
+    textDecoration: 'none'
 }
 
 
 export const buttonStyle = {
-    color: 'white',
     margin: '30px',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: 'rgb(159, 28, 23)',
+    color: 'rgb(146, 144, 144)',
+    fontWeight: 'bold',
 }

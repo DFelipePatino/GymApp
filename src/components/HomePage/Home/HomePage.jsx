@@ -18,6 +18,7 @@ import CardDrawer from '../CardDrawer/CardDrawer';
 import { Fade, Grow, LinearProgress } from '@mui/material';
 import { Box } from '@mui/system';
 import { containerStyles } from '../Filter/filerStyles';
+// import colorPallet from '../../ColorPallet';
 
 function HomePage({ BackToTopButton, headerLoad, bannerLoad, filterLoad, setHeaderLoad, setBannerload, setFilterLoad }) {
 
@@ -155,7 +156,6 @@ function HomePage({ BackToTopButton, headerLoad, bannerLoad, filterLoad, setHead
 
         <div className="home">
 
-            {/* <HeaderNav className="headerNav" localUser={localUser}/> */}
 
             <Fade in={fadeLoad} timeout={600}>
 

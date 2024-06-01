@@ -32,8 +32,8 @@
     margin-top: 20px;
     margin-bottom: 4px;
     display: flex;
-    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
     /* justify-content: center; */
+    color: rgb(146, 144, 144);
     font-size: 30px;
     font-weight: bold;
     /* position: sticky; */

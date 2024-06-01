@@ -1,5 +1,6 @@
 import { Padding } from "@mui/icons-material"
 import { backdropClasses } from "@mui/material"
+import { color } from "@mui/system"
 
 
 export const containerStyles = {
@@ -47,32 +48,44 @@ export const iconStyles = {
     /* #426E92 D9D9D9 #9F8A88 */
 
     iconStyle1: {
-        backgroundColor: '#d65757',
+        // backgroundColor: 'rgb(146, 144, 144)',
+        backgroundColor: 'rgb(0, 0, 0)',
         width: '35px',
         height: '35px',
         borderRadius: '20%',
         marginTop: '16px',
         padding: '5px',
+        // color: 'rgb(159, 28, 23)',
+        color: 'rgb(146, 144, 144)',
+        // color: 'white',
         // boxShadow: 'rgba(16, 14, 18, 0.5) 5px 4px 4px',
     },
 
     iconStyle2: {
-        backgroundColor: '#426E92',
+        // backgroundColor: 'rgb(159, 28, 23)',
+        // backgroundColor: 'rgb(146, 144, 144)',
+        backgroundColor: 'rgb(0, 0, 0)',
         width: '35px',
         height: '35px',
         borderRadius: '20%',
         marginTop: '16px',
         padding: '5px',
+        // color: 'rgb(159, 28, 23)',
+        color: 'rgb(146, 144, 144)',
+        // color: 'white',
         // boxShadow: 'rgba(16, 14, 18, 0.5) 5px 4px 4px',
     },
 
     iconStyle3: {
-        backgroundColor: '#545454',
+        backgroundColor: 'rgb(0, 0, 0)',
         width: '35px',
         height: '35px',
         borderRadius: '20%',
         marginTop: '16px',
         padding: '5px',
+        // color: 'rgb(159, 28, 23)',
+        color: 'rgb(146, 144, 144)',
+        // color: 'white',
         // boxShadow: 'rgba(16, 14, 18, 0.5) 5px 4px 4px',
     }
 }

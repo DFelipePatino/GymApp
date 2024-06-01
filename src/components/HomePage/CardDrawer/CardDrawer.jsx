@@ -27,7 +27,7 @@ const StyledBox = styled('div')(({ theme }) => ({
 const Puller = styled('div')(({ theme }) => ({
     width: 30,
     height: 6,
-    backgroundColor: theme.palette.mode === 'light' ? grey[300] : grey[900],
+    backgroundColor: theme.palette.mode === 'light' ? 'rgb(146, 144, 144)' : 'rgb(146, 144, 144)',
     borderRadius: 3,
     position: 'absolute',
     top: 8,
@@ -78,10 +78,13 @@ function CardDrawer({ inOutStatus, setHeaderLoad, setBannerload, setFilterLoad }
                         // borderTopLeftRadius: 8,
                         // borderTopRightRadius: 8,
                         visibility: 'visible',
-                        top: 0,
+                        top: -20,
                         right: 0,
                         left: 0,
-                        backgroundColor: '#426E92',
+                        backgroundColor: 'rgb(159, 28, 23)',
+                        // backgroundColor: 'rgb(146, 144, 144)',
+                        // backgroundColor: 'rgba(0, 0, 0)',
+
                     }}
                 >
                     <Puller />
@@ -93,7 +96,9 @@ function CardDrawer({ inOutStatus, setHeaderLoad, setBannerload, setFilterLoad }
                         pb: 2,
                         height: '100%',
                         overflow: 'auto',
-                        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                        // backgroundColor: 'rgb(159, 28, 23)',
+                        // backgroundColor: 'rgba(146, 144, 144)',
+                        backgroundColor: 'rgba(0, 0, 0)',
                         display: 'flex',
                         justifyContent: 'center',
                     }}

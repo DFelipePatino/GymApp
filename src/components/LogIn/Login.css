@@ -4,7 +4,7 @@
 
 
 div.loginn {
-    background-image: linear-gradient(to bottom right, #924141, #924141, #d9d9d9);
+    background-image: linear-gradient(to bottom right, rgb(0, 0, 0), rgb(159, 28, 23), rgb(146, 144, 144));
     /* height: 100%;
     width: 100%; */
     /* font-family: "Roboto", "Helvetica", "Arial", sans-serif; */
@@ -14,11 +14,13 @@ div.loginn {
     display: flex;
     align-items: center;
     flex-direction: column;
+    color: rgb(146, 144, 144);
 }
 
 .welcome h1 {
     display: flex;
     justify-content: center;
+    color: rgb(146, 144, 144);
 }
 
 section.logoimage {
@@ -26,6 +28,10 @@ section.logoimage {
     justify-content: space-around;
     position: relative;
 
+}
+
+.p {
+    color: rgb(146, 144, 144);
 }
 
 section.logoimage img {
@@ -61,10 +67,6 @@ header {
     justify-content: space-around;
 }
 
-h1 {
-    color: white;
-}
-
 .form {
     display: flex;
     flex-direction: column;
@@ -92,8 +94,8 @@ h1 {
 }
 
 form input.LogInB {
-    background: #426E92;
-    color: white;
+    background: rgb(146, 144, 144);
+    color: rgb(0, 0, 0);
     border: none;
     border-radius: 20px;
     padding: 10px;
@@ -105,26 +107,27 @@ section.formsection {
     text-align: center;
     /* padding: 10px 20px; */
     padding-top: -10px;
-    color: white;
+    color: rgb(146, 144, 144);
     position: relative;
     padding-bottom: 52%;
 }
 
 section.formsection a {
-    color: white;
+    color: rgb(146, 144, 144);
     text-decoration: none;
 }
 
 
 
 button.register {
-    background: #426E92;
-    color: white;
+    background: rgb(146, 144, 144);
+    color: rgb(0, 0, 0);
     border: none;
     border-radius: 20px;
     padding: 10px;
     width: 100px;
     cursor: pointer;
+    font-weight: bold;
 }
 
 .footer {
@@ -132,7 +135,7 @@ button.register {
     justify-content: center;
     align-items: center;
     /* background-color: #426E92; */
-    color: white;
+    color: rgb(146, 144, 144);
     height: 50px;
     width: 100%;
     /* position: fixed; */
@@ -149,7 +152,7 @@ button.register {
     }
 
     .welcome h1 {
-        margin-bottom: -24px;
+        margin-bottom: -10px;
     }
 
     /* section.ropeimage img {

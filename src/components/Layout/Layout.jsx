@@ -28,6 +28,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import "./Layout.css"
+import { iconStyles, iconStyles2 } from './Layout'
 import { useDispatch, useSelector } from 'react-redux';
 import { setHomeContent } from '../../redux/actions';
 import Swal from 'sweetalert2'
@@ -96,17 +97,29 @@ function Layout({ localUser, setPlayerLoad, playerLoad, headerLoad, bannerLoad, 
 
     if (location.pathname === "/home") {
         drawer = (
-            <div>
+            <div
+                style={{
+                    backgroundColor: 'rgb(146, 144, 144)',
+                }}
+            >
                 <Toolbar />
                 <List>
                     {[
                         // { text: 'Home', icon: <HomeIcon />, fn: "clear", route: '/home' },
                         // { text: 'Profile Card', icon: <AccountCircleIcon />, route: '/profileCard' },
 
-                        { text: 'Chat', icon: <ChatIcon />, route: '/chat', id: '1' },
+                        {
+                            text: 'Chat', icon: <ChatIcon
+                                style={iconStyles2}
+                            />, route: '/chat', id: '1'
+                        },
 
 
-                        { text: 'Log Out', icon: <LogoutIcon />, route: '/', shouldClearLocal: true, id: '2' }
+                        {
+                            text: 'Log Out', icon: <LogoutIcon
+                                style={iconStyles}
+                            />, route: '/', shouldClearLocal: true, id: '2'
+                        }
 
                     ].map((item, index) => (
                         <ListItem key={item.id} disablePadding>
@@ -130,26 +143,62 @@ function Layout({ localUser, setPlayerLoad, playerLoad, headerLoad, bannerLoad, 
                 <Toolbar />
                 <List>
                     {[
-                        { text: 'Home', icon: <HomeIcon />, fn: "clear", route: '/home', id: '1' },
+                        {
+                            text: 'Home', icon: <HomeIcon
+                                style={iconStyles2}
+                            />, fn: "clear", route: '/home', id: '1'
+                        },
 
                         { type: 'divider', id: 'divider-1' },
 
-                        { text: 'Pilates', icon: <FitnessCenterIcon />, fn: 'homePilates', route: '/home', id: '2' },
-                        { text: 'Cardio', icon: <DirectionsBikeIcon />, fn: 'homeCardio', route: '/home', id: '3' },
-                        { text: 'Yoga', icon: <SelfImprovementIcon />, fn: 'homeYoga', route: '/home', id: '4' },
-                        { text: 'Contacto', icon: <SportsGymnasticsIcon />, fn: 'homeContacto', route: '/home', id: '5' },
-                        { text: 'Boxing', icon: <SportsKabaddiIcon />, fn: 'homeBoxing', route: '/home', id: '6' },
-                        { text: 'Crossfit', icon: <SportsHandballIcon />, fn: 'homeCrossfit', route: '/home', id: '7' },
+                        {
+                            text: 'Pilates', icon: <FitnessCenterIcon
+                                style={iconStyles}
+                            />, fn: 'homePilates', route: '/home', id: '2'
+                        },
+                        {
+                            text: 'Cardio', icon: <DirectionsBikeIcon
+                                style={iconStyles}
+                            />, fn: 'homeCardio', route: '/home', id: '3'
+                        },
+                        {
+                            text: 'Yoga', icon: <SelfImprovementIcon
+                                style={iconStyles}
+                            />, fn: 'homeYoga', route: '/home', id: '4'
+                        },
+                        {
+                            text: 'Contacto', icon: <SportsGymnasticsIcon
+                                style={iconStyles}
+                            />, fn: 'homeContacto', route: '/home', id: '5'
+                        },
+                        {
+                            text: 'Boxing', icon: <SportsKabaddiIcon
+                                style={iconStyles}
+                            />, fn: 'homeBoxing', route: '/home', id: '6'
+                        },
+                        {
+                            text: 'Crossfit', icon: <SportsHandballIcon
+                                style={iconStyles}
+                            />, fn: 'homeCrossfit', route: '/home', id: '7'
+                        },
 
                         { type: 'divider', id: 'divider-2' },
 
-                        { text: 'Chat', icon: <ChatIcon />, route: '/chat', id: '8' },
-                        { text: 'Log Out', icon: <LogoutIcon />, route: '/', shouldClearLocal: true, id: '9' }
+                        {
+                            text: 'Chat', icon: <ChatIcon
+                                style={iconStyles2}
+                            />, route: '/chat', id: '8'
+                        },
+                        {
+                            text: 'Log Out', icon: <LogoutIcon
+                                style={iconStyles}
+                            />, route: '/', shouldClearLocal: true, id: '9'
+                        }
                     ].map((item, index) => (
                         item.type === 'divider' ?
                             <Divider key={item.id} component="li" aria-hidden="true"
                                 style={{
-                                    height: '10px', margin: '10px 0'
+                                    height: '10px', margin: '10px 0', color: 'rgb(159, 28, 23)'
                                 }}
                             /> :
                             <ListItem key={item.id} disablePadding>
@@ -204,7 +253,9 @@ function Layout({ localUser, setPlayerLoad, playerLoad, headerLoad, bannerLoad, 
 
                     }}>
                         <ListItemIcon>
-                            <LogoutIcon />
+                            <LogoutIcon
+                                style={iconStyles}
+                            />
                         </ListItemIcon>
                         <ListItemText primary="Log Out" />
                     </ListItemButton>
@@ -223,7 +274,8 @@ function Layout({ localUser, setPlayerLoad, playerLoad, headerLoad, bannerLoad, 
     const ACI = {
         height: '25px',
         width: '25px',
-        color: 'white',
+        // color: 'white',
+        color: 'rgb(159, 28, 23)',
         cursor: 'pointer',
         marginRight: "5%",
         Padding: "0px"
@@ -236,8 +288,11 @@ function Layout({ localUser, setPlayerLoad, playerLoad, headerLoad, bannerLoad, 
 
             <Toolbar
                 style={{
-                    backgroundColor: '#426E92',
-                    color: 'white',
+                    // backgroundColor: 'rgb(146, 144, 144)',
+                    backgroundColor: 'rgb(0, 0, 0)',
+                    // backgroundColor: 'rgb(159, 28, 23)',
+                    // color: 'white',
+                    color: 'rgb(159, 28, 23)',
                     display: 'flex',
                     justifyContent: 'space-between',
                     /* position: sticky;
@@ -256,6 +311,7 @@ function Layout({ localUser, setPlayerLoad, playerLoad, headerLoad, bannerLoad, 
                     <MenuIcon />
                 </IconButton>
                 <Typography
+                    variant="h5" noWrap component="div"
                     style={{ cursor: 'pointer' }}
                     onClick={() => {
 
@@ -304,7 +360,7 @@ function Layout({ localUser, setPlayerLoad, playerLoad, headerLoad, bannerLoad, 
                         }
                     }
                     }
-                    variant="h6" noWrap component="div">
+                >
                     One Gym
                 </Typography>
                 {userInitials === "" ? (

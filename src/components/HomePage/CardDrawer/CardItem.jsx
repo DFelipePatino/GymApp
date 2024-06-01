@@ -69,7 +69,18 @@ export default function CardItem({ setHeaderLoad, setBannerload, setFilterLoad }
     const category = localStorage.getItem("category");
 
     return (
-        <Card sx={{ maxWidth: 850, backgroundColor: '#9e4d4d', color: 'white', marginTop: '40px' }}>
+
+        <Card sx={{
+            maxWidth: 850,
+            // backgroundColor: 'rgb(159, 28, 23)', 
+            backgroundColor: 'rgb(146, 144, 144)',
+            // backgroundColor: 'rgb(0, 0, 0)',
+            // color: 'rgb(146, 144, 144)',
+            // color: 'rgb(159, 28, 23)',
+            color: 'rgb(0, 0, 0)',
+            // fontSize: '1.8rem',
+            marginTop: '20px'
+        }}>
             <CardHeader
                 // avatar={
                 //     <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
@@ -93,7 +104,12 @@ export default function CardItem({ setHeaderLoad, setBannerload, setFilterLoad }
 
                 title={`Ejercicios de ${category}`}
                 subheader="Quema de grasas"
-                subheaderTypographyProps={{ style: { color: 'white' } }}
+                subheaderTypographyProps={{
+                    style: {
+                        // color: 'rgb(146, 144, 144)'
+                        color: 'rgb(0, 0, 0)'
+                    }
+                }}
             />
             <CardMedia
                 component="img"
@@ -102,17 +118,31 @@ export default function CardItem({ setHeaderLoad, setBannerload, setFilterLoad }
                 alt="Paella dish"
             />
             <CardContent>
-                <Typography variant="body2" color="white">
+                <Typography
+                    variant="body2"
+                    // color='rgb(146, 144, 144)'
+                    color='rgb(0, 0, 0)'
+                >
                     ¡Bienvenidos a nuestro Entrenamiento Completo para Todos los Niveles! Esta rutina de ejercicio de 30 minutos está diseñada para ayudarte a construir fuerza, aumentar la resistencia y mejorar la flexibilidad.
                 </Typography>
             </CardContent>
 
             <div style={{ display: 'flex', justifyContent: 'space-around', marginBottom: '0px' }}>
-                <Button variant="contained" style={{ backgroundColor: 'lightblue', color: 'black' }}
+                <Button variant="contained" style={{
+                    // backgroundColor: 'rgb(146, 144, 144)', 
+                    backgroundColor: 'rgb(159, 28, 23)',
+                    color: 'rgb(146, 144, 144)',
+                    fontWeight: 'bold',
+                }}
                     onClick={toggleNavigate}
                 > En Casa</Button>
 
-                <Button variant="contained" style={{ backgroundColor: '#f0c14b', color: 'black' }}
+                <Button variant="contained" style={{
+                    // backgroundColor: 'rgb(146, 144, 144)', 
+                    backgroundColor: 'rgb(159, 28, 23)',
+                    color: 'rgb(146, 144, 144)',
+                    fontWeight: 'bold',
+                }}
                     onClick={toggleNavigate}
                 > En el Gym</Button>
             </div>

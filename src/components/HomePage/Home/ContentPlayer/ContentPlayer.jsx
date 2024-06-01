@@ -7,7 +7,7 @@ import './contentPlayer.css';
 import { Button, Card, CardActions, CardContent, CardHeader, Collapse, Divider, Fade, Grow, IconButton, LinearProgress, Typography } from '@mui/material';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ReactPlayer from 'react-player'
-import { Box, margin } from '@mui/system';
+import { Box, border, color, margin } from '@mui/system';
 import { ExpandMore, FavoriteBorder } from '@mui/icons-material';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
@@ -74,6 +74,8 @@ function ContentPlayer({ setPlayerLoad, playerLoad }) {
 
     const buttonStyle = {
         margin: '4px',
+        color: 'rgb(159, 28, 23)',
+        border: '1px solid rgb(0, 0, 0)',
     }
 
     return (
@@ -95,7 +97,7 @@ function ContentPlayer({ setPlayerLoad, playerLoad }) {
             >
                 <div className='mediaPlayer' >
                     <Card
-                        style={{ width: '94%', height: 'auto', backgroundColor: 'lightgrey' }}
+                        style={{ width: '94%', height: 'auto', backgroundColor: 'rgb(146, 144, 144)' }}
                     >
                         <CardHeader
                             action={
@@ -108,7 +110,10 @@ function ContentPlayer({ setPlayerLoad, playerLoad }) {
                             title={
                                 <div>
                                     <IconButton aria-label="regresar"
-                                        style={{ fontSize: '0.8rem' }}
+                                        style={{
+                                            fontSize: '0.8rem',
+                                            // color: 'rgb(159, 28, 23)'
+                                        }}
                                         onClick={() => {
                                             localStorage.setItem("homeContent", "goBack");
                                             localStorage.setItem("categorytoDispatch", `${lastCategory}`);
@@ -129,7 +134,7 @@ function ContentPlayer({ setPlayerLoad, playerLoad }) {
                                 justifyContent: 'space-between',
                                 alignItems: 'center',
                                 padding: '10px 0px',
-                                paddingRight: '100px',
+                                paddingRight: '30%',
                             }}
                         />
                         <ReactPlayer
@@ -198,8 +203,9 @@ function ContentPlayer({ setPlayerLoad, playerLoad }) {
                             </Button>
 
                             <Button variant="contained"
-                                color="primary"
+                                // color="primary"
                                 // style={buttonStyle}
+                                style={{ backgroundColor: 'rgb(159, 28, 23)' }}
                                 sx={{ mr: 'auto' }}
                             >
                                 Chat
@@ -228,7 +234,7 @@ function ContentPlayer({ setPlayerLoad, playerLoad }) {
                                 onClick={handleExpandClick}
                                 aria-expanded={expanded}
                                 aria-label="show more"
-                                sx={{ ml: '20px', mr: '20px', color: 'grey' }}
+                                sx={{ ml: '20px', mr: '20px', color: 'primary' }}
                             >
                                 <ExpandMoreIcon />
                             </ExpandMore>

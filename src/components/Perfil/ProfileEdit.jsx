@@ -11,6 +11,7 @@ import {
     LinearProgress
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import { inputFieldsStyles } from './ProfileEdit'
 
 
 function ProfileEdit({ localUser, BackToTopButton, profilePicture, headerMountIn, contentMountIn, setHeaderMountIn, setContentMountIn }) {
@@ -39,7 +40,7 @@ function ProfileEdit({ localUser, BackToTopButton, profilePicture, headerMountIn
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
-    const typographyStyle = windowWidth >= 375 ? { marginTop: '10px', color: '#ffffff' } : { color: '#ffffff' };
+    const typographyStyle = windowWidth >= 375 ? { marginTop: '10px', color: 'rgb(146, 144, 144)' } : { color: '#rgb(146, 144, 144)' };
 
     const [dob, setDob] = useState(''); // Initialize state variable for dob
 
@@ -100,7 +101,7 @@ function ProfileEdit({ localUser, BackToTopButton, profilePicture, headerMountIn
                                 width: '150px',
                                 height: '150px',
                                 cursor: 'pointer',
-                                border: '3px solid #426E92'
+                                border: '3px solid rgb(159, 28, 23)'
 
                             }}
                             onClick={() => alert('Futuro cambio de imagen')}
@@ -145,9 +146,9 @@ function ProfileEdit({ localUser, BackToTopButton, profilePicture, headerMountIn
                                             <TextField
                                                 InputProps={{
                                                     style: {
-                                                        border: '3px solid #426E92',
+                                                        border: '3px solid rgb(159, 28, 23',
                                                         borderRadius: '30px',
-                                                        backgroundColor: '#D9D9D9'
+                                                        backgroundColor: 'rgb(146, 144, 144'
                                                     },
                                                 }}
                                                 fullWidth
@@ -165,9 +166,9 @@ function ProfileEdit({ localUser, BackToTopButton, profilePicture, headerMountIn
                                             <TextField
                                                 InputProps={{
                                                     style: {
-                                                        border: '3px solid #426E92',
+                                                        border: '3px solid rgb(159, 28, 23',
                                                         borderRadius: '30px',
-                                                        backgroundColor: '#D9D9D9'
+                                                        backgroundColor: 'rgb(146, 144, 144'
                                                     },
                                                 }}
                                                 fullWidth
@@ -185,9 +186,9 @@ function ProfileEdit({ localUser, BackToTopButton, profilePicture, headerMountIn
                                             <TextField
                                                 InputProps={{
                                                     style: {
-                                                        border: '3px solid #426E92',
+                                                        border: '3px solid rgb(159, 28, 23',
                                                         borderRadius: '30px',
-                                                        backgroundColor: '#D9D9D9'
+                                                        backgroundColor: 'rgb(146, 144, 144'
                                                     },
                                                 }}
                                                 fullWidth
@@ -207,9 +208,9 @@ function ProfileEdit({ localUser, BackToTopButton, profilePicture, headerMountIn
                                             <TextField
                                                 InputProps={{
                                                     style: {
-                                                        border: '3px solid #426E92',
+                                                        border: '3px solid rgb(159, 28, 23',
                                                         borderRadius: '30px',
-                                                        backgroundColor: '#D9D9D9'
+                                                        backgroundColor: 'rgb(146, 144, 144'
                                                     },
                                                 }}
                                                 fullWidth
@@ -227,9 +228,9 @@ function ProfileEdit({ localUser, BackToTopButton, profilePicture, headerMountIn
                                             <TextField
                                                 InputProps={{
                                                     style: {
-                                                        border: '3px solid #426E92',
+                                                        border: '3px solid rgb(159, 28, 23',
                                                         borderRadius: '30px',
-                                                        backgroundColor: '#D9D9D9'
+                                                        backgroundColor: 'rgb(146, 144, 144'
                                                     },
                                                 }}
                                                 fullWidth
@@ -247,9 +248,9 @@ function ProfileEdit({ localUser, BackToTopButton, profilePicture, headerMountIn
                                             <TextField
                                                 InputProps={{
                                                     style: {
-                                                        border: '3px solid #426E92',
+                                                        border: '3px solid rgb(159, 28, 23',
                                                         borderRadius: '30px',
-                                                        backgroundColor: '#D9D9D9'
+                                                        backgroundColor: 'rgb(146, 144, 144'
                                                     },
                                                 }}
                                                 fullWidth
@@ -267,9 +268,9 @@ function ProfileEdit({ localUser, BackToTopButton, profilePicture, headerMountIn
                                             <TextField
                                                 InputProps={{
                                                     style: {
-                                                        border: '3px solid #426E92',
+                                                        border: '3px solid rgb(159, 28, 23',
                                                         borderRadius: '30px',
-                                                        backgroundColor: '#D9D9D9'
+                                                        backgroundColor: 'rgb(146, 144, 144'
                                                     },
                                                 }}
                                                 fullWidth
@@ -287,9 +288,9 @@ function ProfileEdit({ localUser, BackToTopButton, profilePicture, headerMountIn
                                             <TextField
                                                 InputProps={{
                                                     style: {
-                                                        border: '3px solid #426E92',
+                                                        border: '3px solid rgb(159, 28, 23',
                                                         borderRadius: '30px',
-                                                        backgroundColor: '#D9D9D9'
+                                                        backgroundColor: 'rgb(146, 144, 144'
                                                     },
                                                 }}
                                                 fullWidth
@@ -307,9 +308,9 @@ function ProfileEdit({ localUser, BackToTopButton, profilePicture, headerMountIn
                                             <TextField
                                                 InputProps={{
                                                     style: {
-                                                        border: '3px solid #426E92',
+                                                        border: '3px solid rgb(159, 28, 23',
                                                         borderRadius: '30px',
-                                                        backgroundColor: '#D9D9D9'
+                                                        backgroundColor: 'rgb(146, 144, 144'
                                                     },
                                                 }}
                                                 fullWidth
@@ -325,9 +326,13 @@ function ProfileEdit({ localUser, BackToTopButton, profilePicture, headerMountIn
                                             xs={12}
                                         >
                                             <Button
+                                                style={{
+                                                    backgroundColor: 'rgb(159, 28, 23)',
+                                                    color: 'rgb(146, 144, 144)',
+                                                    fontWeight: 'bold',
+                                                }}
                                                 fullWidth
                                                 variant="contained"
-                                                color="primary"
                                                 type="submit"
                                                 onClick={(e) => {
                                                     e.preventDefault();

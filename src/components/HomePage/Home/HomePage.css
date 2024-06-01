@@ -10,7 +10,12 @@ div.home {
     /* width: 100%; */
     height: 170%;
     /* height: 50vh; */
-    background-image: url(/public/back.jpg);
+    /* background-image: url(/public/back.jpg); */
+    /* background-image: url(/public/back2.jpg); */
+    /* background-image: url(/public/back3.jpg); */
+    /* background-image: url(/public/back4.jpg); */
+    /* background-image: url(/public/back5.jpg); */
+    background-image: url(/public/back6.jpg);
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -33,7 +38,7 @@ div.home {
     justify-content: center;
     margin-bottom: 0;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-    /* color:  #D9D9D9; */
+    color: rgb(146, 144, 144);
 }
 
 

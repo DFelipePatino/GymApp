@@ -24,7 +24,9 @@
     border-radius: 25%;
     /* #426E92 D9D9D9 */
     /* background: linear-gradient(to bottom right, #426E92); */
-    background: linear-gradient(to bottom right, #D9D9D9, #D9D9D9);
+    /* background: linear-gradient(to bottom right, #D9D9D9, #D9D9D9); */
+    background: rgb(146, 144, 144);
+    /* color:rgb(159, 28, 23); */
     color: black;
     margin: 0 10px;
     display: flex;

@@ -146,7 +146,8 @@ function LogIn() {
                                     }}
                                 />
                                 <br />
-                                <a href='/form'>¿Olvidaste tu contraseña?</a>
+                                <p>¿Olvidaste tu contraseña?</p>
+                                {/* <a href='/form'>¿Olvidaste tu contraseña?</a> */}
                             </form>
 
 

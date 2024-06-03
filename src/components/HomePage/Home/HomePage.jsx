@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { getUser, getCardio, getContacto, getPilates, getCrossfit, getBoxing, getYoga, getDefault } from '../../../redux/actions';
+import { getUser, getMetodo1, getMetodo2, getPilates, getCrossfit, getBoxing, getYoga, getDefault, getMethods } from '../../../redux/actions';
 import HeaderNav from '../../HeaderNav/HeaderNav';
 import NavBar from '../NavBar/NavBar';
 import Cards from '../../cards/cards'
@@ -103,23 +103,23 @@ function HomePage({ BackToTopButton, headerLoad, bannerLoad, filterLoad, setHead
         }
         if (homeContent === "Cardio") {
             localStorage.setItem("category", "Cardio");
-            dispatch(getCardio());
+            dispatch(getMetodo1());
             scrolling()
         }
         if (homeContent === "Contacto") {
             localStorage.setItem("category", "Contacto");
-            dispatch(getContacto());
+            dispatch(getMetodo2());
             scrolling()
         }
 
         if (homeContent === "goBack") {
             switch (categoryToDispatch) {
                 case 'Contacto':
-                    dispatch(getContacto());
+                    dispatch(getMetodo2());
                     scrolling()
                     break;
                 case 'Cardio':
-                    dispatch(getCardio());
+                    dispatch(getMetodo1());
                     scrolling()
                     break;
                 case 'Yoga':
@@ -143,7 +143,7 @@ function HomePage({ BackToTopButton, headerLoad, bannerLoad, filterLoad, setHead
             }
         }
         else if (!homeContent) {
-            dispatch(getDefault());
+            dispatch(getMetodo1());
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 

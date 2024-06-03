@@ -7,10 +7,10 @@
     border-radius: 20px;
     width: 500px;
     height: 200px;
-    background-color: #426E92;
+    background-color: rgb(146, 144, 144);
     box-shadow: rgba(16, 14, 18, 0.5) 5px 4px 4px;
     margin-bottom: 40px;
-
+    /* border: 1px solid rgb(156, 28, 23); */
 }
 
 .paper {
@@ -33,7 +33,7 @@
 
 @media screen and (max-width: 935px) {
     .carousel {
-        width: 400px;
+        width: 395px;
     }
 
 

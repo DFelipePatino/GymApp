@@ -35,6 +35,8 @@
     align-items: flex-start;
     width: 110px;
     height: 100px;
+    border: 1px solid rgb(156, 28, 23);
+    /* border: 2px solid rgb(0, 0, 0); */
     /* box-shadow: rgba(16, 14, 18, 0.5) 6px 7px 3px; */
 }
 

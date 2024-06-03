@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import LogIn from './components/LogIn/LogIn.jsx';
@@ -14,6 +14,7 @@ import Layout from './components/Layout/Layout.jsx';
 import SimpleGrow from './components/test/test.jsx';
 import BackToTopButton from './components/backToTopButton/BackToTopButton.jsx';
 import ContentPlayer from './components/HomePage/Home/ContentPlayer/ContentPlayer.jsx';
+import { getMethods } from './redux/actions.js';
 
 function App() {
   const dispatch = useDispatch();
@@ -56,6 +57,10 @@ function App() {
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
   };
+
+  // useEffect(() => {
+  //   dispatch(getMethods())
+  // });
 
   return (
     <>

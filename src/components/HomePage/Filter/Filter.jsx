@@ -1,6 +1,6 @@
 import React from 'react'
-import { useDispatch } from 'react-redux';
-import { getCardio, getContacto, getPilates, getCrossfit, getBoxing, getYoga, emptyState } from '../../../redux/actions';
+import { useDispatch, useSelector } from 'react-redux';
+import { getMetodo1, getMetodo2, getPilates, getCrossfit, getBoxing, getYoga, emptyState } from '../../../redux/actions';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
@@ -20,16 +20,18 @@ function Filter({ inOutStatus, setInOutStatus }) {
 
     const dispatch = useDispatch();
 
+    const results = useSelector((state) => state.results);
+
     const loadFns = {
 
         loadCardio: () => {
-            dispatch(getCardio());
-            localStorage.setItem("category", "Cardio");
+            dispatch(getMetodo1());
+            localStorage.setItem("category", "Metodo1");
         },
 
         loadYoga: () => {
             dispatch(getYoga());
-            localStorage.setItem("category", "Yoga");
+            localStorage.setItem("category", "Metodo2");
         },
 
         loadPilates: () => {
@@ -38,7 +40,7 @@ function Filter({ inOutStatus, setInOutStatus }) {
         },
 
         loadContacto: () => {
-            dispatch(getContacto());
+            dispatch(getMetodo2());
             localStorage.setItem("category", "Contacto");
         },
 
@@ -62,6 +64,7 @@ function Filter({ inOutStatus, setInOutStatus }) {
                     <Button
                         className="button"
                         variant='contained'
+                        color='error'
                         key={index}
                         onClick={() => {
                             window.scrollTo({ top: 320, behavior: 'smooth' });
@@ -86,40 +89,40 @@ function Filter({ inOutStatus, setInOutStatus }) {
     const items = [
         {
             icon: <FitnessCenterIcon style={iconStyles.iconStyle1} />,
-            click: loadFns.loadPilates,
-            name: "Pilates",
+            click: loadFns.loadCardio,
+            name: results?.data && results?.data.length > 0 ? results?.data[0].nombre : "Loading",
             // description: "Probably the most random thing you have ever seen!"
         },
         {
             icon: <DirectionsBikeIcon style={iconStyles.iconStyle2} />,
-            click: loadFns.loadCardio,
-            name: "Cardio",
+            click: loadFns.loadPilates,
+            name: results?.data && results?.data.length > 0 ? results?.data[1].nombre : "Loading",
             // description: "Hello World!"
         },
         {
             icon: <SelfImprovementIcon style={iconStyles.iconStyle3} />,
             click: loadFns.loadYoga,
-            name: "Yoga",
+            name: results?.data && results?.data.length > 0 ? results?.data[2].nombre : "Loading",
             // description: "Hello World!"
         },
         {
             icon: <SportsGymnasticsIcon style={iconStyles.iconStyle1} />,
             click: loadFns.loadContacto,
-            name: "Contacto",
+            name: results?.data && results?.data.length > 0 ? results?.data[3].nombre : "Loading",
         },
         // description: "Hello World!"
 
         {
             icon: <SportsKabaddiIcon style={iconStyles.iconStyle2} />,
             click: loadFns.loadKickBoxing,
-            name: "Boxing",
+            name: results?.data && results?.data.length > 0 ? results?.data[4].nombre : "Loading",
         },
         // description: "Hello World!"
 
         {
             icon: <SportsHandballIcon style={iconStyles.iconStyle3} />,
             click: loadFns.loadCrossfit,
-            name: "Crossfit",
+            name: results?.data && results?.data.length > 0 ? results?.data[5].nombre : "Loading",
             // description: "Hello World!"
         },
     ];

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { getUser } from '../../redux/actions';
+import { useDispatch, useSelector } from 'react-redux';
+import { getMethods, getUser } from '../../redux/actions';
 import Box from '@mui/material/Box';
 import LinearProgress from '@mui/material/LinearProgress';
 import './Login.css';
@@ -9,6 +9,10 @@ import { Grow } from '@mui/material';
 import Swal from 'sweetalert2'
 
 function LogIn() {
+
+
+    const results = useSelector((state) => state.results);
+    console.log(results, 'results en login');
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -48,6 +52,8 @@ function LogIn() {
         } else if (password === onlyPassword) {
             localStorage.setItem("localUserName", username);
 
+            dispatch(getMethods())
+
             // console.log(localStorage.getItem("localUserName"), "has been set");
 
             setFormShown(false)
@@ -61,10 +67,11 @@ function LogIn() {
 
         const localUser = localStorage.getItem("localUserName")
 
-        if (localUser) {
+        if (localUser && results.length !== 0) {
             setTimeout(() => {
                 navigate('/home');
-            }, 3500);
+            }, 8000);
+
         }
 
         setUsername('');

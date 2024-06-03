@@ -5,6 +5,7 @@ export const GET_CROSSFIT = 'GET_CROSSFIT';
 export const GET_BOXING = 'GET_BOXING';
 export const GET_YOGA = 'GET_YOGA';
 export const EMPTY_STATE = 'EMPTY_STATE';
+export const GET_METHODS = 'GET_METHODS';
 
 export const GET_USER = 'GET_USER';
 

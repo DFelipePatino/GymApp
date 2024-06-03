@@ -2,7 +2,7 @@ import React from 'react'
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Drawer, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
-import { getCardio, getContacto, getPilates, getCrossfit, getBoxing, getYoga } from '../../redux/actions';
+import { getMetodo1, getMetodo2, getPilates, getCrossfit, getBoxing, getYoga } from '../../redux/actions';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
 import DirectionsBikeIcon from '@mui/icons-material/DirectionsBike';
@@ -71,9 +71,9 @@ function Layout({ localUser, setPlayerLoad, playerLoad, headerLoad, bannerLoad, 
         if (fn === 'clear') { localStorage.removeItem("homeContent") }
 
         if (fn === 'homePilates') { localStorage.setItem("homeContent", "Pilates"), dispatch(getPilates()) }
-        if (fn === 'homeCardio') { localStorage.setItem("homeContent", "Cardio"), dispatch(getCardio()) }
+        if (fn === 'homeCardio') { localStorage.setItem("homeContent", "Cardio"), dispatch(getMetodo1()) }
         if (fn === 'homeYoga') { localStorage.setItem("homeContent", "Yoga"), dispatch(getYoga()) }
-        if (fn === 'homeContacto') { localStorage.setItem("homeContent", "Contacto"), dispatch(getContacto()) }
+        if (fn === 'homeContacto') { localStorage.setItem("homeContent", "Contacto"), dispatch(getMetodo2()) }
         if (fn === 'homeBoxing') { localStorage.setItem("homeContent", "Boxing"), dispatch(getBoxing()) }
         if (fn === 'homeCrossfit') { localStorage.setItem("homeContent", "Crossfit"), dispatch(getCrossfit()) }
 
@@ -152,32 +152,32 @@ function Layout({ localUser, setPlayerLoad, playerLoad, headerLoad, bannerLoad, 
                         { type: 'divider', id: 'divider-1' },
 
                         {
-                            text: 'Pilates', icon: <FitnessCenterIcon
-                                style={iconStyles}
-                            />, fn: 'homePilates', route: '/home', id: '2'
-                        },
-                        {
-                            text: 'Cardio', icon: <DirectionsBikeIcon
+                            text: 'Metodo 1', icon: <DirectionsBikeIcon
                                 style={iconStyles}
                             />, fn: 'homeCardio', route: '/home', id: '3'
                         },
                         {
-                            text: 'Yoga', icon: <SelfImprovementIcon
+                            text: 'Metodo 2', icon: <FitnessCenterIcon
+                                style={iconStyles}
+                            />, fn: 'homePilates', route: '/home', id: '2'
+                        },
+                        {
+                            text: 'Metodo 3', icon: <SelfImprovementIcon
                                 style={iconStyles}
                             />, fn: 'homeYoga', route: '/home', id: '4'
                         },
                         {
-                            text: 'Contacto', icon: <SportsGymnasticsIcon
+                            text: 'Metodo 4', icon: <SportsGymnasticsIcon
                                 style={iconStyles}
                             />, fn: 'homeContacto', route: '/home', id: '5'
                         },
                         {
-                            text: 'Boxing', icon: <SportsKabaddiIcon
+                            text: 'Metodo 5', icon: <SportsKabaddiIcon
                                 style={iconStyles}
                             />, fn: 'homeBoxing', route: '/home', id: '6'
                         },
                         {
-                            text: 'Crossfit', icon: <SportsHandballIcon
+                            text: 'Metodo 6', icon: <SportsHandballIcon
                                 style={iconStyles}
                             />, fn: 'homeCrossfit', route: '/home', id: '7'
                         },
@@ -293,6 +293,7 @@ function Layout({ localUser, setPlayerLoad, playerLoad, headerLoad, bannerLoad, 
                     // backgroundColor: 'rgb(159, 28, 23)',
                     // color: 'white',
                     color: 'rgb(159, 28, 23)',
+                    // color: 'rgb(146, 144, 144)',
                     display: 'flex',
                     justifyContent: 'space-between',
                     /* position: sticky;
@@ -312,7 +313,12 @@ function Layout({ localUser, setPlayerLoad, playerLoad, headerLoad, bannerLoad, 
                 </IconButton>
                 <Typography
                     variant="h5" noWrap component="div"
-                    style={{ cursor: 'pointer' }}
+                    style={{
+                        cursor: 'pointer',
+                        fontWeight: 'bold',
+                        // color: 'rgb(146, 144, 144)' 
+                        color: 'rgb(156, 28, 23)'
+                    }}
                     onClick={() => {
 
                         localStorage.removeItem("homeContent");
@@ -436,7 +442,7 @@ function Layout({ localUser, setPlayerLoad, playerLoad, headerLoad, bannerLoad, 
                 }}
                 sx={{
                     display: { xs: 'block', sm: 'block' },
-                    '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth, height: '100%' },
+                    '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth, height: '100%', backgroundColor: 'rgb(146, 144, 144)', },
                 }}
             >
                 {drawer}

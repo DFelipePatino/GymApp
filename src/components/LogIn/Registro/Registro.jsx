@@ -35,7 +35,7 @@ function Registro({ BackToTopButton }) {
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
-    const typographyStyle = windowWidth >= 360 ? { marginTop: '50px', color: '#ffffff' } : { color: '#ffffff' };
+    const typographyStyle = windowWidth >= 360 ? { marginTop: '50px', color: 'rgb(146, 144, 144)' } : { color: 'rgb(146, 144, 144)' };
 
     const [dob, setDob] = useState(''); // Initialize state variable for dob
 
@@ -60,7 +60,8 @@ function Registro({ BackToTopButton }) {
 
         <div
             style={{
-                backgroundImage: 'linear-gradient(to bottom right, #924141, #924141, #d9d9d9)'
+                // backgroundImage: 'linear-gradient(to bottom right, #924141, #924141, #d9d9d9)',
+                backgroundImage: 'linear-gradient(to bottom right, rgb(0, 0, 0), rgb(0, 0, 0), rgb(159, 28, 23), rgb(146, 144, 144))'
             }}
         >
 
@@ -105,8 +106,9 @@ function Registro({ BackToTopButton }) {
                                 width: '150px',
                                 height: '150px',
                                 cursor: 'pointer',
-                                border: '3px solid #426E92',
+                                border: '3px solid rgb(159, 28, 23)',
                                 position: 'relative',
+                                backgroundColor: 'rgb(146, 144, 144)'
                                 // filter: 'blur(1px)'
                             }}
                             onClick={() => alert('Futuro cambio de imagen')}
@@ -136,9 +138,9 @@ function Registro({ BackToTopButton }) {
                                             <TextField
                                                 InputProps={{
                                                     style: {
-                                                        border: '3px solid #426E92',
+                                                        border: '3px solid rgb(159, 28, 23)',
                                                         borderRadius: '30px',
-                                                        backgroundColor: '#D9D9D9'
+                                                        backgroundColor: 'rgb(146, 144, 144)'
                                                     },
                                                 }}
                                                 fullWidth
@@ -156,9 +158,9 @@ function Registro({ BackToTopButton }) {
                                             <TextField
                                                 InputProps={{
                                                     style: {
-                                                        border: '3px solid #426E92',
+                                                        border: '3px solid rgb(159, 28, 23)',
                                                         borderRadius: '30px',
-                                                        backgroundColor: '#D9D9D9'
+                                                        backgroundColor: 'rgb(146, 144, 144)'
                                                     },
                                                 }}
                                                 fullWidth
@@ -176,9 +178,9 @@ function Registro({ BackToTopButton }) {
                                             <TextField
                                                 InputProps={{
                                                     style: {
-                                                        border: '3px solid #426E92',
+                                                        border: '3px solid rgb(159, 28, 23)',
                                                         borderRadius: '30px',
-                                                        backgroundColor: '#D9D9D9'
+                                                        backgroundColor: 'rgb(146, 144, 144)'
                                                     },
                                                 }}
                                                 fullWidth
@@ -198,9 +200,9 @@ function Registro({ BackToTopButton }) {
                                             <TextField
                                                 InputProps={{
                                                     style: {
-                                                        border: '3px solid #426E92',
+                                                        border: '3px solid rgb(159, 28, 23)',
                                                         borderRadius: '30px',
-                                                        backgroundColor: '#D9D9D9'
+                                                        backgroundColor: 'rgb(146, 144, 144)'
                                                     },
                                                 }}
                                                 fullWidth
@@ -218,9 +220,9 @@ function Registro({ BackToTopButton }) {
                                             <TextField
                                                 InputProps={{
                                                     style: {
-                                                        border: '3px solid #426E92',
+                                                        border: '3px solid rgb(159, 28, 23)',
                                                         borderRadius: '30px',
-                                                        backgroundColor: '#D9D9D9'
+                                                        backgroundColor: 'rgb(146, 144, 144)'
                                                     },
                                                 }}
                                                 fullWidth
@@ -238,9 +240,9 @@ function Registro({ BackToTopButton }) {
                                             <TextField
                                                 InputProps={{
                                                     style: {
-                                                        border: '3px solid #426E92',
+                                                        border: '3px solid rgb(159, 28, 23)',
                                                         borderRadius: '30px',
-                                                        backgroundColor: '#D9D9D9'
+                                                        backgroundColor: 'rgb(146, 144, 144)'
                                                     },
                                                 }}
                                                 fullWidth
@@ -258,9 +260,9 @@ function Registro({ BackToTopButton }) {
                                             <TextField
                                                 InputProps={{
                                                     style: {
-                                                        border: '3px solid #426E92',
+                                                        border: '3px solid rgb(159, 28, 23)',
                                                         borderRadius: '30px',
-                                                        backgroundColor: '#D9D9D9'
+                                                        backgroundColor: 'rgb(146, 144, 144)'
                                                     },
                                                 }}
                                                 fullWidth
@@ -278,9 +280,9 @@ function Registro({ BackToTopButton }) {
                                             <TextField
                                                 InputProps={{
                                                     style: {
-                                                        border: '3px solid #426E92',
+                                                        border: '3px solid rgb(159, 28, 23)',
                                                         borderRadius: '30px',
-                                                        backgroundColor: '#D9D9D9'
+                                                        backgroundColor: 'rgb(146, 144, 144)'
                                                     },
                                                 }}
                                                 fullWidth
@@ -298,9 +300,9 @@ function Registro({ BackToTopButton }) {
                                             <TextField
                                                 InputProps={{
                                                     style: {
-                                                        border: '3px solid #426E92',
+                                                        border: '3px solid rgb(159, 28, 23)',
                                                         borderRadius: '30px',
-                                                        backgroundColor: '#D9D9D9'
+                                                        backgroundColor: 'rgb(146, 144, 144)'
                                                     },
                                                 }}
                                                 fullWidth
@@ -355,7 +357,7 @@ function Registro({ BackToTopButton }) {
                                             <br />
                                             <br />
                                             <Button
-                                                style={{ backgroundColor: '#924141' }}
+                                                style={{ backgroundColor: 'rgb(159, 28, 23)' }}
                                                 fullWidth
                                                 variant="contained"
                                                 type="submit"

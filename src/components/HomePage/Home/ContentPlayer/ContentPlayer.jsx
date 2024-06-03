@@ -205,7 +205,7 @@ function ContentPlayer({ setPlayerLoad, playerLoad }) {
                             <Button variant="contained"
                                 // color="primary"
                                 // style={buttonStyle}
-                                style={{ backgroundColor: 'rgb(159, 28, 23)' }}
+                                style={{ backgroundColor: 'rgb(159, 28, 23)', color: 'rgb(146, 144, 144)', fontWeight: 'bold' }}
                                 sx={{ mr: 'auto' }}
                             >
                                 Chat

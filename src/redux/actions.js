@@ -22,7 +22,8 @@ import {
     GET_USER,
     SET_HOME_CONTENT,
     GET_DEFAULT,
-    EMPTY_STATE
+    EMPTY_STATE,
+    GET_METHODS
 } from "./action-types";
 
 export const emptyState = () => {
@@ -51,23 +52,37 @@ export const getDefault = () => {
     }
 }
 
-export const getCardio = () => {
-    return (dispatch) => {
-        const data = {
-            category: 'Cardio',
-            images: [
-                image10,
-                image11,
-                image6,
-                image7,
-            ]
-        }
-        dispatch({ type: GET_CARDIO, payload: data });
 
+const URL = "http://213.218.240.192:8082/onegym-back/api/metodos"
+
+export const getMethods = () => {
+    return async (dispatch) => {
+        try {
+            const data = await axios.get(URL);
+            dispatch({ type: GET_METHODS, payload: data });
+            console.log(data, "data in action");
+        } catch (error) {
+            console.error(error);
+        }
     }
 }
 
-export const getContacto = () => {
+export const getMetodo1 = () => {
+    return async (dispatch, getState) => {
+        try {
+            const { results } = getState();
+
+            const data = results.data[0];
+            console.log(data, "data in action");
+
+            dispatch({ type: GET_CARDIO, payload: data });
+        } catch (error) {
+            console.error(error);
+        }
+    }
+}
+
+export const getMetodo2 = () => {
     return (dispatch) => {
         const data = {
             category: 'Contacto',

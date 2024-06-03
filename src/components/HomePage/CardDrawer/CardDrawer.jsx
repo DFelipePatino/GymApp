@@ -98,7 +98,8 @@ function CardDrawer({ inOutStatus, setHeaderLoad, setBannerload, setFilterLoad }
                         overflow: 'auto',
                         // backgroundColor: 'rgb(159, 28, 23)',
                         // backgroundColor: 'rgba(146, 144, 144)',
-                        backgroundColor: 'rgba(0, 0, 0)',
+                        // backgroundColor: 'rgb(0, 0, 0)',
+                        backgroundImage: 'url(public/backCardItem.jpg)',
                         display: 'flex',
                         justifyContent: 'center',
                     }}

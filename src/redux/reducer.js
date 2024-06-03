@@ -8,12 +8,16 @@ import {
     GET_USER,
     SET_HOME_CONTENT,
     GET_DEFAULT,
-    EMPTY_STATE
+    EMPTY_STATE,
+    GET_METHODS
 } from "./action-types";
+
 const initialState = {
     results: {},
+    resultsFiltered: {},
     user: '',
-    homeContent: ''
+    homeContent: '',
+    // cardItem2View: 'false',
 }
 
 const reducer = (state = initialState, action) => {
@@ -32,40 +36,46 @@ const reducer = (state = initialState, action) => {
                 results: action.payload,
             }
 
-        case GET_CARDIO:
+        case GET_METHODS:
             return {
                 ...state,
                 results: action.payload,
+            }
+
+        case GET_CARDIO:
+            return {
+                ...state,
+                resultsFiltered: action.payload,
             }
 
         case GET_CONTACTO:
             return {
                 ...state,
-                results: action.payload,
+                resultsFiltered: action.payload,
             }
 
         case GET_YOGA:
             return {
                 ...state,
-                results: action.payload,
+                resultsFiltered: action.payload,
             }
 
         case GET_PILATES:
             return {
                 ...state,
-                results: action.payload,
+                resultsFiltered: action.payload,
             }
 
         case GET_CROSSFIT:
             return {
                 ...state,
-                results: action.payload,
+                resultsFiltered: action.payload,
             }
 
         case GET_BOXING:
             return {
                 ...state,
-                results: action.payload,
+                resultsFiltered: action.payload,
             }
 
         case GET_USER:

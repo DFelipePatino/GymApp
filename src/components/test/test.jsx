@@ -6,7 +6,7 @@ import Grow from '@mui/material/Grow';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import { useSelector } from 'react-redux';
 import { Button } from '@mui/material';
-import { getCardio } from '../../redux/actions';
+import { getMetodo1 } from '../../redux/actions';
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 
@@ -50,7 +50,7 @@ export default function SimpleGrow() {
         // </Box>
 
         <Box sx={{ display: 'flex', backgroundColor: 'white', margin: '70px' }}>
-            <Button onClick={() => { dispatch(getCardio()) }}>Click</Button>
+            <Button onClick={() => { dispatch(getMetodo1()) }}>Click</Button>
             <FormControlLabel
                 control={<Switch checked={checked}
                 // onChange={handleChange} 

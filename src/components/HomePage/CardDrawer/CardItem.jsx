@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
 import { toggleDrawer } from '../CardDrawer/CardDrawer';
@@ -17,7 +17,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import { Button, Divider } from '@mui/material';
+import { Button, Divider, Grow } from '@mui/material';
 import { emptyState } from '../../../redux/actions'
 import { useEffect } from 'react';
 import { ExpandMore } from '@mui/icons-material';
@@ -39,7 +39,27 @@ export default function CardItem({ setHeaderLoad, setBannerload, setFilterLoad }
 
     const navigate = useNavigate();
 
+    const resultsFiltered = useSelector((state) => state.resultsFiltered);
+
+    const entrenamientos = resultsFiltered
+
+    console.log(entrenamientos.entrenamientos, 'entrenamientos en cardItem');
+
+    const [expanded, setExpanded] = React.useState(false);
+
+    const [grow, setGrow] = React.useState(true);
+
     const timeouts = [];
+
+    const handleExpandClick = () => {
+        setGrow(false);
+        setTimeout(() => {
+            setExpanded(!expanded);
+        }, 500);
+        setTimeout(() => {
+            setGrow(true);
+        }, 700);
+    };
 
     const toggleNavigate = async () => {
         toggleDrawer(false)();
@@ -61,6 +81,7 @@ export default function CardItem({ setHeaderLoad, setBannerload, setFilterLoad }
     }
 
     useEffect(() => {
+        setExpanded(false);
         return () => {
             timeouts.forEach(timeout => clearTimeout(timeout));
         };
@@ -70,84 +91,104 @@ export default function CardItem({ setHeaderLoad, setBannerload, setFilterLoad }
 
     return (
 
-        <Card sx={{
-            maxWidth: 850,
-            // backgroundColor: 'rgb(159, 28, 23)', 
-            backgroundColor: 'rgb(146, 144, 144)',
-            // backgroundColor: 'rgb(0, 0, 0)',
-            // color: 'rgb(146, 144, 144)',
-            // color: 'rgb(159, 28, 23)',
-            color: 'rgb(0, 0, 0)',
-            // fontSize: '1.8rem',
-            marginTop: '20px'
-        }}>
-            <CardHeader
-                // avatar={
-                //     <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-                //         R
-                //     </Avatar>
-                // }
-                action={
-                    <div>
-                        <IconButton aria-label="add to favorites"
-                        // onClick={() => navigate('/profile2')}
+        <Grow
+            in={grow} timeout={500}>
+
+            <Card sx={{
+                maxWidth: 850,
+                backgroundColor: 'rgb(146, 144, 144)',
+                color: 'rgb(0, 0, 0)',
+                marginTop: '20px',
+                marginBottom: '10px',
+            }}>
+                {!expanded ? (
+                    <>
+                        <CardHeader
+                            action={
+                                <div>
+                                    <IconButton aria-label="add to favorites">
+                                        <FavoriteIcon />
+                                    </IconButton>
+                                    <IconButton aria-label="share">
+                                        <ShareIcon />
+                                    </IconButton>
+                                </div>
+                            }
+                            title={`Ejercicios de ${category}`}
+                            subheader="Quema de grasas"
+                            subheaderTypographyProps={{
+                                style: {
+                                    color: 'rgb(0, 0, 0)'
+                                }
+                            }}
+                        />
+                        <CardContent
+                            style={{ backgroundColor: 'rgb(0, 0, 0)', paddingLeft: '0px', paddingRight: '0px' }}
                         >
-                            <FavoriteIcon />
-                        </IconButton>
-                        <IconButton aria-label="share"
-                        // onClick={() => navigate('/profile2')}
-                        >
-                            <ShareIcon />
-                        </IconButton>
-                    </div>
-                }
+                            <CardMedia
+                                style={{ width: '100%' }}
+                                component="img"
+                                height="194"
+                                image="/Screenshot1.png"
+                            />
+                        </CardContent>
 
-                title={`Ejercicios de ${category}`}
-                subheader="Quema de grasas"
-                subheaderTypographyProps={{
-                    style: {
-                        // color: 'rgb(146, 144, 144)'
-                        color: 'rgb(0, 0, 0)'
-                    }
-                }}
-            />
-            <CardMedia
-                component="img"
-                height="194"
-                image="/Screenshot1.png"
-                alt="Paella dish"
-            />
-            <CardContent>
-                <Typography
-                    variant="body2"
-                    // color='rgb(146, 144, 144)'
-                    color='rgb(0, 0, 0)'
-                >
-                    ¡Bienvenidos a nuestro Entrenamiento Completo para Todos los Niveles! Esta rutina de ejercicio de 30 minutos está diseñada para ayudarte a construir fuerza, aumentar la resistencia y mejorar la flexibilidad.
-                </Typography>
-            </CardContent>
+                        <CardContent>
+                            <Typography
+                                variant="body2"
+                                color='rgb(0, 0, 0)'
+                            >
+                                ¡Bienvenidos a nuestro Entrenamiento Completo para Todos los Niveles! Esta rutina de ejercicio de 30 minutos está diseñada para ayudarte a construir fuerza, aumentar la resistencia y mejorar la flexibilidad.
+                            </Typography>
+                        </CardContent>
 
-            <div style={{ display: 'flex', justifyContent: 'space-around', marginBottom: '0px' }}>
-                <Button variant="contained" style={{
-                    // backgroundColor: 'rgb(146, 144, 144)', 
-                    backgroundColor: 'rgb(159, 28, 23)',
-                    color: 'rgb(146, 144, 144)',
-                    fontWeight: 'bold',
-                }}
-                    onClick={toggleNavigate}
-                > En Casa</Button>
+                        <div style={{ display: 'flex', justifyContent: 'space-around', marginBottom: '0px' }}>
+                            <Button variant="contained" style={{
+                                backgroundColor: 'rgb(159, 28, 23)',
+                                color: 'rgb(146, 144, 144)',
+                                fontWeight: 'bold',
+                            }}
+                                onClick={handleExpandClick}
+                            >En el Gym</Button>
 
-                <Button variant="contained" style={{
-                    // backgroundColor: 'rgb(146, 144, 144)', 
-                    backgroundColor: 'rgb(159, 28, 23)',
-                    color: 'rgb(146, 144, 144)',
-                    fontWeight: 'bold',
-                }}
-                    onClick={toggleNavigate}
-                > En el Gym</Button>
-            </div>
-
-
-        </Card >
+                            <Button variant="contained" style={{
+                                backgroundColor: 'rgb(159, 28, 23)',
+                                color: 'rgb(146, 144, 144)',
+                                fontWeight: 'bold',
+                            }}
+                                onClick={handleExpandClick}
+                            >En Casa</Button>
+                        </div>
+                    </>
+                ) : (
+                    <>
+                        <CardHeader
+                            title={`Ejercicios de ${category}`}
+                            // subheader="Quema de grasas"
+                            subheaderTypographyProps={{
+                                style: {
+                                    color: 'rgb(0, 0, 0)'
+                                }
+                            }}
+                        />
+                        {entrenamientos.entrenamientos && entrenamientos.entrenamientos.map((entrenamiento, index) => (
+                            <CardContent key={index}>
+                                <Typography variant="body2" color="text.secondary"
+                                    style={{ cursor: 'pointer' }}
+                                    onClick={toggleNavigate}
+                                >
+                                    {entrenamiento.nombre}
+                                </Typography>
+                            </CardContent>
+                        ))}
+                        <CardMedia
+                            component="img"
+                            height="194"
+                            image={"/Screenshot1.png"}
+                        />
+                    </>
+                )}
+            </Card>
+        </Grow>
     );
 }

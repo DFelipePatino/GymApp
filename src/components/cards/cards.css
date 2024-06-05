@@ -18,23 +18,23 @@
     /* background-color: aqua; */
 }
 
-@media (min-width: 600px) {
+/* @media (min-width: 600px) {
 
     body .css-1oqqzyl-MuiContainer-root {
         padding-left: 80px;
         padding-right: 24px;
         /* height: 300px; */
 
-    }
-}
+/* } */
+/* } */
 
-.resultsTitle {
+*/ .resultsTitle {
     margin-top: 20px;
     margin-bottom: 4px;
     display: flex;
     /* justify-content: center; */
     color: rgb(146, 144, 144);
-    font-size: 30px;
+    /* font-size: 30px; */
     font-weight: bold;
     /* position: sticky; */
     top: 150px;

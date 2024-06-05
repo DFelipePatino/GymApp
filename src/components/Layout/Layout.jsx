@@ -2,7 +2,7 @@ import React from 'react'
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Drawer, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
-import { getMetodo1, getMetodo2, getPilates, getCrossfit, getBoxing, getYoga } from '../../redux/actions';
+import { getMetodo1, getMetodo2, getMetodo3, getMetodo4, getMetodo5, getMetodo6 } from '../../redux/actions';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
 import DirectionsBikeIcon from '@mui/icons-material/DirectionsBike';
@@ -43,6 +43,8 @@ function Layout({ localUser, setPlayerLoad, playerLoad, headerLoad, bannerLoad, 
     const navigate = useNavigate();
 
     const user = useSelector((state) => state.user);
+    const resultsData = useSelector((state) => state.results.data);
+    // console.log(resultsData, 'resultsData en layout');
 
     const userInitials = localUser?.split(' ').map((n) => n ? n[0].toUpperCase() : '').join('');
 
@@ -70,12 +72,42 @@ function Layout({ localUser, setPlayerLoad, playerLoad, headerLoad, bannerLoad, 
 
         if (fn === 'clear') { localStorage.removeItem("homeContent") }
 
-        if (fn === 'homePilates') { localStorage.setItem("homeContent", "Pilates"), dispatch(getPilates()) }
-        if (fn === 'homeCardio') { localStorage.setItem("homeContent", "Cardio"), dispatch(getMetodo1()) }
-        if (fn === 'homeYoga') { localStorage.setItem("homeContent", "Yoga"), dispatch(getYoga()) }
-        if (fn === 'homeContacto') { localStorage.setItem("homeContent", "Contacto"), dispatch(getMetodo2()) }
-        if (fn === 'homeBoxing') { localStorage.setItem("homeContent", "Boxing"), dispatch(getBoxing()) }
-        if (fn === 'homeCrossfit') { localStorage.setItem("homeContent", "Crossfit"), dispatch(getCrossfit()) }
+        switch (fn) {
+            case 'homeM1':
+                localStorage.setItem("homeContent", "Metodo 1");
+                dispatch(getMetodo1(0));
+                break;
+            case 'homeM2':
+                // localStorage.setItem("homeContent", "Metodo 2");
+                dispatch(getMetodo1(0));
+                break;
+            case 'homeM3':
+                // localStorage.setItem("homeContent", "Metodo 3");
+                dispatch(getMetodo1(0));
+                break;
+            case 'homeM4':
+                // localStorage.setItem("homeContent", "Metodo 4");
+                dispatch(getMetodo1(0));
+                break;
+            case 'homeM5':
+                // localStorage.setItem("homeContent", "Metodo 5");
+                dispatch(getMetodo1(0));
+                break;
+            case 'homeM6':
+                // localStorage.setItem("homeContent", "Metodo 6");
+                dispatch(getMetodo1(0));
+                break;
+            default:
+                break;
+        }
+
+
+        // if (fn === 'homeM1') { localStorage.setItem("homeContent", "Metodo 1"), dispatch(getMetodo1()) }
+        // if (fn === 'homeM2') { localStorage.setItem("homeContent", "Metodo 2"), dispatch(getMetodo2()) }
+        // if (fn === 'homeM3') { localStorage.setItem("homeContent", "Metodo 3"), dispatch(getMetodo3()) }
+        // if (fn === 'homeM4') { localStorage.setItem("homeContent", "Metodo 4"), dispatch(getMetodo4()) }
+        // if (fn === 'homeM5') { localStorage.setItem("homeContent", "Metodo 5"), dispatch(getMetodo5()) }
+        // if (fn === 'homeM6') { localStorage.setItem("homeContent", "Metodo 6"), dispatch(getMetodo6()) }
 
         if (location.pathname !== '/home') {
             navigate(route);
@@ -92,6 +124,15 @@ function Layout({ localUser, setPlayerLoad, playerLoad, headerLoad, bannerLoad, 
         }
 
     };
+
+    const mappedData = resultsData?.map((item, index) => ({
+        text: item.nombre,
+        icon: <DirectionsBikeIcon style={iconStyles} />, // replace with your actual icon logic
+        // fn: `homeM${index + 1}`,
+        fn: 'homeM1',
+        route: '/home',
+        id: item.id.toString(),
+    }));
 
     let drawer;
 
@@ -137,79 +178,51 @@ function Layout({ localUser, setPlayerLoad, playerLoad, headerLoad, bannerLoad, 
     }
 
     if (location.pathname !== "/home" && location.pathname !== "/profileedit") {
-
         drawer = (
             <div>
                 <Toolbar />
                 <List>
-                    {[
-                        {
-                            text: 'Home', icon: <HomeIcon
-                                style={iconStyles2}
-                            />, fn: "clear", route: '/home', id: '1'
-                        },
+                    {
+                        [
+                            {
+                                text: 'Home', icon: <HomeIcon
+                                    style={iconStyles2}
+                                />, fn: "clear", route: '/home', id: '1'
+                            },
 
-                        { type: 'divider', id: 'divider-1' },
+                            { type: 'divider', id: 'divider-1' },
 
-                        {
-                            text: 'Metodo 1', icon: <DirectionsBikeIcon
-                                style={iconStyles}
-                            />, fn: 'homeCardio', route: '/home', id: '3'
-                        },
-                        {
-                            text: 'Metodo 2', icon: <FitnessCenterIcon
-                                style={iconStyles}
-                            />, fn: 'homePilates', route: '/home', id: '2'
-                        },
-                        {
-                            text: 'Metodo 3', icon: <SelfImprovementIcon
-                                style={iconStyles}
-                            />, fn: 'homeYoga', route: '/home', id: '4'
-                        },
-                        {
-                            text: 'Metodo 4', icon: <SportsGymnasticsIcon
-                                style={iconStyles}
-                            />, fn: 'homeContacto', route: '/home', id: '5'
-                        },
-                        {
-                            text: 'Metodo 5', icon: <SportsKabaddiIcon
-                                style={iconStyles}
-                            />, fn: 'homeBoxing', route: '/home', id: '6'
-                        },
-                        {
-                            text: 'Metodo 6', icon: <SportsHandballIcon
-                                style={iconStyles}
-                            />, fn: 'homeCrossfit', route: '/home', id: '7'
-                        },
+                            ...mappedData, // spread mappedData into the parent array
 
-                        { type: 'divider', id: 'divider-2' },
+                            { type: 'divider', id: 'divider-2' },
 
-                        {
-                            text: 'Chat', icon: <ChatIcon
-                                style={iconStyles2}
-                            />, route: '/chat', id: '8'
-                        },
-                        {
-                            text: 'Log Out', icon: <LogoutIcon
-                                style={iconStyles}
-                            />, route: '/', shouldClearLocal: true, id: '9'
-                        }
-                    ].map((item, index) => (
-                        item.type === 'divider' ?
-                            <Divider key={item.id} component="li" aria-hidden="true"
-                                style={{
-                                    height: '10px', margin: '10px 0', color: 'rgb(159, 28, 23)'
-                                }}
-                            /> :
-                            <ListItem key={item.id} disablePadding>
-                                <ListItemButton onClick={() => handleMenuClick(item.fn, item.route, item.shouldClearLocal)}>
-                                    <ListItemIcon>
-                                        {item.icon}
-                                    </ListItemIcon>
-                                    <ListItemText primary={item.text} />
-                                </ListItemButton>
-                            </ListItem>
-                    ))}
+                            {
+                                text: 'Chat', icon: <ChatIcon
+                                    style={iconStyles2}
+                                />, route: '/chat', id: '8'
+                            },
+                            {
+                                text: 'Log Out', icon: <LogoutIcon
+                                    style={iconStyles}
+                                />, route: '/', shouldClearLocal: true, id: '9'
+                            }
+
+                        ].map((item, index) => (
+                            item.type === 'divider' ?
+                                <Divider key={item.id} component="li" aria-hidden="true"
+                                    style={{
+                                        height: '10px', margin: '10px 0', color: 'rgb(159, 28, 23)'
+                                    }}
+                                /> :
+                                <ListItem key={item.id} disablePadding>
+                                    <ListItemButton onClick={() => handleMenuClick(item.fn, item.route, item.shouldClearLocal)}>
+                                        <ListItemIcon>
+                                            {item.icon}
+                                        </ListItemIcon>
+                                        <ListItemText primary={item.text} />
+                                    </ListItemButton>
+                                </ListItem>
+                        ))}
                 </List>
             </div>
         );
@@ -316,8 +329,8 @@ function Layout({ localUser, setPlayerLoad, playerLoad, headerLoad, bannerLoad, 
                     style={{
                         cursor: 'pointer',
                         fontWeight: 'bold',
-                        // color: 'rgb(146, 144, 144)' 
-                        color: 'rgb(156, 28, 23)'
+                        color: 'rgb(256, 256, 256)'
+                        // color: 'rgb(156, 28, 23)'
                     }}
                     onClick={() => {
 
@@ -367,7 +380,7 @@ function Layout({ localUser, setPlayerLoad, playerLoad, headerLoad, bannerLoad, 
                     }
                     }
                 >
-                    One Gym
+                    One
                 </Typography>
                 {userInitials === "" ? (
                     <AccountCircleIcon style={ACI} />

@@ -1,5 +1,6 @@
 import * as React from 'react';
 import CardItem from '../CardDrawer/CardItem';
+import { getCrdItem2View } from '../../../redux/actions';
 import PropTypes from 'prop-types';
 import { Global } from '@emotion/react';
 import { styled } from '@mui/material/styles';
@@ -11,6 +12,7 @@ import Skeleton from '@mui/material/Skeleton';
 import Typography from '@mui/material/Typography';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import { Card, CardHeader } from '@mui/material';
+import { useDispatch } from 'react-redux';
 
 const drawerBleeding = 56;
 
@@ -42,8 +44,14 @@ export const toggleDrawer = (newOpen) => () => {
 
 function CardDrawer({ inOutStatus, setHeaderLoad, setBannerload, setFilterLoad }) {
 
-
     [open, setOpen] = React.useState(false);
+
+    // console.log(open, 'open en cardDrawer');
+
+    // const toggleDrawer = (a, dia) => () => {
+    //     console.log(dia, 'dia en toggleDrawer');
+    //     dispatch(getCrdItem2View(dia));
+    // };
 
     return (
         <Root>

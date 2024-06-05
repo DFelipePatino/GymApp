@@ -65,6 +65,6 @@ export const buttonStyle = {
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'rgb(159, 28, 23)',
-    color: 'rgb(146, 144, 144)',
-    fontWeight: 'bold',
+    // color: 'rgb(146, 144, 144)',
+    // fontWeight: 'bold',
 }

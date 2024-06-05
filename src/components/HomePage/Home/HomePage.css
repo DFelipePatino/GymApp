@@ -39,9 +39,16 @@ div.home {
     font-size: 50px;
     display: flex;
     justify-content: center;
-    margin-bottom: 0;
+    padding-left: 8%;
+
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
     color: rgb(146, 144, 144);
+}
+
+.filterContainerDivHome h3 {
+    color: rgb(146, 144, 144);
+    padding-left: 5%;
+
 }
 
 
@@ -64,6 +71,7 @@ div.home {
         display: flex;
         justify-content: flex-end;
         padding: 4px;
+        margin-bottom: 0;
         padding-bottom: 25px;
         padding-left: 6%;
         flex-direction: row-reverse;

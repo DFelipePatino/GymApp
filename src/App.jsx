@@ -54,13 +54,13 @@ function App() {
 
   const [open, setOpen] = React.useState(false);
 
-  const toggleDrawer = (newOpen) => () => {
-    setOpen(newOpen);
-  };
+  // const toggleDrawer = (newOpen) => () => {
+  //   setOpen(newOpen);
+  // };
 
-  // useEffect(() => {
-  //   dispatch(getMethods())
-  // });
+  useEffect(() => {
+    dispatch(getMethods())
+  });
 
   return (
     <>

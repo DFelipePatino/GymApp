@@ -1,15 +1,17 @@
 import { Padding } from "@mui/icons-material"
 import { backdropClasses } from "@mui/material"
-import { color } from "@mui/system"
+import { color, height, margin } from "@mui/system"
 
 
 export const containerStyles = {
-    display: 'flex',
-    flexDirection: 'column',
-    position: 'sticky',
-    top: '65px',
+    // display: 'flex',
+    justifyContent: 'space-evenly',
+    // flexDirection: 'column',
+    // position: 'sticky',
+    // top: '65px',
     backdropFilter: 'blur(2px)',
     WebkitBackdropFilter: 'blur(2px)',
+    // backgroundColor: 'transparent',
 
     // '@media screen and (max-width: 730px) and (max-width: 935px)': {
     //     position: 'sticky',
@@ -22,23 +24,29 @@ export const containerStyles = {
 
 export const navButtonsWrapperProps2 = {
     style: {
-        bottom: "0px",
-        top: "0px",
-        right: "0px",
-        transform: "none",
-        height: "24%",
-        width: "15%",
-        position: "relative",
+        // bottom: "0px",
+        // top: "0px",
+        // right: "0px",
+        // transform: "none",
+        // height: "24%",
+        // width: "15%",
+        // position: "relative",
     }
 }
 
 export const navButtonsProps2 = {
     style: {
         backgroundColor: 'transparent',
-        color: 'black',
+        color: 'white',
+        // position: 'absolute',
+        // height: '100%',
+        // backgroundColor: 'transparent',
+        // zIndex: 1,
+        // top: '-230px',
+        // right: '-62px',
+        margin: '0px',
     }
 }
-
 
 
 //Icon Styles

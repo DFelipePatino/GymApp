@@ -11,6 +11,7 @@ import CardActions from '@mui/material/CardActions';
 import Collapse from '@mui/material/Collapse';
 import Avatar from '@mui/material/Avatar';
 import IconButton from '@mui/material/IconButton';
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import Typography from '@mui/material/Typography';
 import { red } from '@mui/material/colors';
 import FavoriteIcon from '@mui/icons-material/Favorite';
@@ -21,6 +22,7 @@ import { Button, Divider, Grow } from '@mui/material';
 import { emptyState } from '../../../redux/actions'
 import { useEffect } from 'react';
 import { ExpandMore } from '@mui/icons-material';
+import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 
 // const ExpandMore = styled((props) => {
 //     const { expand, ...other } = props;
@@ -40,10 +42,12 @@ export default function CardItem({ setHeaderLoad, setBannerload, setFilterLoad }
     const navigate = useNavigate();
 
     const resultsFiltered = useSelector((state) => state.resultsFiltered);
+    // console.log(resultsFiltered, 'resultsFiltered en cardItem');
 
-    const entrenamientos = resultsFiltered
 
-    console.log(entrenamientos.entrenamientos, 'entrenamientos en cardItem');
+    // console.log(resultsFiltered.entrenamientos, 'entrenamientos en cardItem');
+
+    // const dia = resultsFiltered.entrenamientos
 
     const [expanded, setExpanded] = React.useState(false);
 
@@ -53,6 +57,7 @@ export default function CardItem({ setHeaderLoad, setBannerload, setFilterLoad }
 
     const handleExpandClick = () => {
         setGrow(false);
+        //dispatch de contenido en 2view
         setTimeout(() => {
             setExpanded(!expanded);
         }, 500);
@@ -63,7 +68,7 @@ export default function CardItem({ setHeaderLoad, setBannerload, setFilterLoad }
 
     const toggleNavigate = async () => {
         toggleDrawer(false)();
-        dispatch(emptyState());
+        // dispatch(emptyState());
         window.scrollTo({ top: 0, behavior: 'smooth' });
 
         setTimeout(() => {
@@ -89,17 +94,22 @@ export default function CardItem({ setHeaderLoad, setBannerload, setFilterLoad }
 
     const category = localStorage.getItem("category");
 
+    // const currentMetodo = 
+
     return (
 
         <Grow
             in={grow} timeout={500}>
 
-            <Card sx={{
+            <Card style={{
                 maxWidth: 850,
-                backgroundColor: 'rgb(146, 144, 144)',
                 color: 'rgb(0, 0, 0)',
+                backgroundColor: 'rgb(146, 144, 144)',
+                // backgroundImage: 'url(/Screenshot1.png)',
+                // backgroundColor: 'rgb(0, 0, 0)',
                 marginTop: '20px',
                 marginBottom: '10px',
+
             }}>
                 {!expanded ? (
                     <>
@@ -114,7 +124,7 @@ export default function CardItem({ setHeaderLoad, setBannerload, setFilterLoad }
                                     </IconButton>
                                 </div>
                             }
-                            title={`Ejercicios de ${category}`}
+                            title={category}
                             subheader="Quema de grasas"
                             subheaderTypographyProps={{
                                 style: {
@@ -163,22 +173,55 @@ export default function CardItem({ setHeaderLoad, setBannerload, setFilterLoad }
                 ) : (
                     <>
                         <CardHeader
-                            title={`Ejercicios de ${category}`}
-                            // subheader="Quema de grasas"
-                            subheaderTypographyProps={{
-                                style: {
-                                    color: 'rgb(0, 0, 0)'
-                                }
-                            }}
-                        />
-                        {entrenamientos.entrenamientos && entrenamientos.entrenamientos.map((entrenamiento, index) => (
-                            <CardContent key={index}>
-                                <Typography variant="body2" color="text.secondary"
-                                    style={{ cursor: 'pointer' }}
-                                    onClick={toggleNavigate}
+                            action={
+                                <div
+                                    style={{ marginTop: '6px', fontSize: '1.5rem', padding: '4px', display: 'flex', justifyContent: 'center', paddingRight: '110%' }}
                                 >
-                                    {entrenamiento.nombre}
-                                </Typography>
+                                    {/* {`Entrenamientos de ${category}`} */}
+                                    Entrenamientos
+                                </div>
+                            }
+
+                            title={
+                                <div
+                                    style={{ marginLeft: '-10px' }}
+                                >
+                                    <IconButton aria-label="regresar"
+                                        style={{
+                                            fontSize: '0.8rem',
+                                            // color: 'rgb(159, 28, 23)'
+                                        }}
+                                        onClick={() => {
+                                            handleExpandClick();
+                                        }}
+                                    >
+                                        <ArrowBackIosNewIcon />
+                                        {/* Regresar */}
+                                    </IconButton>
+                                </div>}
+                        />
+
+
+
+                        {resultsFiltered.entrenamientos && resultsFiltered.entrenamientos.map((entrenamiento, index) => (
+                            <CardContent key={index}
+                                style={{ paddingBottom: '0' }}>
+
+                                {entrenamiento.rutinas.map((rutina, index) => (
+                                    <div key={index}>
+                                        <KeyboardArrowRightIcon
+                                            style={{ color: 'rgb(156, 28, 23)', cursor: 'pointer' }}
+                                        />
+                                        <Typography variant="body6" color="text.secondary"
+                                            style={{ cursor: 'pointer' }}
+                                            onClick={toggleNavigate}
+                                        >
+                                            {rutina.nombre}
+                                        </Typography>
+                                        <br />
+                                    </div>
+
+                                ))}
                             </CardContent>
                         ))}
                         <CardMedia

@@ -9,7 +9,9 @@ import {
     SET_HOME_CONTENT,
     GET_DEFAULT,
     EMPTY_STATE,
-    GET_METHODS
+    GET_METHODS,
+    CRD_ITEM_2VIEW,
+    SET_METODO_ID
 } from "./action-types";
 
 const initialState = {
@@ -17,7 +19,11 @@ const initialState = {
     resultsFiltered: {},
     user: '',
     homeContent: '',
-    // cardItem2View: 'false',
+    cardItem2View: {},
+    metodoID: '',
+    entrenamientoID: '',
+    rutinaID: '',
+
 }
 
 const reducer = (state = initialState, action) => {
@@ -27,7 +33,7 @@ const reducer = (state = initialState, action) => {
         case GET_DEFAULT:
             return {
                 ...state,
-                results: action.payload,
+                resultsFiltered: action.payload,
             }
 
         case EMPTY_STATE:
@@ -40,6 +46,19 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 results: action.payload,
+            }
+
+
+        case CRD_ITEM_2VIEW:
+            return {
+                ...state,
+                cardItem2View: action.payload,
+            }
+
+        case SET_METODO_ID:
+            return {
+                ...state,
+                metodoID: action.payload,
             }
 
         case GET_CARDIO:

@@ -7,6 +7,10 @@ export const GET_YOGA = 'GET_YOGA';
 export const EMPTY_STATE = 'EMPTY_STATE';
 export const GET_METHODS = 'GET_METHODS';
 
+export const SET_METODO_ID = 'SET_METODO_ID';
+
+export const CRD_ITEM_2VIEW = 'CRD_ITEM_2VIEW';
+
 export const GET_USER = 'GET_USER';
 
 export const SET_HOME_CONTENT = 'SET_HOME_CONTENT';

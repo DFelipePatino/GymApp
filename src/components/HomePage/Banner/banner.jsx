@@ -54,6 +54,17 @@ function banner() {
         >
 
             <Carousel
+                // style={{
+                //     overflow: "hidden",
+                //     display: "flex",
+                //     justifyContent: "center",
+                //     borderRadius: "20px",
+                //     width: "500px",
+                //     height: "200px",
+                //     backgroundColor: "rgb(146, 144, 144)",
+                //     boxShadow: "rgba(16, 14, 18, 0.5) 5px 4px 4px",
+                //     marginBottom: "40px"
+                // }}
                 className="carousel"
                 navButtonsAlwaysVisible={true}
                 navButtonsAlwaysInvisible={false}

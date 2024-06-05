@@ -23,7 +23,9 @@ import {
     SET_HOME_CONTENT,
     GET_DEFAULT,
     EMPTY_STATE,
-    GET_METHODS
+    GET_METHODS,
+    CRD_ITEM_2VIEW,
+    SET_METODO_ID
 } from "./action-types";
 
 export const emptyState = () => {
@@ -41,17 +43,46 @@ export const emptyState = () => {
 
 export const getDefault = () => {
     return (dispatch) => {
-        const data = {
-            category: 'Explora tu contenido aqui!',
-            images: [
-
-            ]
+        const data =
+        {
+            id: 1,
+            // nombre: 'Explora tu contenido aqui!',
+            nombre: '',
         }
+
         dispatch({ type: GET_DEFAULT, payload: data });
 
     }
 }
 
+export const getCrdItem2View = (dia) => {
+    return async (dispatch, getState) => {
+        try {
+            const { resultsFiltered } = getState();
+
+            // Check if entrenamientos and the dia property exist before trying to access rutinas
+            if (resultsFiltered.entrenamientos && resultsFiltered.entrenamientos[dia]) {
+                const data = resultsFiltered.entrenamientos[dia].rutinas;
+                // console.log(data, "data 0 in action");
+
+                dispatch({ type: CRD_ITEM_2VIEW, payload: data });
+            } else {
+                console.log("entrenamientos or dia property not found");
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
+}
+
+export const setMetodoID = (metodoIndex) => {
+    return (dispatch) => {
+        const data = metodoIndex;
+
+        dispatch({ type: SET_METODO_ID, payload: data });
+
+    }
+}
 
 const URL = "http://213.218.240.192:8082/onegym-back/api/metodos"
 
@@ -60,20 +91,20 @@ export const getMethods = () => {
         try {
             const data = await axios.get(URL);
             dispatch({ type: GET_METHODS, payload: data });
-            console.log(data, "data in action");
+            // console.log(data, "data in action");
         } catch (error) {
             console.error(error);
         }
     }
 }
 
-export const getMetodo1 = () => {
+export const getMetodo1 = (index) => {
     return async (dispatch, getState) => {
         try {
             const { results } = getState();
 
-            const data = results.data[0];
-            console.log(data, "data in action");
+            const data = results.data[index];
+            // console.log(data, index, "results.data  in action");
 
             dispatch({ type: GET_CARDIO, payload: data });
         } catch (error) {
@@ -83,86 +114,77 @@ export const getMetodo1 = () => {
 }
 
 export const getMetodo2 = () => {
-    return (dispatch) => {
-        const data = {
-            category: 'Contacto',
-            images: [
-                image8,
-                image9,
-            ],
-        }
-        dispatch({ type: GET_CONTACTO, payload: data });
+    return async (dispatch, getState) => {
+        try {
+            const { results } = getState();
 
+            const data = results.data[1];
+            // console.log(data, "data 1 in action");
+
+            dispatch({ type: GET_CARDIO, payload: data });
+        } catch (error) {
+            console.error(error);
+        }
     }
 }
 
-export const getYoga = () => {
-    return (dispatch) => {
-        const data = {
-            category: 'Yoga',
-            images: [
-                image1,
-                image2,
-            ],
-        }
-        dispatch({ type: GET_YOGA, payload: data });
+export const getMetodo3 = () => {
+    return async (dispatch, getState) => {
+        try {
+            const { results } = getState();
 
+            const data = results.data[2];
+            // console.log(data, "data 2 in action");
+
+            dispatch({ type: GET_CARDIO, payload: data });
+        } catch (error) {
+            console.error(error);
+        }
     }
 }
 
-export const getPilates = () => {
-    return (dispatch) => {
-        const data = {
-            category: "Pilates",
-            images: [
-                image4,
-                image5,
-                image10,
-                image11,
-                image6,
+export const getMetodo4 = () => {
+    return async (dispatch, getState) => {
+        try {
+            const { results } = getState();
 
-            ]
-        }
-        dispatch({ type: GET_PILATES, payload: data });
+            const data = results.data[3];
+            // console.log(data, "data 3 in action");
 
-    }
-}
-export const getCrossfit = () => {
-    return (dispatch) => {
-        const data = {
-            category: "Crossfit",
-            images: [
-                image1,
-                image2,
-                image3,
-                image4, ,
-                image5
-            ]
+            dispatch({ type: GET_CARDIO, payload: data });
+        } catch (error) {
+            console.error(error);
         }
-        dispatch({ type: GET_CROSSFIT, payload: data });
     }
 }
 
-export const getBoxing = () => {
-    return (dispatch) => {
-        const data = {
-            category: 'Kick Boxing',
-            images: [
-                image10,
-                image11,
-                image6,
-                image7,
-                image8,
-                image9,
-                image1,
-                image2,
-                image3,
-                image4,
-                image5
-            ]
-        }
-        dispatch({ type: GET_BOXING, payload: data });
+export const getMetodo5 = () => {
+    return async (dispatch, getState) => {
+        try {
+            const { results } = getState();
 
+            const data = results.data[4];
+            // console.log(data, "data 4 in action");
+
+            dispatch({ type: GET_CARDIO, payload: data });
+        } catch (error) {
+            console.error(error);
+        }
+    }
+}
+
+export const getMetodo6 = () => {
+    return async (dispatch, getState) => {
+        try {
+            const { results } = getState();
+
+            const data = results.data[5];
+            // console.log(data, "data 5 in action");
+
+            dispatch({ type: GET_CARDIO, payload: data });
+        } catch (error) {
+            console.error(error);
+        }
     }
 }
 

@@ -3,12 +3,21 @@ import { useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { getUser, getMetodo1, getMetodo2, getPilates, getCrossfit, getBoxing, getYoga, getDefault, getMethods } from '../../../redux/actions';
+import { getDefault, getMetodo1, getMetodo2, getMetodo3, getMetodo4, getMetodo5, getMetodo6, emptyState } from '../../../redux/actions';
 import HeaderNav from '../../HeaderNav/HeaderNav';
 import NavBar from '../NavBar/NavBar';
-import Cards from '../../cards/cards'
 import Banner from '../Banner/banner';
-import Filter from '../Filter/Filter';
+import Filter1 from '../Filter/Filter1';
+import Filter2 from '../Filter/Filter2';
+import Filter3 from '../Filter/Filter3';
+import Filter4 from '../Filter/Filter4';
+import Filter5 from '../Filter/Filter5';
+import Cards1 from '../../cards/Cards1'
+import Cards2 from '../../cards/Cards2'
+import Cards3 from '../../cards/Cards3'
+import Cards4 from '../../cards/Cards4'
+import Cards5 from '../../cards/Cards5'
+
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
@@ -17,7 +26,7 @@ import './HomePage.css';
 import CardDrawer from '../CardDrawer/CardDrawer';
 import { Fade, Grow, LinearProgress } from '@mui/material';
 import { Box } from '@mui/system';
-import { containerStyles } from '../Filter/filerStyles';
+import { containerStyles } from '../Filter/filterStyles';
 // import colorPallet from '../../ColorPallet';
 
 function HomePage({ BackToTopButton, headerLoad, bannerLoad, filterLoad, setHeaderLoad, setBannerload, setFilterLoad }) {
@@ -81,61 +90,61 @@ function HomePage({ BackToTopButton, headerLoad, bannerLoad, filterLoad, setHead
         }
 
 
-        if (homeContent === "Pilates") {
-            localStorage.setItem("category", "Pilates");
-            dispatch(getPilates());
-            scrolling()
-        }
-        if (homeContent === "Crossfit") {
-            localStorage.setItem("category", "Crossfit");
-            dispatch(getCrossfit());
-            scrolling()
-        }
-        if (homeContent === "Boxing") {
-            localStorage.setItem("category", "Boxing");
-            dispatch(getBoxing());
-            scrolling()
-        }
-        if (homeContent === "Yoga") {
-            localStorage.setItem("category", "Yoga");
-            dispatch(getYoga());
-            scrolling()
-        }
-        if (homeContent === "Cardio") {
-            localStorage.setItem("category", "Cardio");
+        if (homeContent === "Metodo 1") {
+            localStorage.setItem("category", "Metodo 1");
             dispatch(getMetodo1());
             scrolling()
         }
-        if (homeContent === "Contacto") {
-            localStorage.setItem("category", "Contacto");
+        if (homeContent === "Metodo 2") {
+            localStorage.setItem("category", "Metodo 2");
             dispatch(getMetodo2());
+            scrolling()
+        }
+        if (homeContent === "Metodo 3") {
+            localStorage.setItem("category", "Metodo 3");
+            dispatch(getMetodo3());
+            scrolling()
+        }
+        if (homeContent === "Metodo 4") {
+            localStorage.setItem("category", "Metodo 4");
+            dispatch(getMetodo4());
+            scrolling()
+        }
+        if (homeContent === "Metodo 5") {
+            localStorage.setItem("category", "Metodo 5");
+            dispatch(getMetodo5());
+            scrolling()
+        }
+        if (homeContent === "Metodo 6") {
+            localStorage.setItem("category", "Metodo 6");
+            dispatch(getMetodo6());
             scrolling()
         }
 
         if (homeContent === "goBack") {
             switch (categoryToDispatch) {
-                case 'Contacto':
-                    dispatch(getMetodo2());
-                    scrolling()
-                    break;
-                case 'Cardio':
+                case 'Metodo 1':
                     dispatch(getMetodo1());
                     scrolling()
                     break;
-                case 'Yoga':
-                    dispatch(getYoga());
+                case 'Metodo 2':
+                    dispatch(getMetodo2());
                     scrolling()
                     break;
-                case 'Pilates':
-                    dispatch(getPilates());
+                case 'Metodo 3':
+                    dispatch(getMetodo3());
                     scrolling()
                     break;
-                case 'Crossfit':
-                    dispatch(getCrossfit());
+                case 'Metodo 4':
+                    dispatch(getMetodo4());
                     scrolling()
                     break;
-                case 'Boxing':
-                    dispatch(getBoxing());
+                case 'Metodo 5':
+                    dispatch(getMetodo5());
+                    scrolling()
+                    break;
+                case 'Metodo 6':
+                    dispatch(getMetodo6());
                     scrolling()
                     break;
                 default:
@@ -143,13 +152,18 @@ function HomePage({ BackToTopButton, headerLoad, bannerLoad, filterLoad, setHead
             }
         }
         else if (!homeContent) {
-            dispatch(getMetodo1());
+            dispatch(getDefault());
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
     }, [navigate, homeContent]);
 
-    const [inOutStatus, setInOutStatus] = useState(true);
+    const [inOutStatus1, setInOutStatus1] = useState(true);
+    console.log(inOutStatus1, 'inOutStatus1');
+    const [inOutStatus2, setInOutStatus2] = useState(true);
+    const [inOutStatus3, setInOutStatus3] = useState(true);
+    const [inOutStatus4, setInOutStatus4] = useState(true);
+    const [inOutStatus5, setInOutStatus5] = useState(true);
 
     return (
 
@@ -194,14 +208,105 @@ function HomePage({ BackToTopButton, headerLoad, bannerLoad, filterLoad, setHead
                 {...(filterLoad ? { timeout: 600 } : {})}
             >
                 <div
+                    className='filterContainerDivHome'
                     style={containerStyles}  >
-                    <Filter setInOutStatus={setInOutStatus} />
+
+
+                    <h3>Tu seleccion</h3>
+
+                    <Filter1
+                        setInOutStatus1={setInOutStatus1}
+                        setInOutStatus2={setInOutStatus2}
+                        setInOutStatus3={setInOutStatus3}
+                        setInOutStatus4={setInOutStatus4}
+                        setInOutStatus5={setInOutStatus5}
+                    />
+
+                    {inOutStatus1 ?
+
+                        <Cards1 inOutStatus1={inOutStatus1} setHeaderLoad={setHeaderLoad} setBannerload={setBannerload} setFilterLoad={setFilterLoad} />
+
+                        : null}
+
+                    <br />
+
+                    <h3>Cardio</h3>
+
+                    <Filter2
+                        setInOutStatus1={setInOutStatus1}
+                        setInOutStatus2={setInOutStatus2}
+                        setInOutStatus3={setInOutStatus3}
+                        setInOutStatus4={setInOutStatus4}
+                        setInOutStatus5={setInOutStatus5}
+                    />
+
+                    {inOutStatus2 ?
+                        <Cards2 inOutStatus2={inOutStatus2} setHeaderLoad={setHeaderLoad} setBannerload={setBannerload} setFilterLoad={setFilterLoad} />
+
+                        : null}
+
+
+                    <br />
+
+                    <h3>Estiramiento</h3>
+
+                    <Filter3
+                        setInOutStatus1={setInOutStatus1}
+                        setInOutStatus2={setInOutStatus2}
+                        setInOutStatus3={setInOutStatus3}
+                        setInOutStatus4={setInOutStatus4}
+                        setInOutStatus5={setInOutStatus5}
+                    />
+
+                    {inOutStatus3 ?
+                        <Cards3 inOutStatus3={inOutStatus3} setHeaderLoad={setHeaderLoad} setBannerload={setBannerload} setFilterLoad={setFilterLoad} />
+
+                        : null}
+
+
+                    <br />
+
+                    <h3>Tips Alimentacion</h3>
+
+                    <Filter4
+                        setInOutStatus1={setInOutStatus1}
+                        setInOutStatus2={setInOutStatus2}
+                        setInOutStatus3={setInOutStatus3}
+                        setInOutStatus4={setInOutStatus4}
+                        setInOutStatus5={setInOutStatus5}
+                    />
+
+                    {inOutStatus4 ?
+                        <Cards4 inOutStatus4={inOutStatus4} setHeaderLoad={setHeaderLoad} setBannerload={setBannerload} setFilterLoad={setFilterLoad} />
+
+                        : null}
+
+                    <br />
+
+                    <h3>Todo el contenido</h3>
+
+                    <Filter5
+                        setInOutStatus1={setInOutStatus1}
+                        setInOutStatus2={setInOutStatus2}
+                        setInOutStatus3={setInOutStatus3}
+                        setInOutStatus4={setInOutStatus4}
+                        setInOutStatus5={setInOutStatus5}
+                    />
+
+                    {inOutStatus5 ?
+                        <Cards5 inOutStatus5={inOutStatus5} setHeaderLoad={setHeaderLoad} setBannerload={setBannerload} setFilterLoad={setFilterLoad} />
+
+                        : null}
+
+
                 </div>
+
             </Grow>
 
 
 
-            <Cards inOutStatus={inOutStatus} setHeaderLoad={setHeaderLoad} setBannerload={setBannerload} setFilterLoad={setFilterLoad} />
+
+
 
             {/* <SwipeableEdgeDrawer /> */}
 

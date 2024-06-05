@@ -12,7 +12,7 @@ function LogIn() {
 
 
     const results = useSelector((state) => state.results);
-    console.log(results, 'results en login');
+    // console.log(results, 'results en login');
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -70,7 +70,7 @@ function LogIn() {
         if (localUser && results.length !== 0) {
             setTimeout(() => {
                 navigate('/home');
-            }, 8000);
+            }, 3500);
 
         }
 

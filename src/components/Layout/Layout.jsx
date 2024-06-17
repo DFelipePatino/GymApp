@@ -32,11 +32,12 @@ import { iconStyles, iconStyles2 } from './Layout'
 import { useDispatch, useSelector } from 'react-redux';
 import { setHomeContent } from '../../redux/actions';
 import Swal from 'sweetalert2'
+import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 
 const drawerWidth = "50%";
 
 
-function Layout({ localUser, setPlayerLoad, playerLoad, headerLoad, bannerLoad, filterLoad, setHeaderLoad, setBannerload, setFilterLoad, headerMountIn, contentMountIn, setHeaderMountIn, setContentMountIn, navigateAway, setNavigateAway }) {
+function Layout({ localUser, setPlayerLoad, setHeaderLoad, setBannerload, setFilterLoad, setHeaderMountIn, setContentMountIn, navigateAway, setNavigateAway }) {
 
     const dispatch = useDispatch();
     const location = useLocation();
@@ -44,6 +45,7 @@ function Layout({ localUser, setPlayerLoad, playerLoad, headerLoad, bannerLoad, 
 
     const user = useSelector((state) => state.user);
     const resultsData = useSelector((state) => state.results.data);
+    const currentIndex = useSelector((state) => state.rutinaID);
     // console.log(resultsData, 'resultsData en layout');
 
     const userInitials = localUser?.split(' ').map((n) => n ? n[0].toUpperCase() : '').join('');
@@ -75,43 +77,63 @@ function Layout({ localUser, setPlayerLoad, playerLoad, headerLoad, bannerLoad, 
         switch (fn) {
             case 'homeM1':
                 localStorage.setItem("homeContent", "Metodo 1");
-                dispatch(getMetodo1(0));
+                dispatch(getMetodo1(currentIndex));
                 break;
             case 'homeM2':
-                // localStorage.setItem("homeContent", "Metodo 2");
-                dispatch(getMetodo1(0));
+                localStorage.setItem("homeContent", "Metodo 2");
+                dispatch(getMetodo1(currentIndex));
                 break;
             case 'homeM3':
-                // localStorage.setItem("homeContent", "Metodo 3");
-                dispatch(getMetodo1(0));
+                localStorage.setItem("homeContent", "Metodo 3");
+                dispatch(getMetodo1(currentIndex));
                 break;
             case 'homeM4':
-                // localStorage.setItem("homeContent", "Metodo 4");
-                dispatch(getMetodo1(0));
+                localStorage.setItem("homeContent", "Metodo 4");
+                dispatch(getMetodo1(currentIndex));
                 break;
             case 'homeM5':
-                // localStorage.setItem("homeContent", "Metodo 5");
-                dispatch(getMetodo1(0));
+                localStorage.setItem("homeContent", "Metodo 5");
+                dispatch(getMetodo1(currentIndex));
                 break;
             case 'homeM6':
-                // localStorage.setItem("homeContent", "Metodo 6");
-                dispatch(getMetodo1(0));
+                localStorage.setItem("homeContent", "Metodo 6");
+                dispatch(getMetodo1(currentIndex));
+                break;
+            case 'Tu Seleccion':
+                localStorage.setItem("homeContent", "Tu Seleccion");
+                dispatch(getMetodo1(currentIndex));
+                break;
+            case 'Estiramiento':
+                localStorage.setItem("homeContent", "Estiramiento");
+                dispatch(getMetodo1(currentIndex));
+                break;
+            case 'Tips Alimentacion':
+                localStorage.setItem("homeContent", "Tips Alimentacion");
+                dispatch(getMetodo1(currentIndex));
+                break;
+            case 'Cardio':
+                localStorage.setItem("homeContent", "Cardio");
+                dispatch(getMetodo1(currentIndex));
+                break;
+            case 'Todos':
+                localStorage.setItem("homeContent", "Todos");
+                dispatch(getMetodo1(currentIndex));
                 break;
             default:
+                localStorage.removeItem("homeContent")
                 break;
         }
 
-
-        // if (fn === 'homeM1') { localStorage.setItem("homeContent", "Metodo 1"), dispatch(getMetodo1()) }
-        // if (fn === 'homeM2') { localStorage.setItem("homeContent", "Metodo 2"), dispatch(getMetodo2()) }
-        // if (fn === 'homeM3') { localStorage.setItem("homeContent", "Metodo 3"), dispatch(getMetodo3()) }
-        // if (fn === 'homeM4') { localStorage.setItem("homeContent", "Metodo 4"), dispatch(getMetodo4()) }
-        // if (fn === 'homeM5') { localStorage.setItem("homeContent", "Metodo 5"), dispatch(getMetodo5()) }
-        // if (fn === 'homeM6') { localStorage.setItem("homeContent", "Metodo 6"), dispatch(getMetodo6()) }
+        if (location.pathname === '/home') {
+            navigate(route);
+            handleDrawerClose()
+        }
 
         if (location.pathname !== '/home') {
             navigate(route);
             handleDrawerClose()
+
+
         } else if (location.pathname === '/home' && !fn) {
             navigate(route);
             handleDrawerClose()
@@ -128,56 +150,107 @@ function Layout({ localUser, setPlayerLoad, playerLoad, headerLoad, bannerLoad, 
     const mappedData = resultsData?.map((item, index) => ({
         text: item.nombre,
         icon: <DirectionsBikeIcon style={iconStyles} />, // replace with your actual icon logic
-        // fn: `homeM${index + 1}`,
-        fn: 'homeM1',
+        fn: `homeM${index + 1}`,
+        // fn: 'homeM1',
         route: '/home',
+        shouldClearLocal: false,
         id: item.id.toString(),
     }));
 
+    const homeNavButtons = [
+        {
+            text: 'Tu Seleccion',
+            icon: <KeyboardArrowRightIcon
+                style={{ color: 'rgb(156, 28, 23)', cursor: 'pointer' }}
+            />,
+            fn: "Tu Seleccion",
+            route: '/home',
+            id: '2'
+        },
+        {
+            text: 'Cardio',
+            icon: <KeyboardArrowRightIcon
+                style={{ color: 'rgb(156, 28, 23)', cursor: 'pointer' }}
+            />,
+            fn: "Cardio",
+            route: '/home',
+            id: '3'
+        },
+        {
+            text: 'Estiramiento',
+            icon: <KeyboardArrowRightIcon
+                style={{ color: 'rgb(156, 28, 23)', cursor: 'pointer' }}
+            />,
+            fn: "Estiramiento",
+            route: '/home',
+            id: '4'
+        },
+        {
+            text: 'Tips Alimentacion',
+            icon: <KeyboardArrowRightIcon
+                style={{ color: 'rgb(156, 28, 23)', cursor: 'pointer' }}
+            />,
+            fn: "Tips Alimentacion",
+            route: '/home',
+            id: '5'
+        },
+        {
+            text: 'Todos',
+            icon: <KeyboardArrowRightIcon
+                style={{ color: 'rgb(156, 28, 23)', cursor: 'pointer' }}
+            />,
+            fn: "Todos",
+            route: '/home',
+            id: '6'
+        },
+    ];
+
     let drawer;
 
-    if (location.pathname === "/home") {
-        drawer = (
-            <div
-                style={{
-                    backgroundColor: 'rgb(146, 144, 144)',
-                }}
-            >
-                <Toolbar />
-                <List>
-                    {[
-                        // { text: 'Home', icon: <HomeIcon />, fn: "clear", route: '/home' },
-                        // { text: 'Profile Card', icon: <AccountCircleIcon />, route: '/profileCard' },
+    // if (location.pathname === "/home") {
+    //     drawer = (
+    //         <div
+    //             style={{
+    //                 backgroundColor: 'rgb(146, 144, 144)',
+    //             }}
+    //         >
+    //             <Toolbar />
+    //             <List>
+    //                 {[
+    //                     // { text: 'Home', icon: <HomeIcon />, fn: "clear", route: '/home' },
+    //                     // { text: 'Profile Card', icon: <AccountCircleIcon />, route: '/profileCard' },
 
-                        {
-                            text: 'Chat', icon: <ChatIcon
-                                style={iconStyles2}
-                            />, route: '/chat', id: '1'
-                        },
+    //                     {
+    //                         text: 'Chat', icon: <ChatIcon
+    //                             style={iconStyles2}
+    //                         />, route: '/chat', id: '1'
+    //                     },
 
 
-                        {
-                            text: 'Log Out', icon: <LogoutIcon
-                                style={iconStyles}
-                            />, route: '/', shouldClearLocal: true, id: '2'
-                        }
+    //                     {
+    //                         text: 'Log Out', icon: <LogoutIcon
+    //                             style={iconStyles}
+    //                         />, route: '/', shouldClearLocal: true, id: '2'
+    //                     }
 
-                    ].map((item, index) => (
-                        <ListItem key={item.id} disablePadding>
-                            <ListItemButton onClick={() => handleMenuClick(item.fn, item.route, item.shouldClearLocal)}>
-                                <ListItemIcon>
-                                    {item.icon}
-                                </ListItemIcon>
-                                <ListItemText primary={item.text} />
-                            </ListItemButton>
-                        </ListItem>
-                    ))}
-                </List>
-            </div>
-        );
-    }
+    //                 ].map((item, index) => (
+    //                     <ListItem key={item.id} disablePadding>
+    //                         <ListItemButton onClick={() => handleMenuClick(item.fn, item.route, item.shouldClearLocal)}>
+    //                             <ListItemIcon>
+    //                                 {item.icon}
+    //                             </ListItemIcon>
+    //                             <ListItemText primary={item.text} />
+    //                         </ListItemButton>
+    //                     </ListItem>
+    //                 ))}
+    //             </List>
+    //         </div>
+    //     );
+    // }
 
-    if (location.pathname !== "/home" && location.pathname !== "/profileedit") {
+    if (
+        // location.pathname !== "/home" && 
+        location.pathname !== "/profileedit") {
         drawer = (
             <div>
                 <Toolbar />
@@ -192,7 +265,10 @@ function Layout({ localUser, setPlayerLoad, playerLoad, headerLoad, bannerLoad, 
 
                             { type: 'divider', id: 'divider-1' },
 
-                            ...mappedData, // spread mappedData into the parent array
+                            // ...mappedData, // spread mappedData into the parent array
+
+                            ...homeNavButtons,
+
 
                             { type: 'divider', id: 'divider-2' },
 
@@ -219,7 +295,7 @@ function Layout({ localUser, setPlayerLoad, playerLoad, headerLoad, bannerLoad, 
                                         <ListItemIcon>
                                             {item.icon}
                                         </ListItemIcon>
-                                        <ListItemText primary={item.text} />
+                                        <ListItemText primary={<Typography variant="body2">{item.text}</Typography>} />
                                     </ListItemButton>
                                 </ListItem>
                         ))}
@@ -332,15 +408,17 @@ function Layout({ localUser, setPlayerLoad, playerLoad, headerLoad, bannerLoad, 
                         color: 'rgb(256, 256, 256)'
                         // color: 'rgb(156, 28, 23)'
                     }}
-                    onClick={() => {
+                    onClick={() => { //this is for the home button
 
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
                         localStorage.removeItem("homeContent");
+
 
                         if (location.pathname === '/player') {
                             setPlayerLoad(false);
                             setTimeout(() => {
                                 navigate("/home");
-                            }, 200);
+                            }, 300);
                         }
 
                         if (location.pathname === '/profileedit') {
@@ -354,13 +432,14 @@ function Layout({ localUser, setPlayerLoad, playerLoad, headerLoad, bannerLoad, 
                                 confirmButtonText: 'Confirmar!'
                             }).then((result) => {
                                 if (result.isConfirmed) {
+                                    window.scrollTo({ top: 0, behavior: 'smooth' });
                                     navigate('/home')
                                 }
                             });
                         }
 
                         if (location.pathname === '/profile2') {
-                            setNavigateAway(true);
+                            // setNavigateAway(true);
                             setTimeout(() => {
                                 setHeaderMountIn(false);
                             }, 200);
@@ -389,7 +468,9 @@ function Layout({ localUser, setPlayerLoad, playerLoad, headerLoad, bannerLoad, 
                     <button
                         className='initials'
                         onClick={() => {
+
                             window.scrollTo({ top: 0, behavior: 'smooth' });
+
                             if (location.pathname === '/home') {
                                 setNavigateAway(false);
                                 setTimeout(() => {
@@ -405,6 +486,7 @@ function Layout({ localUser, setPlayerLoad, playerLoad, headerLoad, bannerLoad, 
                                     navigate('/profile2')
                                 }, 600);
                             }
+
                             if (location.pathname === '/player') {
                                 setNavigateAway(false);
                                 setPlayerLoad(false);

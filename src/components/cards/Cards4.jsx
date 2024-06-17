@@ -37,12 +37,6 @@ function Cards4({ inOutStatus4, setHeaderLoad, setBannerload, setFilterLoad }) {
         repeticiones: 3,
     };
 
-    // useEffect(() => {
-    //     setChecked(prevChecked => !prevChecked);
-    //     setTimeout(() => {
-    //         setChecked(prevChecked => !prevChecked);
-    //     }, 500);
-    // }, [inOutStatus4]);
 
     return (
 

@@ -7,6 +7,9 @@ export const GET_YOGA = 'GET_YOGA';
 export const EMPTY_STATE = 'EMPTY_STATE';
 export const GET_METHODS = 'GET_METHODS';
 
+export const ADD_FAV = 'ADD_FAV';
+export const REMOVE_FAV = 'REMOVE_FAV';
+
 export const SET_METODO_ID = 'SET_METODO_ID';
 
 export const CRD_ITEM_2VIEW = 'CRD_ITEM_2VIEW';

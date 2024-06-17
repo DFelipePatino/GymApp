@@ -21,11 +21,8 @@ function Cards2({ inOutStatus2, setHeaderLoad, setBannerload, setFilterLoad }) {
 
     const dispatch = useDispatch();
     const results = useSelector((state) => state.results);
-    // console.log(results, 'results en cards');
 
     const resultsData = useSelector((state) => state.results.data);
-    // console.log(resultsData, 'resultsData en layout');
-
     // const resultsFiltered = useSelector((state) => state.resultsFiltered);
     // console.log(resultsFiltered, 'resultsFiltered en cards');
     // console.log(resultsFiltered?.nombre, 'results nombre');

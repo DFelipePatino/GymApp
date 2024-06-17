@@ -102,7 +102,7 @@ function ContentPlayer({ setPlayerLoad, playerLoad }) {
                         <CardHeader
                             action={
                                 <div
-                                    style={{ marginTop: '6px', fontSize: '1.5rem', padding: '4px' }}
+                                    style={{ marginTop: '6px', fontSize: '1.5rem', padding: '4px', paddingLeft: '18px' }}
                                 >
                                     {`Ejercicios de ${category}`}
                                 </div>
@@ -112,11 +112,11 @@ function ContentPlayer({ setPlayerLoad, playerLoad }) {
                                     <IconButton aria-label="regresar"
                                         style={{
                                             fontSize: '0.8rem',
-                                            // color: 'rgb(159, 28, 23)'
+                                            color: 'rgb(159, 28, 23)'
                                         }}
                                         onClick={() => {
                                             localStorage.setItem("homeContent", "goBack");
-                                            localStorage.setItem("categorytoDispatch", `${lastCategory}`);
+                                            // localStorage.setItem("categorytoDispatch", `${lastCategory}`);
                                             // aqui debe ir la categoria anterior
                                             setPlayerLoad(false)
                                             setTimeout(() => {
@@ -125,7 +125,7 @@ function ContentPlayer({ setPlayerLoad, playerLoad }) {
                                         }}
                                     >
                                         <ArrowBackIosNewIcon />
-                                        Regresar
+                                        {/* Regresar */}
                                     </IconButton>
                                 </div>
                             }
@@ -234,7 +234,7 @@ function ContentPlayer({ setPlayerLoad, playerLoad }) {
                                 onClick={handleExpandClick}
                                 aria-expanded={expanded}
                                 aria-label="show more"
-                                sx={{ ml: '20px', mr: '20px', color: 'primary' }}
+                                sx={{ ml: '20px', mr: '20px', color: 'rgb(159, 28, 23)' }}
                             >
                                 <ExpandMoreIcon />
                             </ExpandMore>

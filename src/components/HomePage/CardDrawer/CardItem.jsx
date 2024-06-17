@@ -41,23 +41,42 @@ export default function CardItem({ setHeaderLoad, setBannerload, setFilterLoad }
 
     const navigate = useNavigate();
 
+    const CardIndex = parseInt(localStorage.getItem('CardIndex'), 10) + 1;
+
     const resultsFiltered = useSelector((state) => state.resultsFiltered);
-    // console.log(resultsFiltered, 'resultsFiltered en cardItem');
+
+    const resultsFilteredRutinas = resultsFiltered?.entrenamientos
+        ? resultsFiltered.entrenamientos.filter((entrenamiento) => entrenamiento?.id === CardIndex)
+        : [];
 
 
-    // console.log(resultsFiltered.entrenamientos, 'entrenamientos en cardItem');
-
-    // const dia = resultsFiltered.entrenamientos
+    const resultsFilteredDia = resultsFilteredRutinas[0]?.dia
 
     const [expanded, setExpanded] = React.useState(false);
 
     const [grow, setGrow] = React.useState(true);
 
+    const [showGym, setShowGym] = React.useState(false);
+    const [showHome, setShowHome] = React.useState(false);
+
     const timeouts = [];
 
     const handleExpandClick = () => {
         setGrow(false);
-        //dispatch de contenido en 2view
+        setShowGym(true);
+        setShowHome(false);
+        setTimeout(() => {
+            setExpanded(!expanded);
+        }, 500);
+        setTimeout(() => {
+            setGrow(true);
+        }, 700);
+    };
+
+    const handleExpandClick2 = () => {
+        setGrow(false);
+        setShowHome(true);
+        setShowGym(false);
         setTimeout(() => {
             setExpanded(!expanded);
         }, 500);
@@ -103,8 +122,8 @@ export default function CardItem({ setHeaderLoad, setBannerload, setFilterLoad }
 
             <Card style={{
                 maxWidth: 850,
-                color: 'rgb(0, 0, 0)',
-                backgroundColor: 'rgb(146, 144, 144)',
+                color: 'white',
+                backgroundColor: 'rgb(0,0,0)',
                 // backgroundImage: 'url(/Screenshot1.png)',
                 // backgroundColor: 'rgb(0, 0, 0)',
                 marginTop: '20px',
@@ -124,16 +143,16 @@ export default function CardItem({ setHeaderLoad, setBannerload, setFilterLoad }
                                     </IconButton>
                                 </div>
                             }
-                            title={category}
-                            subheader="Quema de grasas"
+                            title={"Dia " + resultsFilteredDia}
+                            subheader="En donde vas a entrenar?"
                             subheaderTypographyProps={{
                                 style: {
-                                    color: 'rgb(0, 0, 0)'
+                                    color: 'white'
                                 }
                             }}
                         />
                         <CardContent
-                            style={{ backgroundColor: 'rgb(0, 0, 0)', paddingLeft: '0px', paddingRight: '0px' }}
+                            style={{ backgroundColor: 'rgb(0,0,0)', paddingLeft: '0px', paddingRight: '0px' }}
                         >
                             <CardMedia
                                 style={{ width: '100%' }}
@@ -146,27 +165,27 @@ export default function CardItem({ setHeaderLoad, setBannerload, setFilterLoad }
                         <CardContent>
                             <Typography
                                 variant="body2"
-                                color='rgb(0, 0, 0)'
+                                color='white'
                             >
-                                ¡Bienvenidos a nuestro Entrenamiento Completo para Todos los Niveles! Esta rutina de ejercicio de 30 minutos está diseñada para ayudarte a construir fuerza, aumentar la resistencia y mejorar la flexibilidad.
+                                ¡Bienvenidos a nuestro Entrenamiento Completo para Todos! En donde quieres entrenar hoy?
                             </Typography>
                         </CardContent>
 
                         <div style={{ display: 'flex', justifyContent: 'space-around', marginBottom: '0px' }}>
                             <Button variant="contained" style={{
                                 backgroundColor: 'rgb(159, 28, 23)',
-                                color: 'rgb(146, 144, 144)',
-                                fontWeight: 'bold',
+                                // color: 'rgb(146, 144, 144)',
+                                // fontWeight: 'bold',
                             }}
                                 onClick={handleExpandClick}
                             >En el Gym</Button>
 
                             <Button variant="contained" style={{
                                 backgroundColor: 'rgb(159, 28, 23)',
-                                color: 'rgb(146, 144, 144)',
-                                fontWeight: 'bold',
+                                // color: 'rgb(146, 144, 144)',
+                                // fontWeight: 'bold',
                             }}
-                                onClick={handleExpandClick}
+                                onClick={handleExpandClick2}
                             >En Casa</Button>
                         </div>
                     </>
@@ -175,21 +194,24 @@ export default function CardItem({ setHeaderLoad, setBannerload, setFilterLoad }
                         <CardHeader
                             action={
                                 <div
-                                    style={{ marginTop: '6px', fontSize: '1.5rem', padding: '4px', display: 'flex', justifyContent: 'center', paddingRight: '110%' }}
+                                    style={{
+                                        marginTop: '6px', fontSize: '1rem', padding: '4px', display: 'flex', justifyContent: 'center', alignItems: 'center', width: '235px'
+                                        // marginLeft: '-40%'
+                                    }}
                                 >
-                                    {/* {`Entrenamientos de ${category}`} */}
-                                    Entrenamientos
+
+                                    {resultsFilteredRutinas[0]?.nombre ? resultsFilteredRutinas[0].nombre : null}
                                 </div>
                             }
 
                             title={
                                 <div
-                                    style={{ marginLeft: '-10px' }}
+                                // style={{ marginLeft: '-10px', width: '10px' }}
                                 >
                                     <IconButton aria-label="regresar"
                                         style={{
                                             fontSize: '0.8rem',
-                                            // color: 'rgb(159, 28, 23)'
+                                            color: 'rgb(159, 28, 23)'
                                         }}
                                         onClick={() => {
                                             handleExpandClick();
@@ -203,7 +225,7 @@ export default function CardItem({ setHeaderLoad, setBannerload, setFilterLoad }
 
 
 
-                        {resultsFiltered.entrenamientos && resultsFiltered.entrenamientos.map((entrenamiento, index) => (
+                        {resultsFilteredRutinas.map((entrenamiento, index) => (
                             <CardContent key={index}
                                 style={{ paddingBottom: '0' }}>
 
@@ -212,7 +234,7 @@ export default function CardItem({ setHeaderLoad, setBannerload, setFilterLoad }
                                         <KeyboardArrowRightIcon
                                             style={{ color: 'rgb(156, 28, 23)', cursor: 'pointer' }}
                                         />
-                                        <Typography variant="body6" color="text.secondary"
+                                        <Typography variant="body6" color="white"
                                             style={{ cursor: 'pointer' }}
                                             onClick={toggleNavigate}
                                         >
@@ -225,6 +247,7 @@ export default function CardItem({ setHeaderLoad, setBannerload, setFilterLoad }
                             </CardContent>
                         ))}
                         <CardMedia
+                            style={{ padding: '10px' }}
                             component="img"
                             height="194"
                             image={"/Screenshot1.png"}

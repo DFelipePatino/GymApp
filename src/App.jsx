@@ -26,7 +26,7 @@ function App() {
 
   const [headerMountIn, setHeaderMountIn] = useState(false)
   const [contentMountIn, setContentMountIn] = useState(false)
-  const [navigateAway, setNavigateAway] = useState(false)
+  const [navigateAway, setNavigateAway] = useState(true)
 
   const [playerLoad, setPlayerLoad] = useState(false)
 
@@ -90,7 +90,8 @@ function App() {
         <Route path='/test' element={<SimpleGrow />} />
         <Route path='/' element={<LogIn />} />
         <Route path='/registro' element={<Registro BackToTopButton={BackToTopButton} />} />
-        <Route path='/home' element={<HomePage headerLoad={headerLoad} bannerLoad={bannerLoad} filterLoad={filterLoad} setHeaderLoad={setHeaderLoad}
+        <Route path='/home' element={<HomePage
+          headerLoad={headerLoad} bannerLoad={bannerLoad} filterLoad={filterLoad} setHeaderLoad={setHeaderLoad}
           setBannerload={setBannerload}
           setFilterLoad={setFilterLoad} BackToTopButton={BackToTopButton} localUser={localUser} />} />
         <Route path='/player' element={<ContentPlayer setPlayerLoad={setPlayerLoad} playerLoad={playerLoad} />} />

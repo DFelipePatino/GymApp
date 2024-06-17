@@ -11,7 +11,9 @@ import {
     EMPTY_STATE,
     GET_METHODS,
     CRD_ITEM_2VIEW,
-    SET_METODO_ID
+    SET_METODO_ID,
+    ADD_FAV,
+    REMOVE_FAV
 } from "./action-types";
 
 const initialState = {
@@ -23,6 +25,7 @@ const initialState = {
     metodoID: '',
     entrenamientoID: '',
     rutinaID: '',
+    favorites: [],
 
 }
 
@@ -65,6 +68,18 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 resultsFiltered: action.payload,
+            }
+
+        case ADD_FAV:
+            return {
+                ...state,
+                favorites: [action.payload, ...state.favorites],
+            }
+
+        case REMOVE_FAV:
+            return {
+                ...state,
+                favorites: action.payload,
             }
 
         case GET_CONTACTO:

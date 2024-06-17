@@ -5,14 +5,24 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 
 function MetodoCard({ resultsFiltered }) {
+
+    const handleClick = (index) => {
+        toggleDrawer(true)();
+        localStorage.setItem('CardIndex', index);
+    }
+
+
+    const filteredResults = resultsFiltered?.entrenamientos?.filter((each) => each.lugar === "GYM");
+
+
     return (
         <React.Fragment>
-            {resultsFiltered?.entrenamientos && resultsFiltered?.entrenamientos.map((entrenamiento, index) => (
+            {filteredResults?.map((entrenamiento, index) => (
                 <Grid item key={index} xs={6} md={4} lg={4}>
                     <Card
                         id={`card-${index}`}
-                        style={{ margin: '10px', cursor: 'pointer', backgroundColor: 'rgb(146, 144, 144)', border: '2px solid rgb(156, 28, 23)', borderRadius: '20px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', padding: '10px' }}
-                        onClick={toggleDrawer(true)}
+                        style={{ margin: '10px', cursor: 'pointer', backgroundColor: 'rgb(0,0,0)', border: '2px solid rgb(156, 28, 23)', borderRadius: '20px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', padding: '10px', color: 'white' }}
+                        onClick={() => { handleClick(index) }}
                     >
                         <h4 style={{ marginBottom: '10px', marginTop: '0' }}>Dia: {entrenamiento.dia}</h4>
                         <CardContent
@@ -26,7 +36,7 @@ function MetodoCard({ resultsFiltered }) {
                 </Grid>
             ))}
         </React.Fragment>
-    )
+    );
 }
 
 export default MetodoCard

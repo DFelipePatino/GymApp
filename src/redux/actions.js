@@ -25,7 +25,9 @@ import {
     EMPTY_STATE,
     GET_METHODS,
     CRD_ITEM_2VIEW,
-    SET_METODO_ID
+    SET_METODO_ID,
+    ADD_FAV,
+    REMOVE_FAV
 } from "./action-types";
 
 export const emptyState = () => {
@@ -91,20 +93,19 @@ export const getMethods = () => {
         try {
             const data = await axios.get(URL);
             dispatch({ type: GET_METHODS, payload: data });
-            // console.log(data, "data in action");
+
         } catch (error) {
             console.error(error);
         }
     }
 }
 
-export const getMetodo1 = (index) => {
+export const getMetodo1 = (idToFind) => {
     return async (dispatch, getState) => {
         try {
             const { results } = getState();
 
-            const data = results.data[index];
-            // console.log(data, index, "results.data  in action");
+            const data = results?.data?.find(item => item.id === idToFind);
 
             dispatch({ type: GET_CARDIO, payload: data });
         } catch (error) {
@@ -112,6 +113,24 @@ export const getMetodo1 = (index) => {
         }
     }
 }
+
+export const addFav = (item) => {
+    return (dispatch, getState) => {
+        const data = item.id;
+        dispatch({ type: ADD_FAV, payload: data });
+    }
+}
+
+export const removeFav = (item) => {
+    return (dispatch, getState) => {
+        const { favorites } = getState();
+        // Create a new array excluding the item with the matching ID
+        const updatedFavorites = favorites.filter(favorite => favorite !== item.id);
+        // Dispatch the action with the updated array
+        dispatch({ type: REMOVE_FAV, payload: updatedFavorites });
+    }
+}
+
 
 export const getMetodo2 = () => {
     return async (dispatch, getState) => {

@@ -8,7 +8,7 @@ import { Button, Card, CardActions, CardContent, CardHeader, Collapse, Divider, 
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ReactPlayer from 'react-player'
 import { Box } from '@mui/system';
-import { ExpandMore, FavoriteBorder } from '@mui/icons-material';
+import { ExpandMore, FavoriteBorder, Gradient } from '@mui/icons-material';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -28,13 +28,6 @@ function ContentPlayer({ setPlayerLoad, playerLoad }) {
     const entrenamientoSeleccionado = useSelector((state) => state.selectedEntrenamiento);
 
     const entrenamientoSeleccionadoLocalStorage = JSON.parse(localStorage.getItem("entrenamientoSeleccionado"));
-
-    console.log(entrenamientoSeleccionadoLocalStorage, 'entrenamientoSeleccionadoLocalStorage from contentPlayer');
-
-    console.log(entrenamientoSeleccionado, 'entrenamientoSeleccionado from contentPlayer');
-
-
-    const lastCategory = localStorage.getItem("category");
 
     const homeContent = localStorage.getItem("homeContent");
 
@@ -68,7 +61,7 @@ function ContentPlayer({ setPlayerLoad, playerLoad }) {
 
     const category = localStorage.getItem("category");
 
-    const [expanded, setExpanded] = React.useState(false);
+    const [expanded, setExpanded] = React.useState(true);
 
     const handleExpandClick = () => {
         setExpanded(!expanded);
@@ -97,9 +90,8 @@ function ContentPlayer({ setPlayerLoad, playerLoad }) {
     let rutinasButtons = entrenamientoSeleccionado.rutinas ? entrenamientoSeleccionado?.rutinas?.map((rutina, index) => {
         return (
             <Button
-                variant="outlined"
-                color="primary"
-                style={buttonStyle}
+                variant="contained"
+                style={{ backgroundColor: 'rgb(159, 28, 23)', color: 'white', fontWeight: 'bold', margin: '4px' }}
                 key={index}
                 onClick={() => seekTo(rutina.seekTime || 10)}
             >
@@ -109,9 +101,9 @@ function ContentPlayer({ setPlayerLoad, playerLoad }) {
     }) : entrenamientoSeleccionadoLocalStorage?.rutinas?.map((rutina, index) => {
         return (
             <Button
-                variant="outlined"
-                color="primary"
-                style={buttonStyle}
+                variant="contained"
+                style={{ backgroundColor: 'rgb(159, 28, 23)', color: 'white', fontWeight: 'bold', margin: '4px' }}
+
                 key={index}
                 onClick={() => seekTo(rutina.seekTime || 10)}
             >
@@ -135,12 +127,12 @@ function ContentPlayer({ setPlayerLoad, playerLoad }) {
             >
                 <div className='mediaPlayer'>
                     <Card
-                        style={{ width: '94%', height: 'auto', backgroundColor: 'rgb(146, 144, 144)' }}
+                        style={{ width: '94%', height: 'auto', backgroundColor: 'rgb(0, 0, 0)', radius: '1px, solid, rgb(159, 28, 23)' }}
                     >
                         <CardHeader
                             action={
                                 <div
-                                    style={{ marginTop: '6px', fontSize: '1rem', padding: '4px', paddingLeft: '18px', whiteSpace: 'pre-wrap', overflowWrap: 'break-word' }}
+                                    style={{ marginTop: '6px', fontSize: '1rem', padding: '4px', paddingLeft: '18px', whiteSpace: 'pre-wrap', overflowWrap: 'break-word', color: 'white' }}
                                 >
                                     {entrenamientoSeleccionado.nombre ? entrenamientoSeleccionado?.nombre : entrenamientoSeleccionadoLocalStorage?.nombre}
                                 </div>
@@ -179,6 +171,7 @@ function ContentPlayer({ setPlayerLoad, playerLoad }) {
                             controls={true}
                             width={'100%'}
                             height={'350px'}
+                            style={{ background: 'linear-gradient(to bottom, rgb(0, 0, 0),rgb(159, 28, 23),rgb(159, 28, 23)' }}
                         />
 
                         <CardActions
@@ -191,13 +184,19 @@ function ContentPlayer({ setPlayerLoad, playerLoad }) {
                                 alignItems: 'flex-start',
                             }}
                         >
+
+                            <h4
+                                style={{ color: 'white' }}
+                            >Rutinas</h4>
+
                             {rutinasButtons}
 
                             <br />
 
                             <Button
                                 variant="contained"
-                                style={{ backgroundColor: 'rgb(159, 28, 23)', color: 'rgb(146, 144, 144)', fontWeight: 'bold' }}
+                                color='primary'
+                                style={{ backgroundColor: 'rgb(0,0,0)', color: 'rgb(159, 28, 23)', fontWeight: 'bold' }}
                                 sx={{ mr: 'auto' }}
                             >
                                 Chat
@@ -225,11 +224,17 @@ function ContentPlayer({ setPlayerLoad, playerLoad }) {
                         </CardActions>
                         <Collapse in={expanded} timeout="auto" unmountOnExit>
                             <CardContent>
-                                <Typography paragraph>Descripcion:</Typography>
-                                <Typography paragraph>
+                                <Typography paragraph
+                                    style={{ color: 'white' }}
+                                >Descripcion:</Typography>
+                                <Typography
+                                    style={{ color: 'white' }}
+                                    paragraph>
                                     ¡Bienvenidos a nuestro Entrenamiento Completo para Todos los Niveles! Esta rutina de ejercicio de 30 minutos está diseñada para ayudarte a construir fuerza, aumentar la resistencia y mejorar la flexibilidad, todo desde la comodidad de tu hogar. Ya seas principiante o un entusiasta del fitness con experiencia, este entrenamiento se adapta a tus necesidades.
                                 </Typography>
-                                <Typography paragraph>
+                                <Typography
+                                    style={{ color: 'white' }}
+                                    paragraph>
                                     En este video, harás:
 
                                     Calentamiento con estiramientos dinámicos para preparar tus músculos y articulaciones.
@@ -237,7 +242,9 @@ function ContentPlayer({ setPlayerLoad, playerLoad }) {
                                     Ejercicios con modificaciones para hacer cada movimiento más fácil o más desafiante.
                                     Enfriamiento con una serie de estiramientos para ayudar en la recuperación y mejorar la flexibilidad.
                                 </Typography>
-                                <Typography paragraph>
+                                <Typography
+                                    style={{ color: 'white' }}
+                                    paragraph>
                                     Lo que necesitas:
 
                                     Una esterilla o toalla para los ejercicios en el suelo.
@@ -245,7 +252,9 @@ function ContentPlayer({ setPlayerLoad, playerLoad }) {
                                     Opcional: Pesas ligeras o bandas de resistencia para mayor intensidad.
                                     Únete a nosotros y da un paso hacia una vida más saludable y fuerte. Recuerda escuchar a tu cuerpo, tomar descansos cuando sea necesario y, lo más importante, ¡diviértete! ¡Vamos a comenzar y a superar este entrenamiento juntos!
                                 </Typography>
-                                <Typography>
+                                <Typography
+                                    style={{ color: 'white' }}
+                                >
                                     No olvides darle like, suscribirte y hacer clic en el icono de la campana para mantenerte al día con más videos de fitness. Comparte tu progreso y conéctate con nuestra comunidad usando #OneGymApp.
                                 </Typography>
                             </CardContent>

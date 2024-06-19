@@ -20,11 +20,9 @@ const Test3 = forwardRef(({ setInOutStatus1, setInOutStatus2, setInOutStatus3, s
     const [width, setWidth] = useState(600);
 
     const handleClick = (id) => {
-        localStorage.setItem("category", "Tu Seleccion")
+        localStorage.setItem("category", "Estiramiento")
         // const metodoIndex = index;
         const idToFind = id;
-        // dispatch(setMetodoID(metodoIndex));
-        dispatch(getMetodo1(idToFind));
 
         setInOutStatus1(false);
         setInOutStatus2(false);
@@ -32,9 +30,12 @@ const Test3 = forwardRef(({ setInOutStatus1, setInOutStatus2, setInOutStatus3, s
         setInOutStatus4(false);
         setInOutStatus5(false);
 
-        setTimeout(() => {
-            setInOutStatus3(true);
-        }, 500);
+        if (idToFind) {
+            setTimeout(() => {
+                dispatch(getMetodo1(idToFind));
+                setInOutStatus3(true);
+            }, 500);
+        }
 
         setTimeout(() => {
             if (localRef.current) {
@@ -53,23 +54,25 @@ const Test3 = forwardRef(({ setInOutStatus1, setInOutStatus2, setInOutStatus3, s
 
     const settings = {
         className: "center",
-        // centerMode: true,
+        centerMode: true,
         centerPadding: "60px",
         lazyLoad: true,
-        dots: true,
+        dots: false,
         infinite: true,
         pauseOnHover: true,
         adaptiveHeight: true,
+        arrows: false,
+        focusOnSelect: true,
         // autoplay: true,
         autoplaySpeed: 4000,
-        slidesToShow: 4,
-        slidesToScroll: 5,
+        slidesToShow: 5,
+        slidesToScroll: 1,
         responsive: [
             {
                 breakpoint: 1024,
                 settings: {
                     slidesToShow: 4,
-                    slidesToScroll: 5,
+                    slidesToScroll: 1,
                     infinite: true,
                     dots: true,
                     pauseOnHover: true,
@@ -79,7 +82,7 @@ const Test3 = forwardRef(({ setInOutStatus1, setInOutStatus2, setInOutStatus3, s
                 breakpoint: 600,
                 settings: {
                     slidesToShow: 3,
-                    slidesToScroll: 4,
+                    slidesToScroll: 1,
                     initialSlide: 2,
                     pauseOnHover: true,
                 }
@@ -87,14 +90,13 @@ const Test3 = forwardRef(({ setInOutStatus1, setInOutStatus2, setInOutStatus3, s
             {
                 breakpoint: 480,
                 settings: {
-                    slidesToShow: 4,
-                    slidesToScroll: 5,
+                    slidesToShow: 2,
+                    slidesToScroll: 1,
                     pauseOnHover: true,
                 }
             }
         ]
     };
-
 
     const URLImage = 'http://213.218.240.192:8082/onegym-back/api/multimedia/image/'
 

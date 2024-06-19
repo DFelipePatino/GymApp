@@ -35,7 +35,7 @@ import { containerStyles } from '../Filter/filterStyles';
 import { TroubleshootRounded } from '@mui/icons-material';
 // import colorPallet from '../../ColorPallet';
 
-function HomePage({ BackToTopButton, headerLoad, bannerLoad, filterLoad, setHeaderLoad, setBannerload, setFilterLoad }) {
+function HomePage({ BackToTopButton, headerLoad, bannerLoad, filterLoad, setHeaderLoad, setBannerload, setFilterLoad, scrollToFilter1, filterRef1, scrollToFilter2, filterRef2, scrollToFilter3, filterRef3, scrollToFilter4, filterRef4, scrollToFilter5, filterRef5 }) {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -61,13 +61,6 @@ function HomePage({ BackToTopButton, headerLoad, bannerLoad, filterLoad, setHead
     const [inOutStatus5, setInOutStatus5] = useState(false);
 
 
-    const filterRef1 = useRef(null);
-    const filterRef2 = useRef(null);
-    const filterRef3 = useRef(null);
-    const filterRef4 = useRef(null);
-    const filterRef5 = useRef(null);
-
-
     // const addFav = (newFav) => {
     //     setFavs((prevFavs) => {
     //         // Check if the array already contains an object with the same id
@@ -89,47 +82,10 @@ function HomePage({ BackToTopButton, headerLoad, bannerLoad, filterLoad, setHead
     // }
 
 
-
-
-    const scrollToFilter1 = () => {
-        if (filterRef1.current) {
-            filterRef1.current.scrollToComponent();
-            // console.log('scrolling f1?');
-            dispatch(getMetodo1(0));
-        }
-
-    };
-    const scrollToFilter2 = () => {
-        if (filterRef2.current) {
-            filterRef2.current.scrollToComponent();
-            // console.log('scrolling f2?');
-        }
-
-    };
-    const scrollToFilter3 = () => {
-        if (filterRef3.current) {
-            filterRef3.current.scrollToComponent();
-            // console.log('scrolling f3?');
-        }
-    };
-    const scrollToFilter4 = () => {
-        if (filterRef4.current) {
-            filterRef4.current.scrollToComponent();
-            // console.log('scrolling f4?');
-        }
-    };
-    const scrollToFilter5 = () => {
-        if (filterRef5.current) {
-            filterRef5.current.scrollToComponent();
-            // console.log('scrolling f5?');
-        }
-    };
-
-    // console.log(filterRef1, 'filterRef1 en home');
-
-
-
     useEffect(() => {
+
+        localStorage.removeItem('entrenamientoSeleccionado')
+        // localStorage.removeItem('CardIndex')
 
         setTimeout(() => {
             setfadeLoad(false)
@@ -230,6 +186,10 @@ function HomePage({ BackToTopButton, headerLoad, bannerLoad, filterLoad, setHead
             // dispatch(getMetodo1(5));
             scrollToFilter5()
         }
+
+        console.log('homeContent:', homeContent);
+        console.log('lastCategory:', lastCategory);
+        console.log('categoryToDispatch:', categoryToDispatch);
 
 
         if (homeContent === "goBack") {
@@ -352,7 +312,6 @@ function HomePage({ BackToTopButton, headerLoad, bannerLoad, filterLoad, setHead
 
 
 
-                    {favs.length > 0 ? <h3>Tu seleccion</h3> : null}
 
                     {/* <Filter1
                         setInOutStatus1={setInOutStatus1}
@@ -361,8 +320,9 @@ function HomePage({ BackToTopButton, headerLoad, bannerLoad, filterLoad, setHead
                         setInOutStatus4={setInOutStatus4}
                         setInOutStatus5={setInOutStatus5}
                         ref={filterRef1}
-                    /> */}
+                        /> */}
 
+                    {favs.length > 0 ? <h3>Tu seleccion</h3> : null}
 
                     <Test5
                         favs={favs}

@@ -1,4 +1,4 @@
-import { width } from "@mui/system"
+import { display, width } from "@mui/system"
 
 export const profile2divCardStyle = {
     // backgroundImage: 'linear-gradient(to bottom right, #924141, #924141, #d9d9d9)',
@@ -17,10 +17,12 @@ export const profile2divCardStyle = {
 }
 
 export const cardHeaderStyle = {
-    color: 'white',
-    width: '100%',
-    marginBottom: '10px',
-    backgroundImage: 'linear-gradient(to top , #92414100, #92414100, #92414100,  #d9d9d9)'
+    // color: 'white',
+    // width: '100%',
+    // marginBottom: '10px',
+    // backgroundImage: 'linear-gradient(to top , #92414100, #92414100, #92414100,  #d9d9d9)'
+    display: 'flex',
+    justifyContent: 'center',
 }
 
 export const avatarStyle = {
@@ -60,11 +62,12 @@ export const infoCardsIconStyle = {
 
 
 export const buttonStyle = {
-    margin: '30px',
+    fontSize: '16px',
+    background: 'rgb(159, 28, 23)',
+    margin: '10px 100px',
+    paddingTop: '8px',
+    paddingBottom: '10px',
+    borderRadius: '40px',
     display: 'flex',
     justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgb(159, 28, 23)',
-    // color: 'rgb(146, 144, 144)',
-    // fontWeight: 'bold',
-}
+};

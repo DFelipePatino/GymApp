@@ -19,10 +19,10 @@ const Test5 = forwardRef(({ setInOutStatus1, setInOutStatus2, setInOutStatus3, s
 
     const handleClick = (id) => {
         localStorage.setItem("category", "Tu Seleccion")
+        localStorage.removeItem("lugar")
         // const metodoIndex = index;
         const idToFind = id;
         // dispatch(setMetodoID(metodoIndex));
-        dispatch(getMetodo1(idToFind));
 
         setInOutStatus1(false);
         setInOutStatus2(false);
@@ -30,9 +30,13 @@ const Test5 = forwardRef(({ setInOutStatus1, setInOutStatus2, setInOutStatus3, s
         setInOutStatus4(false);
         setInOutStatus5(false);
 
-        setTimeout(() => {
-            setInOutStatus5(true);
-        }, 500);
+        if (idToFind) {
+            setTimeout(() => {
+                dispatch(getMetodo1(idToFind));
+                setInOutStatus5(true);
+            }, 500);
+        }
+
 
         setTimeout(() => {
             if (localRef.current) {
@@ -44,8 +48,6 @@ const Test5 = forwardRef(({ setInOutStatus1, setInOutStatus2, setInOutStatus3, s
 
     };
 
-
-
     useImperativeHandle(ref, () => ({
         scrollToComponent: handleClick,
     }));
@@ -53,27 +55,27 @@ const Test5 = forwardRef(({ setInOutStatus1, setInOutStatus2, setInOutStatus3, s
     const slidesToShow = Math.min(4, favs.length) || 1;
     // parece que esto esta rompiendo, mejor dejarlo asi!
 
-
-
     const settings = {
         className: "center",
-        // centerMode: true,
+        centerMode: true,
         centerPadding: "60px",
         lazyLoad: true,
-        dots: true,
+        dots: false,
         infinite: true,
         pauseOnHover: true,
         adaptiveHeight: true,
+        arrows: false,
+        focusOnSelect: true,
         // autoplay: true,
         autoplaySpeed: 4000,
-        slidesToShow: slidesToShow,
-        slidesToScroll: slidesToShow,
+        slidesToShow: 5,
+        slidesToScroll: 1,
         responsive: [
             {
                 breakpoint: 1024,
                 settings: {
-                    slidesToShow: slidesToShow,
-                    slidesToScroll: slidesToShow,
+                    slidesToShow: 4,
+                    slidesToScroll: 1,
                     infinite: true,
                     dots: true,
                     pauseOnHover: true,
@@ -82,8 +84,8 @@ const Test5 = forwardRef(({ setInOutStatus1, setInOutStatus2, setInOutStatus3, s
             {
                 breakpoint: 600,
                 settings: {
-                    slidesToShow: slidesToShow,
-                    slidesToScroll: slidesToShow,
+                    slidesToShow: 3,
+                    slidesToScroll: 1,
                     initialSlide: 2,
                     pauseOnHover: true,
                 }
@@ -91,14 +93,13 @@ const Test5 = forwardRef(({ setInOutStatus1, setInOutStatus2, setInOutStatus3, s
             {
                 breakpoint: 480,
                 settings: {
-                    slidesToShow: slidesToShow,
-                    slidesToScroll: slidesToShow,
+                    slidesToShow: 2,
+                    slidesToScroll: 1,
                     pauseOnHover: true,
                 }
             }
         ]
     };
-
 
     // const URLImage = 'http://213.218.240.192:8082/onegym-back/api/multimedia/image/'
 
@@ -116,14 +117,14 @@ const Test5 = forwardRef(({ setInOutStatus1, setInOutStatus2, setInOutStatus3, s
 
     const URLImage = 'http://213.218.240.192:8082/onegym-back/api/multimedia/image/'
 
-
     const items = favsToShow?.map((item, index) => ({
-        icon: <img src={URLImage + (item.multimedia && item.multimedia.length > 0 ? item.multimedia.filter((i) => i.type === 'IMAGE')[0].id : 1)} alt="David" style={{ objectFit: 'cover', width: '100%', height: '100%' }} />,
+        icon: <img src={URLImage + (item.multimedia && item.multimedia.length > 0 ? item.multimedia.filter((i) => i.type === 'IMAGE')[0].id : 1)} alt="David"
+            style={{ width: '60%' }}
+        />,
         // click: loadFns.loadM1,
         name: item.nombre || 'pepe',
         id: item.id,
     }))
-
         || [{
             // click: loadFns.loadM1(0),
             name: 'Loading',
@@ -133,8 +134,6 @@ const Test5 = forwardRef(({ setInOutStatus1, setInOutStatus2, setInOutStatus3, s
     const handleClick2 = (item) => {
         dispatch(removeFav(item));
     }
-
-
 
     return (
         <div className="slider-container">

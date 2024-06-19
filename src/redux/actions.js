@@ -27,7 +27,8 @@ import {
     CRD_ITEM_2VIEW,
     SET_METODO_ID,
     ADD_FAV,
-    REMOVE_FAV
+    REMOVE_FAV,
+    SELECTED_ENTRENAMIENTO
 } from "./action-types";
 
 export const emptyState = () => {
@@ -128,6 +129,14 @@ export const removeFav = (item) => {
         const updatedFavorites = favorites.filter(favorite => favorite !== item.id);
         // Dispatch the action with the updated array
         dispatch({ type: REMOVE_FAV, payload: updatedFavorites });
+    }
+}
+
+
+export const selectedEntrenamiento = (entrenamientoSeleccionado) => {
+    return (dispatch) => {
+        const data = entrenamientoSeleccionado;
+        dispatch({ type: SELECTED_ENTRENAMIENTO, payload: data });
     }
 }
 

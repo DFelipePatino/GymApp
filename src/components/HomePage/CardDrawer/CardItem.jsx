@@ -19,10 +19,11 @@ import ShareIcon from '@mui/icons-material/Share';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { Button, Divider, Grow } from '@mui/material';
-import { emptyState } from '../../../redux/actions'
+import { emptyState, selectedEntrenamiento } from '../../../redux/actions'
 import { useEffect } from 'react';
 import { ExpandMore } from '@mui/icons-material';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
+import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
 
 // const ExpandMore = styled((props) => {
 //     const { expand, ...other } = props;
@@ -41,21 +42,46 @@ export default function CardItem({ setHeaderLoad, setBannerload, setFilterLoad }
 
     const navigate = useNavigate();
 
-    const CardIndex = parseInt(localStorage.getItem('CardIndex'), 10) + 1;
+    const CardIndex = parseInt(localStorage.getItem('CardIndex'));
+    console.log(CardIndex, 'CardIndex at CardItem');
 
     const resultsFiltered = useSelector((state) => state.resultsFiltered);
+    console.log(resultsFiltered, 'resultsFiltered at CardItem');
 
-    const resultsFilteredRutinas = resultsFiltered?.entrenamientos
-        ? resultsFiltered.entrenamientos.filter((entrenamiento) => entrenamiento?.id === CardIndex)
+    const filteredResultsGym = resultsFiltered?.entrenamientos?.filter((each) => each.lugar === "GYM");
+    const filteredResultsHome = resultsFiltered?.entrenamientos?.filter((each) => each.lugar === "CASA");
+    console.log(filteredResultsGym, 'filteredResultsGym');
+    console.log(filteredResultsHome, 'filteredResultsHome');
+
+    // const resultsFilteredRutinasGym = filteredResultsGym?.map(entrenamientos) => entrenamientos.rutinas.filter((rutina) => rutina?.id === CardIndex)
+    // : [];
+
+    let entrenamientoSeleccionado;
+
+    if (localStorage.getItem('lugar') === 'GYM') {
+        entrenamientoSeleccionado = filteredResultsGym?.filter((entrenamiento) => entrenamiento?.id === CardIndex)[0]
+    }
+    else if (localStorage.getItem('lugar') === 'CASA') {
+        entrenamientoSeleccionado = filteredResultsHome?.filter((entrenamiento) => entrenamiento?.id === CardIndex)[0]
+    }
+
+
+    // .map((rutina) => rutina.rutinas)
+    console.log(entrenamientoSeleccionado, 'entrenamientoSeleccionado');
+
+    // const resultsFilteredRutinasGymRutinas = primer.filter((rutina) => rutina?.id === CardIndex)
+
+    // console.log(resultsFilteredRutinasGymRutinas, 'resultsFilteredRutinasGymRutinas');
+
+    const resultsFilteredRutinasGym = filteredResultsGym?.entrenamientos
+        ? filteredResultsGym.entrenamientos.filter((entrenamiento) => entrenamiento?.id === CardIndex)
+        : [];
+    const resultsFilteredRutinasHome = filteredResultsHome?.entrenamientos
+        ? filteredResultsHome.entrenamientos.filter((entrenamiento) => entrenamiento?.id === CardIndex)
         : [];
 
-
-    const resultsFilteredDia = resultsFilteredRutinas[0]?.dia
-
     const [expanded, setExpanded] = React.useState(false);
-
     const [grow, setGrow] = React.useState(true);
-
     const [showGym, setShowGym] = React.useState(false);
     const [showHome, setShowHome] = React.useState(false);
 
@@ -65,9 +91,9 @@ export default function CardItem({ setHeaderLoad, setBannerload, setFilterLoad }
         setGrow(false);
         setShowGym(true);
         setShowHome(false);
-        setTimeout(() => {
-            setExpanded(!expanded);
-        }, 500);
+        // setTimeout(() => {
+        //     setExpanded(!expanded);
+        // }, 500);
         setTimeout(() => {
             setGrow(true);
         }, 700);
@@ -105,15 +131,18 @@ export default function CardItem({ setHeaderLoad, setBannerload, setFilterLoad }
     }
 
     useEffect(() => {
-        setExpanded(false);
-        return () => {
-            timeouts.forEach(timeout => clearTimeout(timeout));
-        };
-    }, []);
+
+        if (entrenamientoSeleccionado) {
+            dispatch(selectedEntrenamiento(entrenamientoSeleccionado));
+            localStorage.setItem('entrenamientoSeleccionado', JSON.stringify(entrenamientoSeleccionado));
+        }
+    }, [CardIndex]);
+
+    console.log(localStorage.getItem('entrenamientoSeleccionado'))
 
     const category = localStorage.getItem("category");
 
-    // const currentMetodo = 
+    const URLImage = 'http://213.218.240.192:8082/onegym-back/api/multimedia/image/'
 
     return (
 
@@ -121,7 +150,7 @@ export default function CardItem({ setHeaderLoad, setBannerload, setFilterLoad }
             in={grow} timeout={500}>
 
             <Card style={{
-                maxWidth: 850,
+                width: 850,
                 color: 'white',
                 backgroundColor: 'rgb(0,0,0)',
                 // backgroundImage: 'url(/Screenshot1.png)',
@@ -130,7 +159,7 @@ export default function CardItem({ setHeaderLoad, setBannerload, setFilterLoad }
                 marginBottom: '10px',
 
             }}>
-                {!expanded ? (
+                {/* {!expanded ? (
                     <>
                         <CardHeader
                             action={
@@ -189,71 +218,95 @@ export default function CardItem({ setHeaderLoad, setBannerload, setFilterLoad }
                             >En Casa</Button>
                         </div>
                     </>
-                ) : (
-                    <>
-                        <CardHeader
-                            action={
-                                <div
-                                    style={{
-                                        marginTop: '6px', fontSize: '1rem', padding: '4px', display: 'flex', justifyContent: 'center', alignItems: 'center', width: '235px'
-                                        // marginLeft: '-40%'
-                                    }}
-                                >
+                ) : ( */}
+                <>
+                    <CardHeader
 
-                                    {resultsFilteredRutinas[0]?.nombre ? resultsFilteredRutinas[0].nombre : null}
-                                </div>
-                            }
 
-                            title={
-                                <div
-                                // style={{ marginLeft: '-10px', width: '10px' }}
-                                >
-                                    <IconButton aria-label="regresar"
-                                        style={{
-                                            fontSize: '0.8rem',
-                                            color: 'rgb(159, 28, 23)'
-                                        }}
-                                        onClick={() => {
-                                            handleExpandClick();
-                                        }}
+                        title={
+                            <div
+                                style={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    padding: '16px',
+                                    justifyContent: 'flex-end',
+                                    flexWrap: 'wrap',
+                                    flexDirection: 'column'
+                                }}
+                            >
+                                {entrenamientoSeleccionado?.nombre ? entrenamientoSeleccionado.nombre : null}
+
+                                {/* <h5 style={{ color: 'white', marginBottom: 0, marginTop: 10 }}>Elije tu ejercicio a continuacion...</h5> */}
+
+                            </div>
+                        }
+                    />
+
+
+
+                    {/* {resultsFilteredRutinasGym.map((entrenamiento, index) => ( */}
+                    <CardContent
+                        // key={index}
+                        style={{ paddingTop: '0' }}
+                    >
+
+                        <div style={{ position: 'relative' }}>
+                            <PlayCircleOutlineIcon
+                                style={{
+                                    position: 'absolute',
+                                    top: '50%',
+                                    left: '50%',
+                                    transform: 'translate(-50%, -50%)',
+                                    cursor: 'pointer',
+                                    fontSize: '48px',
+                                    color: 'red'
+                                }}
+                                onClick={toggleNavigate} />
+                            <CardMedia
+                                // style={{ width: '100%', height: '100%' }}
+                                component="img"
+                                height="194"
+                                image={URLImage + (entrenamientoSeleccionado?.multimedia && entrenamientoSeleccionado?.multimedia?.length > 0 ? entrenamientoSeleccionado?.multimedia.filter((i) => i.type === 'IMAGE')[0].id : 22)}
+                                onClick={toggleNavigate}
+                            />
+                        </div>
+
+                        <div
+                            style={{ margin: '10px', fontSize: '1.5rem' }}
+                        >
+
+                            <h5>Contenido</h5>
+
+                            {entrenamientoSeleccionado?.rutinas?.map((rutina, index) =>
+                            (<p key={index}
+                                style={{ fontSize: '1rem' }}
+                            >
+                                {rutina.nombre}
+                            </p>
+                            ))}
+
+                        </div>
+
+                        {/* {entrenamiento.rutinas.map((rutina, index) => (
+                                <div key={index}>
+                                    <KeyboardArrowRightIcon
+                                        style={{ color: 'rgb(156, 28, 23)', cursor: 'pointer' }}
+                                    />
+                                    <Typography variant="body6" color="white"
+                                        style={{ cursor: 'pointer' }}
+                                        onClick={toggleNavigate}
                                     >
-                                        <ArrowBackIosNewIcon />
-                                        {/* Regresar */}
-                                    </IconButton>
-                                </div>}
-                        />
+                                        {rutina.nombre}
+                                    </Typography>
+                                    <br />
+                                </div>
 
+                            ))} */}
+                    </CardContent>
+                    {/* ))} */}
 
-
-                        {resultsFilteredRutinas.map((entrenamiento, index) => (
-                            <CardContent key={index}
-                                style={{ paddingBottom: '0' }}>
-
-                                {entrenamiento.rutinas.map((rutina, index) => (
-                                    <div key={index}>
-                                        <KeyboardArrowRightIcon
-                                            style={{ color: 'rgb(156, 28, 23)', cursor: 'pointer' }}
-                                        />
-                                        <Typography variant="body6" color="white"
-                                            style={{ cursor: 'pointer' }}
-                                            onClick={toggleNavigate}
-                                        >
-                                            {rutina.nombre}
-                                        </Typography>
-                                        <br />
-                                    </div>
-
-                                ))}
-                            </CardContent>
-                        ))}
-                        <CardMedia
-                            style={{ padding: '10px' }}
-                            component="img"
-                            height="194"
-                            image={"/Screenshot1.png"}
-                        />
-                    </>
-                )}
+                </>
+                {/* )} */}
             </Card>
         </Grow>
     );

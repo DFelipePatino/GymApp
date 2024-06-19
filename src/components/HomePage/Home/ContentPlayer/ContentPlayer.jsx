@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -7,7 +7,7 @@ import './contentPlayer.css';
 import { Button, Card, CardActions, CardContent, CardHeader, Collapse, Divider, Fade, Grow, IconButton, LinearProgress, Typography } from '@mui/material';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ReactPlayer from 'react-player'
-import { Box, border, color, margin } from '@mui/system';
+import { Box } from '@mui/system';
 import { ExpandMore, FavoriteBorder } from '@mui/icons-material';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
@@ -20,31 +20,41 @@ function ContentPlayer({ setPlayerLoad, playerLoad }) {
     const location = useLocation();
     const navigate = useNavigate();
 
-
-    const [fadeLoad, setfadeLoad] = useState(true)
-    const [headerLoad, setHeaderLoad] = useState(false)
+    const [fadeLoad, setfadeLoad] = useState(true);
+    const [headerLoad, setHeaderLoad] = useState(false);
 
     const user = useSelector((state) => state.user);
 
-    const lastCategory = localStorage.getItem("category")
+    const entrenamientoSeleccionado = useSelector((state) => state.selectedEntrenamiento);
 
-    const homeContent = localStorage.getItem("homeContent")
+    const entrenamientoSeleccionadoLocalStorage = JSON.parse(localStorage.getItem("entrenamientoSeleccionado"));
+
+    console.log(entrenamientoSeleccionadoLocalStorage, 'entrenamientoSeleccionadoLocalStorage from contentPlayer');
+
+    console.log(entrenamientoSeleccionado, 'entrenamientoSeleccionado from contentPlayer');
+
+
+    const lastCategory = localStorage.getItem("category");
+
+    const homeContent = localStorage.getItem("homeContent");
+
+    const URLVideo = 'http://213.218.240.192:8082/onegym-back/api/multimedia/video/';
 
     useEffect(() => {
         let fadeLoadTimeout = setTimeout(() => {
-            setfadeLoad(false)
+            setfadeLoad(false);
         }, 900);
         let playerLoadTimeout = setTimeout(() => {
-            setPlayerLoad(true)
+            setPlayerLoad(true);
         }, 350);
 
-        const localUser = localStorage.getItem("localUserName")
+        const localUser = localStorage.getItem("localUserName");
 
         const verifyLogin = (localUser) => {
             if (!localUser) {
                 navigate("/");
             }
-        }
+        };
         verifyLogin(localUser);
 
         window.scrollTo(0, 0);
@@ -55,8 +65,6 @@ function ContentPlayer({ setPlayerLoad, playerLoad }) {
             clearTimeout(playerLoadTimeout);
         };
     }, [navigate, homeContent]);
-
-
 
     const category = localStorage.getItem("category");
 
@@ -76,18 +84,48 @@ function ContentPlayer({ setPlayerLoad, playerLoad }) {
         margin: '4px',
         color: 'rgb(159, 28, 23)',
         border: '1px solid rgb(0, 0, 0)',
-    }
+    };
+
+    const playerRef = useRef(null);
+
+    const seekTo = (seconds) => {
+        if (playerRef.current) {
+            playerRef.current.seekTo(seconds, 'seconds');
+        }
+    };
+
+    let rutinasButtons = entrenamientoSeleccionado.rutinas ? entrenamientoSeleccionado?.rutinas?.map((rutina, index) => {
+        return (
+            <Button
+                variant="outlined"
+                color="primary"
+                style={buttonStyle}
+                key={index}
+                onClick={() => seekTo(rutina.seekTime || 10)}
+            >
+                {rutina.nombre}
+            </Button>
+        );
+    }) : entrenamientoSeleccionadoLocalStorage?.rutinas?.map((rutina, index) => {
+        return (
+            <Button
+                variant="outlined"
+                color="primary"
+                style={buttonStyle}
+                key={index}
+                onClick={() => seekTo(rutina.seekTime || 10)}
+            >
+                {rutina.nombre}
+            </Button>
+        );
+    });
 
     return (
-
         <div className="contenthome">
-
             <Fade in={fadeLoad} timeout={600}>
-
                 <Box sx={{ width: '100%' }}>
                     <LinearProgress />
                 </Box>
-
             </Fade>
 
             <Grow
@@ -95,16 +133,16 @@ function ContentPlayer({ setPlayerLoad, playerLoad }) {
                 style={{ transformOrigin: '1 1 1' }}
                 {...(playerLoad ? { timeout: 800 } : {})}
             >
-                <div className='mediaPlayer' >
+                <div className='mediaPlayer'>
                     <Card
                         style={{ width: '94%', height: 'auto', backgroundColor: 'rgb(146, 144, 144)' }}
                     >
                         <CardHeader
                             action={
                                 <div
-                                    style={{ marginTop: '6px', fontSize: '1.5rem', padding: '4px', paddingLeft: '18px' }}
+                                    style={{ marginTop: '6px', fontSize: '1rem', padding: '4px', paddingLeft: '18px', whiteSpace: 'pre-wrap', overflowWrap: 'break-word' }}
                                 >
-                                    {`Ejercicios de ${category}`}
+                                    {entrenamientoSeleccionado.nombre ? entrenamientoSeleccionado?.nombre : entrenamientoSeleccionadoLocalStorage?.nombre}
                                 </div>
                             }
                             title={
@@ -116,16 +154,13 @@ function ContentPlayer({ setPlayerLoad, playerLoad }) {
                                         }}
                                         onClick={() => {
                                             localStorage.setItem("homeContent", "goBack");
-                                            // localStorage.setItem("categorytoDispatch", `${lastCategory}`);
-                                            // aqui debe ir la categoria anterior
-                                            setPlayerLoad(false)
+                                            setPlayerLoad(false);
                                             setTimeout(() => {
                                                 navigate("/home");
                                             }, 200);
                                         }}
                                     >
                                         <ArrowBackIosNewIcon />
-                                        {/* Regresar */}
                                     </IconButton>
                                 </div>
                             }
@@ -138,73 +173,30 @@ function ContentPlayer({ setPlayerLoad, playerLoad }) {
                             }}
                         />
                         <ReactPlayer
-                            url='https://www.youtube.com/watch?v=HQfF5XRVXjU&ab_channel=DavidHo'
+                            ref={playerRef}
+                            url={URLVideo + ((entrenamientoSeleccionado?.multimedia?.find(i => i.type === 'VIDEO')?.id) || (entrenamientoSeleccionadoLocalStorage?.multimedia?.find(i => i.type === 'VIDEO')?.id))}
+                            // url={'https://www.youtube.com/watch?v=9bZkp7q19f0'}
                             controls={true}
                             width={'100%'}
                             height={'350px'}
                         />
-                        {/* <CardContent
-                            style={{ color: 'black', backgroundColor: '#D9D9D9' }}
-                        >
-                            <p>
-                                Este ejercicio de pierna es muy efectivo para fortalecer los músculos de las piernas.
-                                Se recomienda hacerlo 3 veces por semana.
-                            </p>
-                        </CardContent> */}
 
                         <CardActions
                             style={{
                                 display: 'flex',
                                 justifyContent: 'flex-start',
                                 flexWrap: 'wrap',
+                                flexDirection: 'column',
+                                alignContent: 'flex-start',
+                                alignItems: 'flex-start',
                             }}
                         >
-                            {/* 
-                            <IconButton variant="outlined" color="neutral" sx={{ mr: 'auto' }}>
-                                <FavoriteBorder />
-                            </IconButton> */}
+                            {rutinasButtons}
 
+                            <br />
 
-
-                            <Button variant="outlined"
-                                color="primary"
-                                style={buttonStyle}
-                            >
-                                Pesos
-                            </Button>
-
-                            <Button variant="outlined"
-                                color="primary"
-                                style={buttonStyle}
-                            >
-                                Tips
-                            </Button>
-
-                            <Button variant="outlined"
-                                color="primary"
-                                style={buttonStyle}
-                            >
-                                Ejemplos
-                            </Button>
-
-                            <Button variant="outlined"
-                                color="primary"
-                                style={buttonStyle}
-                            >
-                                Dieta
-                            </Button>
-
-
-                            <Button variant="outlined"
-                                color="primary"
-                                style={buttonStyle}
-                            >
-                                Timer
-                            </Button>
-
-                            <Button variant="contained"
-                                // color="primary"
-                                // style={buttonStyle}
+                            <Button
+                                variant="contained"
                                 style={{ backgroundColor: 'rgb(159, 28, 23)', color: 'rgb(146, 144, 144)', fontWeight: 'bold' }}
                                 sx={{ mr: 'auto' }}
                             >
@@ -213,22 +205,14 @@ function ContentPlayer({ setPlayerLoad, playerLoad }) {
 
                             <Divider orientation="vertical" flexItem />
 
-                            {/*  <Button variant="outlined"
-                                color="primary"
-                            >
-                                Chat
-                            </Button> */}
+                            <br />
 
-                            {/* </CardActions> */}
-
-                            {/* <CardActions disableSpacing> */}
-
-                            <IconButton aria-label="add to favorites">
+                            {/* <IconButton aria-label="add to favorites">
                                 <FavoriteIcon />
                             </IconButton>
                             <IconButton aria-label="share">
                                 <ShareIcon />
-                            </IconButton>
+                            </IconButton> */}
                             <ExpandMore
                                 expand={expanded ? 'true' : undefined}
                                 onClick={handleExpandClick}
@@ -238,7 +222,6 @@ function ContentPlayer({ setPlayerLoad, playerLoad }) {
                             >
                                 <ExpandMoreIcon />
                             </ExpandMore>
-
                         </CardActions>
                         <Collapse in={expanded} timeout="auto" unmountOnExit>
                             <CardContent>
@@ -267,11 +250,9 @@ function ContentPlayer({ setPlayerLoad, playerLoad }) {
                                 </Typography>
                             </CardContent>
                         </Collapse>
-
                     </Card>
                 </div>
             </Grow>
-
         </div>
     );
 }

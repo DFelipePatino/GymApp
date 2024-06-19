@@ -8,6 +8,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import { infoCardsStyle, profile2divCardStyle, cardHeaderStyle, avatarStyle, buttonStyle, cardContentCard, infoCardsIconStyle } from './Profile2'
 import { Troubleshoot } from '@mui/icons-material';
 import { Box } from '@mui/system';
+import profilePic from "/Perfil.png"
 
 
 function Profile2({ userForTesting, BackToTopButton, name, headerMountIn, contentMountIn, setHeaderMountIn, setContentMountIn, navigateAway, setNavigateAway }) {
@@ -58,7 +59,7 @@ function Profile2({ userForTesting, BackToTopButton, name, headerMountIn, conten
             </Fade>
 
             <div
-            // style={cardHeaderStyle}
+                style={cardHeaderStyle}
             >
                 <Slide
                     direction="right"
@@ -66,7 +67,65 @@ function Profile2({ userForTesting, BackToTopButton, name, headerMountIn, conten
                     timeout={500}
                     mountOnEnter unmountOnExit>
 
-                    <CardHeader
+                    <div className='container'>
+                        <div className='gradiant'> </div>
+                        <div className='profile'>
+
+                            <img src={profilePic} alt="profilePic" />
+
+                            <div className='name'>
+                                {`${userForTesting.name}`}
+                            </div>
+
+                            <div className='description'>
+                                <h2>Info:</h2>
+                                {`${userForTesting.age}`}
+                                <br />
+                                {`${userForTesting.email}`}
+                                <br />
+                                {`${userForTesting.gender}`}
+                                <br />
+                                <br />
+                                <h2>Entrenamiento:</h2>
+                                {`${userForTesting.entrenamiento}`}
+                                <br />
+                                <br />
+                                <h2>Objetivos:</h2>
+                                {`${userForTesting.objetivo}`}
+                            </div>
+
+                            <div className='contact'>
+
+                                <Button
+                                    style={buttonStyle}
+                                    variant='contained'
+                                    onClick={() => {
+                                        window.scroll({ top: 0, behavior: 'smooth' });
+                                        setTimeout(() => {
+                                            setNavigateAway(true);
+                                        }, 200);
+                                        setTimeout(() => {
+                                            setHeaderMountIn(false)
+                                        }, 250);
+                                        setTimeout(() => {
+                                            setContentMountIn(false)
+                                        }, 300);
+                                        setTimeout(() => {
+                                            navigate('/profileedit')
+                                        }, 600);
+                                    }}
+                                >
+                                    Editar
+                                    <br />
+                                    <EditIcon />
+                                </Button>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    {/* <CardHeader
                         // style={cardHeaderStyle}
                         avatar={
                             <Avatar
@@ -78,31 +137,35 @@ function Profile2({ userForTesting, BackToTopButton, name, headerMountIn, conten
                         subheader={`${userForTesting.email}`}
                         titleTypographyProps={{ variant: 'h5', style: { color: 'rgb(146, 144, 144)' } }}
                         subheaderTypographyProps={{ variant: 'subtitle1', style: { color: 'rgb(146, 144, 144)' } }}
-                    />
+                    /> */}
                 </Slide>
+
+
 
             </div>
 
-            <Slide
-                direction="right"
-                in={contentMountIn}
-                timeout={500}
-                mountOnEnter unmountOnExit>
+            {userForTesting.premium ? (
 
-                <div
-                    className='userInfoDiv'
-                >
+                <Slide
+                    direction="right"
+                    in={contentMountIn}
+                    timeout={500}
+                    mountOnEnter unmountOnExit>
 
-                    {/* <Card /> */}
+                    <div
+                        className='userInfoDiv'
+                    >
 
-                    {/* <div className='cardContent'> */}
-                    <Card style={cardContentCard}>
-                        <Grid container spacing={0}>
-                            {Object.entries(userForTesting).map(([key, value], index) => {
-                                if (key !== 'dietPlan' && key !== 'profilePicture') {
-                                    return (
-                                        <Grid item xs={5} md={4} lg={6} style={infoCardsStyle} key={index}>
-                                            {/* <Card>
+                        {/* <Card /> */}
+
+                        {/* <div className='cardContent'> */}
+                        <Card style={cardContentCard}>
+                            <Grid container spacing={0}>
+                                {Object.entries(userForTesting).map(([key, value], index) => {
+                                    if (key !== 'dietPlan' && key !== 'profilePicture') {
+                                        return (
+                                            <Grid item xs={5} md={4} lg={6} style={infoCardsStyle} key={index}>
+                                                {/* <Card>
                                         <CardHeader
                                             subheader={key}>
                                         </CardHeader>
@@ -110,66 +173,47 @@ function Profile2({ userForTesting, BackToTopButton, name, headerMountIn, conten
                                             <Typography variant='body1'>{value}</Typography>
                                         </CardContent>
                                     </Card> */}
-                                            <p><strong>{key}:</strong> {value}</p>
-                                        </Grid>
-                                    );
-                                }
-                                return null;
-                            })}
-                        </Grid>
-                    </Card>
+                                                <p><strong>{key}:</strong> {value}</p>
+                                            </Grid>
+                                        );
+                                    }
+                                    return null;
+                                })}
+                            </Grid>
+                        </Card>
 
-                </div>
+                    </div>
 
-            </Slide>
+                </Slide>
 
-            <Fade
-                in={contentMountIn}
-            >
+            ) : (null)}
 
-                <div
-                    className='lastDiv'
+            {userForTesting.premium ? (
+
+                <Fade
+                    in={contentMountIn}
                 >
 
-                    <Card style={infoCardsIconStyle}>
-                        <PictureAsPdfTwoToneIcon />
-                        <Link to={userForTesting.dietPlan} target='blank'>
-                            <Button
-                                style={{ color: 'black' }}
-                            >
-                                Plan de dieta
-                            </Button>
-                        </Link>
-                    </Card>
-
-                    <Button
-                        style={buttonStyle}
-                        variant='contained'
-                        onClick={() => {
-                            window.scroll({ top: 0, behavior: 'smooth' });
-                            setTimeout(() => {
-                                setNavigateAway(true);
-                            }, 200);
-                            setTimeout(() => {
-                                setHeaderMountIn(false)
-                            }, 250);
-                            setTimeout(() => {
-                                setContentMountIn(false)
-                            }, 300);
-                            setTimeout(() => {
-                                navigate('/profileedit')
-                            }, 600);
-                        }}
+                    <div
+                        className='lastDiv'
                     >
-                        Editar
-                        <br />
-                        <EditIcon />
-                    </Button>
 
-                </div>
-            </Fade >
+                        <Card style={infoCardsIconStyle}>
+                            <PictureAsPdfTwoToneIcon />
+                            <Link to={userForTesting.dietPlan} target='blank'>
+                                <Button
+                                    style={{ color: 'black' }}
+                                >
+                                    Plan de dieta
+                                </Button>
+                            </Link>
+                        </Card>
 
 
+                    </div>
+                </Fade >
+
+            ) : (null)}
 
         </div >
     );

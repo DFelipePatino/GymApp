@@ -51,6 +51,8 @@ function LogIn() {
             return;
         } else if (password === onlyPassword) {
             localStorage.setItem("localUserName", username);
+            localStorage.removeItem('homeContent');
+            localStorage.removeItem('category');
 
             dispatch(getMethods())
 

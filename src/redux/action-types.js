@@ -7,6 +7,8 @@ export const GET_YOGA = 'GET_YOGA';
 export const EMPTY_STATE = 'EMPTY_STATE';
 export const GET_METHODS = 'GET_METHODS';
 
+export const SELECTED_ENTRENAMIENTO = 'SELECTED_ENTRENAMIENTO';
+
 export const ADD_FAV = 'ADD_FAV';
 export const REMOVE_FAV = 'REMOVE_FAV';
 

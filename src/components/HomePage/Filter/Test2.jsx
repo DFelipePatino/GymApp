@@ -9,22 +9,14 @@ import { Button } from "@mui/material";
 
 const Test2 = forwardRef(({ setInOutStatus1, setInOutStatus2, setInOutStatus3, setInOutStatus4, setInOutStatus5 }, ref) => {
 
-
     const localRef = useRef(null);
     const dispatch = useDispatch();
     const results = useSelector((state) => state.results);
-
-
-
-    const [display, setDisplay] = useState(true);
-    const [width, setWidth] = useState(600);
 
     const handleClick = (id) => {
         localStorage.setItem("category", "Cardio")
         // const metodoIndex = index;
         const idToFind = id;
-        // dispatch(setMetodoID(metodoIndex));
-        dispatch(getMetodo1(idToFind));
 
         setInOutStatus1(false);
         setInOutStatus2(false);
@@ -32,10 +24,12 @@ const Test2 = forwardRef(({ setInOutStatus1, setInOutStatus2, setInOutStatus3, s
         setInOutStatus4(false);
         setInOutStatus5(false);
 
-        setTimeout(() => {
-            setInOutStatus2(true);
-        }, 500);
-
+        if (idToFind) {
+            setTimeout(() => {
+                dispatch(getMetodo1(idToFind));
+                setInOutStatus2(true);
+            }, 500);
+        }
         setTimeout(() => {
             if (localRef.current) {
                 localRef.current.scrollIntoView({ behavior: 'smooth' });
@@ -46,31 +40,31 @@ const Test2 = forwardRef(({ setInOutStatus1, setInOutStatus2, setInOutStatus3, s
 
     };
 
-
     useImperativeHandle(ref, () => ({
         scrollToComponent: handleClick,
     }));
 
-
     const settings = {
         className: "center",
-        // centerMode: true,
+        centerMode: true,
         centerPadding: "60px",
         lazyLoad: true,
         dots: false,
         infinite: true,
         pauseOnHover: true,
         adaptiveHeight: true,
+        arrows: false,
+        focusOnSelect: true,
         // autoplay: true,
         autoplaySpeed: 4000,
-        slidesToShow: 4,
-        slidesToScroll: 5,
+        slidesToShow: 5,
+        slidesToScroll: 1,
         responsive: [
             {
                 breakpoint: 1024,
                 settings: {
                     slidesToShow: 4,
-                    slidesToScroll: 5,
+                    slidesToScroll: 1,
                     infinite: true,
                     dots: true,
                     pauseOnHover: true,
@@ -80,7 +74,7 @@ const Test2 = forwardRef(({ setInOutStatus1, setInOutStatus2, setInOutStatus3, s
                 breakpoint: 600,
                 settings: {
                     slidesToShow: 3,
-                    slidesToScroll: 4,
+                    slidesToScroll: 1,
                     initialSlide: 2,
                     pauseOnHover: true,
                 }
@@ -88,17 +82,15 @@ const Test2 = forwardRef(({ setInOutStatus1, setInOutStatus2, setInOutStatus3, s
             {
                 breakpoint: 480,
                 settings: {
-                    slidesToShow: 4,
-                    slidesToScroll: 5,
+                    slidesToShow: 2,
+                    slidesToScroll: 1,
                     pauseOnHover: true,
                 }
             }
         ]
     };
 
-
     const URLImage = 'http://213.218.240.192:8082/onegym-back/api/multimedia/image/'
-
 
     // const items = results?.data?.map((item, index) => ({
     //       icon: <img src={'public/DavidB&W.png'} alt="David" style={{ objectFit: 'cover', width: '100%', height: '100%' }} />,
@@ -151,9 +143,6 @@ const Test2 = forwardRef(({ setInOutStatus1, setInOutStatus2, setInOutStatus3, s
         name: 'Loading',
         id: 1,
     }];
-
-
-
 
     return (
         <div className="slider-container">

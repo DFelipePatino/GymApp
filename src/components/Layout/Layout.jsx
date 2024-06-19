@@ -37,7 +37,7 @@ import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 const drawerWidth = "50%";
 
 
-function Layout({ localUser, setPlayerLoad, setHeaderLoad, setBannerload, setFilterLoad, setHeaderMountIn, setContentMountIn, navigateAway, setNavigateAway }) {
+function Layout({ localUser, setPlayerLoad, setHeaderLoad, setBannerload, setFilterLoad, setHeaderMountIn, setContentMountIn, navigateAway, setNavigateAway, scrollToFilter1, scrollToFilter2, scrollToFilter3, scrollToFilter4, scrollToFilter5 }) {
 
     const dispatch = useDispatch();
     const location = useLocation();
@@ -101,22 +101,27 @@ function Layout({ localUser, setPlayerLoad, setHeaderLoad, setBannerload, setFil
                 break;
             case 'Tu Seleccion':
                 localStorage.setItem("homeContent", "Tu Seleccion");
+                scrollToFilter1();
                 dispatch(getMetodo1(currentIndex));
                 break;
             case 'Estiramiento':
                 localStorage.setItem("homeContent", "Estiramiento");
+                scrollToFilter2();
                 dispatch(getMetodo1(currentIndex));
                 break;
             case 'Tips Alimentacion':
                 localStorage.setItem("homeContent", "Tips Alimentacion");
+                scrollToFilter3();
                 dispatch(getMetodo1(currentIndex));
                 break;
             case 'Cardio':
                 localStorage.setItem("homeContent", "Cardio");
+                scrollToFilter4();
                 dispatch(getMetodo1(currentIndex));
                 break;
             case 'Todos':
                 localStorage.setItem("homeContent", "Todos");
+                scrollToFilter5();
                 dispatch(getMetodo1(currentIndex));
                 break;
             default:
@@ -130,6 +135,7 @@ function Layout({ localUser, setPlayerLoad, setHeaderLoad, setBannerload, setFil
         }
 
         if (location.pathname !== '/home') {
+            console.log('not home');
             navigate(route);
             handleDrawerClose()
 

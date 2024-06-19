@@ -270,7 +270,9 @@ function HomePage({ BackToTopButton, headerLoad, bannerLoad, filterLoad, setHead
                 {...(headerLoad ? { timeout: 800 } : {})}
             >
                 <div className='welcomeUser' >
-                    <h1>Bienvenid{lastNameLetter} {userFisrtName}</h1>
+                    {/* <h1>Bienvenid{lastNameLetter} {userFisrtName}</h1> */}
+                    <br />
+                    <br />
                 </div>
             </Grow>
 
@@ -343,6 +345,8 @@ function HomePage({ BackToTopButton, headerLoad, bannerLoad, filterLoad, setHead
                         : null}
 
                     <br />
+
+
 
                     <h3>Cardio</h3>
 
@@ -447,7 +451,6 @@ function HomePage({ BackToTopButton, headerLoad, bannerLoad, filterLoad, setHead
                         setInOutStatus5={setInOutStatus5}
                         ref={filterRef5}
                     /> */}
-
 
 
                     <Test1

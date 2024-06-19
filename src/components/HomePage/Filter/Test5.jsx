@@ -166,7 +166,7 @@ const Test5 = forwardRef(({ setInOutStatus1, setInOutStatus2, setInOutStatus3, s
                             }}
                         >
                             <div>{item.icon}
-                                <p>{item.name}</p>
+                                {/* <p>{item.name}</p> */}
 
                             </div>
                         </Button>

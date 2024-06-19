@@ -23,6 +23,7 @@ import { emptyState, selectedEntrenamiento } from '../../../redux/actions'
 import { useEffect } from 'react';
 import { ExpandMore } from '@mui/icons-material';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
+import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
 
 // const ExpandMore = styled((props) => {
@@ -263,7 +264,7 @@ export default function CardItem({ setHeaderLoad, setBannerload, setFilterLoad }
                                 }}
                                 onClick={toggleNavigate} />
                             <CardMedia
-                                // style={{ width: '100%', height: '100%' }}
+                                style={{ border: 'solid , 2px, rgb(159, 28, 23) ', borderRadius: '5%' }}
                                 component="img"
                                 height="194"
                                 image={URLImage + (entrenamientoSeleccionado?.multimedia && entrenamientoSeleccionado?.multimedia?.length > 0 ? entrenamientoSeleccionado?.multimedia.filter((i) => i.type === 'IMAGE')[0].id : 22)}
@@ -275,12 +276,17 @@ export default function CardItem({ setHeaderLoad, setBannerload, setFilterLoad }
                             style={{ margin: '10px', fontSize: '1.5rem' }}
                         >
 
-                            <h5>Contenido</h5>
+                            <h5
+                            style={{ color: 'rgb(159, 28, 23)'}}
+                            >Contenido</h5>
 
                             {entrenamientoSeleccionado?.rutinas?.map((rutina, index) =>
                             (<p key={index}
                                 style={{ fontSize: '1rem' }}
                             >
+                                <KeyboardArrowRightIcon
+                                style={{color: 'rgb(159, 28, 23)', paddingTop: '6px', paddingBottom: '-20px'}}
+                                />
                                 {rutina.nombre}
                             </p>
                             ))}

@@ -141,10 +141,10 @@ const Test1 = forwardRef(({ setInOutStatus1, setInOutStatus2, setInOutStatus3, s
                             </Icon>
                         </IconButton> 
                         : */}
-                        <div
+                        {/* <div
                             style={{ margin: 10 }}>
                             {item.name}
-                        </div>
+                        </div> */}
                         <IconButton
                             className="favButton"
                             sx={{ position: 'absolute', zIndex: 2 }}

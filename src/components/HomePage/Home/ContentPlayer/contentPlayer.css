@@ -33,19 +33,38 @@ div.contenthome {
 
     div.contenthome {
 
-        height: 260%;
+        height: 155%;
 
     }
 
 }
 
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 640px) {
 
     div.contenthome {
         margin-top: 56px;
+        height: 145%;
     }
 
+}
+
+@media screen and (max-width: 430px) {
+
+    div.contenthome {
+
+        height: 200%;
+
+    }
+
+}
+
+@media screen and (max-width: 375px) {
+    div.contenthome {
+
+        height: 240%;
+
+    }
 }
 
 @media screen and (orientation: landscape) {

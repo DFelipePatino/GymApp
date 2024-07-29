@@ -1,6 +1,9 @@
+import { padding } from "@mui/system"
+
 export const bannerContainerStyles = {
     display: 'flex',
     justifyContent: 'center',
+    padding: '0px',
 }
 
 export const navButtonsProps1 = {

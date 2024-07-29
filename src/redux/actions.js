@@ -28,8 +28,86 @@ import {
     SET_METODO_ID,
     ADD_FAV,
     REMOVE_FAV,
-    SELECTED_ENTRENAMIENTO
+    SELECTED_ENTRENAMIENTO,
+    GET_BANNER,
+    GET_CATEGORIES
 } from "./action-types";
+
+
+
+// export const getBanner = () => {
+//     return async (dispatch) => {
+//         // const data = await axios.get("http://213.218.240.192:8082/onegym-back/api/banner");
+//         const data = await axios.get("http://localhost:8082/onegym-back/api/banner");
+//         dispatch({ type: GET_BANNER, payload: data });
+//     }
+// }
+
+// const baseUrl = "http://localhost:8082/onegym-back/api";
+
+const baseUrl = "https://backdev.onetrainingteam.com/onegym-backtest/api";
+
+export const getBanner = () => {
+    return async (dispatch) => {
+        const id_token = localStorage.getItem('id_token');
+        // const config = {
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //         'Authorization': 'Bearer ' + id_token
+        //     }
+        // };
+        // const data = await axios.get("http://localhost:8082/onegym-back/api/banner", config);
+        // dispatch({ type: GET_BANNER, payload: data });
+        const registro = await fetch(`${baseUrl}/banner`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': "Bearer " + id_token
+            },
+            body: null
+        });
+
+        const data = await registro.json();
+        dispatch({ type: GET_BANNER, payload: data });
+    }
+}
+
+export const getCategories = () => {
+    return async (dispatch) => {
+        const id_token = localStorage.getItem('id_token');
+        const registro = await fetch(`${baseUrl}/categorias`,
+            {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': "Bearer " + id_token
+                },
+                body: null
+            }
+        );
+        const data = await registro.json();
+        dispatch({ type: GET_CATEGORIES, payload: data });
+    }
+}
+
+export const putUsuario = (usuario) => {
+    return async (dispatch) => {
+        const id_token = localStorage.getItem('id_token');
+        const registro = await fetch(`${baseUrl}/updateInfo/${usuario?.id}`,
+            {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': "Bearer " + id_token
+                },
+                body: usuario
+            }
+        );
+        const data = await registro.json();
+        //dispatch({ type: GET_CATEGORIES, payload: data });
+    }
+}
+
 
 export const emptyState = () => {
     return (dispatch) => {
@@ -87,17 +165,47 @@ export const setMetodoID = (metodoIndex) => {
     }
 }
 
-const URL = "http://213.218.240.192:8082/onegym-back/api/metodos"
+// const URL = "http://213.218.240.192:8082/onegym-back/api/metodos"
+
+// export const getMethods = () => {
+//     return async (dispatch) => {
+//         try {
+//             const data = await axios.get(URL);
+//             dispatch({ type: GET_METHODS, payload: data });
+
+//         } catch (error) {
+//             console.error(error);
+//         }
+//     }
+// }
 
 export const getMethods = () => {
     return async (dispatch) => {
-        try {
-            const data = await axios.get(URL);
-            dispatch({ type: GET_METHODS, payload: data });
+        const id_token = localStorage.getItem('id_token');
+        // const config = {
+        //     headers: {
+        //         'Authorization': 'Bearer ' + id_token
+        //     }
+        // };
+        // try {
+        //     const data = await axios.get('http://localhost:8082/onegym-back/api/metodos', config);
+        //     dispatch({ type: GET_METHODS, payload: data });
 
-        } catch (error) {
-            console.error(error);
-        }
+        // } catch (error) {
+        //     console.error(error);
+        // }
+
+        const registro = await fetch(`${baseUrl}/metodos`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': "Bearer " + id_token
+            },
+            body: null
+        });
+
+        const data = await registro.json();
+        dispatch({ type: GET_METHODS, payload: data });
     }
 }
 
@@ -232,3 +340,35 @@ export const setHomeContent = (content) => {
         dispatch({ type: SET_HOME_CONTENT, payload: data });
     }
 }
+
+export function getHeaders() {
+    const id_token = localStorage.getItem('id_token');
+    return { 'Authorization': "Bearer " + id_token }
+}
+
+export const fetchBlobWithAuth = (url) => {
+    return fetch(url, {
+        headers: getHeaders()
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.blob();
+        });
+}
+
+export const getImageObject = async (id) => {
+
+    //let fileElement = $('<img class="img-thumbnail multimedia-item">');
+    try {
+        const blob = await fetchBlobWithAuth(`${baseUrl}/multimedia/image/${id}`);
+        const objectURL = URL.createObjectURL(blob);
+        //fileElement.attr('src', objectURL);
+
+        return `<img class="img-thumbnail multimedia-item" src = ${objectURL} >`;
+    } catch (error) {
+        console.error('Error fetching image:', error);
+    }
+}
+

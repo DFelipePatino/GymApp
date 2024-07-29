@@ -6,12 +6,14 @@ import { useDispatch } from 'react-redux';
 import './contentPlayer.css';
 import { Button, Card, CardActions, CardContent, CardHeader, Collapse, Divider, Fade, Grow, IconButton, LinearProgress, Typography } from '@mui/material';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import ReactPlayer from 'react-player'
 import { Box } from '@mui/system';
 import { ExpandMore, FavoriteBorder, Gradient } from '@mui/icons-material';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { fetchBlobWithAuth } from '../../../../multimediaUtils';
 
 function ContentPlayer({ setPlayerLoad, playerLoad }) {
 
@@ -22,12 +24,14 @@ function ContentPlayer({ setPlayerLoad, playerLoad }) {
 
     const [fadeLoad, setfadeLoad] = useState(true);
     const [headerLoad, setHeaderLoad] = useState(false);
+    const [urlVideo, setUrlVideo] = useState('');
 
     const user = useSelector((state) => state.user);
 
     const entrenamientoSeleccionado = useSelector((state) => state.selectedEntrenamiento);
 
     const entrenamientoSeleccionadoLocalStorage = JSON.parse(localStorage.getItem("entrenamientoSeleccionado"));
+    console.log(entrenamientoSeleccionadoLocalStorage, 'entrenamientoSeleccionadoLocalStorage');
 
     const homeContent = localStorage.getItem("homeContent");
 
@@ -41,14 +45,14 @@ function ContentPlayer({ setPlayerLoad, playerLoad }) {
             setPlayerLoad(true);
         }, 350);
 
-        const localUser = localStorage.getItem("localUserName");
+        // const localUser = localStorage.getItem("localUserName");
 
-        const verifyLogin = (localUser) => {
-            if (!localUser) {
-                navigate("/");
-            }
-        };
-        verifyLogin(localUser);
+        // const verifyLogin = (localUser) => {
+        //     if (!localUser) {
+        //         navigate("/");
+        //     }
+        // };
+        // verifyLogin(localUser);
 
         window.scrollTo(0, 0);
 
@@ -62,6 +66,7 @@ function ContentPlayer({ setPlayerLoad, playerLoad }) {
     const category = localStorage.getItem("category");
 
     const [expanded, setExpanded] = React.useState(true);
+    const [expanded2, setExpanded2] = React.useState(false);
 
     const handleExpandClick = () => {
         setExpanded(!expanded);
@@ -70,6 +75,20 @@ function ContentPlayer({ setPlayerLoad, playerLoad }) {
         }
         else if (expanded === true) {
             window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    };
+
+    const rutinaID = entrenamientoSeleccionadoLocalStorage.rutinas.map((rutina) => rutina.id - 1);
+
+    const handleExpandClick2 = (index) => {
+        if (rutinaID.includes(index)) {
+            setExpanded2(!expanded2);
+            if (expanded2 === false) {
+                window.scrollTo({ top: 400, behavior: 'smooth' });
+            }
+            else if (expanded2 === true) {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
         }
     };
 
@@ -87,16 +106,47 @@ function ContentPlayer({ setPlayerLoad, playerLoad }) {
         }
     };
 
-    let rutinasButtons = entrenamientoSeleccionado.rutinas ? entrenamientoSeleccionado?.rutinas?.map((rutina, index) => {
+    let rutinasButtons = entrenamientoSeleccionadoLocalStorage.rutinas ? entrenamientoSeleccionadoLocalStorage?.rutinas?.map((rutina, index) => {
         return (
-            <Button
-                variant="contained"
-                style={{ backgroundColor: 'rgb(159, 28, 23)', color: 'white', fontWeight: 'bold', margin: '4px' }}
-                key={index}
-                onClick={() => seekTo(rutina.seekTime || 10)}
-            >
-                {rutina.nombre}
-            </Button>
+            <>
+                <Button
+                    variant="contained"
+                    style={{ backgroundColor: 'rgb(159, 28, 23)', color: 'white', fontWeight: 'bold', margin: '4px' }}
+                    key={index}
+                    onClick={() => {
+                        seekTo(rutina.segundoInicial);
+                        handleExpandClick2(index)
+                        console.log(index, 'index');
+                    }}
+                >
+                    <KeyboardArrowRightIcon
+                        style={{ color: 'rgb(256, 256, 256)', paddingBottom: '-20px', marginLeft: '-10px' }}
+                    />
+                    {rutina.nombre}
+
+                </Button>
+
+                {rutina.nombre ? (
+
+                    <>
+
+
+                        <Collapse in={expanded2} timeout="auto" unmountOnExit>
+                            <CardContent>
+                                <Typography paragraph
+                                    style={{ color: 'white' }}
+                                >Descripcion:</Typography>
+                                <Typography
+                                    style={{ color: 'white' }}
+                                    paragraph>
+                                    {rutina.nombre}
+                                </Typography>
+
+                            </CardContent>
+                        </Collapse>
+                    </>
+                ) : null}
+            </>
         );
     }) : entrenamientoSeleccionadoLocalStorage?.rutinas?.map((rutina, index) => {
         return (
@@ -105,12 +155,39 @@ function ContentPlayer({ setPlayerLoad, playerLoad }) {
                 style={{ backgroundColor: 'rgb(159, 28, 23)', color: 'white', fontWeight: 'bold', margin: '4px' }}
 
                 key={index}
-                onClick={() => seekTo(rutina.seekTime || 10)}
+                // expand={expanded ? 'true' : undefined}
+                // onClick={() => {
+                //     handleExpandClick2();
+                //     seekTo(rutina.seekTime);
+                //     console.log('rutina.seekTime');
+                // }}
+                onClick={
+                    handleExpandClick2
+                }
             >
                 {rutina.nombre}
             </Button>
         );
     });
+
+    const getVideoLink = async () => {
+
+        const idVideo = entrenamientoSeleccionadoLocalStorage?.multimedia?.find(i => i.type === 'VIDEO')?.id || null;
+
+        if (!idVideo) {
+            setUrlVideo('https://www.youtube.com/watch?v=9bZkp7q19f0');
+            return;
+        }
+
+        const blob = await fetchBlobWithAuth(`/multimedia/video/${idVideo}`);
+        const objectURL = URL.createObjectURL(blob);
+        setUrlVideo(objectURL);
+    };
+
+
+    useEffect(() => {
+        getVideoLink();
+    }, []);
 
     return (
         <div className="contenthome">
@@ -132,9 +209,17 @@ function ContentPlayer({ setPlayerLoad, playerLoad }) {
                         <CardHeader
                             action={
                                 <div
-                                    style={{ marginTop: '6px', fontSize: '1rem', padding: '4px', paddingLeft: '18px', whiteSpace: 'pre-wrap', overflowWrap: 'break-word', color: 'white' }}
+                                    style={{
+                                        marginTop: '12px',
+                                        fontSize: '1rem',
+                                        padding: '4px',
+                                        paddingLeft: '0px',
+                                        paddingBottom: '0px',
+                                        color: 'white',
+                                        whiteSpace: 'normal' // This ensures text wraps to the next line
+                                    }}
                                 >
-                                    {entrenamientoSeleccionado.nombre ? entrenamientoSeleccionado?.nombre : entrenamientoSeleccionadoLocalStorage?.nombre}
+                                    {entrenamientoSeleccionadoLocalStorage.nombre ? entrenamientoSeleccionadoLocalStorage?.nombre : entrenamientoSeleccionadoLocalStorage?.nombre}
                                 </div>
                             }
                             title={
@@ -142,7 +227,8 @@ function ContentPlayer({ setPlayerLoad, playerLoad }) {
                                     <IconButton aria-label="regresar"
                                         style={{
                                             fontSize: '0.8rem',
-                                            color: 'rgb(159, 28, 23)'
+                                            color: 'rgb(159, 28, 23)',
+                                            paddingRight: '0px'
                                         }}
                                         onClick={() => {
                                             localStorage.setItem("homeContent", "goBack");
@@ -166,12 +252,14 @@ function ContentPlayer({ setPlayerLoad, playerLoad }) {
                         />
                         <ReactPlayer
                             ref={playerRef}
-                            url={URLVideo + ((entrenamientoSeleccionado?.multimedia?.find(i => i.type === 'VIDEO')?.id) || (entrenamientoSeleccionadoLocalStorage?.multimedia?.find(i => i.type === 'VIDEO')?.id))}
+                            // url={URLVideo + ((entrenamientoSeleccionado?.multimedia?.find(i => i.type === 'VIDEO')?.id) || (entrenamientoSeleccionadoLocalStorage?.multimedia?.find(i => i.type === 'VIDEO')?.id) || 'https://www.youtube.com/watch?v=9bZkp7q19f0')}
                             // url={'https://www.youtube.com/watch?v=9bZkp7q19f0'}
+                            url={urlVideo}
                             controls={true}
                             width={'100%'}
                             height={'350px'}
-                            style={{ background: 'linear-gradient(to bottom, rgb(0, 0, 0),rgb(159, 28, 23),rgb(159, 28, 23)' }}
+                            // light={true}
+                            style={{ background: 'linear-gradient(to bottom, rgb(0, 0, 0),rgb(159, 28, 23),rgb(0, 0, 0)' }}
                         />
 
                         <CardActions
@@ -187,40 +275,46 @@ function ContentPlayer({ setPlayerLoad, playerLoad }) {
 
                             <h4
                                 style={{ color: 'white' }}
-                            >Rutinas</h4>
+                            >Ejercicios</h4>
 
                             {rutinasButtons}
 
                             <br />
 
-                            <Button
-                                variant="contained"
-                                color='primary'
-                                style={{ backgroundColor: 'rgb(0,0,0)', color: 'rgb(159, 28, 23)', fontWeight: 'bold' }}
-                                sx={{ mr: 'auto' }}
+                            <div
+                                style={{ display: 'flex', width: '100%' }}
                             >
-                                Chat
-                            </Button>
 
-                            <Divider orientation="vertical" flexItem />
+                                <Button
+                                    variant="outlined"
+                                    // color='rgb(159, 28, 23)'
+                                    style={{ backgroundColor: 'rgb(0,0,0)', color: 'rgb(159, 28, 23)', fontWeight: 'bold', border: '1px solid rgb(159, 28, 23)' }}
+                                // sx={{ mr: 'auto' }}
+                                >
+                                    Chat
+                                </Button>
 
-                            <br />
+                                <Divider orientation="vertical" flexItem />
 
-                            {/* <IconButton aria-label="add to favorites">
+                                <br />
+
+                                {/* <IconButton aria-label="add to favorites">
                                 <FavoriteIcon />
                             </IconButton>
                             <IconButton aria-label="share">
                                 <ShareIcon />
                             </IconButton> */}
-                            <ExpandMore
-                                expand={expanded ? 'true' : undefined}
-                                onClick={handleExpandClick}
-                                aria-expanded={expanded}
-                                aria-label="show more"
-                                sx={{ ml: '20px', mr: '20px', color: 'rgb(159, 28, 23)' }}
-                            >
-                                <ExpandMoreIcon />
-                            </ExpandMore>
+                                <ExpandMore
+                                    expand={expanded ? 'true' : undefined}
+                                    onClick={handleExpandClick}
+                                    aria-expanded={expanded}
+                                    aria-label="show more"
+                                    sx={{ ml: '50px', mt: '5px', color: 'rgb(159, 28, 23)' }}
+                                >
+                                    <ExpandMoreIcon />
+                                </ExpandMore>
+
+                            </div>
                         </CardActions>
                         <Collapse in={expanded} timeout="auto" unmountOnExit>
                             <CardContent>

@@ -1,4 +1,4 @@
-import { display, width } from "@mui/system"
+import { display, maxWidth, width } from "@mui/system"
 
 export const profile2divCardStyle = {
     // backgroundImage: 'linear-gradient(to bottom right, #924141, #924141, #d9d9d9)',
@@ -32,39 +32,44 @@ export const avatarStyle = {
 }
 
 export const cardContentCard = {
-    backgroundColor: 'transparent',
-    boxShadow: 'none'
+    // backgroundColor: 'transparent',
+    boxShadow: 'none',
+    backgroundColor: 'rgb(0,0,0)',
+    maxWidth: '300px',
+
 }
 
 
 export const infoCardsStyle = {
-    // marginTop: '20px',
+    marginTop: '20px',
     border: '2px solid rgb(159, 28, 23)',
     margin: '2px',
     borderRadius: '20px',
     padding: '10px',
-    backgroundColor: 'rgb(146, 144, 144)',
-    color: 'black'
+    backgroundColor: 'rgb(0,0,0)',
+    color: 'white',
+    width: '380px',
 }
 
 export const infoCardsIconStyle = {
-    marginTop: '20px',
+    marginBottom: '10px',
     border: '2px solid rgb(159, 28, 23)',
-    // margin: '2px',
+    margin: '2px',
     borderRadius: '20px',
     padding: '10px',
-    backgroundColor: 'rgb(146, 144, 144)',
-    color: 'black',
+    backgroundColor: 'rgb(0, 0, 0)',
+    color: 'white',
     display: 'flex',
     justifyContent: 'flex-start',
-    textDecoration: 'none'
+    textDecoration: 'none',
+    maxWidth: '200px',
 }
 
 
 export const buttonStyle = {
     fontSize: '16px',
     background: 'rgb(159, 28, 23)',
-    margin: '10px 100px',
+    // margin: 'auto',
     paddingTop: '8px',
     paddingBottom: '10px',
     borderRadius: '40px',

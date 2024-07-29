@@ -13,11 +13,19 @@ import { Grow } from '@mui/material';
 
 import MetodoCard from './MetodoCard';
 
-function Cards1({ inOutStatus1, setHeaderLoad, setBannerload, setFilterLoad }) {
+function Cards1({ inOutStatus1, setHeaderLoad, setBannerload, setFilterLoad, results }) {
 
     const [checked, setChecked] = React.useState(true);
 
-    const resultsFiltered = useSelector((state) => state.resultsFiltered);
+    // console.log(results, 'results en cards1');
+
+    const resultsFiltered = results.map((each) => each)
+    console.log(resultsFiltered, 'resultsFiltered en cards1');
+
+
+    // const filteredResultsGym = resultsFiltered?.entrenamientos?.filter((each) => each.lugar === "GYM");
+
+    // console.log(filteredResultsGym, 'filteredResultsGym en cards1');
 
     return (
         <Container className='results'>
@@ -67,7 +75,7 @@ function Cards1({ inOutStatus1, setHeaderLoad, setBannerload, setFilterLoad }) {
 
                     </Card> */}
 
-                    <MetodoCard resultsFiltered={resultsFiltered} />
+                    <MetodoCard resultsFiltered={resultsFiltered} results={results} />
 
                 </Grid>
 

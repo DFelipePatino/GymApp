@@ -2,7 +2,8 @@
     /* background-image: url(/public/back.jpg); */
     /* background-image: url(/public/back2.jpg); */
     /* background-image: url(/public/back6.jpg); */
-    background-image: url(/public/back8.jpg);
+    /* background-image: url(/public/back8.jpg);*/
+    background-image: url(/public/back10.jpg);
     /* background-color: lightgrey; */
     background-size: cover;
     background-repeat: no-repeat;
@@ -14,19 +15,34 @@
 
     .profileEditDiv {
 
-        height: 260%;
+        height: 155%;
 
     }
 
 }
 
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 640px) {
 
     .profileEditDiv {
         margin-top: 56px;
+        height: 145%;
     }
 
+}
+
+@media screen and (max-width: 430px) {
+
+    .profileEditDiv {
+        height: 200%;
+    }
+
+}
+
+@media screen and (max-width: 375px) {
+    .profileEditDiv {
+        height: 240%;
+    }
 }
 
 @media screen and (orientation: landscape) {

@@ -48,10 +48,17 @@ function Layout({ localUser, setPlayerLoad, setHeaderLoad, setBannerload, setFil
     const currentIndex = useSelector((state) => state.rutinaID);
     // console.log(resultsData, 'resultsData en layout');
 
+
+
     const userInitials = localUser?.split(' ').map((n) => n ? n[0].toUpperCase() : '').join('');
 
     const [mobileOpen, setMobileOpen] = React.useState(false);
     const [isClosing, setIsClosing] = React.useState(false);
+
+
+    const usuario = JSON.parse(localStorage.getItem("localUser"));
+
+
 
 
     const handleDrawerClose = () => {
@@ -301,7 +308,9 @@ function Layout({ localUser, setPlayerLoad, setHeaderLoad, setBannerload, setFil
                                         <ListItemIcon>
                                             {item.icon}
                                         </ListItemIcon>
-                                        <ListItemText primary={<Typography variant="body2">{item.text}</Typography>} />
+                                        <ListItemText primary={<Typography
+                                            style={{ color: 'rgb(256, 256, 256)' }}
+                                            variant="body2">{item.text}</Typography>} />
                                     </ListItemButton>
                                 </ListItem>
                         ))}
@@ -321,12 +330,16 @@ function Layout({ localUser, setPlayerLoad, setHeaderLoad, setBannerload, setFil
 
                     <Divider
                         style={{
-                            height: '10px', margin: '10px 0'
+                            height: '10px', margin: '10px 0', color: 'rgb(256, 256, 256)'
                         }} />
-                    Guarda tus cambios antes de abandonar esta pagina!
+
+                    <p
+                        style={{ color: 'rgb(256, 256, 256)', textAlign: 'center', fontSize: '12px', fontWeight: 'bold' }}
+                    >Guarda tus cambios antes de abandonar esta pagina!</p>
+
                     <Divider
                         style={{
-                            height: '10px', margin: '10px 0'
+                            height: '10px', margin: '10px 0', color: 'rgb(256, 256, 256)'
                         }} />
 
                     <ListItemButton onClick={() => {
@@ -338,7 +351,10 @@ function Layout({ localUser, setPlayerLoad, setHeaderLoad, setBannerload, setFil
                             showCancelButton: true,
                             confirmButtonColor: '#3085d6',
                             cancelButtonColor: '#d33',
-                            confirmButtonText: 'Log Out!'
+                            confirmButtonText: 'Log Out!',
+                            color: 'rgb(255, 255, 255)',
+                            background: "rgb(0,0,0)",
+                            backdrop: `rgba(159, 28, 23, 0.4)`
                         }).then((result) => {
                             if (result.isConfirmed) {
                                 localStorage.clear();
@@ -352,7 +368,9 @@ function Layout({ localUser, setPlayerLoad, setHeaderLoad, setBannerload, setFil
                                 style={iconStyles}
                             />
                         </ListItemIcon>
-                        <ListItemText primary="Log Out" />
+                        <ListItemText
+                            style={{ color: 'rgb(256, 256, 256)' }}
+                            primary="Log Out" />
                     </ListItemButton>
                     {/* 
                 <IconButton>
@@ -383,6 +401,7 @@ function Layout({ localUser, setPlayerLoad, setHeaderLoad, setBannerload, setFil
 
             <Toolbar
                 style={{
+                    // backgroundColor: 'rgba(0, 0, 0, 0)',
                     // backgroundColor: 'rgb(146, 144, 144)',
                     backgroundColor: 'rgb(0, 0, 0)',
                     // backgroundColor: 'rgb(159, 28, 23)',
@@ -435,7 +454,10 @@ function Layout({ localUser, setPlayerLoad, setHeaderLoad, setBannerload, setFil
                                 showCancelButton: true,
                                 confirmButtonColor: '#3085d6',
                                 cancelButtonColor: '#d33',
-                                confirmButtonText: 'Confirmar!'
+                                confirmButtonText: 'Confirmar!',
+                                color: 'rgb(255, 255, 255)',
+                                background: "rgb(0,0,0)",
+                                backdrop: `rgba(159, 28, 23, 0.4)`
                             }).then((result) => {
                                 if (result.isConfirmed) {
                                     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -474,7 +496,6 @@ function Layout({ localUser, setPlayerLoad, setHeaderLoad, setBannerload, setFil
                     <button
                         className='initials'
                         onClick={() => {
-
                             window.scrollTo({ top: 0, behavior: 'smooth' });
 
                             if (location.pathname === '/home') {
@@ -509,7 +530,10 @@ function Layout({ localUser, setPlayerLoad, setHeaderLoad, setBannerload, setFil
                                     showCancelButton: true,
                                     confirmButtonColor: '#3085d6',
                                     cancelButtonColor: '#d33',
-                                    confirmButtonText: 'Confirmar!'
+                                    confirmButtonText: 'Confirmar!',
+                                    color: 'rgb(255, 255, 255)',
+                                    background: "rgb(0,0,0)",
+                                    backdrop: `rgba(159, 28, 23, 0.4)`
                                 }).then((result) => {
                                     if (result.isConfirmed) {
                                         setNavigateAway(false);
@@ -527,7 +551,7 @@ function Layout({ localUser, setPlayerLoad, setHeaderLoad, setBannerload, setFil
                             }
                         }}
                     >
-                        {userInitials}
+                        <img src={usuario.foto} alt="profile pic" style={ACI} />
                     </button>
                 }
             </Toolbar>
@@ -543,7 +567,7 @@ function Layout({ localUser, setPlayerLoad, setHeaderLoad, setBannerload, setFil
                 }}
                 sx={{
                     display: { xs: 'block', sm: 'block' },
-                    '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth, height: '100%', backgroundColor: 'rgb(146, 144, 144)', },
+                    '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth, height: '100%', backgroundColor: 'rgb( 0, 0, 0)', },
                 }}
             >
                 {drawer}

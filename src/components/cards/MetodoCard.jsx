@@ -8,7 +8,9 @@ import ShareIcon from '@mui/icons-material/Share';
 import { Button, CardHeader, CardMedia, Typography } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 
-function MetodoCard({ resultsFiltered }) {
+function MetodoCard({ resultsFiltered, results }) {
+
+    console.log(resultsFiltered, 'resultsFiltered en metodoCard');
 
     const [expandedGym, setExpandedGym] = React.useState(false);
     const [expandedHome, setExpandedHome] = React.useState(false);
@@ -40,8 +42,9 @@ function MetodoCard({ resultsFiltered }) {
     console.log(localStorage.getItem("lugar"));
 
 
-    const filteredResultsGym = resultsFiltered?.entrenamientos?.filter((each) => each.lugar === "GYM");
-    const filteredResultsHome = resultsFiltered?.entrenamientos?.filter((each) => each.lugar === "CASA");
+    const filteredResultsGym = results?.map((each) => each.entrenamientos?.filter((each) => each.lugar === "GYM"));
+    console.log(filteredResultsGym, 'filteredResultsGym en metodoCard');
+    const filteredResultsHome = results?.map((each) => each.entrenamientos?.filter((each) => each.lugar === "CASA"));
     console.log(filteredResultsHome, 'filteredResultsHome en metodoCard');
 
 
@@ -49,7 +52,7 @@ function MetodoCard({ resultsFiltered }) {
         <>
             {localStorage.getItem("lugar") === 'GYM' ? (
                 <React.Fragment>
-                    {filteredResultsGym?.map((entrenamiento, index) => (
+                    {filteredResultsGym[0]?.map((entrenamiento, index) => (
                         <Grid item key={index} xs={6} md={4} lg={4}>
                             <Card
                                 id={`card-${entrenamiento.id}`}

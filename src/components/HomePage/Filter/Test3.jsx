@@ -60,13 +60,15 @@ const Test3 = forwardRef(({ setInOutStatus1, setInOutStatus2, setInOutStatus3, s
         dots: false,
         infinite: true,
         pauseOnHover: true,
+        pauseOnFocus: true,
         adaptiveHeight: true,
         arrows: false,
         focusOnSelect: true,
-        // autoplay: true,
+        autoplay: true,
         autoplaySpeed: 4000,
         slidesToShow: 5,
         slidesToScroll: 1,
+        rtl: false,
         responsive: [
             {
                 breakpoint: 1024,

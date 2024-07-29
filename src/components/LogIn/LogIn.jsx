@@ -6,38 +6,34 @@ import Box from '@mui/material/Box';
 import LinearProgress from '@mui/material/LinearProgress';
 import './Login.css';
 import { Grow } from '@mui/material';
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2';
 
 function LogIn() {
-
-
     const results = useSelector((state) => state.results);
-    // console.log(results, 'results en login');
-
-    useEffect(() => {
-        window.scrollTo(0, 0);
-    });
-
     const navigate = useNavigate();
     const dispatch = useDispatch();
-
-    const localUser = localStorage.getItem("localUserName")
-
-    const setLocalUser = () => {
-        // if (localUser !== "") {
-        dispatch(getUser(localUser));
-        // }
-    }
-    setLocalUser();
-
-    const onlyPassword = '1234';
+    const localUser = localStorage.getItem("localUserName");
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-
-    const [isLoading, setIsLoading] = useState(false)
+    const [isLoading, setIsLoading] = useState(false);
     const [formShown, setFormShown] = useState(true);
     const [loadingShown, setLoadingShown] = useState(false);
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+        setLocalUser();
+        loadGoogleScript();
+        isLoggedIn();
+    }, []);
+
+    const baseUrl = "https://backdev.onetrainingteam.com/onegym-backtest/api";
+
+    const setLocalUser = () => {
+        dispatch(getUser(localUser));
+    };
+
+    const onlyPassword = '1234';
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -47,45 +43,143 @@ function LogIn() {
                 title: 'Error!',
                 text: 'Contraseña incorrecta.',
                 icon: 'error',
+                color: 'rgb(255, 255, 255)',
+                background: "rgb(0,0,0)",
+                backdrop: `rgba(159, 28, 23, 0.4)`
             });
             return;
         } else if (password === onlyPassword) {
-            localStorage.setItem("localUserName", username);
+            localStorage.setItem("localUser", username);
             localStorage.removeItem('homeContent');
             localStorage.removeItem('category');
 
-            dispatch(getMethods())
+            dispatch(getMethods());
 
-            // console.log(localStorage.getItem("localUserName"), "has been set");
-
-            setFormShown(false)
+            setFormShown(false);
 
             setTimeout(() => {
-                setLoadingShown(true)
-                setIsLoading(true)
+                setLoadingShown(true);
+                setIsLoading(true);
             }, 500);
-
         }
-
-        const localUser = localStorage.getItem("localUserName")
 
         if (localUser && results.length !== 0) {
             setTimeout(() => {
                 navigate('/home');
             }, 3500);
-
         }
 
         setUsername('');
         setPassword('');
     };
 
+    const loadGoogleScript = () => {
+        const script = document.createElement('script');
+        script.src = 'https://accounts.google.com/gsi/client';
+        script.async = true;
+        script.defer = true;
+        script.onload = autenticarCongoogle;
+        document.body.appendChild(script);
+    };
+
+    const autenticarCongoogle = () => {
+        google.accounts.id.initialize({
+            client_id: '440245761376-4n8f17fi52g5ce2cf5hjakqonfmh4bji.apps.googleusercontent.com',
+            callback: handleCredentialResponse
+        });
+
+        google.accounts.id.renderButton(
+            document.getElementById('buttonDiv'),
+            { theme: 'outline', size: 'large' }
+        );
+
+        //google.accounts.id.prompt();
+
+    };
+
+    async function handleCredentialResponse(response) {
+        const id_token = response.credential;
+        localStorage.setItem('id_token', id_token);
+        console.log(response, 'response');
+        console.log(localStorage.getItem('id_token'), 'id_token');
+
+        const registro = await fetch(`${baseUrl}/users`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': "Bearer " + id_token
+            },
+            body: null
+        });
+
+        let respuesta = null;
+        try {
+            respuesta = await registro.json();
+        } catch (error) {
+            console.error('Error:', error);
+        }
+
+        if (!respuesta || respuesta.state !== 'ACTIVE') {
+            Swal.fire({
+                title: 'Error!',
+                html: 'Usuario no registrado. Continua para registrarte.',
+                icon: 'error',
+                color: 'rgb(255, 255, 255)',
+                background: "rgb(0,0,0)",
+                backdrop: `rgba(159, 28, 23, 0.4)`,
+                confirmButtonText: 'Continuar',
+                preConfirm: () => {
+                    // Navigate to /registro when "Continuar" is clicked
+                    navigate('/registro');
+                }
+            });
+        } else if (!respuesta.genero) {
+            localStorage.setItem('localUser', JSON.stringify(respuesta));
+            navigate('/registro');
+        } else {
+            localStorage.setItem('localUser', JSON.stringify(respuesta));
+            navigate('/home');
+        }
+    }
+
+    async function isLoggedIn() {
+
+        const id_token = localStorage.getItem('id_token');
+        if (!id_token) {
+            return;
+        }
+
+        // const registro = await fetch(`${baseUrl}/users`, {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //         'Authorization': "Bearer " + id_token
+        //     },
+        //     body: null
+        // });
+
+        // const respuesta = await registro.json();
+        // console.log('Success:', respuesta);
+        // localStorage.setItem('localUserName', JSON.stringify(respuesta));
+        // navigate('/home');
+    }
+
+    // const traerMultimedia = async () => {
+    //     const registro = await fetch('http://localhost:8082/onegym-backdev/api/metodos', {
+    //         method: 'GET',
+    //         headers: {
+    //             'Content-Type': 'application/json',
+    //             'Authorization': "Bearer " + id_token
+    //         },
+    //         body: null
+    //     });
+
+    //     const respuesta = await registro.json();
+    //     console.log('Success:', respuesta);
+    // };
+
     return (
-
-
         <div className='loginn'>
-
-
             <section className='titanimage'>
                 <img src="titan.png" alt="titan" />
             </section>
@@ -93,10 +187,7 @@ function LogIn() {
                 <img src="onegym.jpeg" alt="one gym logo" />
             </section>
 
-
-
-            {isLoading ?
-
+            {isLoading ? (
                 <Grow
                     in={loadingShown}
                     style={{ transformOrigin: '1 1 1' }}
@@ -108,36 +199,28 @@ function LogIn() {
                         Loading...
                         <br />
                         <br />
-                        <p>
-                            Preparate para una gran experiencia!
-                        </p>
+                        <p>Preparate para una gran experiencia!</p>
                         <Box sx={{ width: '60%', paddingBottom: "104%" }}>
                             <LinearProgress />
                         </Box>
                     </div>
                 </Grow>
-
-                :
-
+            ) : (
                 <Grow
                     in={formShown}
-                    // out={checked}
                     style={{ transformOrigin: '1 1 1' }}
                     {...(formShown ? { timeout: 1000 } : {})}
                 >
                     <div>
-
                         <header className='welcome'>
                             <h1>Welcome</h1>
                         </header>
 
-                        <section className='formsection'>
+                        <br />
+                        <br />
 
-
-
-                            <form
-                                className='form'
-                                onSubmit={handleSubmit}>
+                        {/* <section className='formsection'>
+                            <form className='form' onSubmit={handleSubmit}>
                                 <label>
                                     <input className='username' type="text" value={username} placeholder='Usuario' onChange={(e) => setUsername(e.target.value)} />
                                 </label>
@@ -156,37 +239,33 @@ function LogIn() {
                                 />
                                 <br />
                                 <p>¿Olvidaste tu contraseña?</p>
-                                {/* <a href='/form'>¿Olvidaste tu contraseña?</a> */}
                             </form>
 
-
                             <br />
-                            <button
+                            <p>¿Aun no tienes cuenta?</p> */}
+                        {/* <br /> */}
+                        <div
+                            style={{ display: 'flex', justifyContent: 'center', borderRadius: '40px' }}
+                            id="buttonDiv">
+                        </div>
+                        {/* <br /> */}
+                        {/* <button
                                 className='register'
                                 onClick={() => { navigate('/registro'); }}
-                            >Registrate</button>
-                            <p>¿Aun no tienes cuenta?</p>
+                            >Registrate</button> */}
 
 
-                            {/* <footer className='footer'>
-                            <p>OneGym 2024 </p>
-                        </footer> */}
-                        </section>
+                        <br />
+                        {/* <button onClick={traerMultimedia}>Traer datos de multimedia mi perro</button> */}
+                        {/* </section> */}
                     </div>
                 </Grow>
-
-
-            }
+            )}
 
             <section className='ropeimage'>
                 <img src="rope.jpeg" alt="rope guy" />
             </section>
-
-
-        </div >
-
-
-
+        </div>
     );
 }
 

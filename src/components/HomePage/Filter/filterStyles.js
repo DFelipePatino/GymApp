@@ -1,5 +1,6 @@
 import { Padding } from "@mui/icons-material"
 import { backdropClasses } from "@mui/material"
+import zIndex from "@mui/material/styles/zIndex"
 import { color, height, margin } from "@mui/system"
 
 
@@ -12,7 +13,6 @@ export const containerStyles = {
     backdropFilter: 'blur(2px)',
     WebkitBackdropFilter: 'blur(2px)',
     // backgroundColor: 'transparent',
-
     // '@media screen and (max-width: 730px) and (max-width: 935px)': {
     //     position: 'sticky',
     //     top: "2px",

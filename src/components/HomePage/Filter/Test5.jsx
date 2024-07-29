@@ -15,6 +15,7 @@ const Test5 = forwardRef(({ setInOutStatus1, setInOutStatus2, setInOutStatus3, s
     const dispatch = useDispatch();
 
     const results = useSelector((state) => state.results);
+    // console.log(results, "results in test5");
     const favsToShow = results?.data?.filter((item) => favs.includes(item.id));
 
     const handleClick = (id) => {
@@ -63,13 +64,15 @@ const Test5 = forwardRef(({ setInOutStatus1, setInOutStatus2, setInOutStatus3, s
         dots: false,
         infinite: true,
         pauseOnHover: true,
+        pauseOnFocus: true,
         adaptiveHeight: true,
         arrows: false,
         focusOnSelect: true,
-        // autoplay: true,
+        autoplay: true,
         autoplaySpeed: 4000,
         slidesToShow: 5,
         slidesToScroll: 1,
+        rtl: true,
         responsive: [
             {
                 breakpoint: 1024,
@@ -115,7 +118,8 @@ const Test5 = forwardRef(({ setInOutStatus1, setInOutStatus2, setInOutStatus3, s
     //     id: 1,
     // }];
 
-    const URLImage = 'http://213.218.240.192:8082/onegym-back/api/multimedia/image/'
+    // const URLImage = 'http://213.218.240.192:8082/onegym-back/api/multimedia/image/'
+    const URLImage = 'http://localhost:8082/onegym-back/api/multimedia/image/'
 
     const items = favsToShow?.map((item, index) => ({
         icon: <img src={URLImage + (item.multimedia && item.multimedia.length > 0 ? item.multimedia.filter((i) => i.type === 'IMAGE')[0].id : 1)} alt="David"

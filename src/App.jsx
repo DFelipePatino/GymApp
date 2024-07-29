@@ -1,20 +1,20 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import LogIn from './components/LogIn/LogIn.jsx';
 import HomePage from './components/HomePage/Home/HomePage';
 import Profile from './components/Perfil/Profile.jsx';
 import Profile2 from './components/Perfil/Profile2.jsx';
 import ProfileEdit from './components/Perfil/ProfileEdit.jsx';
 import Registro from './components/LogIn/Registro/Registro.jsx';
-import Test from './components/test/test';
 import ProfileCard from './components/Perfil/profileCard';
 import Chat from './components/Chat/Chat.jsx';
 import Layout from './components/Layout/Layout.jsx';
-import SimpleGrow from './components/test/test.jsx';
+import DropDownCategorias from './components/Perfil/DropDownCategorias.jsx';
 import BackToTopButton from './components/backToTopButton/BackToTopButton.jsx';
 import ContentPlayer from './components/HomePage/Home/ContentPlayer/ContentPlayer.jsx';
-import { getMethods } from './redux/actions.js';
+import { getMethods, getBanner, getCategories } from './redux/actions.js';
+import Testtt from './components/test/Testtt.jsx';
 
 function App() {
   const dispatch = useDispatch();
@@ -26,41 +26,49 @@ function App() {
 
   const [headerMountIn, setHeaderMountIn] = useState(false)
   const [contentMountIn, setContentMountIn] = useState(false)
-  const [navigateAway, setNavigateAway] = useState(true)
+  const [navigateAway, setNavigateAway] = useState(false)
 
   const [playerLoad, setPlayerLoad] = useState(false)
 
-  const localUser = localStorage.getItem("localUserName");
+  const localUser = localStorage.getItem("localUser");
+
+  const usuario = JSON.parse(localStorage.getItem("localUser"));
+
+  const profilefoto = usuario?.foto;
+  console.log(profilefoto, "profilefoto in App.js");
+
+  const id_token = localStorage.getItem('id_token');
+  console.log(id_token, "id_token in App.js");
 
   const userForTesting = { // eventually this will be replaced by the user's data
-    name: "John Doe",
-    dob: "1990-01-01",
-    age: "31",
-    email: "email@gmail.com",
-    profilePicture: "/Perfil.png",
-    goals: "Run a marathon",
-    healthStatus: "Healthy",
-    height: "180cm",
-    weight: "75kg",
-    gender: "Male",
-    bloodType: "O+",
-    hairColor: "Brown",
-    eyeColor: "Blue",
-    skinColor: "Fair",
-    bodyType: "Athletic",
-    shoeSize: "10",
-    clothingSize: "Medium",
-    dietPlan: "/plandedieta.pdf",
-    premium: true,
-    entrenamiento: [' GIMNASIO EN CASA ', ' GIMNASIO ', ' HOGAR '],
-    objetivo: [' SALUD ', ' ACONDICIONAMIENTO FISICO ', ' ACONDICIONAMIENTO FISICO ', ' DISMINUCION PORCENTAJE DE GRASA '],
-
+    Name: localUser,
+    DOB: "1990-01-01",
+    Age: "31",
+    Email: "email@gmail.com",
+    Gender: "Male",
+    Categorias: ['GANA MASA MUSCULAR ', 'MEJORAR ESTADO DE SALUD   ', 'REDUCIR PORCENTAJES DE GRASA ', 'MEJORAR RENDIMIENTO DEPORTIVO  ', 'TENER SU CUERPO TONIFICADO ', 'MEJORAR  ESTADO FISICO  '],
+    Premium: true,
+    Entrenamiento: [' GIMNASIO EN CASA ', ' GIMNASIO ', ' HOGAR '],
+    Objetivo: [' SALUD ', ' ACONDICIONAMIENTO FISICO ', ' DISMINUCION PORCENTAJE DE GRASA '],
+    ProfilePicture: "/Perfil.png",
+    NivelDeExperiencia: "Intermedio",
+    FrecuenciaDeEntrenamiento: "2 veces por semana",
+    Nutricion: "Come bien",
+    Patologias: "Fracturas",
+    Peso: "70KG",
+    Talla: "Medium",
+    DietPlan: "/plandedieta.pdf",
   };
 
-  const [open, setOpen] = React.useState(false);
+  // const todasLasCategorias = useSelector(state => state.allCategories)
+  // console.log(todasLasCategorias, "todasLasCategorias in App.js");
+
+  const todasLasCategorias = ['GANA MASA MUSCULAR ', 'MEJORAR ESTADO DE SALUD   ', 'REDUCIR PORCENTAJES DE GRASA ', 'MEJORAR RENDIMIENTO DEPORTIVO  ', 'TENER SU CUERPO TONIFICADO ', 'MEJORAR  ESTADO FISICO  ', 'GIMNASIO EN CASA ', ' GIMNASIO ', ' HOGAR ', ' SALUD ', ' ACONDICIONAMIENTO FISICO ', ' DISMINUCION PORCENTAJE DE GRASA ',]
 
   useEffect(() => {
     dispatch(getMethods())
+    dispatch(getBanner())
+    dispatch(getCategories())
   });
 
   const scrollToFilter1 = () => {
@@ -128,17 +136,19 @@ function App() {
           scrollToFilter4={scrollToFilter4}
           scrollToFilter5={scrollToFilter5}
 
-
           localUser={localUser} />}
 
       <Routes>
 
-        <Route path='/test' element={<SimpleGrow />} />
-
         <Route path='/' element={<LogIn />} />
 
+        <Route path='/testeo' element={<Testtt profilefoto={profilefoto} />} />
+
         <Route path='/registro' element={<Registro
-          BackToTopButton={BackToTopButton} />} />
+          BackToTopButton={BackToTopButton}
+          usuario={usuario}
+          todasLasCategorias={todasLasCategorias}
+        />} />
 
         <Route path='/home' element={<HomePage
           headerLoad={headerLoad}
@@ -177,7 +187,9 @@ function App() {
           setNavigateAway={setNavigateAway}
           BackToTopButton={BackToTopButton}
           name={localUser}
-          userForTesting={userForTesting} />} />
+          userForTesting={userForTesting}
+          usuario={usuario}
+          todasLasCategorias={todasLasCategorias} />} />
 
         <Route path='/profileedit' element={<ProfileEdit
           headerMountIn={headerMountIn}
@@ -186,9 +198,15 @@ function App() {
           setContentMountIn={setContentMountIn}
           BackToTopButton={BackToTopButton}
           profilePicture="/Perfil.png"
-          localUser={localUser} />} />
+          localUser={localUser}
+          userForTesting={userForTesting}
+          usuario={usuario}
+          todasLasCategorias={todasLasCategorias}
+        />} />
 
-        <Route path='/test' element={<Test />} />
+        <Route path='/test' element={<DropDownCategorias
+          todasLasCategorias={todasLasCategorias}
+        />} />
 
         <Route path='/profileCard' element={<ProfileCard />} />
 

@@ -9,13 +9,17 @@ import { infoCardsStyle, profile2divCardStyle, cardHeaderStyle, avatarStyle, but
 import { Troubleshoot } from '@mui/icons-material';
 import { Box } from '@mui/system';
 import profilePic from "/Perfil.png"
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import DropDownCategorias from './DropDownCategorias';
 
 
-function Profile2({ userForTesting, BackToTopButton, name, headerMountIn, contentMountIn, setHeaderMountIn, setContentMountIn, navigateAway, setNavigateAway }) {
+function Profile2({ userForTesting, BackToTopButton, name, headerMountIn, contentMountIn, setHeaderMountIn, setContentMountIn, navigateAway, setNavigateAway, todasLasCategotias, usuario }) {
 
     const navigate = useNavigate();
 
     const [fadeLoad, setfadeLoad] = useState(true)
+    const [infoPremium, setInfoPremium] = useState(false)
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -67,63 +71,224 @@ function Profile2({ userForTesting, BackToTopButton, name, headerMountIn, conten
                     timeout={500}
                     mountOnEnter unmountOnExit>
 
+
                     <div className='container'>
                         <div className='gradiant'> </div>
                         <div className='profile'>
 
-                            <img src={profilePic} alt="profilePic" />
+                            <img src={usuario.foto} alt="profilePic" />
 
                             <div className='name'>
-                                {`${userForTesting.name}`}
+                                {/* {`${userForTesting.Name}`} */}
+                                {`${usuario.nombres}` + ' ' + `${usuario.apellidos}`}
                             </div>
 
-                            <div className='description'>
-                                <h2>Info:</h2>
-                                {`${userForTesting.age}`}
-                                <br />
-                                {`${userForTesting.email}`}
-                                <br />
-                                {`${userForTesting.gender}`}
-                                <br />
-                                <br />
-                                <h2>Entrenamiento:</h2>
-                                {`${userForTesting.entrenamiento}`}
-                                <br />
-                                <br />
-                                <h2>Objetivos:</h2>
-                                {`${userForTesting.objetivo}`}
-                            </div>
 
-                            <div className='contact'>
+                            {infoPremium && usuario.accountType === "FREE" ? (
 
-                                <Button
-                                    style={buttonStyle}
-                                    variant='contained'
-                                    onClick={() => {
-                                        window.scroll({ top: 0, behavior: 'smooth' });
-                                        setTimeout(() => {
-                                            setNavigateAway(true);
-                                        }, 200);
-                                        setTimeout(() => {
-                                            setHeaderMountIn(false)
-                                        }, 250);
-                                        setTimeout(() => {
-                                            setContentMountIn(false)
-                                        }, 300);
-                                        setTimeout(() => {
-                                            navigate('/profileedit')
-                                        }, 600);
-                                    }}
-                                >
-                                    Editar
-                                    <br />
-                                    <EditIcon />
-                                </Button>
-                            </div>
+                                <>
+
+                                    <div className='contact'>
+
+                                        <Button
+                                            style={buttonStyle}
+                                            variant='contained'
+                                            onClick={() => {
+                                                window.scroll({ top: 0, behavior: 'smooth' });
+                                                // setTimeout(() => {
+                                                setHeaderMountIn(false);
+                                                // }, 200);
+                                                setTimeout(() => {
+                                                    setInfoPremium(false)
+                                                }, 400);
+                                                setTimeout(() => {
+                                                    setHeaderMountIn(true)
+                                                }, 800);
+                                                // setTimeout(() => {
+                                                // setInfoPremium(true)
+                                                // }, 600);
+                                            }}
+                                        >
+                                            <ArrowBackIosNewIcon />
+                                            Back
+                                        </Button>
+
+
+                                        <Button
+                                            style={buttonStyle}
+                                            variant='contained'
+                                            onClick={() => {
+                                                window.scroll({ top: 0, behavior: 'smooth' });
+                                                setTimeout(() => {
+                                                    setNavigateAway(true);
+                                                }, 200);
+                                                setTimeout(() => {
+                                                    setHeaderMountIn(false)
+                                                }, 250);
+                                                setTimeout(() => {
+                                                    setContentMountIn(false)
+                                                }, 300);
+                                                setTimeout(() => {
+                                                    navigate('/profileedit')
+                                                }, 600);
+                                            }}
+                                        >
+                                            Editar
+                                            <br />
+                                            <EditIcon />
+                                        </Button>
+                                    </div>
+
+                                    <div
+                                        className='lastDiv'
+                                    >
+                                        <Card style={infoCardsIconStyle}>
+                                            <PictureAsPdfTwoToneIcon />
+                                            <Link to={userForTesting.DietPlan} target='blank'>
+                                                <Button
+                                                    style={{ color: 'white' }}
+                                                >
+                                                    Plan de dieta
+                                                </Button>
+                                            </Link>
+                                        </Card>
+
+                                    </div>
+
+                                    <div
+                                        className='userInfoDiv'
+                                    >
+
+
+                                        {/* <Card /> */}
+
+                                        {/* <div className='cardContent'> */}
+                                        {/* <Card style={cardContentCard}> */}
+                                        <Grid container spacing={1}>
+                                            {/* <div className='description2'> */}
+                                            {Object.entries(userForTesting).map(([key, value], index) => {
+                                                if (key !== 'DietPlan' && key !== 'ProfilePicture' && key !== 'Entrenamiento' && key !== 'Name' && key !== 'Email' && key !== 'Premium' && key !== 'Objetivo' && key !== 'Age' && key !== 'DOB' && key !== 'Gender') {
+                                                    return (
+                                                        <Grid item xs={12} sm={6}
+                                                            style={{ paddingLeft: '70px', fontSize: '0.8rem' }}
+                                                            key={index}>
+
+                                                            <h2>{key}:</h2>
+                                                            {value}
+                                                            <br />
+                                                            <br />
+
+                                                            {/* <p><strong>{key}:</strong> {value}</p> */}
+                                                        </Grid>
+                                                    );
+                                                }
+                                                return null;
+                                            })}
+                                            {/* </div> */}
+                                        </Grid>
+                                        {/*  </Card> */}
+
+                                    </div>
+
+
+                                </>
+
+
+                            ) : (
+
+                                <>
+                                    <div className='description'>
+                                        <h2>Info:</h2>
+                                        {`${usuario.email}`}
+                                        <br />
+                                        {`${usuario.accountType}`}
+                                        <br />
+                                        {`${usuario.state}`}
+                                        <br />
+                                        <br />
+
+                                        {/* <DropDownCategorias
+                                            userForTesting={userForTesting}
+                                            todasLasCategotias={todasLasCategotias}
+                                        /> */}
+
+                                        <h2>Entrenamiento:</h2>
+                                        {`${userForTesting.Entrenamiento}`}
+                                        <br />
+                                        <br />
+                                        <h2>Objetivos:</h2>
+                                        {`${userForTesting.Objetivo}`}
+                                    </div>
+
+
+
+
+                                    <div className='contact'>
+
+                                        {userForTesting.Premium ? (<Button
+                                            style={buttonStyle}
+                                            variant='contained'
+                                            onClick={() => {
+                                                window.scroll({ top: 0, behavior: 'smooth' });
+                                                // setTimeout(() => {
+                                                setHeaderMountIn(false);
+                                                // }, 200);
+                                                setTimeout(() => {
+                                                    setInfoPremium(true)
+                                                }, 400);
+                                                setTimeout(() => {
+                                                    setHeaderMountIn(true)
+                                                }, 800);
+                                                // setTimeout(() => {
+                                                // setInfoPremium(true)
+                                                // }, 600);
+                                            }}
+                                        >
+                                            <ArrowForwardIosIcon />
+                                            Premium
+                                        </Button>) : (null)}
+
+
+
+
+                                        <Button
+                                            style={buttonStyle}
+                                            variant='contained'
+                                            onClick={() => {
+                                                window.scroll({ top: 0, behavior: 'smooth' });
+                                                setTimeout(() => {
+                                                    setNavigateAway(true);
+                                                }, 200);
+                                                setTimeout(() => {
+                                                    setHeaderMountIn(false)
+                                                }, 250);
+                                                setTimeout(() => {
+                                                    setContentMountIn(false)
+                                                }, 300);
+                                                setTimeout(() => {
+                                                    navigate('/profileedit')
+                                                }, 600);
+                                            }}
+                                        >
+                                            Editar
+                                            <br />
+                                            <EditIcon />
+                                        </Button>
+                                    </div>
+
+                                </>
+
+
+                            )}
 
                         </div>
 
                     </div>
+
+
+
+
+
 
                     {/* <CardHeader
                         // style={cardHeaderStyle}
@@ -142,53 +307,15 @@ function Profile2({ userForTesting, BackToTopButton, name, headerMountIn, conten
 
 
 
-            </div>
+            </div >
 
-            {userForTesting.premium ? (
+            {/* {userForTesting.premium ? (
 
-                <Slide
-                    direction="right"
-                    in={contentMountIn}
-                    timeout={500}
-                    mountOnEnter unmountOnExit>
 
-                    <div
-                        className='userInfoDiv'
-                    >
 
-                        {/* <Card /> */}
+            ): (null)} */}
 
-                        {/* <div className='cardContent'> */}
-                        <Card style={cardContentCard}>
-                            <Grid container spacing={0}>
-                                {Object.entries(userForTesting).map(([key, value], index) => {
-                                    if (key !== 'dietPlan' && key !== 'profilePicture') {
-                                        return (
-                                            <Grid item xs={5} md={4} lg={6} style={infoCardsStyle} key={index}>
-                                                {/* <Card>
-                                        <CardHeader
-                                            subheader={key}>
-                                        </CardHeader>
-                                        <CardContent>
-                                            <Typography variant='body1'>{value}</Typography>
-                                        </CardContent>
-                                    </Card> */}
-                                                <p><strong>{key}:</strong> {value}</p>
-                                            </Grid>
-                                        );
-                                    }
-                                    return null;
-                                })}
-                            </Grid>
-                        </Card>
-
-                    </div>
-
-                </Slide>
-
-            ) : (null)}
-
-            {userForTesting.premium ? (
+            {/* {userForTesting.premium ? (
 
                 <Fade
                     in={contentMountIn}
@@ -213,7 +340,7 @@ function Profile2({ userForTesting, BackToTopButton, name, headerMountIn, conten
                     </div>
                 </Fade >
 
-            ) : (null)}
+            ) : (null)} */}
 
         </div >
     );

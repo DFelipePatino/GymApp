@@ -1,0 +1,94 @@
+    <h3>Cardio</h3>
+
+                    {/* <Filter2
+    setInOutStatus1={setInOutStatus1}
+    setInOutStatus2={setInOutStatus2}
+    setInOutStatus3={setInOutStatus3}
+    setInOutStatus4={setInOutStatus4}
+    setInOutStatus5={setInOutStatus5}
+    ref={filterRef2}
+/> */}
+
+
+                    <Test2
+                        setInOutStatus1={setInOutStatus1}
+                        setInOutStatus2={setInOutStatus2}
+                        setInOutStatus3={setInOutStatus3}
+                        setInOutStatus4={setInOutStatus4}
+                        setInOutStatus5={setInOutStatus5}
+                        ref={filterRef2}
+                    />
+
+
+                    {inOutStatus2 ?
+                        <Cards2 inOutStatus2={inOutStatus2} setHeaderLoad={setHeaderLoad} setBannerload={setBannerload} setFilterLoad={setFilterLoad} />
+
+                        : null}
+
+
+                    <br />
+
+                    <h3>Estiramiento</h3>
+
+                    {/* <Filter3
+    setInOutStatus1={setInOutStatus1}
+    setInOutStatus2={setInOutStatus2}
+    setInOutStatus3={setInOutStatus3}
+    setInOutStatus4={setInOutStatus4}
+    setInOutStatus5={setInOutStatus5}
+    ref={filterRef3}
+/> */}
+
+
+
+                    <Test3
+                        setInOutStatus1={setInOutStatus1}
+                        setInOutStatus2={setInOutStatus2}
+                        setInOutStatus3={setInOutStatus3}
+                        setInOutStatus4={setInOutStatus4}
+                        setInOutStatus5={setInOutStatus5}
+                        ref={filterRef3}
+                    />
+
+
+                    {inOutStatus3 ?
+                        <Cards3 inOutStatus3={inOutStatus3} setHeaderLoad={setHeaderLoad} setBannerload={setBannerload} setFilterLoad={setFilterLoad} />
+
+                        : null}
+
+
+                    <br />
+
+                    <h3>Tips Alimentacion</h3>
+
+                    {/* <Filter4
+    setInOutStatus1={setInOutStatus1}
+    setInOutStatus2={setInOutStatus2}
+    setInOutStatus3={setInOutStatus3}
+    setInOutStatus4={setInOutStatus4}
+    setInOutStatus5={setInOutStatus5}
+    ref={filterRef4}
+/> */}
+
+
+                    <Test4
+                        setInOutStatus1={setInOutStatus1}
+                        setInOutStatus2={setInOutStatus2}
+                        setInOutStatus3={setInOutStatus3}
+                        setInOutStatus4={setInOutStatus4}
+                        setInOutStatus5={setInOutStatus5}
+                        ref={filterRef4}
+                    />
+
+
+                    {inOutStatus4 ?
+                        <Cards4 inOutStatus4={inOutStatus4} setHeaderLoad={setHeaderLoad} setBannerload={setBannerload} setFilterLoad={setFilterLoad} />
+
+                        : null}
+
+
+                    {/* //here goes the rest of the code// */}
+
+                    <br />
+
+                 

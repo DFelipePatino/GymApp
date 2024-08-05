@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { getDefault, getMetodo1, getMetodo2, getMetodo3, getMetodo4, getMetodo5, getMetodo6, emptyState } from '../../../redux/actions';
+import { getDefault, getMetodo1, getMetodo2, getMetodo3, getMetodo4, getMetodo5, getMetodo6, emptyState, getEntrenamientoActual } from '../../../redux/actions';
 import HeaderNav from '../../HeaderNav/HeaderNav';
 import NavBar from '../NavBar/NavBar';
 import Banner from '../Banner/banner';
@@ -40,18 +40,21 @@ function HomePage({ BackToTopButton, headerLoad, bannerLoad, filterLoad, setHead
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const user = useSelector((state) => state.user);
     const results = useSelector((state) => state.results);
-    console.log('results:', results);
+    // console.log('results:', results);
     const favs = useSelector((state) => state.favorites);
 
+    const entrenamientoSeleccionadoLocalStorage = JSON.parse(localStorage.getItem("entrenamientoSeleccionado"));
+    // console.log(entrenamientoSeleccionadoLocalStorage, 'entrenamientoSeleccionadoLocalStorage');
 
+    const entrenamientoActual = useSelector((state) => state.currentEntrenamiento);
+    // console.log('entrenamientoActual:', entrenamientoActual);
 
     const homeContent = localStorage.getItem("homeContent")
     const lastCategory = localStorage.getItem("category")
     const categoryToDispatch = localStorage.getItem("categorytoDispatch")
     const usuario = JSON.parse(localStorage.getItem("localUser"));
-    console.log('usuario:', usuario);
+    // console.log('usuario:', usuario);
 
 
 
@@ -116,8 +119,9 @@ function HomePage({ BackToTopButton, headerLoad, bannerLoad, filterLoad, setHead
     useEffect(() => {
         isMounted.current = true;
 
-        localStorage.removeItem('entrenamientoSeleccionado');
+        // localStorage.removeItem('entrenamientoSeleccionado');
         // localStorage.removeItem('CardIndex');
+        getEntrenamientoActual();
 
         setTimeout(() => {
             if (isMounted.current) setfadeLoad(false);
@@ -209,9 +213,9 @@ function HomePage({ BackToTopButton, headerLoad, bannerLoad, filterLoad, setHead
             scrollToFilter5();
         }
 
-        console.log('homeContent:', homeContent);
-        console.log('lastCategory:', lastCategory);
-        console.log('categoryToDispatch:', categoryToDispatch);
+        // console.log('homeContent:', homeContent);
+        // console.log('lastCategory:', lastCategory);
+        // console.log('categoryToDispatch:', categoryToDispatch);
 
         if (homeContent === "goBack") {
             switch (lastCategory) {
@@ -274,7 +278,7 @@ function HomePage({ BackToTopButton, headerLoad, bannerLoad, filterLoad, setHead
 
 
     const todasLasCategotias = useSelector(state => state.allCategories)
-    console.log('todasLasCategotias:', todasLasCategotias);
+    // console.log('todasLasCategotias:', todasLasCategotias);
 
     return (
 

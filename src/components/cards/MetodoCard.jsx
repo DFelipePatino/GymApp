@@ -10,7 +10,7 @@ import IconButton from '@mui/material/IconButton';
 
 function MetodoCard({ resultsFiltered, results }) {
 
-    console.log(resultsFiltered, 'resultsFiltered en metodoCard');
+    // console.log(resultsFiltered, 'resultsFiltered en metodoCard');
 
     const [expandedGym, setExpandedGym] = React.useState(false);
     const [expandedHome, setExpandedHome] = React.useState(false);
@@ -39,13 +39,13 @@ function MetodoCard({ resultsFiltered, results }) {
         setExpandedHome(!expandedHome);
     };
 
-    console.log(localStorage.getItem("lugar"));
+    // console.log(localStorage.getItem("lugar"));
 
 
     const filteredResultsGym = results?.map((each) => each.entrenamientos?.filter((each) => each.lugar === "GYM"));
-    console.log(filteredResultsGym, 'filteredResultsGym en metodoCard');
+    // console.log(filteredResultsGym, 'filteredResultsGym en metodoCard');
     const filteredResultsHome = results?.map((each) => each.entrenamientos?.filter((each) => each.lugar === "CASA"));
-    console.log(filteredResultsHome, 'filteredResultsHome en metodoCard');
+    // console.log(filteredResultsHome, 'filteredResultsHome en metodoCard');
 
 
     return (
@@ -57,7 +57,10 @@ function MetodoCard({ resultsFiltered, results }) {
                             <Card
                                 id={`card-${entrenamiento.id}`}
                                 style={{ margin: '10px', cursor: 'pointer', backgroundColor: 'rgb(0,0,0)', border: '2px solid rgb(156, 28, 23)', borderRadius: '20px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', padding: '10px', color: 'white' }}
-                                onClick={() => { handleClick(entrenamiento.id), console.log(entrenamiento.id); }}
+                                onClick={() => {
+                                    handleClick(entrenamiento.id);
+                                    // console.log(entrenamiento.id);
+                                }}
                             >
                                 <h4 style={{ marginBottom: '10px', marginTop: '0' }}>
                                     Dia: {entrenamiento.dia}</h4>

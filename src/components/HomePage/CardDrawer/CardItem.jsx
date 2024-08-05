@@ -19,7 +19,7 @@ import ShareIcon from '@mui/icons-material/Share';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { Button, Divider, Grow } from '@mui/material';
-import { emptyState, selectedEntrenamiento } from '../../../redux/actions';
+import { emptyState, selectedEntrenamiento, empezarEntrenamiento } from '../../../redux/actions';
 import { useEffect, useState } from 'react';
 import { ExpandMore } from '@mui/icons-material';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
@@ -36,12 +36,14 @@ const CardItem = ({ setHeaderLoad, setBannerload, setFilterLoad }) => {
     const filteredResultsHome = results?.map((each) => each.entrenamientos?.filter((each) => each.lugar === "CASA"));
 
     let entrenamientoSeleccionado;
+
     if (localStorage.getItem('lugar') === 'GYM') {
         entrenamientoSeleccionado = filteredResultsGym[0]?.filter((entrenamiento) => entrenamiento?.id === CardIndex)[0];
+
     } else if (localStorage.getItem('lugar') === 'CASA') {
         entrenamientoSeleccionado = filteredResultsHome[0]?.filter((entrenamiento) => entrenamiento?.id === CardIndex)[0];
     }
-    console.log(entrenamientoSeleccionado, 'entrenamientoSeleccionado en cardItem');
+    // console.log(entrenamientoSeleccionado, 'entrenamientoSeleccionado en cardItem');
 
     const [expanded, setExpanded] = useState(false);
     const [grow, setGrow] = useState(true);
@@ -65,6 +67,8 @@ const CardItem = ({ setHeaderLoad, setBannerload, setFilterLoad }) => {
     };
 
     const toggleNavigate = () => {
+        dispatch(empezarEntrenamiento(entrenamientoSeleccionado.id));
+        console.log(entrenamientoSeleccionado.id, 'entrenamientoSeleccionado.id');
         toggleDrawer(false)();
         window.scrollTo({ top: 0, behavior: 'smooth' });
         setTimeout(() => setBannerload(false), 300);
@@ -131,7 +135,7 @@ const CardItem = ({ setHeaderLoad, setBannerload, setFilterLoad }) => {
                     />
                     <CardContent style={{ paddingTop: '0' }}>
                         <div style={{ position: 'relative' }}>
-                            <PlayCircleOutlineIcon
+                            {/* <PlayCircleOutlineIcon
                                 style={{
                                     position: 'absolute',
                                     top: '50%',
@@ -141,7 +145,7 @@ const CardItem = ({ setHeaderLoad, setBannerload, setFilterLoad }) => {
                                     fontSize: '48px',
                                     color: 'red'
                                 }}
-                                onClick={toggleNavigate} />
+                                onClick={toggleNavigate} /> */}
                             <CardMedia
                                 style={{ borderRadius: '5%', paddingTop: '30px', paddingBottom: '30px', background: 'linear-gradient(to bottom, rgb(0, 0, 0),rgb(159, 28, 23),rgb(0, 0, 0)' }}
                                 component="img"

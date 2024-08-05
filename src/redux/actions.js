@@ -30,7 +30,9 @@ import {
     REMOVE_FAV,
     SELECTED_ENTRENAMIENTO,
     GET_BANNER,
-    GET_CATEGORIES
+    GET_CATEGORIES,
+    GET_GOOGLE,
+    GET_ENTRENAMIENTO_ACTUAL
 } from "./action-types";
 
 
@@ -47,17 +49,31 @@ import {
 
 const baseUrl = "https://backdev.onetrainingteam.com/onegym-backtest/api";
 
+export const getGoogle = () => {
+    return async (dispatch) => {
+        const id_token = localStorage.getItem('id_token');
+        const response = await fetch(`${baseUrl}/users`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': "Bearer " + id_token
+            },
+            body: null
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            dispatch({ type: GET_GOOGLE, payload: data });
+        } else {
+            // Handle error response
+            console.error('Failed to fetch data from Google API');
+        }
+    };
+};
+
 export const getBanner = () => {
     return async (dispatch) => {
         const id_token = localStorage.getItem('id_token');
-        // const config = {
-        //     headers: {
-        //         'Content-Type': 'application/json',
-        //         'Authorization': 'Bearer ' + id_token
-        //     }
-        // };
-        // const data = await axios.get("http://localhost:8082/onegym-back/api/banner", config);
-        // dispatch({ type: GET_BANNER, payload: data });
         const registro = await fetch(`${baseUrl}/banner`, {
             method: 'GET',
             headers: {
@@ -71,6 +87,64 @@ export const getBanner = () => {
         dispatch({ type: GET_BANNER, payload: data });
     }
 }
+export const getEntrenamientoActual = () => {
+    return async (dispatch) => {
+        const id_token = localStorage.getItem('id_token');
+        const localUser = localStorage.getItem('localUser');
+        const registro = await fetch(`${baseUrl}/progreso/last/${localUser?.id}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': "Bearer " + id_token
+            },
+            body: null
+        });
+
+        const data = await registro.json();
+        dispatch({ type: GET_ENTRENAMIENTO_ACTUAL, payload: data });
+    }
+}
+
+export const empezarEntrenamiento = (entrenamientoID) => {
+    return async (dispatch, getState) => {
+        console.log('entrenamientoID:', entrenamientoID);
+
+        console.log('entro al action');
+        const { currentEntrenamiento } = getState();
+        console.log(currentEntrenamiento, "currentEntrenamiento");
+
+        if (!currentEntrenamiento.terminado && (currentEntrenamiento.id || currentEntrenamiento.entrenamientoId === entrenamientoID)) {
+            return;
+        }
+
+        console.log('llamamos a la action empezarEntrenamiento');
+        const id_token = localStorage.getItem('id_token');
+        const localUser = JSON.parse(localStorage.getItem('localUser'));
+
+        const response = await fetch(`${baseUrl}/progreso/last/${localUser?.id}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': "Bearer " + id_token
+            },
+            body: JSON.stringify({
+                entrenamientoId: entrenamientoID,
+                usuarioId: localUser?.id,
+                fecha: new Date(),
+                terminado: false
+            })
+        });
+
+        const data = await response.json();
+        console.log('Success crear entrenamiento actual', data);
+
+        // You may want to dispatch some action here to update the state
+        // dispatch({ type: 'SET_CURRENT_ENTRENAMIENTO', payload: data });
+    };
+};
+
+
+
 
 export const getCategories = () => {
     return async (dispatch) => {
@@ -81,8 +155,7 @@ export const getCategories = () => {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': "Bearer " + id_token
-                },
-                body: null
+                }
             }
         );
         const data = await registro.json();
@@ -90,22 +163,27 @@ export const getCategories = () => {
     }
 }
 
-export const putUsuario = (usuario) => {
-    return async (dispatch) => {
-        const id_token = localStorage.getItem('id_token');
-        const registro = await fetch(`${baseUrl}/updateInfo/${usuario?.id}`,
-            {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': "Bearer " + id_token
-                },
-                body: usuario
-            }
-        );
-        const data = await registro.json();
-        //dispatch({ type: GET_CATEGORIES, payload: data });
-    }
+export const putUsuario = async (usuario) => {
+    console.log('usuario Perro:', usuario);
+    //usuario.fechaNacimiento = null;
+    // usuario.genero = 'HOMBRE';
+    // usuario.accountType = 'FREE';
+    // usuario.state = 'ACTIVE';
+    const id_token = localStorage.getItem('id_token');
+    const registro = await fetch(`${baseUrl}/users/updateinfo/${usuario?.id}`,
+        {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': "Bearer " + id_token
+            },
+            body: JSON.stringify(usuario)
+        }
+    );
+    console.log('registro:', registro);
+    const data = registro.json();
+    console.log('Success actrualizar:', data);
+    //dispatch({ type: GET_CATEGORIES, payload: data });
 }
 
 

@@ -66,7 +66,12 @@ function ContentPlayer({ setPlayerLoad, playerLoad }) {
     const category = localStorage.getItem("category");
 
     const [expanded, setExpanded] = React.useState(true);
-    const [expanded2, setExpanded2] = React.useState(false);
+
+    const [expandedDescription, setExpandedDescription] = useState(
+        new Array(entrenamientoSeleccionadoLocalStorage.rutinas?.length).fill(false)
+    );
+
+    console.log(expandedDescription, 'expandedDescription');
 
     const handleExpandClick = () => {
         setExpanded(!expanded);
@@ -78,18 +83,14 @@ function ContentPlayer({ setPlayerLoad, playerLoad }) {
         }
     };
 
-    const rutinaID = entrenamientoSeleccionadoLocalStorage.rutinas.map((rutina) => rutina.id - 1);
-
-    const handleExpandClick2 = (index) => {
-        if (rutinaID.includes(index)) {
-            setExpanded2(!expanded2);
-            if (expanded2 === false) {
-                window.scrollTo({ top: 400, behavior: 'smooth' });
-            }
-            else if (expanded2 === true) {
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            }
+    const handleExpandClickRutina = (index) => {
+        const newExpandedDescription = [...expandedDescription];
+        const newExpanded = newExpandedDescription[index];
+        if (!newExpandedDescription[index]) {
+            newExpandedDescription.fill(false);
         }
+        newExpandedDescription[index] = !newExpanded;
+        setExpandedDescription(newExpandedDescription);
     };
 
     const buttonStyle = {
@@ -106,69 +107,39 @@ function ContentPlayer({ setPlayerLoad, playerLoad }) {
         }
     };
 
-    let rutinasButtons = entrenamientoSeleccionadoLocalStorage.rutinas ? entrenamientoSeleccionadoLocalStorage?.rutinas?.map((rutina, index) => {
-        return (
-            <>
-                <Button
-                    variant="contained"
-                    style={{ backgroundColor: 'rgb(159, 28, 23)', color: 'white', fontWeight: 'bold', margin: '4px' }}
-                    key={index}
-                    onClick={() => {
-                        seekTo(rutina.segundoInicial);
-                        handleExpandClick2(index)
-                        console.log(index, 'index');
-                    }}
-                >
-                    <KeyboardArrowRightIcon
-                        style={{ color: 'rgb(256, 256, 256)', paddingBottom: '-20px', marginLeft: '-10px' }}
-                    />
-                    {rutina.nombre}
-
-                </Button>
-
-                {rutina.nombre ? (
-
-                    <>
-
-
-                        <Collapse in={expanded2} timeout="auto" unmountOnExit>
-                            <CardContent>
-                                <Typography paragraph
-                                    style={{ color: 'white' }}
-                                >Descripcion:</Typography>
-                                <Typography
-                                    style={{ color: 'white' }}
-                                    paragraph>
-                                    {rutina.nombre}
-                                </Typography>
-
-                            </CardContent>
-                        </Collapse>
-                    </>
-                ) : null}
-            </>
-        );
-    }) : entrenamientoSeleccionadoLocalStorage?.rutinas?.map((rutina, index) => {
-        return (
+    const rutinasButtons = entrenamientoSeleccionadoLocalStorage.rutinas?.map((rutina, index) => (
+        <div key={index}>
             <Button
                 variant="contained"
                 style={{ backgroundColor: 'rgb(159, 28, 23)', color: 'white', fontWeight: 'bold', margin: '4px' }}
-
-                key={index}
-                // expand={expanded ? 'true' : undefined}
-                // onClick={() => {
-                //     handleExpandClick2();
-                //     seekTo(rutina.seekTime);
-                //     console.log('rutina.seekTime');
-                // }}
-                onClick={
-                    handleExpandClick2
-                }
+                onClick={() => {
+                    // Assuming seekTo is defined elsewhere
+                    seekTo(rutina.segundoInicial);
+                    handleExpandClickRutina(index);
+                    console.log(index, 'index');
+                }}
             >
+                <KeyboardArrowRightIcon
+                    style={{ color: 'rgb(256, 256, 256)', paddingBottom: '-20px', marginLeft: '-10px' }}
+                />
                 {rutina.nombre}
             </Button>
-        );
-    });
+            {rutina?.nombre && (
+                <Collapse in={expandedDescription[index]} timeout="auto" unmountOnExit>
+                    <CardContent>
+                        <Typography paragraph style={{ color: 'white' }}>
+                            Descripcion:
+                        </Typography>
+                        <Typography style={{ color: 'white' }} paragraph>
+                            {rutina?.nombre}
+                        </Typography>
+                    </CardContent>
+                </Collapse>
+            )}
+        </div>
+    )) || <>    </>;
+
+
 
     const getVideoLink = async () => {
 
@@ -188,6 +159,9 @@ function ContentPlayer({ setPlayerLoad, playerLoad }) {
     useEffect(() => {
         getVideoLink();
     }, []);
+
+
+    console.log(entrenamientoSeleccionadoLocalStorage, 'entrenamientoSeleccionadoLocalStorage');
 
     return (
         <div className="contenthome">
@@ -250,17 +224,33 @@ function ContentPlayer({ setPlayerLoad, playerLoad }) {
                                 paddingRight: '30%',
                             }}
                         />
-                        <ReactPlayer
-                            ref={playerRef}
-                            // url={URLVideo + ((entrenamientoSeleccionado?.multimedia?.find(i => i.type === 'VIDEO')?.id) || (entrenamientoSeleccionadoLocalStorage?.multimedia?.find(i => i.type === 'VIDEO')?.id) || 'https://www.youtube.com/watch?v=9bZkp7q19f0')}
-                            // url={'https://www.youtube.com/watch?v=9bZkp7q19f0'}
-                            url={urlVideo}
-                            controls={true}
-                            width={'100%'}
-                            height={'350px'}
-                            // light={true}
-                            style={{ background: 'linear-gradient(to bottom, rgb(0, 0, 0),rgb(159, 28, 23),rgb(0, 0, 0)' }}
-                        />
+                        {urlVideo === '' ?
+
+                            <div style={{
+                                width: '100%',
+                                height: '350px',
+                                display: 'flex',
+                                flexDirection: 'column',
+                                justifyContent: 'space-around',
+                                background: 'linear-gradient(to bottom, rgb(0, 0, 0),rgb(159, 28, 23),rgb(0, 0, 0)'
+                            }}>
+                                <LinearProgress />
+                            </div>
+
+                            :
+                            <ReactPlayer
+                                ref={playerRef}
+                                // url={URLVideo + ((entrenamientoSeleccionado?.multimedia?.find(i => i.type === 'VIDEO')?.id) || (entrenamientoSeleccionadoLocalStorage?.multimedia?.find(i => i.type === 'VIDEO')?.id) || 'https://www.youtube.com/watch?v=9bZkp7q19f0')}
+                                // url={'https://www.youtube.com/watch?v=9bZkp7q19f0'}
+                                url={urlVideo}
+                                controls={true}
+                                width={'100%'}
+                                height={'350px'}
+                                // light={true}
+                                style={{ background: 'linear-gradient(to bottom, rgb(0, 0, 0),rgb(159, 28, 23),rgb(0, 0, 0)' }}
+                            />
+
+                        }
 
                         <CardActions
                             style={{
@@ -278,6 +268,134 @@ function ContentPlayer({ setPlayerLoad, playerLoad }) {
                             >Ejercicios</h4>
 
                             {rutinasButtons}
+
+                            {/* {entrenamientoSeleccionadoLocalStorage.rutinas[0]?.descripcion ? (
+
+                                <>
+                                    <Collapse in={expanded2} timeout="auto" unmountOnExit>
+                                        <CardContent>
+                                            <Typography paragraph
+                                                style={{ color: 'white' }}
+                                            >Descripcion:</Typography>
+                                            <Typography
+                                                style={{ color: 'white' }}
+                                                paragraph>
+                                                {entrenamientoSeleccionadoLocalStorage.rutinas[0]?.descripcion}
+                                            </Typography>
+
+                                        </CardContent>
+                                    </Collapse>
+                                </>
+                            ) : <>  </>}
+                            {entrenamientoSeleccionadoLocalStorage.rutinas[1]?.descripcion ? (
+
+                                <>
+                                    <Collapse in={expanded3} timeout="auto" unmountOnExit>
+                                        <CardContent>
+                                            <Typography paragraph
+                                                style={{ color: 'white' }}
+                                            >Descripcion:</Typography>
+                                            <Typography
+                                                style={{ color: 'white' }}
+                                                paragraph>
+                                                {entrenamientoSeleccionadoLocalStorage.rutinas[1]?.descripcion}
+                                            </Typography>
+
+                                        </CardContent>
+                                    </Collapse>
+                                </>
+                            ) : <>  </>}
+                            {entrenamientoSeleccionadoLocalStorage.rutinas[2]?.descripcion ? (
+
+                                <>
+                                    <Collapse in={expanded4} timeout="auto" unmountOnExit>
+                                        <CardContent>
+                                            <Typography paragraph
+                                                style={{ color: 'white' }}
+                                            >Descripcion:</Typography>
+                                            <Typography
+                                                style={{ color: 'white' }}
+                                                paragraph>
+                                                {entrenamientoSeleccionadoLocalStorage.rutinas[2]?.descripcion}
+                                            </Typography>
+
+                                        </CardContent>
+                                    </Collapse>
+                                </>
+                            ) : <>  </>}
+                            {entrenamientoSeleccionadoLocalStorage.rutinas[3]?.descripcion ? (
+
+                                <>
+                                    <Collapse in={expanded5} timeout="auto" unmountOnExit>
+                                        <CardContent>
+                                            <Typography paragraph
+                                                style={{ color: 'white' }}
+                                            >Descripcion:</Typography>
+                                            <Typography
+                                                style={{ color: 'white' }}
+                                                paragraph>
+                                                {entrenamientoSeleccionadoLocalStorage.rutinas[3]?.descripcion}
+                                            </Typography>
+
+                                        </CardContent>
+                                    </Collapse>
+                                </>
+                            ) : <>  </>}
+                            {entrenamientoSeleccionadoLocalStorage.rutinas[4]?.descripcion ? (
+
+                                <>
+                                    <Collapse in={expanded6} timeout="auto" unmountOnExit>
+                                        <CardContent>
+                                            <Typography paragraph
+                                                style={{ color: 'white' }}
+                                            >Descripcion:</Typography>
+                                            <Typography
+                                                style={{ color: 'white' }}
+                                                paragraph>
+                                                {entrenamientoSeleccionadoLocalStorage.rutinas[4]?.descripcion}
+                                            </Typography>
+
+                                        </CardContent>
+                                    </Collapse>
+                                </>
+                            ) : <>  </>}
+                            {entrenamientoSeleccionadoLocalStorage.rutinas[5]?.descripcion ? (
+
+                                <>
+                                    <Collapse in={expanded7} timeout="auto" unmountOnExit>
+                                        <CardContent>
+                                            <Typography paragraph
+                                                style={{ color: 'white' }}
+                                            >Descripcion:</Typography>
+                                            <Typography
+                                                style={{ color: 'white' }}
+                                                paragraph>
+                                                {entrenamientoSeleccionadoLocalStorage.rutinas[5]?.descripcion}
+                                            </Typography>
+
+                                        </CardContent>
+                                    </Collapse>
+                                </>
+                            ) : <>  </>}
+                            {entrenamientoSeleccionadoLocalStorage.rutinas[6]?.descripcion ? (
+
+                                <>
+                                    <Collapse in={expanded8} timeout="auto" unmountOnExit>
+                                        <CardContent>
+                                            <Typography paragraph
+                                                style={{ color: 'white' }}
+                                            >Descripcion:</Typography>
+                                            <Typography
+                                                style={{ color: 'white' }}
+                                                paragraph>
+                                                {entrenamientoSeleccionadoLocalStorage.rutinas[6].descripcion}
+                                            </Typography>
+
+                                        </CardContent>
+                                    </Collapse>
+                                </>
+                            ) : <>  </>} */}
+
 
                             <br />
 
@@ -355,8 +473,8 @@ function ContentPlayer({ setPlayerLoad, playerLoad }) {
                         </Collapse>
                     </Card>
                 </div>
-            </Grow>
-        </div>
+            </Grow >
+        </div >
     );
 }
 

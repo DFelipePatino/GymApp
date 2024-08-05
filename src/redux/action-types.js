@@ -24,3 +24,7 @@ export const GET_USER = 'GET_USER';
 export const SET_HOME_CONTENT = 'SET_HOME_CONTENT';
 
 export const GET_DEFAULT = 'GET_DEFAULT';
+
+export const GET_GOOGLE = 'GET_GOOGLE';
+
+export const GET_ENTRENAMIENTO_ACTUAL = 'GET_ENTRENAMIENTO_ACTUAL';

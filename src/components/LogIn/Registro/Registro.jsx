@@ -150,14 +150,69 @@ const MenuButton = styled(BaseMenuButton)(
     `,
 );
 
-const generos = ['Hombre', 'Mujer'];
+const CssTextField = styled(TextField)({
+    '& label': {
+        color: 'rgb(146, 144, 144)',
+    },
+    '& label.Mui-focused': {
+        color: 'rgb(159, 28, 23)',
+    },
+    '& .MuiInput-underline:after': {
+        borderBottomColor: 'rgb(159, 28, 23)',
+    },
+    '& .MuiOutlinedInput-root': {
+        '& fieldset': {
+            borderColor: 'rgb(159, 28, 23)',
+        },
+        '&:hover fieldset': {
+            borderColor: 'rgb(159, 28, 23)',
+        },
+        '&.Mui-focused fieldset': {
+            borderColor: 'rgb(159, 28, 23)',
+        },
+        '& input': { // Add this block to change the value color
+            color: 'rgb(159, 28, 23)',
+        },
+    },
+});
 
 
 function Registro({ BackToTopButton, usuario, todasLasCategorias }) {
 
     const navigate = useNavigate();
 
-    console.log(usuario, 'usuario en registro');
+    const [windowSize, setWindowSize] = useState({
+        width: window.innerWidth,
+        height: window.innerHeight,
+    });
+
+    useEffect(() => {
+        const handleResize = () => {
+            setWindowSize({
+                width: window.innerWidth,
+                height: window.innerHeight,
+            });
+        };
+
+        window.addEventListener('resize', handleResize);
+        window.scrollTo(0, 0);
+
+        setTimeout(() => {
+            setHeaderMountIn(true);
+        }, 300);
+
+        setTimeout(() => {
+            setContentMountIn(true);
+        }, 600);
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
+
+
+
+    const typographyStyle = windowSize.width >= 360 ? { marginTop: '50px', color: 'rgb(146, 144, 144)' } : { color: 'rgb(146, 144, 144)' };
 
     const handleNombreChange = (event) => {
         const { name, value } = event.target;
@@ -173,10 +228,6 @@ function Registro({ BackToTopButton, usuario, todasLasCategorias }) {
             [name]: value
         }));
     };
-    const handleCombinedChange = (event) => {
-        handleDobChange(event);
-        handleEdadChange(event);
-    };
     const handleEdadChange = (event) => {
         setUserEdited(prevState => ({
             ...prevState,
@@ -190,52 +241,29 @@ function Registro({ BackToTopButton, usuario, todasLasCategorias }) {
             categorias: [...prevState.categorias, event.target.value]
         }));
     };
-    const handleGeneroChange = (event) => {
-        console.log(event.target.value, 'event.target.value');
+    const handleGeneroChange = (button) => {
+        // console.log(event.target.value, 'event.target.value');
+        console.log(userEdited.geneo, 'userEdited.geneo');
+        setActiveButton(button);
         setUserEdited(prevState => ({
             ...prevState,
-            geneo: event.target.value
+            geneo: button
         }));
     };
 
     const [headerMountIn, setHeaderMountIn] = useState(false)
     const [contentMountIn, setContentMountIn] = useState(false)
+    const [activeButton, setActiveButton] = useState(null);
 
-    const [userEdited, setUserEdited] = useState({
-        nombres: usuario.nombres,
-        apellidos: usuario.apellidos,
-        fechaNacimiento: '',
-        categorias: [],
-        geneo: '',
-    })
 
-    console.log(userEdited, 'userEdited');
+    const isoDate = usuario.fechaNacimiento;
+    const date = new Date(isoDate);
+    const year = date.getUTCFullYear();
+    const month = String(date.getUTCMonth() + 1).padStart(2, '0');
+    const day = String(date.getUTCDate()).padStart(2, '0');
+    const formattedDate = `${year}-${month}-${day}`;
 
-    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-
-    useEffect(() => {
-        const handleResize = () => setWindowWidth(window.innerWidth);
-        window.addEventListener('resize', handleResize);
-        window.scrollTo(0, 0);
-        setTimeout(() => {
-            setHeaderMountIn(true)
-        }, 300);
-        setTimeout(() => {
-            setContentMountIn(true)
-        }, 600);
-
-        // Cleanup event listener on component unmount
-        return () => window.removeEventListener('resize', handleResize);
-    }, []);
-
-    const typographyStyle = windowWidth >= 360 ? { marginTop: '50px', color: 'rgb(146, 144, 144)' } : { color: 'rgb(146, 144, 144)' };
-
-    const [dob, setDob] = useState(''); // Initialize state variable for dob
-
-    const handleDobChange = (event) => {
-        setDob(event.target.value); // Update dob when the input changes
-    };
-
+    const dob = formattedDate
     const calculateAge = (dob) => {
         const birthDate = new Date(dob);
         const today = new Date();
@@ -249,12 +277,21 @@ function Registro({ BackToTopButton, usuario, todasLasCategorias }) {
         return age;
     };
 
+    const [userEdited, setUserEdited] = useState({
+        nombres: usuario.nombres,
+        apellidos: usuario.apellidos,
+        fechaNacimiento: formattedDate,
+        categorias: usuario.categorias ? usuario.categorias : [],
+        geneo: usuario.geneo,
+        id: usuario.id
+    })
+
     return (
 
         <div
             style={{
-                // backgroundImage: 'linear-gradient(to bottom right, #924141, #924141, #d9d9d9)',
-                backgroundImage: 'linear-gradient(to bottom right, rgb(0, 0, 0), rgb(0, 0, 0), rgb(159, 28, 23), rgb(146, 144, 144))', height: '100%'
+                backgroundImage: 'linear-gradient(to bottom right, rgb(0, 0, 0), rgb(0, 0, 0), rgb(159, 28, 23), rgb(146, 144, 144))',
+                height: windowSize.height,
             }}
         >
 
@@ -265,13 +302,16 @@ function Registro({ BackToTopButton, usuario, todasLasCategorias }) {
                 mountOnEnter unmountOnExit>
 
 
-                <Box>
+                <Box
+                    sx={{ height: windowSize.height }}
+                >
 
 
 
                     <Grid container
                         justifyContent="space-around"
                         padding="15px"
+                        sx={{ height: windowSize.height }}
                     >
 
                         <Typography
@@ -412,13 +452,9 @@ function Registro({ BackToTopButton, usuario, todasLasCategorias }) {
                                         })} */}
 
                                                 <Grid item xs={6}>
-                                                    <TextField
+                                                    {/* <TextField
                                                         InputProps={{
-                                                            style: {
-                                                                border: '3px solid rgb(159, 28, 23)',
-                                                                borderRadius: '30px',
-                                                                backgroundColor: 'rgb(146, 144, 144)'
-                                                            },
+                                                            style: textFieldStyles
                                                         }}
                                                         InputLabelProps={{
                                                             shrink: !!userEdited.nombres || undefined,
@@ -428,21 +464,18 @@ function Registro({ BackToTopButton, usuario, todasLasCategorias }) {
                                                         label="Nombres"
                                                         value={userEdited.nombres}
                                                         onChange={handleNombreChange}
+                                                    /> */}
+                                                    <CssTextField id="custom-css-outlined-input"
+                                                        fullWidth
+                                                        name="nombres"
+                                                        label="Nombres"
+                                                        value={userEdited.nombres}
+                                                        onChange={handleNombreChange}
                                                     />
                                                 </Grid>
 
                                                 <Grid item xs={6}>
-                                                    <TextField
-                                                        InputProps={{
-                                                            style: {
-                                                                border: '3px solid rgb(159, 28, 23)',
-                                                                borderRadius: '30px',
-                                                                backgroundColor: 'rgb(146, 144, 144)'
-                                                            },
-                                                        }}
-                                                        InputLabelProps={{
-                                                            shrink: !!userEdited.apellidos || undefined,
-                                                        }}
+                                                    <CssTextField
                                                         fullWidth
                                                         name="apellidos"
                                                         label="Apellidos"
@@ -461,94 +494,82 @@ function Registro({ BackToTopButton, usuario, todasLasCategorias }) {
                                             >
 
                                                 <Grid item
-                                                    xs={6}
+                                                    xs={4}
                                                 >
-                                                    <TextField
-                                                        InputProps={{
-                                                            style: {
-                                                                border: '3px solid rgb(159, 28, 23)',
-                                                                borderRadius: '30px',
-                                                                backgroundColor: 'rgb(146, 144, 144)'
-                                                            },
-                                                        }}
+                                                    {/* <Menu> */}
+                                                    <CssTextField
                                                         fullWidth
                                                         type="date"
                                                         name="dob"
                                                         label="Fecha de nacimiento"
-                                                        onChange={handleCombinedChange}
-                                                        InputLabelProps={{
-                                                            shrink: true,
-                                                        }}
-                                                    // disabled // Add the disabled prop to make the field not editable
+                                                        value={userEdited.fechaNacimiento}
+                                                        onChange={handleEdadChange}
                                                     />
+                                                    {/* </Menu> */}
                                                 </Grid>
 
                                                 <Grid item
-                                                    xs={6}
+                                                    xs={2}
                                                 >
-                                                    <TextField
-                                                        InputProps={{
-                                                            style: {
-                                                                border: '3px solid rgb(159, 28, 23)',
-                                                                borderRadius: '30px',
-                                                                backgroundColor: 'rgb(146, 144, 144)'
-                                                            },
-                                                        }}
+                                                    {/* <Menu> */}
+                                                    <CssTextField
                                                         fullWidth
-                                                        type="number"
+                                                        // type="number"
                                                         name="dob"
                                                         label="Edad"
                                                         value={calculateAge(dob)}
-                                                        disabled // Add the disabled prop to make the field not editable
+                                                    // disabled // Add the disabled prop to make the field not editable
                                                     />
+                                                    {/* </Menu> */}
+                                                </Grid>
+                                                <Grid item xs={3}>
+                                                    <Button
+                                                        variant="outlined"
+                                                        size="large"
+                                                        style={{
+                                                            backgroundColor: activeButton === 'MUJER' ? 'rgb(159, 28, 23)' : 'rgb(146, 144, 144)',
+                                                            color: 'white',
+                                                        }}
+                                                        onClick={() => handleGeneroChange('MUJER')}
+                                                    >
+                                                        Mujer
+                                                    </Button>
+                                                </Grid>
+                                                <Grid item xs={3}>
+                                                    <Button
+                                                        variant="outlined"
+                                                        size="large"
+                                                        style={{
+                                                            backgroundColor: activeButton === 'HOMBRE' ? 'rgb(159, 28, 23)' : 'rgb(146, 144, 144)',
+                                                            color: 'white',
+                                                        }}
+                                                        onClick={() => handleGeneroChange('HOMBRE')}
+                                                    >
+                                                        Hombre
+                                                    </Button>
                                                 </Grid>
 
+                                            </Grid>
+
+                                            <Grid container
+                                                spacing={-1}
+                                            >
 
                                                 <Grid item xs={6}>
-                                                    <Menu variant="outlined">
-                                                        <InputLabel style={{ color: 'white' }} htmlFor="genero-select">Genero</InputLabel>
+                                                    <Menu>
+                                                        {/* <InputLabel style={{ color: 'white' }} htmlFor="name-order-select">Mis objetivos</InputLabel>
                                                         <Select
                                                             sx={{
-                                                                backgroundColor: grey[500],
-                                                                color: black,
+                                                                backgroundColor: black[500],
+                                                                border: '3px solid rgb(159, 28, 23)',
+                                                                color: grey[100],
                                                                 '&:focus': {
                                                                     outline: `3px solid ${green[200]}`,
                                                                     backgroundColor: grey,
                                                                     color: green[900],
                                                                 },
                                                                 typography: 'body1',
-                                                                padding: '10px',
-                                                            }}
-                                                            id="genero-select"
-                                                            value={userEdited.geneo}
-                                                            onChange={handleGeneroChange}
-                                                            label="Genero"
-                                                            fullWidth
-                                                            renderValue={(selected) => (
-                                                                <Typography>{selected}</Typography>
-                                                            )}
-                                                        >
-                                                            <MenuItem value="HOMBRE">Hombre</MenuItem>
-                                                            <MenuItem value="MUJER">Mujer</MenuItem>
-                                                        </Select>
-                                                    </Menu>
-
-                                                </Grid>
-
-                                                <Grid item xs={6}>
-                                                    <Menu variant="outlined" >
-                                                        <InputLabel style={{ color: 'white' }} htmlFor="name-order-select">Mis objetivos</InputLabel>
-                                                        <Select
-                                                            sx={{
-                                                                backgroundColor: grey[500],
-                                                                color: black,
-                                                                '&:focus': {
-                                                                    outline: `3px solid ${green[200]}`,
-                                                                    backgroundColor: grey,
-                                                                    color: green[900],
-                                                                },
-                                                                typography: 'body1',
-                                                                padding: '10px',
+                                                                // padding: '10px',
                                                             }}
                                                             value={userEdited.categorias}
                                                             onChange={handleObjetivosChange}
@@ -556,8 +577,74 @@ function Registro({ BackToTopButton, usuario, todasLasCategorias }) {
                                                             renderValue={(selected) => (
                                                                 <Typography>{selected}</Typography>
                                                             )}
+                                                        > */}
+                                                        <CssTextField
+                                                            fullWidth
+                                                            id="outlined-select-objetivos"
+                                                            select
+                                                            label="Objetivos disponibles"
+                                                            value={userEdited.categorias}
+                                                            onChange={handleObjetivosChange}
                                                         >
                                                             {todasLasCategorias.map((categoria, index) => {
+                                                                return (
+                                                                    <MenuItem key={index}
+                                                                        value={categoria.nombre}
+                                                                        sx={{
+                                                                            color: green[900],
+
+                                                                            '&:focus': {
+                                                                                outline: `3px solid ${green[200]}`,
+                                                                                backgroundColor: green[100],
+                                                                                color: green[900],
+                                                                            },
+
+                                                                            typography: 'body1',
+                                                                            padding: '10px',
+                                                                        }}
+                                                                    >
+                                                                        <Typography sx={{ color: 'rgb(159, 28, 23) ' }}>
+                                                                            {categoria.nombre}
+                                                                        </Typography>
+                                                                    </MenuItem>
+                                                                );
+
+                                                            })
+                                                            }
+                                                        </CssTextField>
+                                                    </Menu>
+                                                </Grid>
+                                                <Grid item xs={6}>
+                                                    <Menu>
+                                                        {/* <InputLabel style={{ color: 'white' }} htmlFor="name-order-select">Mis objetivos</InputLabel>
+                                                        <Select
+                                                            sx={{
+                                                                backgroundColor: black[500],
+                                                                border: '3px solid rgb(159, 28, 23)',
+                                                                color: grey[100],
+                                                                '&:focus': {
+                                                                    outline: `3px solid ${green[200]}`,
+                                                                    backgroundColor: grey,
+                                                                    color: green[900],
+                                                                },
+                                                                typography: 'body1',
+                                                                // padding: '10px',
+                                                            }}
+                                                            value={userEdited.categorias}
+                                                            onChange={handleObjetivosChange}
+                                                            fullWidth
+                                                            renderValue={(selected) => (
+                                                                <Typography>{selected}</Typography>
+                                                            )}
+                                                        > */}
+                                                        <CssTextField
+                                                            fullWidth
+                                                            id="outlined-select-objetivos"
+                                                            select
+                                                            label="Tus Objetivos"
+                                                            value={userEdited.categorias}
+                                                        >
+                                                            {userEdited.categorias.map((categoria, index) => {
                                                                 return (
                                                                     <MenuItem key={index}
                                                                         value={categoria}
@@ -574,16 +661,24 @@ function Registro({ BackToTopButton, usuario, todasLasCategorias }) {
                                                                             padding: '10px',
                                                                         }}
                                                                     >
-                                                                        {categoria}
+                                                                        <Typography sx={{ color: 'rgb(159, 28, 23) ' }}>
+                                                                            {categoria}
+                                                                        </Typography>
                                                                     </MenuItem>
                                                                 );
 
                                                             })
                                                             }
-                                                        </Select>
+                                                        </CssTextField>
                                                     </Menu>
                                                 </Grid>
 
+
+                                            </Grid>
+
+                                            <Grid container
+                                                spacing={2}
+                                            >
 
                                                 <Grid item
                                                     xs={6}
@@ -607,19 +702,23 @@ function Registro({ BackToTopButton, usuario, todasLasCategorias }) {
                                                                 color: 'rgb(255, 255, 255)',
                                                                 background: "rgb(0,0,0)",
                                                                 backdrop: `rgba(159, 28, 23, 0.4)`
-                                                            }).then((result) => {
+                                                            }).then(async (result) => {
                                                                 if (result.isConfirmed) {
-                                                                    putUsuario(userEdited);
-
-                                                                    Swal.fire({
-                                                                        title: 'Bienvenido!',
-                                                                        text: 'Tu perfil ha sido creado con exito!',
-                                                                        icon: 'success',
-                                                                        color: 'rgb(255, 255, 255)',
-                                                                        background: "rgb(0,0,0)",
-                                                                        backdrop: `rgba(144, 238, 144, 0.4)`
-                                                                    })
-                                                                        .finally(() => navigate('/'));
+                                                                    try {
+                                                                        const response = await putUsuario(userEdited);
+                                                                        console.log('se envio');
+                                                                        Swal.fire({
+                                                                            title: 'Bienvenido!',
+                                                                            text: 'Tu perfil ha sido actualizado con exito!',
+                                                                            icon: 'success',
+                                                                            color: 'rgb(255, 255, 255)',
+                                                                            background: "rgb(0,0,0)",
+                                                                            backdrop: `rgba(144, 238, 144, 0.4)`
+                                                                        })
+                                                                        navigate('/home');
+                                                                    } catch (e) {
+                                                                        console.error('Error:', e);
+                                                                    }
                                                                 }
                                                                 if (result.isDismissed) {
                                                                     Swal.fire({

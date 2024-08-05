@@ -112,7 +112,7 @@ const Test1 = forwardRef(({ setInOutStatus1, setInOutStatus2, setInOutStatus3, s
                         <div style={{ margin: 10 }}>
                             {item.nombre || 'Loading'}
                         </div>
-                        <IconButton
+                        {/* <IconButton
                             className="favButton"
                             sx={{ position: 'absolute', zIndex: 2 }}
                             aria-label='favorite'
@@ -124,7 +124,7 @@ const Test1 = forwardRef(({ setInOutStatus1, setInOutStatus2, setInOutStatus3, s
                             <Icon>
                                 <FavoriteBorderIcon />
                             </Icon>
-                        </IconButton>
+                        </IconButton> */}
                         <Button
                             ref={localRef}
                             style={{ width: '200px', height: '170px', padding: '0px', margin: '5px', color: 'white' }}
@@ -134,7 +134,7 @@ const Test1 = forwardRef(({ setInOutStatus1, setInOutStatus2, setInOutStatus3, s
                             }}
                         >
                             <div>
-                                <Image id={ item.multimedia?.length > 0 
+                                <Image id={item.multimedia?.length > 0
                                     && item.multimedia[0]?.type === 'IMAGE' ? item.multimedia[0].id : 1} width='69%' />
                             </div>
                         </Button>

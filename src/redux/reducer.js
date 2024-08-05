@@ -16,7 +16,9 @@ import {
     REMOVE_FAV,
     SELECTED_ENTRENAMIENTO,
     GET_BANNER,
-    GET_CATEGORIES
+    GET_CATEGORIES,
+    GET_GOOGLE,
+    GET_ENTRENAMIENTO_ACTUAL
 } from "./action-types";
 
 const initialState = {
@@ -32,13 +34,19 @@ const initialState = {
     selectedEntrenamiento: {},
     banner: [],
     allCategories: [],
+    googleResponse: {},
+    currentEntrenamiento: {},
 
 }
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
 
-
+        case GET_GOOGLE:
+            return {
+                ...state,
+                googleResponse: action.payload,
+            }
         case GET_DEFAULT:
             return {
                 ...state,
@@ -145,6 +153,12 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 homeContent: action.payload,
+            }
+
+        case GET_ENTRENAMIENTO_ACTUAL:
+            return {
+                ...state,
+                currentEntrenamiento: action.payload,
             }
 
         default:

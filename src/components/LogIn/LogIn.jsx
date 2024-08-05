@@ -9,69 +9,22 @@ import { Grow } from '@mui/material';
 import Swal from 'sweetalert2';
 
 function LogIn() {
-    const results = useSelector((state) => state.results);
+
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const localUser = localStorage.getItem("localUserName");
 
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [formShown, setFormShown] = useState(true);
     const [loadingShown, setLoadingShown] = useState(false);
 
     useEffect(() => {
         window.scrollTo(0, 0);
-        setLocalUser();
         loadGoogleScript();
         isLoggedIn();
     }, []);
 
     const baseUrl = "https://backdev.onetrainingteam.com/onegym-backtest/api";
 
-    const setLocalUser = () => {
-        dispatch(getUser(localUser));
-    };
-
-    const onlyPassword = '1234';
-
-    const handleSubmit = (event) => {
-        event.preventDefault();
-
-        if (password !== onlyPassword) {
-            Swal.fire({
-                title: 'Error!',
-                text: 'Contraseña incorrecta.',
-                icon: 'error',
-                color: 'rgb(255, 255, 255)',
-                background: "rgb(0,0,0)",
-                backdrop: `rgba(159, 28, 23, 0.4)`
-            });
-            return;
-        } else if (password === onlyPassword) {
-            localStorage.setItem("localUser", username);
-            localStorage.removeItem('homeContent');
-            localStorage.removeItem('category');
-
-            dispatch(getMethods());
-
-            setFormShown(false);
-
-            setTimeout(() => {
-                setLoadingShown(true);
-                setIsLoading(true);
-            }, 500);
-        }
-
-        if (localUser && results.length !== 0) {
-            setTimeout(() => {
-                navigate('/home');
-            }, 3500);
-        }
-
-        setUsername('');
-        setPassword('');
-    };
 
     const loadGoogleScript = () => {
         const script = document.createElement('script');
@@ -98,6 +51,10 @@ function LogIn() {
     };
 
     async function handleCredentialResponse(response) {
+
+        setLoadingShown(true);
+        setIsLoading(true);
+
         const id_token = response.credential;
         localStorage.setItem('id_token', id_token);
         console.log(response, 'response');
@@ -133,10 +90,13 @@ function LogIn() {
                     navigate('/registro');
                 }
             });
-        } else if (!respuesta.genero) {
+        }
+        else if (!respuesta.genero) {
             localStorage.setItem('localUser', JSON.stringify(respuesta));
             navigate('/registro');
-        } else {
+        }
+        else {
+
             localStorage.setItem('localUser', JSON.stringify(respuesta));
             navigate('/home');
         }

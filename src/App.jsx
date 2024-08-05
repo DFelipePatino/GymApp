@@ -31,14 +31,15 @@ function App() {
   const [playerLoad, setPlayerLoad] = useState(false)
 
   const localUser = localStorage.getItem("localUser");
+  // console.log(localUser, "localUser in App.js");
 
   const usuario = JSON.parse(localStorage.getItem("localUser"));
 
-  const profilefoto = usuario?.foto;
-  console.log(profilefoto, "profilefoto in App.js");
+  // const profilefoto = usuario?.foto;
+  // console.log(profilefoto, "profilefoto in App.js");
 
   const id_token = localStorage.getItem('id_token');
-  console.log(id_token, "id_token in App.js");
+  // console.log(id_token, "id_token in App.js");
 
   const userForTesting = { // eventually this will be replaced by the user's data
     Name: localUser,
@@ -63,7 +64,9 @@ function App() {
   // const todasLasCategorias = useSelector(state => state.allCategories)
   // console.log(todasLasCategorias, "todasLasCategorias in App.js");
 
-  const todasLasCategorias = ['GANA MASA MUSCULAR ', 'MEJORAR ESTADO DE SALUD   ', 'REDUCIR PORCENTAJES DE GRASA ', 'MEJORAR RENDIMIENTO DEPORTIVO  ', 'TENER SU CUERPO TONIFICADO ', 'MEJORAR  ESTADO FISICO  ', 'GIMNASIO EN CASA ', ' GIMNASIO ', ' HOGAR ', ' SALUD ', ' ACONDICIONAMIENTO FISICO ', ' DISMINUCION PORCENTAJE DE GRASA ',]
+  // const todasLasCategorias = ['GANA MASA MUSCULAR ', 'MEJORAR ESTADO DE SALUD   ', 'REDUCIR PORCENTAJES DE GRASA ', 'MEJORAR RENDIMIENTO DEPORTIVO  ', 'TENER SU CUERPO TONIFICADO ', 'MEJORAR  ESTADO FISICO  ', 'GIMNASIO EN CASA ', ' GIMNASIO ', ' HOGAR ', ' SALUD ', ' ACONDICIONAMIENTO FISICO ', ' DISMINUCION PORCENTAJE DE GRASA ',]
+  const todasLasCategorias = useSelector(state => state.allCategories)
+  console.log(todasLasCategorias, "todasLasCategorias in App.js");
 
   useEffect(() => {
     dispatch(getMethods())
@@ -142,7 +145,7 @@ function App() {
 
         <Route path='/' element={<LogIn />} />
 
-        <Route path='/testeo' element={<Testtt profilefoto={profilefoto} />} />
+        {/* <Route path='/testeo' element={<Testtt profilefoto={profilefoto} />} /> */}
 
         <Route path='/registro' element={<Registro
           BackToTopButton={BackToTopButton}

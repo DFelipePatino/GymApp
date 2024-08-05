@@ -131,6 +131,11 @@ function Layout({ localUser, setPlayerLoad, setHeaderLoad, setBannerload, setFil
                 scrollToFilter5();
                 dispatch(getMetodo1(currentIndex));
                 break;
+            case 'Mi entrenamiento actual':
+                // localStorage.setItem("homeContent", "Todos");
+                // scrollToFilter5();
+                // dispatch(getMetodo1(currentIndex));
+                break;
             default:
                 localStorage.removeItem("homeContent")
                 break;
@@ -171,6 +176,15 @@ function Layout({ localUser, setPlayerLoad, setHeaderLoad, setBannerload, setFil
     }));
 
     const homeNavButtons = [
+        {
+            text: 'Mi entrenamiento actual',
+            icon: <KeyboardArrowRightIcon
+                style={{ color: 'rgb(156, 28, 23)', cursor: 'pointer' }}
+            />,
+            fn: "Mi entrenamiento actual",
+            route: '/player',
+            id: '1'
+        },
         {
             text: 'Tu Seleccion',
             icon: <KeyboardArrowRightIcon
@@ -273,7 +287,7 @@ function Layout({ localUser, setPlayerLoad, setHeaderLoad, setBannerload, setFil
                             {
                                 text: 'Home', icon: <HomeIcon
                                     style={iconStyles2}
-                                />, fn: "clear", route: '/home', id: '1'
+                                />, fn: "clear", route: '/home', id: '0'
                             },
 
                             { type: 'divider', id: 'divider-1' },

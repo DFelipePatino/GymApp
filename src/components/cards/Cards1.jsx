@@ -20,7 +20,7 @@ function Cards1({ inOutStatus1, setHeaderLoad, setBannerload, setFilterLoad, res
     // console.log(results, 'results en cards1');
 
     const resultsFiltered = results.map((each) => each)
-    console.log(resultsFiltered, 'resultsFiltered en cards1');
+    // console.log(resultsFiltered, 'resultsFiltered en cards1');
 
 
     // const filteredResultsGym = resultsFiltered?.entrenamientos?.filter((each) => each.lugar === "GYM");

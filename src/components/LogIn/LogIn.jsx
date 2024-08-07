@@ -20,7 +20,6 @@ function LogIn() {
     useEffect(() => {
         window.scrollTo(0, 0);
         loadGoogleScript();
-        isLoggedIn();
     }, []);
 
     const baseUrl = "https://backdev.onetrainingteam.com/onegym-backtest/api";
@@ -46,7 +45,7 @@ function LogIn() {
             { theme: 'outline', size: 'large' }
         );
 
-        //google.accounts.id.prompt();
+        // google.accounts.id.prompt();
 
     };
 
@@ -102,41 +101,6 @@ function LogIn() {
         }
     }
 
-    async function isLoggedIn() {
-
-        const id_token = localStorage.getItem('id_token');
-        if (!id_token) {
-            return;
-        }
-
-        // const registro = await fetch(`${baseUrl}/users`, {
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/json',
-        //         'Authorization': "Bearer " + id_token
-        //     },
-        //     body: null
-        // });
-
-        // const respuesta = await registro.json();
-        // console.log('Success:', respuesta);
-        // localStorage.setItem('localUserName', JSON.stringify(respuesta));
-        // navigate('/home');
-    }
-
-    // const traerMultimedia = async () => {
-    //     const registro = await fetch('http://localhost:8082/onegym-backdev/api/metodos', {
-    //         method: 'GET',
-    //         headers: {
-    //             'Content-Type': 'application/json',
-    //             'Authorization': "Bearer " + id_token
-    //         },
-    //         body: null
-    //     });
-
-    //     const respuesta = await registro.json();
-    //     console.log('Success:', respuesta);
-    // };
 
     return (
         <div className='loginn'>

@@ -34,7 +34,7 @@ const initialState = {
     selectedEntrenamiento: {},
     banner: [],
     allCategories: [],
-    googleResponse: {},
+    googleResponse: null,
     currentEntrenamiento: {},
 
 }

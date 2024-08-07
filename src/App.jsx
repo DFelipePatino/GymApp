@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Routes, Route, useLocation } from 'react-router-dom';
+import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import LogIn from './components/LogIn/LogIn.jsx';
 import HomePage from './components/HomePage/Home/HomePage';
@@ -13,12 +13,14 @@ import Layout from './components/Layout/Layout.jsx';
 import DropDownCategorias from './components/Perfil/DropDownCategorias.jsx';
 import BackToTopButton from './components/backToTopButton/BackToTopButton.jsx';
 import ContentPlayer from './components/HomePage/Home/ContentPlayer/ContentPlayer.jsx';
-import { getMethods, getBanner, getCategories } from './redux/actions.js';
+import { getMethods, getBanner, getCategories, getEntrenamientoActual, getGoogle } from './redux/actions.js';
 import Testtt from './components/test/Testtt.jsx';
 
 function App() {
   const dispatch = useDispatch();
   const location = useLocation();
+  const navigate = useNavigate();
+
 
   const [headerLoad, setHeaderLoad] = useState(false)
   const [bannerLoad, setBannerload] = useState(false)
@@ -33,12 +35,13 @@ function App() {
   const localUser = localStorage.getItem("localUser");
   // console.log(localUser, "localUser in App.js");
 
-  const usuario = JSON.parse(localStorage.getItem("localUser"));
+  let usuario = JSON.parse(localStorage.getItem("localUser"));
+ 
+
 
   // const profilefoto = usuario?.foto;
   // console.log(profilefoto, "profilefoto in App.js");
 
-  const id_token = localStorage.getItem('id_token');
   // console.log(id_token, "id_token in App.js");
 
   const userForTesting = { // eventually this will be replaced by the user's data
@@ -61,18 +64,41 @@ function App() {
     DietPlan: "/plandedieta.pdf",
   };
 
-  // const todasLasCategorias = useSelector(state => state.allCategories)
-  // console.log(todasLasCategorias, "todasLasCategorias in App.js");
-
-  // const todasLasCategorias = ['GANA MASA MUSCULAR ', 'MEJORAR ESTADO DE SALUD   ', 'REDUCIR PORCENTAJES DE GRASA ', 'MEJORAR RENDIMIENTO DEPORTIVO  ', 'TENER SU CUERPO TONIFICADO ', 'MEJORAR  ESTADO FISICO  ', 'GIMNASIO EN CASA ', ' GIMNASIO ', ' HOGAR ', ' SALUD ', ' ACONDICIONAMIENTO FISICO ', ' DISMINUCION PORCENTAJE DE GRASA ',]
   const todasLasCategorias = useSelector(state => state.allCategories)
-  console.log(todasLasCategorias, "todasLasCategorias in App.js");
 
-  useEffect(() => {
-    dispatch(getMethods())
-    dispatch(getBanner())
-    dispatch(getCategories())
-  });
+
+  // const updateLocalUser = async () => {
+  //   console.log('updating local user2');
+
+  //   await getGoogle();
+  //   localStorage.setItem('localUser', googleResponse);
+  // }
+
+
+  useEffect(async () => {
+    // dispatch(getMethods());
+    // dispatch(getBanner());
+    // dispatch(getCategories());
+    const token = await localStorage.getItem("id_token");
+    if(token){
+      try{
+        let pUsuario = await getGoogle();
+        console.log(pUsuario, "pUsuario in App.js");
+        await localStorage.setItem('localUser', JSON.stringify(pUsuario));
+      }catch(err){
+        navigate('/');
+        return;
+      }
+      
+      usuario = JSON.parse(localStorage.getItem("localUser"));
+      console.log(usuario, "usuario in App.js");
+      dispatch(getEntrenamientoActual());
+    }else{
+      navigate('/');
+    }
+    
+  }, []);
+
 
   const scrollToFilter1 = () => {
     if (filterRef1.current) {
@@ -139,7 +165,7 @@ function App() {
           scrollToFilter4={scrollToFilter4}
           scrollToFilter5={scrollToFilter5}
 
-          localUser={localUser} />}
+          usuario={usuario} />}
 
       <Routes>
 
@@ -174,7 +200,7 @@ function App() {
           filterRef5={filterRef5}
         />} />
 
-        <Route path='/player' element={<ContentPlayer
+        <Route path='/player/:entrenamientoId' element={<ContentPlayer
           setPlayerLoad={setPlayerLoad}
           playerLoad={playerLoad} />} />
 

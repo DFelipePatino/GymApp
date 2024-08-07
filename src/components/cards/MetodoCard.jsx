@@ -8,18 +8,9 @@ import ShareIcon from '@mui/icons-material/Share';
 import { Button, CardHeader, CardMedia, Typography } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 
-function MetodoCard({ resultsFiltered, results }) {
+function MetodoCard({ resultsFiltered, results, setInOutStatus1 }) {
 
     // console.log(resultsFiltered, 'resultsFiltered en metodoCard');
-
-    const [expandedGym, setExpandedGym] = React.useState(false);
-    const [expandedHome, setExpandedHome] = React.useState(false);
-
-    useEffect(() => {
-        setExpandedGym(false);
-        setExpandedHome(false);
-    }, []);
-
 
     const handleClick = (entrenamientoId) => {
         toggleDrawer(true)();
@@ -30,13 +21,21 @@ function MetodoCard({ resultsFiltered, results }) {
     const handleExpandClick = () => {
         // console.log(expanded, 'expanded');
         localStorage.setItem('lugar', 'GYM');
-        setExpandedGym(!expandedGym);
+        setInOutStatus1(false);
+        setTimeout(() => {
+            setInOutStatus1(true);
+        }
+            , 500);
     };
 
     const handleExpandClick2 = () => {
         // console.log(expanded, 'expanded');
         localStorage.setItem('lugar', 'CASA');
-        setExpandedHome(!expandedHome);
+        setInOutStatus1(false);
+        setTimeout(() => {
+            setInOutStatus1(true);
+        }
+            , 500);
     };
 
     // console.log(localStorage.getItem("lugar"));

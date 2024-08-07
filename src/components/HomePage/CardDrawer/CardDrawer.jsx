@@ -107,7 +107,7 @@ function CardDrawer({ inOutStatus, setHeaderLoad, setBannerload, setFilterLoad }
                         // backgroundColor: 'rgb(159, 28, 23)',
                         // backgroundColor: 'rgba(146, 144, 144)',
                         // backgroundColor: 'rgb(0, 0, 0)',
-                        backgroundImage: 'url(public/backCardItem.jpg)',
+                        backgroundImage: 'url(/backCardItem.jpg)',
                         display: 'flex',
                         justifyContent: 'center',
                     }}

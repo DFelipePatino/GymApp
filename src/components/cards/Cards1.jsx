@@ -13,7 +13,7 @@ import { Grow } from '@mui/material';
 
 import MetodoCard from './MetodoCard';
 
-function Cards1({ inOutStatus1, setHeaderLoad, setBannerload, setFilterLoad, results }) {
+function Cards1({ inOutStatus1, setHeaderLoad, setBannerload, setFilterLoad, results, setInOutStatus1 }) {
 
     const [checked, setChecked] = React.useState(true);
 
@@ -29,7 +29,7 @@ function Cards1({ inOutStatus1, setHeaderLoad, setBannerload, setFilterLoad, res
 
     return (
         <Container className='results'>
-            <Grow
+            {/* <Grow
                 in={inOutStatus1}
                 // out={checked}
                 style={{ transformOrigin: '0 0 0' }}
@@ -40,7 +40,7 @@ function Cards1({ inOutStatus1, setHeaderLoad, setBannerload, setFilterLoad, res
                     <h2 className='resultsTitle'>{resultsFiltered?.nombre}</h2>
                     : <h3 className='resultsTitle'></h3>}
 
-            </Grow>
+            </Grow> */}
             <Grow
                 in={inOutStatus1}
                 // out={checked}
@@ -75,7 +75,7 @@ function Cards1({ inOutStatus1, setHeaderLoad, setBannerload, setFilterLoad, res
 
                     </Card> */}
 
-                    <MetodoCard resultsFiltered={resultsFiltered} results={results} />
+                    <MetodoCard resultsFiltered={resultsFiltered} results={results} setInOutStatus1={setInOutStatus1} />
 
                 </Grid>
 

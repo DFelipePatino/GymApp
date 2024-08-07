@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { getDefault, getMetodo1, getMetodo2, getMetodo3, getMetodo4, getMetodo5, getMetodo6, emptyState, getEntrenamientoActual } from '../../../redux/actions';
+import { getDefault, getMetodo1, getMetodo2, getMetodo3, getMetodo4, getMetodo5, getMetodo6, emptyState, getEntrenamientoActual, getMethods, getBanner, getCategories } from '../../../redux/actions';
 import HeaderNav from '../../HeaderNav/HeaderNav';
 import NavBar from '../NavBar/NavBar';
 import Banner from '../Banner/banner';
@@ -83,7 +83,7 @@ function HomePage({ BackToTopButton, headerLoad, bannerLoad, filterLoad, setHead
 
         // Set the initial style based on the current window width
         handleResize();
-        isLoggedIn();
+        // isLoggedIn();
 
         // Add event listener
         window.addEventListener('resize', handleResize);
@@ -94,34 +94,37 @@ function HomePage({ BackToTopButton, headerLoad, bannerLoad, filterLoad, setHead
 
     const baseUrl = "https://backdev.onetrainingteam.com/onegym-backtest/api";
 
-    async function isLoggedIn() {
+    // async function isLoggedIn() {
 
-        const id_token = localStorage.getItem('id_token');
-        if (!id_token) {
-            navigate('/');
-            return;
-        }
+    //     const id_token = localStorage.getItem('id_token');
+    //     if (!id_token) {
+    //         navigate('/');
+    //         return;
+    //     }
 
-        const registro = await fetch(`${baseUrl}/users`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': "Bearer " + id_token
-            },
-            body: null
-        });
+    //     const registro = await fetch(`${baseUrl}/users`, {
+    //         method: 'POST',
+    //         headers: {
+    //             'Content-Type': 'application/json',
+    //             'Authorization': "Bearer " + id_token
+    //         },
+    //         body: null
+    //     });
 
-        const respuesta = await registro.json();
+    //     const respuesta = await registro.json();
 
-    }
+    // }
 
 
     useEffect(() => {
         isMounted.current = true;
 
+        dispatch(getMethods());
+        dispatch(getBanner());
+        dispatch(getCategories());
+
         // localStorage.removeItem('entrenamientoSeleccionado');
         // localStorage.removeItem('CardIndex');
-        getEntrenamientoActual();
 
         setTimeout(() => {
             if (isMounted.current) setfadeLoad(false);
@@ -404,7 +407,7 @@ function HomePage({ BackToTopButton, headerLoad, bannerLoad, filterLoad, setHead
 
                     {inOutStatus1 ?
 
-                        <Cards1 inOutStatus1={inOutStatus1} setHeaderLoad={setHeaderLoad} setBannerload={setBannerload} setFilterLoad={setFilterLoad} results={results} />
+                        <Cards1 inOutStatus1={inOutStatus1} setInOutStatus1={setInOutStatus1} setHeaderLoad={setHeaderLoad} setBannerload={setBannerload} setFilterLoad={setFilterLoad} results={results} />
 
                         : null}
 

@@ -49,26 +49,20 @@ import {
 
 const baseUrl = "https://backdev.onetrainingteam.com/onegym-backtest/api";
 
-export const getGoogle = () => {
-    return async (dispatch) => {
-        const id_token = localStorage.getItem('id_token');
-        const response = await fetch(`${baseUrl}/users`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': "Bearer " + id_token
-            },
-            body: null
-        });
+export const getGoogle = async () => {
+    console.log('Executing getGoogle action');
+    const id_token = localStorage.getItem('id_token');
+    const response = await fetch(`${baseUrl}/users`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': "Bearer " + id_token
+        },
+        body: null
+    });
 
-        if (response.ok) {
-            const data = await response.json();
-            dispatch({ type: GET_GOOGLE, payload: data });
-        } else {
-            // Handle error response
-            console.error('Failed to fetch data from Google API');
-        }
-    };
+    const data = await response.json();
+    return data;
 };
 
 export const getBanner = () => {
@@ -87,10 +81,27 @@ export const getBanner = () => {
         dispatch({ type: GET_BANNER, payload: data });
     }
 }
+
+export const getEntrenamiento = async (id) => {
+    const id_token = localStorage.getItem('id_token');
+    const registro = await fetch(`${baseUrl}/entrenamientos/${id}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': "Bearer " + id_token
+        },
+        body: null
+    });
+
+    return await registro.json();
+}
+
 export const getEntrenamientoActual = () => {
     return async (dispatch) => {
         const id_token = localStorage.getItem('id_token');
-        const localUser = localStorage.getItem('localUser');
+        const localUser = JSON.parse(localStorage.getItem('localUser'));
+        console.log('localUser:', localUser);
+
         const registro = await fetch(`${baseUrl}/progreso/last/${localUser?.id}`, {
             method: 'GET',
             headers: {
@@ -101,46 +112,78 @@ export const getEntrenamientoActual = () => {
         });
 
         const data = await registro.json();
+        //localStorage.setItem('currentEntrenamiento', JSON.stringify(data));
+        console.log('Success getEntrenamientoActual:', data);
         dispatch({ type: GET_ENTRENAMIENTO_ACTUAL, payload: data });
     }
 }
 
-export const empezarEntrenamiento = (entrenamientoID) => {
-    return async (dispatch, getState) => {
-        console.log('entrenamientoID:', entrenamientoID);
+export const empezarEntrenamiento = async (entrenamientoID, currentEntrenamiento) => {
 
-        console.log('entro al action');
-        const { currentEntrenamiento } = getState();
-        console.log(currentEntrenamiento, "currentEntrenamiento");
+    if (currentEntrenamiento.entrenamientoId === entrenamientoID) {
+        return 0;
+    }
 
-        if (!currentEntrenamiento.terminado && (currentEntrenamiento.id || currentEntrenamiento.entrenamientoId === entrenamientoID)) {
-            return;
-        }
+    if (currentEntrenamiento.id && !currentEntrenamiento.terminada && !currentEntrenamiento.abandonada ) {
+        return "No podes iniciar un entrenamiento sin acabar el anterior";
+    }
 
-        console.log('llamamos a la action empezarEntrenamiento');
-        const id_token = localStorage.getItem('id_token');
-        const localUser = JSON.parse(localStorage.getItem('localUser'));
+    const id_token = localStorage.getItem('id_token');
+    const localUser = JSON.parse(localStorage.getItem('localUser'));
 
-        const response = await fetch(`${baseUrl}/progreso/last/${localUser?.id}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': "Bearer " + id_token
-            },
-            body: JSON.stringify({
-                entrenamientoId: entrenamientoID,
-                usuarioId: localUser?.id,
-                fecha: new Date(),
-                terminado: false
-            })
-        });
+    const response = await fetch(`${baseUrl}/progreso`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': "Bearer " + id_token
+        },
+        body: JSON.stringify({
+            entrenamientoId: entrenamientoID,
+            usuarioId: localUser?.id,
+            fecha: new Date(),
+            terminada: false
+        })
+    });
 
-        const data = await response.json();
-        console.log('Success crear entrenamiento actual', data);
+    const data = await response.json();
+    console.log('Success crear entrenamiento actual', data);
+    return 0;
+};
 
-        // You may want to dispatch some action here to update the state
-        // dispatch({ type: 'SET_CURRENT_ENTRENAMIENTO', payload: data });
-    };
+
+export const actualizarEntrenamiento = async (entrenamientoID, entrenamiento, currentEntrenamiento) => {
+
+    console.log('currentEntrenamiento:', currentEntrenamiento, entrenamientoID);
+
+    if (!entrenamiento || !currentEntrenamiento.id) {
+        return "No se puede actualizar un entrenamiento sin datos";
+    }
+
+    if (currentEntrenamiento.terminada || currentEntrenamiento.abandonada) {
+        return "El entrenamiento ya se encuentra finalizado";
+    }
+
+    if (currentEntrenamiento.entrenamientoId !== entrenamientoID) {
+        return "Se esta intentando actualizar un entrenamiento distinto al actual";
+    }
+
+    console.log('entrenamiento:', entrenamiento);
+
+    const id_token = localStorage.getItem('id_token');
+    const localUser = JSON.parse(localStorage.getItem('localUser'));
+
+    const response = await fetch(`${baseUrl}/progreso/${entrenamiento.id}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': "Bearer " + id_token
+        },
+        body: JSON.stringify(entrenamiento)
+    });
+
+    const data = await response.json();
+    console.log('Success actualizar entrenamiento actual', data);
+    return 0;
 };
 
 
@@ -170,7 +213,7 @@ export const putUsuario = async (usuario) => {
     // usuario.accountType = 'FREE';
     // usuario.state = 'ACTIVE';
     const id_token = localStorage.getItem('id_token');
-    const registro = await fetch(`${baseUrl}/users/updateinfo/${usuario?.id}`,
+    const registro = await fetch(`${baseUrl}/users/updateInfo/${usuario?.id}`,
         {
             method: 'PUT',
             headers: {
@@ -181,7 +224,7 @@ export const putUsuario = async (usuario) => {
         }
     );
     console.log('registro:', registro);
-    const data = registro.json();
+    const data = await registro.json();
     console.log('Success actrualizar:', data);
     //dispatch({ type: GET_CATEGORIES, payload: data });
 }

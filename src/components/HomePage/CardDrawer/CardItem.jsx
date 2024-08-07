@@ -18,19 +18,21 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import { Button, Divider, Grow } from '@mui/material';
+import { Button, Divider, Grid, Grow } from '@mui/material';
 import { emptyState, selectedEntrenamiento, empezarEntrenamiento } from '../../../redux/actions';
 import { useEffect, useState } from 'react';
 import { ExpandMore } from '@mui/icons-material';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
+import Swal from 'sweetalert2';
 
 const CardItem = ({ setHeaderLoad, setBannerload, setFilterLoad }) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const CardIndex = parseInt(localStorage.getItem('CardIndex'));
     const results = useSelector((state) => state.results);
+    const currentEntrenamientoState = useSelector((state) => state.currentEntrenamiento);
 
     const filteredResultsGym = results?.map((each) => each.entrenamientos?.filter((each) => each.lugar === "GYM"));
     const filteredResultsHome = results?.map((each) => each.entrenamientos?.filter((each) => each.lugar === "CASA"));
@@ -39,6 +41,8 @@ const CardItem = ({ setHeaderLoad, setBannerload, setFilterLoad }) => {
 
     if (localStorage.getItem('lugar') === 'GYM') {
         entrenamientoSeleccionado = filteredResultsGym[0]?.filter((entrenamiento) => entrenamiento?.id === CardIndex)[0];
+        console.log(filteredResultsGym, 'filteredResultsGym en cardItem');
+        
 
     } else if (localStorage.getItem('lugar') === 'CASA') {
         entrenamientoSeleccionado = filteredResultsHome[0]?.filter((entrenamiento) => entrenamiento?.id === CardIndex)[0];
@@ -66,14 +70,25 @@ const CardItem = ({ setHeaderLoad, setBannerload, setFilterLoad }) => {
         setTimeout(() => setGrow(true), 700);
     };
 
-    const toggleNavigate = () => {
-        dispatch(empezarEntrenamiento(entrenamientoSeleccionado.id));
+    const toggleNavigate = async () => {
+        const resultadoCrearEntrenamiento = await empezarEntrenamiento(entrenamientoSeleccionado.id, currentEntrenamientoState);
+        if(resultadoCrearEntrenamiento !== 0) {
+            toggleDrawer(false)();
+            Swal.fire({
+                title: 'Error',
+                text: resultadoCrearEntrenamiento,
+                icon: 'error',
+                confirmButtonText: 'Ok'
+            });
+            console.log('Error al crear entrenamiento', resultadoCrearEntrenamiento);
+            return;
+        }
         console.log(entrenamientoSeleccionado.id, 'entrenamientoSeleccionado.id');
         toggleDrawer(false)();
         window.scrollTo({ top: 0, behavior: 'smooth' });
         setTimeout(() => setBannerload(false), 300);
         setTimeout(() => setFilterLoad(false), 150);
-        setTimeout(() => navigate('/player'), 500);
+        setTimeout(() => navigate(`/player/${entrenamientoSeleccionado.id}`), 500);
     };
 
     const baseUrl = "https://backdev.onetrainingteam.com/onegym-backtest/api";
@@ -135,7 +150,7 @@ const CardItem = ({ setHeaderLoad, setBannerload, setFilterLoad }) => {
                     />
                     <CardContent style={{ paddingTop: '0' }}>
                         <div style={{ position: 'relative' }}>
-                            {/* <PlayCircleOutlineIcon
+                            <PlayCircleOutlineIcon
                                 style={{
                                     position: 'absolute',
                                     top: '50%',
@@ -145,7 +160,7 @@ const CardItem = ({ setHeaderLoad, setBannerload, setFilterLoad }) => {
                                     fontSize: '48px',
                                     color: 'red'
                                 }}
-                                onClick={toggleNavigate} /> */}
+                                onClick={toggleNavigate} />
                             <CardMedia
                                 style={{ borderRadius: '5%', paddingTop: '30px', paddingBottom: '30px', background: 'linear-gradient(to bottom, rgb(0, 0, 0),rgb(159, 28, 23),rgb(0, 0, 0)' }}
                                 component="img"
@@ -165,19 +180,22 @@ const CardItem = ({ setHeaderLoad, setBannerload, setFilterLoad }) => {
                             }}
                         >
                             <h5 style={{ color: 'rgb(159, 28, 23)', margin: '0px' }}>Contenido</h5>
-                            <h6 style={{ color: 'rgb(256, 256, 256)', margin: '15px' }}>Rutinas</h6>
-                            {entrenamientoSeleccionado?.rutinas?.map((rutina, index) => (
-                                <Button
-                                    key={index}
-                                    variant='contained'
-                                    style={{ fontSize: '0.8rem', textDecoration: 'underline', cursor: 'pointer', marginBottom: '10px', backgroundColor: 'rgb(159, 28, 23)', color: 'white' }}
-                                >
-                                    <KeyboardArrowRightIcon
-                                        style={{ color: 'rgb(256, 256, 256)', paddingBottom: '-20px', marginLeft: '-10px' }}
-                                    />
-                                    {rutina.nombre}
-                                </Button>
-                            ))}
+                            <h6 style={{ color: 'rgb(256, 256, 256)', margin: '15px' }}>Ejercicios</h6>
+                            <Grid container>
+                                {entrenamientoSeleccionado?.rutinas?.map((rutina, index) => (
+                                    <Grid item key={index} xs={6} md={4} lg={4}>
+                                        <Typography
+                                            // variant='contained'
+                                            style={{ fontSize: '0.8rem', textDecoration: 'underline', marginBottom: '10px', color: 'white' }}
+                                        >
+                                            {/* <KeyboardArrowRightIcon
+                                                style={{ color: 'rgb(256, 256, 256)', paddingBottom: '-20px', marginLeft: '-10px' }}
+                                            /> */}
+                                            {rutina.nombre}
+                                        </Typography>
+                                    </Grid>
+                                ))}
+                            </Grid>
                         </div>
                     </CardContent>
                 </>

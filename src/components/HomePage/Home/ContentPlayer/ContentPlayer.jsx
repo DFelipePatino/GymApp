@@ -1,10 +1,10 @@
 import React, { useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation, useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import './contentPlayer.css';
-import { Button, Card, CardActions, CardContent, CardHeader, Collapse, Divider, Fade, Grow, IconButton, LinearProgress, Typography } from '@mui/material';
+import { Button, Card, CardActions, CardContent, CardHeader, Collapse, Divider, Fade, Grid, Grow, IconButton, LinearProgress, Typography, TextField } from '@mui/material';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import ReactPlayer from 'react-player'
@@ -14,6 +14,41 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { fetchBlobWithAuth } from '../../../../multimediaUtils';
+import { actualizarEntrenamiento, getEntrenamientoActual, getEntrenamiento } from '../../../../redux/actions';
+import Swal from 'sweetalert2';
+import { styled } from '@mui/system';
+import ClearIcon from '@mui/icons-material/Clear';
+import DoneIcon from '@mui/icons-material/Done';
+import PlaylistAddCheckCircleIcon from '@mui/icons-material/PlaylistAddCheckCircle';
+import PlaylistAddCheckCircleOutlinedIcon from '@mui/icons-material/PlaylistAddCheckCircleOutlined';
+import Tooltip from '@mui/material/Tooltip';
+
+const CssTextField = styled(TextField)({
+    '& label': {
+        color: 'rgb(146, 144, 144)',
+    },
+    '& label.Mui-focused': {
+        color: 'rgb(159, 28, 23)',
+    },
+    '& .MuiInput-underline:after': {
+        borderBottomColor: 'rgb(159, 28, 23)',
+    },
+    '& .MuiOutlinedInput-root': {
+        '& fieldset': {
+            borderColor: 'rgb(159, 28, 23)',
+        },
+        '&:hover fieldset': {
+            borderColor: 'rgb(159, 28, 23)',
+        },
+        '&.Mui-focused fieldset': {
+            borderColor: 'rgb(159, 28, 23)',
+        },
+        '& input': { // Add this block to change the value color
+            color: 'rgb(159, 28, 23)',
+        },
+    },
+});
+
 
 function ContentPlayer({ setPlayerLoad, playerLoad }) {
 
@@ -26,18 +61,49 @@ function ContentPlayer({ setPlayerLoad, playerLoad }) {
     const [headerLoad, setHeaderLoad] = useState(false);
     const [urlVideo, setUrlVideo] = useState('');
 
+    const [expanded, setExpanded] = React.useState(true);
+
+    const [expandedDescription, setExpandedDescription] = useState(
+        []
+    );
+
+    const [currentEntrenamiento, setCurrentEntrenamiento] = useState(null);
+
     const user = useSelector((state) => state.user);
+    const currentEntrenamientoId = useParams().entrenamientoId;
 
-    const entrenamientoSeleccionado = useSelector((state) => state.selectedEntrenamiento);
+    const currentProgressState = useSelector((state) => state.currentEntrenamiento);
 
-    const entrenamientoSeleccionadoLocalStorage = JSON.parse(localStorage.getItem("entrenamientoSeleccionado"));
-    console.log(entrenamientoSeleccionadoLocalStorage, 'entrenamientoSeleccionadoLocalStorage');
+
 
     const homeContent = localStorage.getItem("homeContent");
 
     const URLVideo = 'http://213.218.240.192:8082/onegym-back/api/multimedia/video/';
 
-    useEffect(() => {
+
+    useEffect(async () => {
+
+        dispatch(getEntrenamientoActual());
+        try {
+            const auxEntrenamiento = await getEntrenamiento(currentEntrenamientoId);
+            setCurrentEntrenamiento(auxEntrenamiento);
+            console.log("Entrenamiento:", auxEntrenamiento);
+            if (!auxEntrenamiento || !auxEntrenamiento?.nombre) {
+                throw new Error("Entrenamiento no encontrado");
+            }
+            setExpandedDescription(new Array(currentEntrenamiento?.rutinas?.length).fill(false));
+            
+            getVideoLink(auxEntrenamiento);
+            
+            console.log("Rutinas:", rutinasButtons);
+        } catch (e) {
+            console.log("Error trayendo entrenamiento:", e);
+            //navigate("/home");
+        }
+
+       
+        
+
         let fadeLoadTimeout = setTimeout(() => {
             setfadeLoad(false);
         }, 900);
@@ -63,27 +129,22 @@ function ContentPlayer({ setPlayerLoad, playerLoad }) {
         };
     }, [navigate, homeContent]);
 
-    const category = localStorage.getItem("category");
 
-    const [expanded, setExpanded] = React.useState(true);
 
-    const [expandedDescription, setExpandedDescription] = useState(
-        new Array(entrenamientoSeleccionadoLocalStorage.rutinas?.length).fill(false)
-    );
-
-    console.log(expandedDescription, 'expandedDescription');
 
     const handleExpandClick = () => {
         setExpanded(!expanded);
         if (expanded === false) {
-            window.scrollTo({ top: 400, behavior: 'smooth' });
+            window.scrollTo({ top: 600, behavior: 'smooth' });
         }
         else if (expanded === true) {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            window.scrollTo({ top: 200, behavior: 'smooth' });
         }
     };
 
     const handleExpandClickRutina = (index) => {
+        console.log("entra al hanlde click");
+
         const newExpandedDescription = [...expandedDescription];
         const newExpanded = newExpandedDescription[index];
         if (!newExpandedDescription[index]) {
@@ -107,43 +168,191 @@ function ContentPlayer({ setPlayerLoad, playerLoad }) {
         }
     };
 
-    const rutinasButtons = entrenamientoSeleccionadoLocalStorage.rutinas?.map((rutina, index) => (
-        <div key={index}>
-            <Button
-                variant="contained"
-                style={{ backgroundColor: 'rgb(159, 28, 23)', color: 'white', fontWeight: 'bold', margin: '4px' }}
-                onClick={() => {
-                    // Assuming seekTo is defined elsewhere
-                    seekTo(rutina.segundoInicial);
-                    handleExpandClickRutina(index);
-                    console.log(index, 'index');
-                }}
-            >
-                <KeyboardArrowRightIcon
-                    style={{ color: 'rgb(256, 256, 256)', paddingBottom: '-20px', marginLeft: '-10px' }}
-                />
-                {rutina.nombre}
-            </Button>
-            {rutina?.nombre && (
-                <Collapse in={expandedDescription[index]} timeout="auto" unmountOnExit>
-                    <CardContent>
-                        <Typography paragraph style={{ color: 'white' }}>
-                            Descripcion:
-                        </Typography>
-                        <Typography style={{ color: 'white' }} paragraph>
-                            {rutina?.nombre}
-                        </Typography>
-                    </CardContent>
-                </Collapse>
-            )}
-        </div>
-    )) || <>    </>;
+    async function updateCurrentProgress(progressNuevo) {
+
+        try {
+            const respuesta = await actualizarEntrenamiento(currentEntrenamiento?.id, progressNuevo, currentProgressState);
+            if (respuesta !== 0) {
+                toggleDrawer(false)();
+                Swal.fire({
+                    title: 'Error',
+                    text: respuesta,
+                    icon: 'error',
+                    confirmButtonText: 'Ok'
+                })
+                .then(() => {
+                    if(progressNuevo.abandonada || progressNuevo.terminada) {
+                        navigate('/home');
+                    }
+                });
+            }
+        }
+        catch (e) {
+            console.log(e);
+            Swal.fire(
+                '¡Error!',
+                '¡Ha ocurrido un error al actualizar el entrenamiento!',
+                e.message
+            );
+            if(progressNuevo.abandonada || progressNuevo.terminada) {
+                navigate('/home');
+            }
+        }
 
 
 
-    const getVideoLink = async () => {
+    }
 
-        const idVideo = entrenamientoSeleccionadoLocalStorage?.multimedia?.find(i => i.type === 'VIDEO')?.id || null;
+
+    const prevPeso = 16;
+
+    function loadRutinas() {
+        console.log("Load Rutinas", currentEntrenamiento?.rutinas);
+
+        return currentEntrenamiento?.rutinas?.map((rutina, index) => (
+            <div key={index}>
+                <Button
+                    variant="contained"
+                    style={{ backgroundColor: 'rgb(159, 28, 23)', color: 'white', fontWeight: 'bold', margin: '4px' }}
+                    onClick={() => {
+                        // Assuming seekTo is defined elsewhere
+                        seekTo(rutina.segundoInicial);
+                        handleExpandClickRutina(index);
+                        console.log(index, 'index');
+                    }}
+                >
+                    <KeyboardArrowRightIcon
+                        style={{ color: 'rgb(256, 256, 256)', paddingBottom: '-20px', marginLeft: '-10px' }}
+                    />
+                    {rutina.nombre}
+                </Button>
+                {rutina?.nombre && (
+                    <Collapse in={expandedDescription[index]} timeout="auto" unmountOnExit>
+                        <CardContent>
+                            <Typography style={{ color: 'white' }}>
+                                Descripcion:
+                            </Typography>
+                            <Typography style={{ color: 'white' }} paragraph>
+                                {rutina?.descripcion}
+                            </Typography>
+
+                            <Divider flexItem
+                                sx={
+                                    {
+                                        weight: '1px',
+                                        height: '0.5px',
+                                        backgroundColor: 'rgb(159, 28, 23)',
+                                    }
+                                } />
+
+                            <Typography style={{ color: 'white' }} >
+                                Control de peso:
+                            </Typography>
+
+
+
+                            <Grid container spacing={0}>
+
+                                <Grid item xs={12} sm={3}
+                                    sx={{
+                                        display: 'flex',
+                                        alignItems: 'center',
+
+                                    }}
+                                >
+                                    {/* <CardActions> */}
+                                    {/* <CssTextField
+                                            style={{ color: 'white' }}
+                                            readOnly
+                                            // fullWidth
+                                            name="pesos"
+                                            label={prevPeso + " kg"}
+                                            helperText="Peso anterior"
+                                            FormHelperTextProps={{ style: { color: 'white' } }}
+                                            InputProps={{
+                                                readOnly: true,
+                                            }}
+                                        /> */}
+                                    <Typography
+                                        style={{
+                                            color: 'white',
+                                            fontSize: '0.9rem',
+                                        }}
+                                    >
+                                        Peso anterior: {prevPeso} kg
+                                    </Typography>
+                                    {/* </CardActions> */}
+                                </Grid>
+
+                                <Grid item xs={12} sm={6}>
+                                    <CardActions>
+                                        <CssTextField
+                                            style={{ color: 'white' }}
+                                            type="number"
+                                            // fullWidth
+                                            name="pesos"
+                                            label="Peso (kg)"
+                                            // value={userEdited.nombres}
+                                            // onChange={handleNombreChange}
+                                            helperText="Ingresa el peso que utilizaste"
+                                            FormHelperTextProps={{ style: { color: 'white' } }}
+                                        />
+                                        <IconButton aria-label="enviar"
+                                            sx={{ color: 'rgb(0,128,0) ', marginBottom: '15px' }}
+                                            onClick={() => {
+                                                Swal.fire({
+                                                    title: 'Peso registrado',
+                                                    icon: 'success',
+                                                    showCancelButton: true,
+                                                    confirmButtonColor: 'rgb(0, 128, 0)',
+                                                    showCancelButton: false,
+                                                    confirmButtonText: '¡Entendido!'
+                                                })
+                                            }
+
+                                                //something else
+                                            }
+
+
+
+                                        >
+                                            <PlaylistAddCheckCircleIcon />
+                                            {/* <PlaylistAddCheckCircleOutlinedIcon /> */}
+                                            <br />
+                                            <Typography
+                                                style={{ color: 'rgb(0,128,0)', fontSize: '0.8rem', marginBottom: '40px', marginLeft: '-35px' }}
+                                            >
+                                                Registrar
+                                            </Typography>
+                                        </IconButton>
+                                    </CardActions>
+                                </Grid>
+
+                            </Grid>
+
+                            <Divider flexItem
+                                sx={
+                                    {
+                                        weight: '1px',
+                                        height: '0.5px',
+                                        backgroundColor: 'rgb(159, 28, 23)',
+                                    }
+                                } />
+                        </CardContent>
+                    </Collapse>
+
+                )}
+            </div >
+        )) || <>    </>;
+    }
+
+
+
+
+
+    const getVideoLink = async (auxEntrenamiento) => {
+
+        const idVideo = auxEntrenamiento?.multimedia?.find(i => i.type === 'VIDEO')?.id || null;
 
         if (!idVideo) {
             setUrlVideo('https://www.youtube.com/watch?v=9bZkp7q19f0');
@@ -155,13 +364,6 @@ function ContentPlayer({ setPlayerLoad, playerLoad }) {
         setUrlVideo(objectURL);
     };
 
-
-    useEffect(() => {
-        getVideoLink();
-    }, []);
-
-
-    console.log(entrenamientoSeleccionadoLocalStorage, 'entrenamientoSeleccionadoLocalStorage');
 
     return (
         <div className="contenthome">
@@ -193,7 +395,7 @@ function ContentPlayer({ setPlayerLoad, playerLoad }) {
                                         whiteSpace: 'normal' // This ensures text wraps to the next line
                                     }}
                                 >
-                                    {entrenamientoSeleccionadoLocalStorage.nombre ? entrenamientoSeleccionadoLocalStorage?.nombre : entrenamientoSeleccionadoLocalStorage?.nombre}
+                                    {currentEntrenamiento?.nombre ? currentEntrenamiento?.nombre : currentEntrenamiento?.nombre}
                                 </div>
                             }
                             title={
@@ -240,7 +442,7 @@ function ContentPlayer({ setPlayerLoad, playerLoad }) {
                             :
                             <ReactPlayer
                                 ref={playerRef}
-                                // url={URLVideo + ((entrenamientoSeleccionado?.multimedia?.find(i => i.type === 'VIDEO')?.id) || (entrenamientoSeleccionadoLocalStorage?.multimedia?.find(i => i.type === 'VIDEO')?.id) || 'https://www.youtube.com/watch?v=9bZkp7q19f0')}
+                                // url={URLVideo + ((currentEntrenamiento?.multimedia?.find(i => i.type === 'VIDEO')?.id) || (currentEntrenamiento?.multimedia?.find(i => i.type === 'VIDEO')?.id) || 'https://www.youtube.com/watch?v=9bZkp7q19f0')}
                                 // url={'https://www.youtube.com/watch?v=9bZkp7q19f0'}
                                 url={urlVideo}
                                 controls={true}
@@ -267,142 +469,15 @@ function ContentPlayer({ setPlayerLoad, playerLoad }) {
                                 style={{ color: 'white' }}
                             >Ejercicios</h4>
 
-                            {rutinasButtons}
+                            {loadRutinas()}
 
-                            {/* {entrenamientoSeleccionadoLocalStorage.rutinas[0]?.descripcion ? (
-
-                                <>
-                                    <Collapse in={expanded2} timeout="auto" unmountOnExit>
-                                        <CardContent>
-                                            <Typography paragraph
-                                                style={{ color: 'white' }}
-                                            >Descripcion:</Typography>
-                                            <Typography
-                                                style={{ color: 'white' }}
-                                                paragraph>
-                                                {entrenamientoSeleccionadoLocalStorage.rutinas[0]?.descripcion}
-                                            </Typography>
-
-                                        </CardContent>
-                                    </Collapse>
-                                </>
-                            ) : <>  </>}
-                            {entrenamientoSeleccionadoLocalStorage.rutinas[1]?.descripcion ? (
-
-                                <>
-                                    <Collapse in={expanded3} timeout="auto" unmountOnExit>
-                                        <CardContent>
-                                            <Typography paragraph
-                                                style={{ color: 'white' }}
-                                            >Descripcion:</Typography>
-                                            <Typography
-                                                style={{ color: 'white' }}
-                                                paragraph>
-                                                {entrenamientoSeleccionadoLocalStorage.rutinas[1]?.descripcion}
-                                            </Typography>
-
-                                        </CardContent>
-                                    </Collapse>
-                                </>
-                            ) : <>  </>}
-                            {entrenamientoSeleccionadoLocalStorage.rutinas[2]?.descripcion ? (
-
-                                <>
-                                    <Collapse in={expanded4} timeout="auto" unmountOnExit>
-                                        <CardContent>
-                                            <Typography paragraph
-                                                style={{ color: 'white' }}
-                                            >Descripcion:</Typography>
-                                            <Typography
-                                                style={{ color: 'white' }}
-                                                paragraph>
-                                                {entrenamientoSeleccionadoLocalStorage.rutinas[2]?.descripcion}
-                                            </Typography>
-
-                                        </CardContent>
-                                    </Collapse>
-                                </>
-                            ) : <>  </>}
-                            {entrenamientoSeleccionadoLocalStorage.rutinas[3]?.descripcion ? (
-
-                                <>
-                                    <Collapse in={expanded5} timeout="auto" unmountOnExit>
-                                        <CardContent>
-                                            <Typography paragraph
-                                                style={{ color: 'white' }}
-                                            >Descripcion:</Typography>
-                                            <Typography
-                                                style={{ color: 'white' }}
-                                                paragraph>
-                                                {entrenamientoSeleccionadoLocalStorage.rutinas[3]?.descripcion}
-                                            </Typography>
-
-                                        </CardContent>
-                                    </Collapse>
-                                </>
-                            ) : <>  </>}
-                            {entrenamientoSeleccionadoLocalStorage.rutinas[4]?.descripcion ? (
-
-                                <>
-                                    <Collapse in={expanded6} timeout="auto" unmountOnExit>
-                                        <CardContent>
-                                            <Typography paragraph
-                                                style={{ color: 'white' }}
-                                            >Descripcion:</Typography>
-                                            <Typography
-                                                style={{ color: 'white' }}
-                                                paragraph>
-                                                {entrenamientoSeleccionadoLocalStorage.rutinas[4]?.descripcion}
-                                            </Typography>
-
-                                        </CardContent>
-                                    </Collapse>
-                                </>
-                            ) : <>  </>}
-                            {entrenamientoSeleccionadoLocalStorage.rutinas[5]?.descripcion ? (
-
-                                <>
-                                    <Collapse in={expanded7} timeout="auto" unmountOnExit>
-                                        <CardContent>
-                                            <Typography paragraph
-                                                style={{ color: 'white' }}
-                                            >Descripcion:</Typography>
-                                            <Typography
-                                                style={{ color: 'white' }}
-                                                paragraph>
-                                                {entrenamientoSeleccionadoLocalStorage.rutinas[5]?.descripcion}
-                                            </Typography>
-
-                                        </CardContent>
-                                    </Collapse>
-                                </>
-                            ) : <>  </>}
-                            {entrenamientoSeleccionadoLocalStorage.rutinas[6]?.descripcion ? (
-
-                                <>
-                                    <Collapse in={expanded8} timeout="auto" unmountOnExit>
-                                        <CardContent>
-                                            <Typography paragraph
-                                                style={{ color: 'white' }}
-                                            >Descripcion:</Typography>
-                                            <Typography
-                                                style={{ color: 'white' }}
-                                                paragraph>
-                                                {entrenamientoSeleccionadoLocalStorage.rutinas[6].descripcion}
-                                            </Typography>
-
-                                        </CardContent>
-                                    </Collapse>
-                                </>
-                            ) : <>  </>} */}
-
-
+                            <br />
                             <br />
 
                             <div
                                 style={{ display: 'flex', width: '100%' }}
                             >
-
+                                {/* 
                                 <Button
                                     variant="outlined"
                                     // color='rgb(159, 28, 23)'
@@ -410,9 +485,67 @@ function ContentPlayer({ setPlayerLoad, playerLoad }) {
                                 // sx={{ mr: 'auto' }}
                                 >
                                     Chat
-                                </Button>
+                                </Button> */}
 
-                                <Divider orientation="vertical" flexItem />
+                                <br />
+
+                                <Tooltip title="Finalizar entrenamiento">
+                                    <IconButton aria-label="finalizar"
+                                        sx={{ backgroundColor: 'rgb(0, 128, 0)', color: 'white', fontWeight: 'bold', margin: '4px' }}
+                                        onClick={() => {
+                                            Swal.fire({
+                                                title: '¿Estás seguro de que deseas terminar este entrenamiento?',
+                                                icon: 'warning',
+                                                showCancelButton: true,
+                                                confirmButtonColor: 'rgb(0, 128, 0)',
+                                                cancelButtonColor: 'rgb(0, 0, 0)',
+                                                confirmButtonText: '¡Sí, terminar entrenamiento!'
+                                            }).then(async (result) => {
+                                                if (result.isConfirmed) {
+
+                                                    const entrenamientoFinalizado = { ...currentProgressState };
+                                                    entrenamientoFinalizado.terminada = true;
+                                                    updateCurrentProgress(entrenamientoFinalizado);
+                                                }
+                                            });
+
+                                        }}
+                                    >
+                                        <DoneIcon />
+                                    </IconButton>
+                                </Tooltip>
+
+                                <Divider orientation="vertical" flexItem
+                                    sx={
+                                        { width: '20px' }
+                                    } />
+
+                                <Tooltip title="Abandonar entrenamiento">
+                                    <IconButton aria-label="abandonar"
+                                        sx={{ backgroundColor: 'rgb(159, 28, 23)', color: 'white', fontWeight: 'bold', margin: '4px' }}
+                                        onClick={() => {
+                                            Swal.fire({
+                                                title: '¿Estás seguro de que deseas abandonar este entrenamiento?',
+                                                icon: 'warning',
+                                                color: 'rgb(255, 255, 255)',
+                                                background: "rgb(0,0,0)",
+                                                backdrop: `rgba(159, 28, 23, 0.4)`,
+                                                showCancelButton: true,
+                                                confirmButtonColor: 'rgb(159, 28, 23)',
+                                                cancelButtonColor: 'rgb(0, 0, 0)',
+                                                confirmButtonText: '¡Sí, abandonar entrenamiento!'
+                                            }).then(async (result) => {
+                                                if (result.isConfirmed) {
+                                                    const entrenamientoFinalizado = { ...currentProgressState };
+                                                    entrenamientoFinalizado.terminada = true;
+                                                    updateCurrentProgress(entrenamientoFinalizado);
+                                                }
+                                            });
+                                        }}
+                                    >
+                                        <ClearIcon />
+                                    </IconButton>
+                                </Tooltip>
 
                                 <br />
 
@@ -427,10 +560,16 @@ function ContentPlayer({ setPlayerLoad, playerLoad }) {
                                     onClick={handleExpandClick}
                                     aria-expanded={expanded}
                                     aria-label="show more"
-                                    sx={{ ml: '50px', mt: '5px', color: 'rgb(159, 28, 23)' }}
+                                    sx={{ ml: '50px', mt: '5px', color: 'rgb(159, 28, 23)', pointer: 'cursor' }}
                                 >
                                     <ExpandMoreIcon />
                                 </ExpandMore>
+                                <Typography
+                                    sx={{ color: 'rgb(159, 28, 23)', fontSize: '0.8rem', marginTop: '25px', marginLeft: '-35px', pointer: 'cursor' }}
+                                    onClick={handleExpandClick}
+                                >
+                                    Expandir
+                                </Typography>
 
                             </div>
                         </CardActions>
@@ -438,23 +577,32 @@ function ContentPlayer({ setPlayerLoad, playerLoad }) {
                             <CardContent>
                                 <Typography paragraph
                                     style={{ color: 'white' }}
-                                >Descripcion:</Typography>
-                                <Typography
-                                    style={{ color: 'white' }}
-                                    paragraph>
-                                    ¡Bienvenidos a nuestro Entrenamiento Completo para Todos los Niveles! Esta rutina de ejercicio de 30 minutos está diseñada para ayudarte a construir fuerza, aumentar la resistencia y mejorar la flexibilidad, todo desde la comodidad de tu hogar. Ya seas principiante o un entusiasta del fitness con experiencia, este entrenamiento se adapta a tus necesidades.
+                                >{currentEntrenamiento?.nombre}
                                 </Typography>
                                 <Typography
                                     style={{ color: 'white' }}
                                     paragraph>
-                                    En este video, harás:
+                                    {/* ¡Bienvenidos a nuestro Entrenamiento Completo para Todos los Niveles! Esta rutina de ejercicio de 30 minutos está diseñada para ayudarte a construir fuerza, aumentar la resistencia y mejorar la flexibilidad, todo desde la comodidad de tu hogar. Ya seas principiante o un entusiasta del fitness con experiencia, este entrenamiento se adapta a tus necesidades. */}
+                                    Dia:
+                                    {" " + currentEntrenamiento?.dia}
+                                    <br />
+                                    Estas entrenando en:
+                                    {" " + currentEntrenamiento?.lugar}
+                                </Typography>
+                                <Typography
+                                    style={{ color: 'white' }}
+                                    paragraph>
+                                    {/* En este video, harás:
 
                                     Calentamiento con estiramientos dinámicos para preparar tus músculos y articulaciones.
                                     Una serie de ejercicios con el peso corporal que trabajan todos los grupos musculares principales.
                                     Ejercicios con modificaciones para hacer cada movimiento más fácil o más desafiante.
-                                    Enfriamiento con una serie de estiramientos para ayudar en la recuperación y mejorar la flexibilidad.
+                                    Enfriamiento con una serie de estiramientos para ayudar en la recuperación y mejorar la flexibilidad. */}
+                                    Descripcion:
+                                    <br />
+                                    {currentEntrenamiento?.descripcion}
                                 </Typography>
-                                <Typography
+                                {/* <Typography
                                     style={{ color: 'white' }}
                                     paragraph>
                                     Lo que necesitas:
@@ -468,7 +616,7 @@ function ContentPlayer({ setPlayerLoad, playerLoad }) {
                                     style={{ color: 'white' }}
                                 >
                                     No olvides darle like, suscribirte y hacer clic en el icono de la campana para mantenerte al día con más videos de fitness. Comparte tu progreso y conéctate con nuestra comunidad usando #OneGymApp.
-                                </Typography>
+                                </Typography> */}
                             </CardContent>
                         </Collapse>
                     </Card>

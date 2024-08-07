@@ -229,6 +229,10 @@ function Registro({ BackToTopButton, usuario, todasLasCategorias }) {
         }));
     };
     const handleEdadChange = (event) => {
+        console.log(dob, 'dob');
+
+        calculateAge(dob, dob2)
+        setEdad(calculateAge(dob, dob2));
         setUserEdited(prevState => ({
             ...prevState,
             fechaNacimiento: event.target.value
@@ -236,24 +240,57 @@ function Registro({ BackToTopButton, usuario, todasLasCategorias }) {
     };
     const handleObjetivosChange = (event) => {
         console.log(event.target.value, 'event.target.value');
-        setUserEdited(prevState => ({
-            ...prevState,
-            categorias: [...prevState.categorias, event.target.value]
-        }));
+        setUserEdited(prevState => {
+            const newValue = event.target.value;
+            if (prevState.categorias.includes(newValue)) {
+                console.log('Objetivo añadido');
+
+                Swal.fire({
+                    title: 'Objetivo ya existe!',
+                    text: 'Objetivo ya existe en tu lista de objetivos',
+                    icon: 'warning',
+                    color: 'rgb(255, 255, 255)',
+                    background: "rgb(0,0,0)",
+                    backdrop: `rgba(159, 28, 23, 0.4)`
+                });
+                return prevState;
+            }
+            return {
+                ...prevState,
+                categorias: [...prevState.categorias, newValue]
+            };
+        });
+    };
+    const handleObjetivosChange2 = (event) => {
+        setUserEdited(prevState => {
+            const newValue = event.target.value;
+            if (!prevState.categorias.includes(newValue)) {
+                console.log('Objetivo no existe');
+                return prevState;
+            }
+            return {
+                ...prevState,
+                categorias: prevState.categorias.filter(categoria => categoria !== newValue)
+            };
+        });
     };
     const handleGeneroChange = (button) => {
         // console.log(event.target.value, 'event.target.value');
-        console.log(userEdited.geneo, 'userEdited.geneo');
+        console.log(userEdited.genero, 'userEdited.genero');
         setActiveButton(button);
         setUserEdited(prevState => ({
             ...prevState,
-            geneo: button
+            genero: button
         }));
     };
 
     const [headerMountIn, setHeaderMountIn] = useState(false)
     const [contentMountIn, setContentMountIn] = useState(false)
-    const [activeButton, setActiveButton] = useState(null);
+    const [activeButton, setActiveButton] = useState(usuario.genero);
+    console.log(usuario.genero);
+    console.log(usuario);
+
+
 
 
     const isoDate = usuario.fechaNacimiento;
@@ -264,17 +301,36 @@ function Registro({ BackToTopButton, usuario, todasLasCategorias }) {
     const formattedDate = `${year}-${month}-${day}`;
 
     const dob = formattedDate
-    const calculateAge = (dob) => {
-        const birthDate = new Date(dob);
-        const today = new Date();
-        const age = today.getFullYear() - birthDate.getFullYear();
-        const monthDiff = today.getMonth() - birthDate.getMonth();
 
-        if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
-            return age - 1;
+    const calculateAge = (dob, dob2) => {
+        console.log(dob2, 'dob2');
+
+        if (dob2) {
+            const birthDate = new Date(dob2);
+            const today = new Date();
+            const age = today.getFullYear() - birthDate.getFullYear();
+            const monthDiff = today.getMonth() - birthDate.getMonth();
+
+            if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+                return age - 1;
+            }
+
+            console.log(age, 'age2');
+            return age;
         }
+        else if (dob) {
+            const birthDate = new Date(dob);
+            const today = new Date();
+            const age = today.getFullYear() - birthDate.getFullYear();
+            const monthDiff = today.getMonth() - birthDate.getMonth();
 
-        return age;
+            if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+                return age - 1;
+            }
+
+            console.log(age, 'age');
+            return age;
+        };
     };
 
     const [userEdited, setUserEdited] = useState({
@@ -282,9 +338,22 @@ function Registro({ BackToTopButton, usuario, todasLasCategorias }) {
         apellidos: usuario.apellidos,
         fechaNacimiento: formattedDate,
         categorias: usuario.categorias ? usuario.categorias : [],
-        geneo: usuario.geneo,
+        genero: usuario.genero,
         id: usuario.id
     })
+
+    const isoDate2 = userEdited.fechaNacimiento;
+    const date2 = new Date(isoDate2);
+    const year2 = date2.getUTCFullYear();
+    const month2 = String(date2.getUTCMonth() + 1).padStart(2, '0');
+    const day2 = String(date2.getUTCDate()).padStart(2, '0');
+    const formattedDate2 = `${year2}-${month2}-${day2}`;
+
+    const dob2 = formattedDate2
+
+    const [edad, setEdad] = useState(calculateAge(dob, dob2));
+  console.log(windowSize.height, 'windowSize.height');
+  
 
     return (
 
@@ -363,7 +432,7 @@ function Registro({ BackToTopButton, usuario, todasLasCategorias }) {
                                     backgroundColor: 'rgb(0,0,0)',
                                     borderRadius: '30px',
                                     border: '3px solid rgb(159, 28, 23)',
-                                    width: '80%',
+                                    // width: '80%',
                                     margin: 'auto',
                                     marginTop: '30px',
                                     padding: '15px',
@@ -494,7 +563,7 @@ function Registro({ BackToTopButton, usuario, todasLasCategorias }) {
                                             >
 
                                                 <Grid item
-                                                    xs={4}
+                                                    xs={8}
                                                 >
                                                     {/* <Menu> */}
                                                     <CssTextField
@@ -509,7 +578,7 @@ function Registro({ BackToTopButton, usuario, todasLasCategorias }) {
                                                 </Grid>
 
                                                 <Grid item
-                                                    xs={2}
+                                                    xs={4}
                                                 >
                                                     {/* <Menu> */}
                                                     <CssTextField
@@ -517,15 +586,15 @@ function Registro({ BackToTopButton, usuario, todasLasCategorias }) {
                                                         // type="number"
                                                         name="dob"
                                                         label="Edad"
-                                                        value={calculateAge(dob)}
+                                                        value={edad}
                                                     // disabled // Add the disabled prop to make the field not editable
                                                     />
                                                     {/* </Menu> */}
                                                 </Grid>
-                                                <Grid item xs={3}>
+                                                <Grid item xs={6}>
                                                     <Button
-                                                        variant="outlined"
-                                                        size="large"
+                                                        variant="danger"
+                                                        size="medium"
                                                         style={{
                                                             backgroundColor: activeButton === 'MUJER' ? 'rgb(159, 28, 23)' : 'rgb(146, 144, 144)',
                                                             color: 'white',
@@ -535,10 +604,10 @@ function Registro({ BackToTopButton, usuario, todasLasCategorias }) {
                                                         Mujer
                                                     </Button>
                                                 </Grid>
-                                                <Grid item xs={3}>
+                                                <Grid item xs={6}>
                                                     <Button
-                                                        variant="outlined"
-                                                        size="large"
+                                                        variant="danger"
+                                                        size="medium"
                                                         style={{
                                                             backgroundColor: activeButton === 'HOMBRE' ? 'rgb(159, 28, 23)' : 'rgb(146, 144, 144)',
                                                             color: 'white',
@@ -591,19 +660,12 @@ function Registro({ BackToTopButton, usuario, todasLasCategorias }) {
                                                                     <MenuItem key={index}
                                                                         value={categoria.nombre}
                                                                         sx={{
-                                                                            color: green[900],
-
-                                                                            '&:focus': {
-                                                                                outline: `3px solid ${green[200]}`,
-                                                                                backgroundColor: green[100],
-                                                                                color: green[900],
-                                                                            },
-
+                                                                            backgroundColor: 'rgba(0, 128, 0, 0.1)',
                                                                             typography: 'body1',
                                                                             padding: '10px',
                                                                         }}
                                                                     >
-                                                                        <Typography sx={{ color: 'rgb(159, 28, 23) ' }}>
+                                                                        <Typography sx={{ color: 'rgb(0, 128, 0)' }}>
                                                                             {categoria.nombre}
                                                                         </Typography>
                                                                     </MenuItem>
@@ -643,23 +705,18 @@ function Registro({ BackToTopButton, usuario, todasLasCategorias }) {
                                                             select
                                                             label="Tus Objetivos"
                                                             value={userEdited.categorias}
+                                                            onChange={handleObjetivosChange2}
                                                         >
                                                             {userEdited.categorias.map((categoria, index) => {
                                                                 return (
                                                                     <MenuItem key={index}
                                                                         value={categoria}
                                                                         sx={{
-                                                                            color: green[900],
-
-                                                                            '&:focus': {
-                                                                                outline: `3px solid ${green[200]}`,
-                                                                                backgroundColor: green[100],
-                                                                                color: green[900],
-                                                                            },
-
+                                                                            backgroundColor: 'rgba(159, 28, 23, 0.1)',
                                                                             typography: 'body1',
                                                                             padding: '10px',
                                                                         }}
+                              
                                                                     >
                                                                         <Typography sx={{ color: 'rgb(159, 28, 23) ' }}>
                                                                             {categoria}

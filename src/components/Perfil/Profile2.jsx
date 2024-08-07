@@ -129,8 +129,8 @@ function Profile2({ userForTesting, BackToTopButton, name, headerMountIn, conten
                                                     setContentMountIn(false)
                                                 }, 300);
                                                 setTimeout(() => {
-                                                    // navigate('/profileedit')
-                                                    navigate('/registro')
+                                                    navigate('/profileedit')
+                                                    // navigate('/registro')
                                                 }, 600);
                                             }}
                                         >
@@ -267,8 +267,8 @@ function Profile2({ userForTesting, BackToTopButton, name, headerMountIn, conten
                                                     setContentMountIn(false)
                                                 }, 300);
                                                 setTimeout(() => {
-                                                    // navigate('/profileedit')
-                                                    navigate('/registro')
+                                                    navigate('/profileedit')
+                                                    // navigate('/registro')
                                                 }, 600);
                                             }}
                                         >

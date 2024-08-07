@@ -37,29 +37,23 @@ import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 const drawerWidth = "50%";
 
 
-function Layout({ localUser, setPlayerLoad, setHeaderLoad, setBannerload, setFilterLoad, setHeaderMountIn, setContentMountIn, navigateAway, setNavigateAway, scrollToFilter1, scrollToFilter2, scrollToFilter3, scrollToFilter4, scrollToFilter5 }) {
+function Layout({ usuario, setPlayerLoad, setHeaderLoad, setBannerload, setFilterLoad, setHeaderMountIn, setContentMountIn, navigateAway, setNavigateAway, scrollToFilter1, scrollToFilter2, scrollToFilter3, scrollToFilter4, scrollToFilter5 }) {
 
     const dispatch = useDispatch();
     const location = useLocation();
     const navigate = useNavigate();
 
-    const user = useSelector((state) => state.user);
-    const resultsData = useSelector((state) => state.results.data);
+     const resultsData = useSelector((state) => state.results.data);
     const currentIndex = useSelector((state) => state.rutinaID);
+    const currentProgress = useSelector((state) => state.currentEntrenamiento);
     // console.log(resultsData, 'resultsData en layout');
 
-
+const localUser = null;
 
     const userInitials = localUser?.split(' ').map((n) => n ? n[0].toUpperCase() : '').join('');
 
     const [mobileOpen, setMobileOpen] = React.useState(false);
     const [isClosing, setIsClosing] = React.useState(false);
-
-
-    const usuario = JSON.parse(localStorage.getItem("localUser"));
-
-
-
 
     const handleDrawerClose = () => {
         setIsClosing(true);
@@ -182,7 +176,7 @@ function Layout({ localUser, setPlayerLoad, setHeaderLoad, setBannerload, setFil
                 style={{ color: 'rgb(156, 28, 23)', cursor: 'pointer' }}
             />,
             fn: "Mi entrenamiento actual",
-            route: '/player',
+            route: `/player/${currentProgress.entrenamientoId}`,
             id: '1'
         },
         {
@@ -453,7 +447,7 @@ function Layout({ localUser, setPlayerLoad, setHeaderLoad, setBannerload, setFil
                         localStorage.removeItem("homeContent");
 
 
-                        if (location.pathname === '/player') {
+                        if (location.pathname.includes('/player/')) {
                             setPlayerLoad(false);
                             setTimeout(() => {
                                 navigate("/home");
@@ -528,7 +522,7 @@ function Layout({ localUser, setPlayerLoad, setHeaderLoad, setBannerload, setFil
                                 }, 600);
                             }
 
-                            if (location.pathname === '/player') {
+                            if (location.pathname === '/player/:entrenamientoId') {
                                 setNavigateAway(false);
                                 setPlayerLoad(false);
                                 setTimeout(() => {
@@ -565,7 +559,7 @@ function Layout({ localUser, setPlayerLoad, setHeaderLoad, setBannerload, setFil
                             }
                         }}
                     >
-                        <img src={usuario.foto} alt="profile pic" style={ACI} />
+                        <img src={usuario?.foto} alt="profile pic" style={ACI} />
                     </button>
                 }
             </Toolbar>

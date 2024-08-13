@@ -14,14 +14,31 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import DropDownCategorias from './DropDownCategorias';
 
 
-function Profile2({ userForTesting, BackToTopButton, name, headerMountIn, contentMountIn, setHeaderMountIn, setContentMountIn, navigateAway, setNavigateAway, todasLasCategotias, usuario }) {
+function Profile2({ userForTesting, BackToTopButton, name, headerMountIn, contentMountIn, setHeaderMountIn, setContentMountIn, navigateAway, setNavigateAway, todasLasCategotias, usuario, reload }) {
 
     const navigate = useNavigate();
+
+    const localUserName = usuario?.nombres + ' ' + usuario?.apellidos;
+    console.log(localUserName, 'localUserName en layout');
+
+
+    const userInitials = localUserName?.split(' ').map((n) => n ? n[0].toUpperCase() : '').join('');
+    console.log(userInitials, 'userInitials');
 
     const [fadeLoad, setfadeLoad] = useState(true)
     const [infoPremium, setInfoPremium] = useState(false)
 
+    const reLoad = reload
+
+    const shouldReload = (reLoad) => {
+        console.log('reload:', reLoad);
+        if (reLoad) {
+            window.location.reload();
+        }
+    };
+
     useEffect(() => {
+        shouldReload(reLoad);
         window.scrollTo(0, 0);
         let fadeLoadTimeout = setTimeout(() => {
             setfadeLoad(false)
@@ -42,7 +59,11 @@ function Profile2({ userForTesting, BackToTopButton, name, headerMountIn, conten
             clearTimeout(headerMountTimeout);
             clearTimeout(contentMountTimeout);
         };
-    }, [navigateAway, setHeaderMountIn, setContentMountIn]);
+    }, [navigateAway, setHeaderMountIn, setContentMountIn, reLoad]);
+
+
+    const [usuarioDOB, setUsuarioDOB] = useState('')
+
 
 
 
@@ -76,7 +97,7 @@ function Profile2({ userForTesting, BackToTopButton, name, headerMountIn, conten
                         <div className='gradiant'> </div>
                         <div className='profile'>
 
-                            <img src={usuario.foto} alt="profilePic" />
+                            <img src={usuario.foto} alt={userInitials} />
 
                             <div className='name'>
                                 {/* {`${userForTesting.Name}`} */}
@@ -84,7 +105,7 @@ function Profile2({ userForTesting, BackToTopButton, name, headerMountIn, conten
                             </div>
 
 
-                            {infoPremium && usuario.accountType === "FREE" ? (
+                            {infoPremium && usuario.accountType === "FREE" ? ( //this is hard coded for testing purposes
 
                                 <>
 
@@ -200,11 +221,15 @@ function Profile2({ userForTesting, BackToTopButton, name, headerMountIn, conten
                                 <>
                                     <div className='description'>
                                         <h2>Info:</h2>
-                                        {`${usuario.email}`}
+                                        {`Edad: ${usuario.age}`}
                                         <br />
-                                        {`${usuario.accountType}`}
+                                        {`Genero: ${usuario.genero}`}
                                         <br />
-                                        {`${usuario.state}`}
+                                        {`Email: ${usuario.email}`}
+                                        <br />
+                                        {`Suscripcion: ${usuario.accountType}`}
+                                        <br />
+                                        {`Estado: ${usuario.state}`}
                                         <br />
                                         <br />
 
@@ -213,12 +238,12 @@ function Profile2({ userForTesting, BackToTopButton, name, headerMountIn, conten
                                             todasLasCategotias={todasLasCategotias}
                                         /> */}
 
-                                        <h2>Entrenamiento:</h2>
+                                        {/* <h2>Entrenamiento:</h2>
                                         {`${userForTesting.Entrenamiento}`}
-                                        <br />
+                                        <br /> */}
                                         <br />
                                         <h2>Objetivos:</h2>
-                                        {`${userForTesting.Objetivo}`}
+                                        {`${usuario.categorias.map((categoria) => { return ' ' + categoria.nombre })}`}
                                     </div>
 
 

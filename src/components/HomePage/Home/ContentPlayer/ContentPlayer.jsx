@@ -14,7 +14,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { fetchBlobWithAuth } from '../../../../multimediaUtils';
-import { actualizarEntrenamiento, getEntrenamientoActual, getEntrenamiento } from '../../../../redux/actions';
+import { actualizarEntrenamiento, getProgresoActual, getEntrenamiento } from '../../../../redux/actions';
 import Swal from 'sweetalert2';
 import { styled } from '@mui/system';
 import ClearIcon from '@mui/icons-material/Clear';
@@ -50,7 +50,11 @@ const CssTextField = styled(TextField)({
 });
 
 
-function ContentPlayer({ setPlayerLoad, playerLoad }) {
+function ContentPlayer({ setPlayerLoad, playerLoad, setReload, usuario }) {
+
+
+    console.log("usuario en contentPlayer", usuario);
+
 
     const dispatch = useDispatch();
 
@@ -72,7 +76,7 @@ function ContentPlayer({ setPlayerLoad, playerLoad }) {
     const user = useSelector((state) => state.user);
     const currentEntrenamientoId = useParams().entrenamientoId;
 
-    const currentProgressState = useSelector((state) => state.currentEntrenamiento);
+    const currentProgressState = useSelector((state) => state.currentProgress);
 
 
 
@@ -83,7 +87,7 @@ function ContentPlayer({ setPlayerLoad, playerLoad }) {
 
     useEffect(async () => {
 
-        dispatch(getEntrenamientoActual());
+        dispatch(getProgresoActual());
         try {
             const auxEntrenamiento = await getEntrenamiento(currentEntrenamientoId);
             setCurrentEntrenamiento(auxEntrenamiento);
@@ -92,17 +96,17 @@ function ContentPlayer({ setPlayerLoad, playerLoad }) {
                 throw new Error("Entrenamiento no encontrado");
             }
             setExpandedDescription(new Array(currentEntrenamiento?.rutinas?.length).fill(false));
-            
+
             getVideoLink(auxEntrenamiento);
-            
+
             console.log("Rutinas:", rutinasButtons);
         } catch (e) {
             console.log("Error trayendo entrenamiento:", e);
             //navigate("/home");
         }
 
-       
-        
+
+
 
         let fadeLoadTimeout = setTimeout(() => {
             setfadeLoad(false);
@@ -129,6 +133,16 @@ function ContentPlayer({ setPlayerLoad, playerLoad }) {
         };
     }, [navigate, homeContent]);
 
+
+    const [currentProgressState2, setCurrentProgressState2] = useState({});
+
+    const handlePesoChange = (e, index) => {
+        const newProgress = { ...currentProgressState };
+        newProgress['pesoRutina' + index] = e.target.value;
+        console.log("handlePesoChange", newProgress);
+        setCurrentProgressState2(newProgress); // Correctly update the state
+        // updateCurrentProgress(newProgress); // Uncomment if needed
+    };
 
 
 
@@ -169,7 +183,7 @@ function ContentPlayer({ setPlayerLoad, playerLoad }) {
     };
 
     async function updateCurrentProgress(progressNuevo) {
-
+        console.log("updateCurrentProgress", progressNuevo);
         try {
             const respuesta = await actualizarEntrenamiento(currentEntrenamiento?.id, progressNuevo, currentProgressState);
             if (respuesta !== 0) {
@@ -180,11 +194,24 @@ function ContentPlayer({ setPlayerLoad, playerLoad }) {
                     icon: 'error',
                     confirmButtonText: 'Ok'
                 })
-                .then(() => {
-                    if(progressNuevo.abandonada || progressNuevo.terminada) {
-                        navigate('/home');
-                    }
+                    .then(() => {
+                        if (progressNuevo.abandonada || progressNuevo.terminada) {
+                            navigate('/home');
+                        }
+                    });
+            } else {
+
+                Swal.fire({
+                    title: 'Entrenamiento actualizado',
+                    icon: 'success',
+                    showCancelButton: false,
+                    confirmButtonColor: 'rgb(0, 128, 0)',
+                    confirmButtonText: '¡Entendido!'
                 });
+                if (progressNuevo.abandonada || progressNuevo.terminada) {
+                    navigate('/home');
+                    setReload(true);
+                }
             }
         }
         catch (e) {
@@ -194,7 +221,7 @@ function ContentPlayer({ setPlayerLoad, playerLoad }) {
                 '¡Ha ocurrido un error al actualizar el entrenamiento!',
                 e.message
             );
-            if(progressNuevo.abandonada || progressNuevo.terminada) {
+            if (progressNuevo.abandonada || progressNuevo.terminada) {
                 navigate('/home');
             }
         }
@@ -206,9 +233,8 @@ function ContentPlayer({ setPlayerLoad, playerLoad }) {
 
     const prevPeso = 16;
 
-    function loadRutinas() {
-        console.log("Load Rutinas", currentEntrenamiento?.rutinas);
 
+    function loadRutinas() {
         return currentEntrenamiento?.rutinas?.map((rutina, index) => (
             <div key={index}>
                 <Button
@@ -245,90 +271,70 @@ function ContentPlayer({ setPlayerLoad, playerLoad }) {
                                     }
                                 } />
 
-                            <Typography style={{ color: 'white' }} >
-                                Control de peso:
-                            </Typography>
-
-
-
-                            <Grid container spacing={0}>
-
-                                <Grid item xs={12} sm={3}
-                                    sx={{
-                                        display: 'flex',
-                                        alignItems: 'center',
-
-                                    }}
-                                >
-                                    {/* <CardActions> */}
-                                    {/* <CssTextField
-                                            style={{ color: 'white' }}
-                                            readOnly
-                                            // fullWidth
-                                            name="pesos"
-                                            label={prevPeso + " kg"}
-                                            helperText="Peso anterior"
-                                            FormHelperTextProps={{ style: { color: 'white' } }}
-                                            InputProps={{
-                                                readOnly: true,
-                                            }}
-                                        /> */}
-                                    <Typography
-                                        style={{
-                                            color: 'white',
-                                            fontSize: '0.9rem',
-                                        }}
-                                    >
-                                        Peso anterior: {prevPeso} kg
+                            {(usuario?.accountType !== "FREE" && usuario?.accountType !== "GENERAL") && (
+                                <>
+                                    <Typography style={{ color: 'white' }} >
+                                        Control de peso:
                                     </Typography>
-                                    {/* </CardActions> */}
-                                </Grid>
 
-                                <Grid item xs={12} sm={6}>
-                                    <CardActions>
-                                        <CssTextField
-                                            style={{ color: 'white' }}
-                                            type="number"
-                                            // fullWidth
-                                            name="pesos"
-                                            label="Peso (kg)"
-                                            // value={userEdited.nombres}
-                                            // onChange={handleNombreChange}
-                                            helperText="Ingresa el peso que utilizaste"
-                                            FormHelperTextProps={{ style: { color: 'white' } }}
-                                        />
-                                        <IconButton aria-label="enviar"
-                                            sx={{ color: 'rgb(0,128,0) ', marginBottom: '15px' }}
-                                            onClick={() => {
-                                                Swal.fire({
-                                                    title: 'Peso registrado',
-                                                    icon: 'success',
-                                                    showCancelButton: true,
-                                                    confirmButtonColor: 'rgb(0, 128, 0)',
-                                                    showCancelButton: false,
-                                                    confirmButtonText: '¡Entendido!'
-                                                })
-                                            }
-
-                                                //something else
-                                            }
-
-
-
+                                    <Grid container spacing={0}>
+                                        <Grid item xs={12} sm={3}
+                                            sx={{
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                            }}
                                         >
-                                            <PlaylistAddCheckCircleIcon />
-                                            {/* <PlaylistAddCheckCircleOutlinedIcon /> */}
-                                            <br />
                                             <Typography
-                                                style={{ color: 'rgb(0,128,0)', fontSize: '0.8rem', marginBottom: '40px', marginLeft: '-35px' }}
+                                                style={{
+                                                    color: 'white',
+                                                    fontSize: '0.9rem',
+                                                }}
                                             >
-                                                Registrar
+                                                Peso anterior: {prevPeso} kg
                                             </Typography>
-                                        </IconButton>
-                                    </CardActions>
-                                </Grid>
+                                        </Grid>
 
-                            </Grid>
+                                        <Grid item xs={12} sm={6}>
+                                            <CardActions>
+                                                <CssTextField
+                                                    style={{ color: 'white' }}
+                                                    type="number"
+                                                    name="pesos"
+                                                    label="Peso (kg)"
+                                                    value={currentProgressState['pesoRutina' + (index + 1)]}
+                                                    onChange={(e) => { handlePesoChange(e, index + 1) }}
+                                                    helperText="Ingresa el peso que utilizaste"
+                                                    FormHelperTextProps={{ style: { color: 'white' } }}
+                                                />
+                                                <IconButton aria-label="enviar"
+                                                    sx={{ color: 'rgb(0,128,0) ', marginBottom: '15px' }}
+                                                    onClick={() => {
+                                                        updateCurrentProgress(currentProgressState2);
+                                                        dispatch(getProgresoActual());
+                                                        // Swal.fire({
+                                                        //     title: 'Peso registrado',
+                                                        //     icon: 'success',
+                                                        //     showCancelButton: true,
+                                                        //     confirmButtonColor: 'rgb(0, 128, 0)',
+                                                        //     showCancelButton: false,
+                                                        //     confirmButtonText: '¡Entendido!'
+                                                        // })
+                                                    }}
+                                                >
+                                                    <PlaylistAddCheckCircleIcon />
+                                                    {/* <PlaylistAddCheckCircleOutlinedIcon /> */}
+                                                    <br />
+                                                    <Typography
+                                                        style={{ color: 'rgb(0,128,0)', fontSize: '0.8rem', marginBottom: '40px', marginLeft: '-35px' }}
+                                                    >
+                                                        Registrar
+                                                    </Typography>
+                                                </IconButton>
+                                            </CardActions>
+                                        </Grid>
+                                    </Grid>
+                                </>
+                            )}
 
                             <Divider flexItem
                                 sx={
@@ -494,20 +500,22 @@ function ContentPlayer({ setPlayerLoad, playerLoad }) {
                                         sx={{ backgroundColor: 'rgb(0, 128, 0)', color: 'white', fontWeight: 'bold', margin: '4px' }}
                                         onClick={() => {
                                             Swal.fire({
-                                                title: '¿Estás seguro de que deseas terminar este entrenamiento?',
+                                                title: '¿Estás seguro de que deseas finalizar este entrenamiento?',
                                                 icon: 'warning',
                                                 showCancelButton: true,
                                                 confirmButtonColor: 'rgb(0, 128, 0)',
                                                 cancelButtonColor: 'rgb(0, 0, 0)',
-                                                confirmButtonText: '¡Sí, terminar entrenamiento!'
+                                                confirmButtonText: '¡Sí, finalizar entrenamiento!'
                                             }).then(async (result) => {
                                                 if (result.isConfirmed) {
-
                                                     const entrenamientoFinalizado = { ...currentProgressState };
                                                     entrenamientoFinalizado.terminada = true;
                                                     updateCurrentProgress(entrenamientoFinalizado);
+
+
                                                 }
                                             });
+
 
                                         }}
                                     >
@@ -536,8 +544,10 @@ function ContentPlayer({ setPlayerLoad, playerLoad }) {
                                                 confirmButtonText: '¡Sí, abandonar entrenamiento!'
                                             }).then(async (result) => {
                                                 if (result.isConfirmed) {
+
+
                                                     const entrenamientoFinalizado = { ...currentProgressState };
-                                                    entrenamientoFinalizado.terminada = true;
+                                                    entrenamientoFinalizado.abandonada = true;
                                                     updateCurrentProgress(entrenamientoFinalizado);
                                                 }
                                             });

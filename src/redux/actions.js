@@ -32,7 +32,7 @@ import {
     GET_BANNER,
     GET_CATEGORIES,
     GET_GOOGLE,
-    GET_ENTRENAMIENTO_ACTUAL
+    GET_PROGRESO_ACTUAL
 } from "./action-types";
 
 
@@ -62,6 +62,8 @@ export const getGoogle = async () => {
     });
 
     const data = await response.json();
+    console.log('Success getGoogle:', data);
+
     return data;
 };
 
@@ -96,7 +98,9 @@ export const getEntrenamiento = async (id) => {
     return await registro.json();
 }
 
-export const getEntrenamientoActual = () => {
+export const getProgresoActual = () => {
+    console.log('Executing getProgresoActual action');
+
     return async (dispatch) => {
         const id_token = localStorage.getItem('id_token');
         const localUser = JSON.parse(localStorage.getItem('localUser'));
@@ -114,7 +118,7 @@ export const getEntrenamientoActual = () => {
         const data = await registro.json();
         //localStorage.setItem('currentEntrenamiento', JSON.stringify(data));
         console.log('Success getEntrenamientoActual:', data);
-        dispatch({ type: GET_ENTRENAMIENTO_ACTUAL, payload: data });
+        dispatch({ type: GET_PROGRESO_ACTUAL, payload: data });
     }
 }
 
@@ -124,8 +128,8 @@ export const empezarEntrenamiento = async (entrenamientoID, currentEntrenamiento
         return 0;
     }
 
-    if (currentEntrenamiento.id && !currentEntrenamiento.terminada && !currentEntrenamiento.abandonada ) {
-        return "No podes iniciar un entrenamiento sin acabar el anterior";
+    if (currentEntrenamiento.id && !currentEntrenamiento.terminada && !currentEntrenamiento.abandonada) {
+        return "No puedes iniciar un entrenamiento sin acabar el anterior";
     }
 
     const id_token = localStorage.getItem('id_token');

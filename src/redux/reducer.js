@@ -18,7 +18,7 @@ import {
     GET_BANNER,
     GET_CATEGORIES,
     GET_GOOGLE,
-    GET_ENTRENAMIENTO_ACTUAL
+    GET_PROGRESO_ACTUAL
 } from "./action-types";
 
 const initialState = {
@@ -35,7 +35,7 @@ const initialState = {
     banner: [],
     allCategories: [],
     googleResponse: null,
-    currentEntrenamiento: {},
+    currentProgress: {},
 
 }
 
@@ -155,10 +155,10 @@ const reducer = (state = initialState, action) => {
                 homeContent: action.payload,
             }
 
-        case GET_ENTRENAMIENTO_ACTUAL:
+        case GET_PROGRESO_ACTUAL:
             return {
                 ...state,
-                currentEntrenamiento: action.payload,
+                currentProgress: action.payload,
             }
 
         default:

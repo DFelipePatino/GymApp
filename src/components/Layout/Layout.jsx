@@ -43,14 +43,22 @@ function Layout({ usuario, setPlayerLoad, setHeaderLoad, setBannerload, setFilte
     const location = useLocation();
     const navigate = useNavigate();
 
-     const resultsData = useSelector((state) => state.results.data);
+    const resultsData = useSelector((state) => state.results.data);
     const currentIndex = useSelector((state) => state.rutinaID);
-    const currentProgress = useSelector((state) => state.currentEntrenamiento);
+    const currentProgress = useSelector((state) => state.currentProgress);
+    console.log(currentProgress.entrenamientoId, 'currentProgress.entrenamientoId en layout');
+
     // console.log(resultsData, 'resultsData en layout');
 
-const localUser = null;
+    // const localUser = null;
 
-    const userInitials = localUser?.split(' ').map((n) => n ? n[0].toUpperCase() : '').join('');
+    const localUserName = usuario?.nombres + ' ' + usuario?.apellidos;
+    console.log(localUserName, 'localUserName en layout');
+
+
+    const userInitials = localUserName?.split(' ').map((n) => n ? n[0].toUpperCase() : '').join('');
+    console.log(userInitials, 'userInitials');
+
 
     const [mobileOpen, setMobileOpen] = React.useState(false);
     const [isClosing, setIsClosing] = React.useState(false);
@@ -522,7 +530,7 @@ const localUser = null;
                                 }, 600);
                             }
 
-                            if (location.pathname === '/player/:entrenamientoId') {
+                            if (location.pathname.includes('/player/')) {
                                 setNavigateAway(false);
                                 setPlayerLoad(false);
                                 setTimeout(() => {
@@ -559,7 +567,9 @@ const localUser = null;
                             }
                         }}
                     >
-                        <img src={usuario?.foto} alt="profile pic" style={ACI} />
+                        <img src={usuario?.foto} alt={userInitials}
+                            style={ACI}
+                        />
                     </button>
                 }
             </Toolbar>

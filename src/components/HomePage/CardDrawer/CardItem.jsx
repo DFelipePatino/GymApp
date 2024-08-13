@@ -32,7 +32,10 @@ const CardItem = ({ setHeaderLoad, setBannerload, setFilterLoad }) => {
     const navigate = useNavigate();
     const CardIndex = parseInt(localStorage.getItem('CardIndex'));
     const results = useSelector((state) => state.results);
-    const currentEntrenamientoState = useSelector((state) => state.currentEntrenamiento);
+    const currentProgressState = useSelector((state) => state.currentProgress);
+    console.log(currentProgressState, 'currentProgressState en cardItem');
+
+
 
     const filteredResultsGym = results?.map((each) => each.entrenamientos?.filter((each) => each.lugar === "GYM"));
     const filteredResultsHome = results?.map((each) => each.entrenamientos?.filter((each) => each.lugar === "CASA"));
@@ -42,7 +45,7 @@ const CardItem = ({ setHeaderLoad, setBannerload, setFilterLoad }) => {
     if (localStorage.getItem('lugar') === 'GYM') {
         entrenamientoSeleccionado = filteredResultsGym[0]?.filter((entrenamiento) => entrenamiento?.id === CardIndex)[0];
         console.log(filteredResultsGym, 'filteredResultsGym en cardItem');
-        
+
 
     } else if (localStorage.getItem('lugar') === 'CASA') {
         entrenamientoSeleccionado = filteredResultsHome[0]?.filter((entrenamiento) => entrenamiento?.id === CardIndex)[0];
@@ -71,25 +74,38 @@ const CardItem = ({ setHeaderLoad, setBannerload, setFilterLoad }) => {
     };
 
     const toggleNavigate = async () => {
-        const resultadoCrearEntrenamiento = await empezarEntrenamiento(entrenamientoSeleccionado.id, currentEntrenamientoState);
-        if(resultadoCrearEntrenamiento !== 0) {
+        const resultadoCrearEntrenamiento = await empezarEntrenamiento(entrenamientoSeleccionado.id, currentProgressState);
+        if (resultadoCrearEntrenamiento !== 0) {
             toggleDrawer(false)();
             Swal.fire({
-                title: 'Error',
+                title: 'Atencion',
                 text: resultadoCrearEntrenamiento,
-                icon: 'error',
-                confirmButtonText: 'Ok'
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: `Mi entrenamiento actual`,
+                cancelButtonText: 'Ok, ir a Home',
+                cancelButtonColor: 'rgb(159, 28, 23)',
+                background: "rgb(0,0,0)",
+                backdrop: `rgba(159, 28, 23, 0.4)`,
+                color: 'rgb(255, 255, 255)',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    toggleDrawer(false)();
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    setTimeout(() => setBannerload(false), 300);
+                    setTimeout(() => setFilterLoad(false), 150);
+                    setTimeout(() => navigate(`/player/${currentProgressState.entrenamientoId}`), 500);
+                }
             });
-            console.log('Error al crear entrenamiento', resultadoCrearEntrenamiento);
-            return;
+        } else {
+            console.log(entrenamientoSeleccionado.id, 'entrenamientoSeleccionado.id');
+            toggleDrawer(false)();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            setTimeout(() => setBannerload(false), 300);
+            setTimeout(() => setFilterLoad(false), 150);
+            setTimeout(() => navigate(`/player/${entrenamientoSeleccionado.id}`), 500);
         }
-        console.log(entrenamientoSeleccionado.id, 'entrenamientoSeleccionado.id');
-        toggleDrawer(false)();
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-        setTimeout(() => setBannerload(false), 300);
-        setTimeout(() => setFilterLoad(false), 150);
-        setTimeout(() => navigate(`/player/${entrenamientoSeleccionado.id}`), 500);
-    };
+    }
 
     const baseUrl = "https://backdev.onetrainingteam.com/onegym-backtest/api";
 

@@ -17,6 +17,21 @@ function LogIn() {
     const [formShown, setFormShown] = useState(true);
     const [loadingShown, setLoadingShown] = useState(false);
 
+    function calculateAge(dobString) {
+        const dob = new Date(dobString);
+        const today = new Date();
+        let age = today.getFullYear() - dob.getFullYear();
+        const monthDifference = today.getMonth() - dob.getMonth();
+        const dayDifference = today.getDate() - dob.getDate();
+
+        // Adjust age if the current date is before the birthday in the current year
+        if (monthDifference < 0 || (monthDifference === 0 && dayDifference < 0)) {
+            age--;
+        }
+
+        return age;
+    }
+
     useEffect(() => {
         window.scrollTo(0, 0);
         loadGoogleScript();
@@ -56,8 +71,8 @@ function LogIn() {
 
         const id_token = response.credential;
         localStorage.setItem('id_token', id_token);
-        console.log(response, 'response');
-        console.log(localStorage.getItem('id_token'), 'id_token');
+        // console.log(response, 'response');
+        // console.log(localStorage.getItem('id_token'), 'id_token');
 
         const registro = await fetch(`${baseUrl}/users`, {
             method: 'POST',
@@ -95,8 +110,16 @@ function LogIn() {
             navigate('/registro');
         }
         else {
+            const age = calculateAge(respuesta.fechaNacimiento);
 
-            localStorage.setItem('localUser', JSON.stringify(respuesta));
+            const updatedRespuesta = {
+                ...respuesta,
+                age: age
+            };
+            console.log(updatedRespuesta, 'updatedRespuesta');
+
+
+            localStorage.setItem('localUser', JSON.stringify(updatedRespuesta));
             navigate('/home');
         }
     }

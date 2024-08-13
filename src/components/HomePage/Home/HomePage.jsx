@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { getDefault, getMetodo1, getMetodo2, getMetodo3, getMetodo4, getMetodo5, getMetodo6, emptyState, getEntrenamientoActual, getMethods, getBanner, getCategories } from '../../../redux/actions';
+import { getDefault, getMetodo1, getMetodo2, getMetodo3, getMetodo4, getMetodo5, getMetodo6, emptyState, getProgresoActual, getMethods, getBanner, getCategories } from '../../../redux/actions';
 import HeaderNav from '../../HeaderNav/HeaderNav';
 import NavBar from '../NavBar/NavBar';
 import Banner from '../Banner/banner';
@@ -35,10 +35,12 @@ import { containerStyles } from '../Filter/filterStyles';
 import { TroubleshootRounded } from '@mui/icons-material';
 // import colorPallet from '../../ColorPallet';
 
-function HomePage({ BackToTopButton, headerLoad, bannerLoad, filterLoad, setHeaderLoad, setBannerload, setFilterLoad, scrollToFilter1, filterRef1, scrollToFilter2, filterRef2, scrollToFilter3, filterRef3, scrollToFilter4, filterRef4, scrollToFilter5, filterRef5 }) {
+function HomePage({ BackToTopButton, headerLoad, bannerLoad, filterLoad, setHeaderLoad, setBannerload, setFilterLoad, scrollToFilter1, filterRef1, scrollToFilter2, filterRef2, scrollToFilter3, filterRef3, scrollToFilter4, filterRef4, scrollToFilter5, filterRef5, reload }) {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
+    const reLoad = reload;
 
     const results = useSelector((state) => state.results);
     // console.log('results:', results);
@@ -46,9 +48,6 @@ function HomePage({ BackToTopButton, headerLoad, bannerLoad, filterLoad, setHead
 
     const entrenamientoSeleccionadoLocalStorage = JSON.parse(localStorage.getItem("entrenamientoSeleccionado"));
     // console.log(entrenamientoSeleccionadoLocalStorage, 'entrenamientoSeleccionadoLocalStorage');
-
-    const entrenamientoActual = useSelector((state) => state.currentEntrenamiento);
-    // console.log('entrenamientoActual:', entrenamientoActual);
 
     const homeContent = localStorage.getItem("homeContent")
     const lastCategory = localStorage.getItem("category")
@@ -115,10 +114,20 @@ function HomePage({ BackToTopButton, headerLoad, bannerLoad, filterLoad, setHead
 
     // }
 
+    const shouldReload = (reLoad) => {
+        console.log('reload:', reLoad);
+        if (reLoad) {
+            window.location.reload();
+        }
+    };
+
 
     useEffect(() => {
         isMounted.current = true;
 
+
+        shouldReload(reLoad);
+        dispatch(getProgresoActual());
         dispatch(getMethods());
         dispatch(getBanner());
         dispatch(getCategories());
@@ -277,7 +286,7 @@ function HomePage({ BackToTopButton, headerLoad, bannerLoad, filterLoad, setHead
         return () => {
             isMounted.current = false;
         };
-    }, [navigate, homeContent]);
+    }, [navigate, homeContent, reLoad]);
 
 
     const todasLasCategotias = useSelector(state => state.allCategories)

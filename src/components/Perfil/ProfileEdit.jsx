@@ -243,6 +243,7 @@
 
 
 import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import './ProfileEdit.css';
 import FileUploadIcon from '@mui/icons-material/FileUpload';
 import Swal from 'sweetalert2'
@@ -260,7 +261,7 @@ import {
     InputLabel
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import { putUsuario } from '../../redux/actions';
+import { putUsuario, getGoogle } from '../../redux/actions';
 import { Dropdown } from '@mui/base/Dropdown';
 import { Menu } from '@mui/base/Menu';
 import { MenuButton as BaseMenuButton } from '@mui/base/MenuButton';
@@ -420,14 +421,27 @@ const CssTextField = styled(TextField)({
 });
 
 
-function ProfileEdit({ BackToTopButton, usuario, todasLasCategorias }) {
+function ProfileEdit({ BackToTopButton, usuario, todasLasCategorias, setReload }) {
 
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    const updateUser = async () => {
+        await getGoogle();
+    };
 
     const [windowSize, setWindowSize] = useState({
         width: window.innerWidth,
         height: window.innerHeight,
     });
+
+    async function handleReloadAndNavigate() {
+        await setReload(true); // Assuming setReload returns a promise
+        navigate('/profile2');
+    }
+
+    console.log(todasLasCategorias, 'todasLasCategorias en profileEdit');
+
 
     useEffect(() => {
 
@@ -548,11 +562,6 @@ function ProfileEdit({ BackToTopButton, usuario, todasLasCategorias }) {
 
     const dob = formattedDate
 
-
-
-
-
-
     const calculateAge = (dob, dob2) => {
         console.log(dob2, 'dob2');
 
@@ -632,7 +641,7 @@ function ProfileEdit({ BackToTopButton, usuario, todasLasCategorias }) {
 
 
                 <Box
-                    sx={{ height: windowSize.height }}
+                // sx={{ height: windowSize.height }}
                 >
 
 
@@ -640,7 +649,7 @@ function ProfileEdit({ BackToTopButton, usuario, todasLasCategorias }) {
                     <Grid container
                         justifyContent="space-around"
                         padding="15px"
-                        sx={{ height: windowSize.height }}
+                    // sx={{ height: windowSize.height }}
                     >
 
 
@@ -818,7 +827,7 @@ function ProfileEdit({ BackToTopButton, usuario, todasLasCategorias }) {
                                                         size="medium"
                                                         style={{
                                                             backgroundColor: activeButton === 'MUJER' ? 'rgb(159, 28, 23)' : 'rgb(146, 144, 144)',
-                                                            color: 'white',
+                                                            color: 'white'
                                                         }}
                                                         onClick={() => handleGeneroChange('MUJER')}
                                                     >
@@ -873,13 +882,13 @@ function ProfileEdit({ BackToTopButton, usuario, todasLasCategorias }) {
                                                             id="outlined-select-objetivos"
                                                             select
                                                             label="Objetivos disponibles"
-                                                            value={userEdited.categorias || ''}
+                                                            value={userEdited.categorias || []}
                                                             onChange={handleObjetivosChange}
                                                         >
                                                             {todasLasCategorias.map((categoria, index) => {
                                                                 return (
                                                                     <MenuItem key={index}
-                                                                        value={categoria.nombre ? categoria.nombre : ''}
+                                                                        value={categoria}
                                                                         sx={{
                                                                             backgroundColor: 'rgba(0, 128, 0, 0.1)',
                                                                             typography: 'body1',
@@ -925,13 +934,13 @@ function ProfileEdit({ BackToTopButton, usuario, todasLasCategorias }) {
                                                             id="outlined-select-objetivos"
                                                             select
                                                             label="Tus Objetivos"
-                                                            value={userEdited.categorias || ''}
+                                                            value={userEdited.categorias || []}
                                                             onChange={handleObjetivosChange2}
                                                         >
                                                             {userEdited.categorias.map((categoria, index) => {
                                                                 return (
                                                                     <MenuItem key={index}
-                                                                        value={categoria ? categoria : ''}
+                                                                        value={categoria}
                                                                         sx={{
                                                                             backgroundColor: 'rgba(159, 28, 23, 0.1)',
                                                                             typography: 'body1',
@@ -939,7 +948,7 @@ function ProfileEdit({ BackToTopButton, usuario, todasLasCategorias }) {
                                                                         }}
                                                                     >
                                                                         <Typography sx={{ color: 'rgb(159, 28, 23) ' }}>
-                                                                            {categoria}
+                                                                            {categoria.nombre}
                                                                         </Typography>
                                                                     </MenuItem>
                                                                 );
@@ -992,7 +1001,9 @@ function ProfileEdit({ BackToTopButton, usuario, todasLasCategorias }) {
                                                                             background: "rgb(0,0,0)",
                                                                             backdrop: `rgba(144, 238, 144, 0.4)`
                                                                         })
-                                                                        navigate('/home');
+                                                                            .finally(() => handleReloadAndNavigate());
+
+
                                                                     } catch (e) {
                                                                         console.error('Error:', e);
                                                                         Swal.fire({
@@ -1008,8 +1019,8 @@ function ProfileEdit({ BackToTopButton, usuario, todasLasCategorias }) {
                                                                 if (result.isDismissed) {
                                                                     Swal.fire({
                                                                         title: 'Cancelado!',
-                                                                        text: 'Tu perfil no ha sido actualizado, continua con el proceso de actualizacion!',
-                                                                        icon: 'success',
+                                                                        text: 'Tus cambios no han sido guardados, continua con el proceso de actualizacion!',
+                                                                        icon: 'warning',
                                                                         color: 'rgb(255, 255, 255)',
                                                                         background: "rgb(0,0,0)",
                                                                         backdrop: `rgba(159, 28, 23, 0.4)`

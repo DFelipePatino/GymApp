@@ -13,7 +13,7 @@ import Layout from './components/Layout/Layout.jsx';
 import DropDownCategorias from './components/Perfil/DropDownCategorias.jsx';
 import BackToTopButton from './components/backToTopButton/BackToTopButton.jsx';
 import ContentPlayer from './components/HomePage/Home/ContentPlayer/ContentPlayer.jsx';
-import { getMethods, getBanner, getCategories, getEntrenamientoActual, getGoogle } from './redux/actions.js';
+import { getMethods, getBanner, getCategories, getProgresoActual, getGoogle } from './redux/actions.js';
 import Testtt from './components/test/Testtt.jsx';
 
 function App() {
@@ -29,14 +29,21 @@ function App() {
   const [headerMountIn, setHeaderMountIn] = useState(false)
   const [contentMountIn, setContentMountIn] = useState(false)
   const [navigateAway, setNavigateAway] = useState(false)
+  const [reload, setReload] = useState(false)
 
   const [playerLoad, setPlayerLoad] = useState(false)
 
   const localUser = localStorage.getItem("localUser");
   // console.log(localUser, "localUser in App.js");
 
+  const todasLasCategorias = useSelector(state => state.allCategories)
+  const currentProgress = useSelector((state) => state.currentProgress);
+
   let usuario = JSON.parse(localStorage.getItem("localUser"));
- 
+
+  console.log(usuario, "usuario in App.js");
+
+
 
 
   // const profilefoto = usuario?.foto;
@@ -64,7 +71,6 @@ function App() {
     DietPlan: "/plandedieta.pdf",
   };
 
-  const todasLasCategorias = useSelector(state => state.allCategories)
 
 
   // const updateLocalUser = async () => {
@@ -74,29 +80,60 @@ function App() {
   //   localStorage.setItem('localUser', googleResponse);
   // }
 
+  function calculateAge(dobString) {
+    const dob = new Date(dobString);
+    const today = new Date();
+    let age = today.getFullYear() - dob.getFullYear();
+    const monthDifference = today.getMonth() - dob.getMonth();
+    const dayDifference = today.getDate() - dob.getDate();
 
-  useEffect(async () => {
+    // Adjust age if the current date is before the birthday in the current year
+    if (monthDifference < 0 || (monthDifference === 0 && dayDifference < 0)) {
+      age--;
+    }
+
+    return age;
+  }
+
+  const callActions = () => {
     // dispatch(getMethods());
     // dispatch(getBanner());
-    // dispatch(getCategories());
+    dispatch(getCategories());
+    dispatch(getProgresoActual());
+  }
+
+
+  useEffect(async () => {
+
+    callActions();
+
     const token = await localStorage.getItem("id_token");
-    if(token){
-      try{
+    if (token) {
+
+
+      try {
         let pUsuario = await getGoogle();
-        console.log(pUsuario, "pUsuario in App.js");
-        await localStorage.setItem('localUser', JSON.stringify(pUsuario));
-      }catch(err){
+
+        const age = calculateAge(pUsuario.fechaNacimiento);
+
+        const updatedRespuesta = {
+          ...pUsuario,
+          age: age
+        };
+
+        await localStorage.setItem('localUser', JSON.stringify(updatedRespuesta));
+
+      } catch (err) {
         navigate('/');
         return;
       }
-      
+
       usuario = JSON.parse(localStorage.getItem("localUser"));
-      console.log(usuario, "usuario in App.js");
-      dispatch(getEntrenamientoActual());
-    }else{
+
+    } else {
       navigate('/');
     }
-    
+
   }, []);
 
 
@@ -180,6 +217,7 @@ function App() {
         />} />
 
         <Route path='/home' element={<HomePage
+          reload={reload}
           headerLoad={headerLoad}
           bannerLoad={bannerLoad}
           filterLoad={filterLoad}
@@ -201,6 +239,8 @@ function App() {
         />} />
 
         <Route path='/player/:entrenamientoId' element={<ContentPlayer
+          usuario={usuario}
+          setReload={setReload}
           setPlayerLoad={setPlayerLoad}
           playerLoad={playerLoad} />} />
 
@@ -208,6 +248,7 @@ function App() {
           localUser={localUser} />} />
 
         <Route path='/profile2' element={<Profile2
+          reload={reload}
           headerMountIn={headerMountIn}
           contentMountIn={contentMountIn}
           setHeaderMountIn={setHeaderMountIn}
@@ -221,6 +262,7 @@ function App() {
           todasLasCategorias={todasLasCategorias} />} />
 
         <Route path='/profileedit' element={<ProfileEdit
+          setReload={setReload}
           headerMountIn={headerMountIn}
           contentMountIn={contentMountIn}
           setHeaderMountIn={setHeaderMountIn}

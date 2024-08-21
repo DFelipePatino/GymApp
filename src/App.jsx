@@ -15,6 +15,7 @@ import BackToTopButton from './components/backToTopButton/BackToTopButton.jsx';
 import ContentPlayer from './components/HomePage/Home/ContentPlayer/ContentPlayer.jsx';
 import { getMethods, getBanner, getCategories, getProgresoActual, getGoogle } from './redux/actions.js';
 import Testtt from './components/test/Testtt.jsx';
+import ContentPlayerCE from './components/HomePage/Home/ContentPlayer/ContentPlayerCE.jsx';
 
 function App() {
   const dispatch = useDispatch();
@@ -38,6 +39,7 @@ function App() {
 
   const todasLasCategorias = useSelector(state => state.allCategories)
   const currentProgress = useSelector((state) => state.currentProgress);
+  const cardioState = useSelector((state) => state.cardio);
 
   let usuario = JSON.parse(localStorage.getItem("localUser"));
 
@@ -240,6 +242,11 @@ function App() {
 
         <Route path='/player/:entrenamientoId' element={<ContentPlayer
           usuario={usuario}
+          setReload={setReload}
+          setPlayerLoad={setPlayerLoad}
+          playerLoad={playerLoad} />} />
+
+        <Route path='/playerCE' element={<ContentPlayerCE
           setReload={setReload}
           setPlayerLoad={setPlayerLoad}
           playerLoad={playerLoad} />} />

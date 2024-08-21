@@ -1,5 +1,6 @@
 import {
     GET_CARDIO,
+    GET_ESTIRAMIENTOS,
     GET_CONTACTO,
     GET_PILATES,
     GET_CROSSFIT,
@@ -24,6 +25,8 @@ import {
 const initialState = {
     results: {},
     resultsFiltered: {},
+    cardio: {},
+    estiramientos: {},
     user: '',
     homeContent: '',
     cardItem2View: {},
@@ -92,7 +95,13 @@ const reducer = (state = initialState, action) => {
         case GET_CARDIO:
             return {
                 ...state,
-                resultsFiltered: action.payload,
+                cardio: action.payload,
+            }
+
+        case  GET_ESTIRAMIENTOS:
+            return {
+                ...state,
+                estiramientos: action.payload,
             }
 
         case ADD_FAV:

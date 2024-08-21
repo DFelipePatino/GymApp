@@ -136,9 +136,23 @@ function ContentPlayer({ setPlayerLoad, playerLoad, setReload, usuario }) {
 
     const [currentProgressState2, setCurrentProgressState2] = useState({});
 
-    const handlePesoChange = (e, index) => {
+    const handlePesoChange = (e, index, iPeso, totalPesos) => {
+        console.log("handlePesoChange", e.target.value, index, iPeso, totalPesos);
         const newProgress = { ...currentProgressState };
-        newProgress['pesoRutina' + index] = e.target.value;
+        let pesoAtual = newProgress['pesoRutina' + index] || '';
+
+        let pesosRutina = pesoAtual.split('-');
+
+        for(let i =0; i < totalPesos; i++) {
+            if(pesosRutina.length < i) {
+                pesosRutina.push('0');
+            }
+        }
+
+
+        pesosRutina[iPeso] = e.target.value;
+        console.log(pesosRutina.join('-'));
+        newProgress['pesoRutina' + index] = pesosRutina.join('-');  
         console.log("handlePesoChange", newProgress);
         setCurrentProgressState2(newProgress); // Correctly update the state
         // updateCurrentProgress(newProgress); // Uncomment if needed
@@ -296,16 +310,24 @@ function ContentPlayer({ setPlayerLoad, playerLoad, setReload, usuario }) {
 
                                         <Grid item xs={12} sm={6}>
                                             <CardActions>
-                                                <CssTextField
-                                                    style={{ color: 'white' }}
-                                                    type="number"
-                                                    name="pesos"
-                                                    label="Peso (kg)"
-                                                    value={currentProgressState['pesoRutina' + (index + 1)]}
-                                                    onChange={(e) => { handlePesoChange(e, index + 1) }}
-                                                    helperText="Ingresa el peso que utilizaste"
-                                                    FormHelperTextProps={{ style: { color: 'white' } }}
-                                                />
+
+                                                <>
+                                                    {Array.from({ length: rutina.cantidadPesos }, (_, iPeso) => (
+                                                        
+                                                        <CssTextField
+                                                            style={{ color: 'white' }}
+                                                            type="number"
+                                                            name="pesos"
+                                                            label="Peso (kg)"
+                                                            // value={currentProgressState['pesoRutina' + (index + 1)]?.split('-').length > iPeso ? currentProgressState['pesoRutina' + (index + 1)]?.split('-')[iPeso] : ''}
+                                                            onChange={(e) => { handlePesoChange(e, index + 1, iPeso, rutina.cantidadPesos) }}
+                                                            helperText="Ingresa el peso que utilizaste"
+                                                            FormHelperTextProps={{ style: { color: 'white' } }}
+                                                        />
+
+                                                    ))}
+                                                </>
+    
                                                 <IconButton aria-label="enviar"
                                                     sx={{ color: 'rgb(0,128,0) ', marginBottom: '15px' }}
                                                     onClick={() => {

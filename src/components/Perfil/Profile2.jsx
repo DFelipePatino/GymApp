@@ -12,6 +12,12 @@ import profilePic from "/Perfil.png"
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import DropDownCategorias from './DropDownCategorias';
+import { pink } from '@mui/material/colors';
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormControl from '@mui/material/FormControl';
+import FormLabel from '@mui/material/FormLabel';
 
 
 function Profile2({ userForTesting, BackToTopButton, name, headerMountIn, contentMountIn, setHeaderMountIn, setContentMountIn, navigateAway, setNavigateAway, todasLasCategotias, usuario, reload }) {
@@ -63,8 +69,21 @@ function Profile2({ userForTesting, BackToTopButton, name, headerMountIn, conten
 
 
     const [usuarioDOB, setUsuarioDOB] = useState('')
+    const [showLink, setShowLink] = useState(false)
 
+    const [selectedValue, setSelectedValue] = React.useState('a');
 
+    const handleChange = (event) => {
+        setSelectedValue(event.target.value);
+    };
+
+    const controlProps = (item) => ({
+        checked: selectedValue === item,
+        onChange: handleChange,
+        value: item,
+        name: 'color-radio-button-demo',
+        inputProps: { 'aria-label': item },
+    });
 
 
 
@@ -105,7 +124,7 @@ function Profile2({ userForTesting, BackToTopButton, name, headerMountIn, conten
                             </div>
 
 
-                            {infoPremium && usuario.accountType === "FREE" ? ( //this is hard coded for testing purposes
+                            {infoPremium && usuario.accountType !== "FREE" ? ( //this is hard coded for testing purposes
 
                                 <>
 
@@ -134,7 +153,7 @@ function Profile2({ userForTesting, BackToTopButton, name, headerMountIn, conten
                                             Back
                                         </Button>
 
-
+                                        {/* 
                                         <Button
                                             style={buttonStyle}
                                             variant='contained'
@@ -158,7 +177,7 @@ function Profile2({ userForTesting, BackToTopButton, name, headerMountIn, conten
                                             Editar
                                             <br />
                                             <EditIcon />
-                                        </Button>
+                                        </Button> */}
                                     </div>
 
                                     <div
@@ -170,25 +189,135 @@ function Profile2({ userForTesting, BackToTopButton, name, headerMountIn, conten
                                                 <Button
                                                     style={{ color: 'white' }}
                                                 >
-                                                    Plan de dieta
+                                                    Instructivo
                                                 </Button>
                                             </Link>
                                         </Card>
 
                                     </div>
 
-                                    <div
+                                    {/* <div
                                         className='userInfoDiv'
+
+                                    > */}
+
+                                    <div
+                                        className='lastDiv'
                                     >
 
+                                        <div
+                                            style={{ display: 'flex', space: 'between' }}>
 
-                                        {/* <Card /> */}
+                                            <Grid container spacing={1}>
+                                                <Grid item xs={6} sm={6}>
+                                                    <Button
+                                                        style={buttonStyle}
+                                                        variant='contained'
+                                                    // onClick={() => {
+                                                    //     window.scroll({ top: 0, behavior: 'smooth' });
+                                                    // }}
+                                                    >
+                                                        {/* <ArrowBackIosNewIcon /> */}
+                                                        Premium
+                                                    </Button>
+                                                </Grid>
+                                                <Grid item xs={6} sm={6}>
+                                                    <Button
+                                                        style={buttonStyle}
+                                                        variant='contained'
+                                                    // onClick={() => {
+                                                    //     window.scroll({ top: 0, behavior: 'smooth' });
+                                                    // }}
+                                                    >
+                                                        {/* <ArrowBackIosNewIcon /> */}
+                                                        Basic
+                                                    </Button>
+                                                </Grid>
+                                            </Grid>
 
-                                        {/* <div className='cardContent'> */}
-                                        {/* <Card style={cardContentCard}> */}
-                                        <Grid container spacing={1}>
-                                            {/* <div className='description2'> */}
-                                            {Object.entries(userForTesting).map(([key, value], index) => {
+
+                                        </div>
+
+                                            <br />
+                                  
+                                        <FormControl>
+                                            <FormLabel id="demo-form-control-label-placement">Selecciona tu plan</FormLabel>
+                                            <RadioGroup
+                                                row
+                                                aria-labelledby="demo-form-control-label-placement"
+                                                name="position"
+                                                defaultValue="top"
+                                                style={{
+                                                    display: 'flex',
+                                                    flexDirection: 'row',
+                                                    justifyContent: 'space-around',
+                                                    flexWrap: 'nowrap'
+                                                }}
+                                            >
+                                                <FormControlLabel
+                                                    value="3"
+                                                    control={<Radio
+                                                        onClick={() => setShowLink(3)}
+                                                    //     sx={{
+                                                    //     color: "rgb(256, 256, 256)",
+                                                    //     '&.Mui-checked': {
+                                                    //         color: pink[600],
+                                                    //     },
+                                                    // }} 
+                                                    />}
+                                                    label="3"
+                                                    labelPlacement="top"
+                                                />
+                                                <FormControlLabel
+                                                    value="6"
+                                                    control={<Radio
+                                                        onClick={() => setShowLink(6)}
+                                                    />}
+                                                    label="6"
+                                                    labelPlacement="top"
+                                                />
+                                                <FormControlLabel
+                                                    value="12"
+                                                    control={<Radio
+                                                        onClick={() => setShowLink(12)}
+                                                    />}
+                                                    label="12"
+                                                    labelPlacement="top"
+                                                />
+
+                                            </RadioGroup>
+                                        </FormControl>
+                                    </div >
+
+                                    {showLink === 3 ? (
+                                        <a href="https://example.com" target="_blank" rel="noopener noreferrer">External Link 1</a>
+
+
+
+                                    ) : showLink === 6 ? (
+                                        <a href="https://example.com" target="_blank" rel="noopener noreferrer">External Link 2</a>
+
+
+
+                                    ) :
+
+                                        showLink === 12 ? (
+                                            <a href="https://example.com" target="_blank" rel="noopener noreferrer">External Link 3</a>
+
+
+
+                                        ) :
+
+
+                                            (null)}
+
+                                    {/* <Card /> */}
+
+                                    {/* <div className='cardContent'> */}
+                                    {/* <Card style={cardContentCard}> */}
+                                    {/* <Grid container spacing={1}> */}
+                                    {/* <div className='description2'> */}
+                                    {/* {Object.entries(userForTesting).map(([key, value], index) => {
                                                 if (key !== 'DietPlan' && key !== 'ProfilePicture' && key !== 'Entrenamiento' && key !== 'Name' && key !== 'Email' && key !== 'Premium' && key !== 'Objetivo' && key !== 'Age' && key !== 'DOB' && key !== 'Gender') {
                                                     return (
                                                         <Grid item xs={12} sm={6}
@@ -198,20 +327,20 @@ function Profile2({ userForTesting, BackToTopButton, name, headerMountIn, conten
                                                             <h2>{key}:</h2>
                                                             {value}
                                                             <br />
-                                                            <br />
+                                                            <br /> */}
 
-                                                            {/* <p><strong>{key}:</strong> {value}</p> */}
-                                                        </Grid>
+                                    {/* <p><strong>{key}:</strong> {value}</p> */}
+                                    {/* </Grid>
                                                     );
                                                 }
                                                 return null;
-                                            })}
-                                            {/* </div> */}
-                                        </Grid>
-                                        {/*  </Card> */}
+                                            })} */}
+                                    {/* </div> */}
+                                    {/* </Grid> */}
+                                    {/*  </Card> */}
 
-                                    </div>
 
+                                    {/* </div> */}
 
                                 </>
 
@@ -251,7 +380,7 @@ function Profile2({ userForTesting, BackToTopButton, name, headerMountIn, conten
 
                                     <div className='contact'>
 
-                                        {userForTesting.Premium ? (<Button
+                                        {usuario.accountType ? (<Button
                                             style={buttonStyle}
                                             variant='contained'
                                             onClick={() => {
@@ -330,7 +459,7 @@ function Profile2({ userForTesting, BackToTopButton, name, headerMountIn, conten
                         titleTypographyProps={{ variant: 'h5', style: { color: 'rgb(146, 144, 144)' } }}
                         subheaderTypographyProps={{ variant: 'subtitle1', style: { color: 'rgb(146, 144, 144)' } }}
                     /> */}
-                </Slide>
+                </Slide >
 
 
 

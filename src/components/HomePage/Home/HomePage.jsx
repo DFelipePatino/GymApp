@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { getDefault, getMetodo1, getMetodo2, getMetodo3, getMetodo4, getMetodo5, getMetodo6, emptyState, getProgresoActual, getMethods, getBanner, getCategories } from '../../../redux/actions';
+import { getDefault, getMetodo1, getMetodo2, getMetodo3, getMetodo4, getMetodo5, getMetodo6, emptyState, getProgresoActual, getMethods, getBanner, getCategories, getCardio, getEstiramientos } from '../../../redux/actions';
 import HeaderNav from '../../HeaderNav/HeaderNav';
 import NavBar from '../NavBar/NavBar';
 import Banner from '../Banner/banner';
@@ -131,6 +131,8 @@ function HomePage({ BackToTopButton, headerLoad, bannerLoad, filterLoad, setHead
         dispatch(getMethods());
         dispatch(getBanner());
         dispatch(getCategories());
+        dispatch(getCardio());
+        dispatch(getEstiramientos());
 
         // localStorage.removeItem('entrenamientoSeleccionado');
         // localStorage.removeItem('CardIndex');
@@ -422,19 +424,9 @@ function HomePage({ BackToTopButton, headerLoad, bannerLoad, filterLoad, setHead
 
                     <br />
 
-                    {/* <h3>Cardio</h3> */}
-
-                    {/* <Filter2
-setInOutStatus1={setInOutStatus1}
-setInOutStatus2={setInOutStatus2}
-setInOutStatus3={setInOutStatus3}
-setInOutStatus4={setInOutStatus4}
-setInOutStatus5={setInOutStatus5}
-ref={filterRef2}
-/> */}
-
-
-                    {/* <Test2
+                    <h3>Cardio</h3> 
+{/* 
+                    <Filter2
                         setInOutStatus1={setInOutStatus1}
                         setInOutStatus2={setInOutStatus2}
                         setInOutStatus3={setInOutStatus3}
@@ -442,6 +434,16 @@ ref={filterRef2}
                         setInOutStatus5={setInOutStatus5}
                         ref={filterRef2}
                     /> */}
+
+
+                    <Test2
+                        setInOutStatus1={setInOutStatus1}
+                        setInOutStatus2={setInOutStatus2}
+                        setInOutStatus3={setInOutStatus3}
+                        setInOutStatus4={setInOutStatus4}
+                        setInOutStatus5={setInOutStatus5}
+                        ref={filterRef2}
+                    />
 
                     {/* <Test5
                         favs={favs}
@@ -462,10 +464,10 @@ ref={filterRef2}
                         : null} */}
 
 
-                    {/* {inOutStatus2 ?
+                    {inOutStatus2 ?
                         <Cards2 inOutStatus2={inOutStatus2} setHeaderLoad={setHeaderLoad} setBannerload={setBannerload} setFilterLoad={setFilterLoad} />
 
-                        : null} */}
+                        : null}
 
 
                     <br />

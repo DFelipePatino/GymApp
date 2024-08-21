@@ -13,40 +13,6 @@ function Banner() {
     const dispatch = useDispatch();
     const [items, setItems] = useState([]);
     const allBanners = useSelector(state => state.banner);
-    // console.log(allBanners, "allBanners in Banner.jsx");
-
-    // const idbanner = allBanners?.map((item) => (
-    //     item.multimedia[0].id
-    // ));
-    // console.log(idbanner, "idbanner in Banner.jsx");
-
-    // useEffect(() => {
-    //     const generateItems = async () => {
-    //         const itemsPromises = allBanners?.map(async (item) => ({
-    //             image: await dispatch(getImageObject(item.multimedia[0].id)),
-    //             link: item.enlace,
-    //         })) || [];
-    //         console.log(itemsPromises, "itemsPromises in Banner.jsx");
-
-    //         const items = await Promise.all(itemsPromises);
-    //         setItems(items);
-    //     };
-
-    //     generateItems();
-    // }, [allBanners, dispatch]);
-
-    // function Item({ item }) {
-    //     return (
-    //         <Paper className="paper">
-    //             <Link to={item.link} target="_blank">
-    //                 <Image
-    //                     id={item.image.id}
-    //                     width='110%'
-    //                 />
-    //             </Link>
-    //         </Paper>
-    //     );
-    // }
 
     return (
         <Container style={bannerContainerStyles}>
@@ -63,8 +29,6 @@ function Banner() {
                 navButtonsProps={navButtonsProps1}
                 navButtonsWrapperProps={navButtonsWrapperProps1}
             >
-                {/* {items.map((item, i) => <Item key={i} item={item} />)}
-                 */}
                 {allBanners.map((item, i) => (
                     <Paper className="paper" key={i}>
                         <Link to={item.enlace} target="_blank">

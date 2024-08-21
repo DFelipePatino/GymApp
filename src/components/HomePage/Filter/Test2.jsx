@@ -1,22 +1,32 @@
 import React, { useState, forwardRef, useRef, useImperativeHandle } from "react";
 import { useDispatch, useSelector } from 'react-redux';
-import { getMetodo1, setMetodoID } from '../../../redux/actions';
+import { getCardio, getMetodo1, setMetodoID } from '../../../redux/actions';
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { Button } from "@mui/material";
+import { Button, Paper } from "@mui/material";
+import Image from "../../Multimedia/Image"
+import { Link } from "react-router-dom";
+import {useNavigate} from 'react-router-dom';
 
 
 const Test2 = forwardRef(({ setInOutStatus1, setInOutStatus2, setInOutStatus3, setInOutStatus4, setInOutStatus5 }, ref) => {
 
     const localRef = useRef(null);
     const dispatch = useDispatch();
-    const results = useSelector((state) => state.results);
+    const navigate = useNavigate();
 
-    const handleClick = (id) => {
-        localStorage.setItem("category", "Cardio")
+    // dispatch(getCardio());
+
+    const results = useSelector((state) => state.cardio);
+    console.log(results, "results?");
+    
+
+    const handleClick = (cardioEstiramiento) => {
+        setTimeout(() => navigate(`/playerCE`, {state: {cardioEstiramiento:cardioEstiramiento}}), 200);
+
         // const metodoIndex = index;
-        const idToFind = id;
+       /* const idToFind = id;
 
         setInOutStatus1(false);
         setInOutStatus2(false);
@@ -36,7 +46,7 @@ const Test2 = forwardRef(({ setInOutStatus1, setInOutStatus2, setInOutStatus3, s
                 const yCoordinate = localRef.current.getBoundingClientRect().top + window.pageYOffset;
                 window.scrollTo({ top: yCoordinate - 80, behavior: 'smooth' });
             }
-        }, 600);
+        }, 600);*/
 
     };
 
@@ -92,9 +102,8 @@ const Test2 = forwardRef(({ setInOutStatus1, setInOutStatus2, setInOutStatus3, s
         ]
     };
 
-    const URLImage = 'http://213.218.240.192:8082/onegym-back/api/multimedia/image/'
 
-    // const items = results?.data?.map((item, index) => ({
+    // const items = results??.data?.map((item, index) => ({
     //       icon: <img src={'public/DavidB&W.png'} alt="David" style={{ objectFit: 'cover', width: '100%', height: '100%' }} />,
     //     // click: loadFns.loadM1,
     //     name: item.nombre || 'Loading',
@@ -151,25 +160,32 @@ const Test2 = forwardRef(({ setInOutStatus1, setInOutStatus2, setInOutStatus3, s
 
             <Slider {...settings}
             >
+                    { results && Array.isArray(results) && results.map((item, index) => (
+                        <Button
+                            ref={localRef}
+                            key={index}
+                            style={{ width: '200px', height: '170px', padding: '0px', margin: '5px', color: 'white' }}
+                            color='error'
+                            onClick={() => {
+                                handleClick(item);
+                            }}  
+                        >
 
-                {items.map((item, index) => (
-                    <Button
-                        ref={localRef}
-                        key={index}
-                        style={{ width: '200px', height: '170px', padding: '0px', margin: '5px', color: 'white' }}
-                        color='error'
-                        onClick={() => {
-                            handleClick(item.id);
-                        }}
-                    >
-                        <div>{item.icon}
-                            {/* <p
-                                style={{ marginTop: '-20px', fontSize: '20' }}
-                            >{item.name}</p> */}
+                        <div>
+                            <Image
+                                id={ (item.multimedia && item.multimedia.find( (m) => m.type === 'IMAGE') )?.id}
+                                width='110%'
+                            />
+                            <p
+                                style={{ marginTop: '-20px', color: 'white', fontSize: '20' }}
+                            >{item.nombre}</p>
                         </div>
-                    </Button>
-                ))}
 
+                        </Button>
+
+                    )) }
+    
+                    
             </Slider>
         </div>
 

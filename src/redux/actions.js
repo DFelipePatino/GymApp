@@ -14,6 +14,7 @@ import image11 from '/Screenshot7.png'
 
 import {
     GET_CARDIO,
+    GET_ESTIRAMIENTOS,
     GET_CONTACTO,
     GET_PILATES,
     GET_CROSSFIT,
@@ -81,6 +82,42 @@ export const getBanner = () => {
 
         const data = await registro.json();
         dispatch({ type: GET_BANNER, payload: data });
+    }
+}
+
+export const getCardio = () => {
+    return async (dispatch) => {
+        const id_token = localStorage.getItem('id_token');
+        const registro = await fetch(`${baseUrl}/cardio`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': "Bearer " + id_token
+            },
+            body: null
+        });
+
+        const data = await registro.json();
+        console.log(data, 'data en el action Cardio');
+        
+        dispatch({ type: GET_CARDIO, payload: data });
+    }
+}
+
+export const getEstiramientos = () => {
+    return async (dispatch) => {
+        const id_token = localStorage.getItem('id_token');
+        const registro = await fetch(`${baseUrl}/estiramientos`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': "Bearer " + id_token
+            },
+            body: null
+        });
+
+        const data = await registro.json();
+        dispatch({ type: GET_ESTIRAMIENTOS, payload: data });
     }
 }
 

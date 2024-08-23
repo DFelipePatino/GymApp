@@ -22,6 +22,7 @@ import DoneIcon from '@mui/icons-material/Done';
 import PlaylistAddCheckCircleIcon from '@mui/icons-material/PlaylistAddCheckCircle';
 import PlaylistAddCheckCircleOutlinedIcon from '@mui/icons-material/PlaylistAddCheckCircleOutlined';
 import Tooltip from '@mui/material/Tooltip';
+import { baseUrl } from '../../../../redux/actions';
 
 const CssTextField = styled(TextField)({
     '& label': {
@@ -66,7 +67,7 @@ function ContentPlayerCE({ setPlayerLoad, playerLoad, setReload, usuario, cardio
     const [expandedDescription, setExpandedDescription] = useState(
         []
     );
-    
+
     const [cardio, setCardio] = useState(location.state.cardioEstiramiento);
 
     const user = useSelector((state) => state.user);
@@ -74,7 +75,7 @@ function ContentPlayerCE({ setPlayerLoad, playerLoad, setReload, usuario, cardio
 
     const currentProgressState = useSelector((state) => state.currentProgress);
 
-//    const playerRef = useRef(null);
+    //    const playerRef = useRef(null);
 
     const homeContent = localStorage.getItem("homeContent");
 
@@ -106,24 +107,17 @@ function ContentPlayerCE({ setPlayerLoad, playerLoad, setReload, usuario, cardio
         }
     };
 
-
     const getVideoLink = async (item) => {
 
-        console.log(item, "item");
-
         const idVideo = item?.multimedia?.find(i => i.type === 'VIDEO')?.id || null;
-
-        console.log(idVideo, "idVideo");
 
         if (!idVideo) {
             setUrlVideo('https://www.youtube.com/watch?v=9bZkp7q19f0');
             return;
         }
 
-        const blob = await fetchBlobWithAuth(`/multimedia/video/${idVideo}`);
-        const objectURL = URL.createObjectURL(blob);
-        console.log(objectURL, "objectURL");
-        setUrlVideo(objectURL);
+        const id_token = localStorage.getItem('id_token');
+        setUrlVideo(`${baseUrl}/multimedia/video/${idVideo}?token=${id_token}`);
     };
 
 
@@ -225,12 +219,12 @@ function ContentPlayerCE({ setPlayerLoad, playerLoad, setReload, usuario, cardio
                             }}
                         >
 
-    
+
                             <div
                                 style={{ display: 'flex', width: '100%' }}
                             >
                                 <br />
-                               
+
                                 <ExpandMore
                                     expand={expanded ? 'true' : undefined}
                                     onClick={handleExpandClick}
@@ -255,7 +249,7 @@ function ContentPlayerCE({ setPlayerLoad, playerLoad, setReload, usuario, cardio
                                     style={{ color: 'white' }}
                                 >{cardio?.nombre}
                                 </Typography>
-                               
+
                                 <Typography
                                     style={{ color: 'white' }}
                                     paragraph>
@@ -263,7 +257,7 @@ function ContentPlayerCE({ setPlayerLoad, playerLoad, setReload, usuario, cardio
                                     <br />
                                     {cardio?.descripcion}
                                 </Typography>
-                            
+
                             </CardContent>
                         </Collapse>
                     </Card>

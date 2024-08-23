@@ -9,10 +9,12 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getImageObject } from '../../../redux/actions';
 import Image from '../../Multimedia/Image';
 
-function Banner() {
+function Banner({ setInfoPremium }) {
     const dispatch = useDispatch();
     const [items, setItems] = useState([]);
     const allBanners = useSelector(state => state.banner);
+    console.log(allBanners, "allBanners in Banner.jsx");
+
 
     return (
         <Container style={bannerContainerStyles}>
@@ -31,12 +33,23 @@ function Banner() {
             >
                 {allBanners.map((item, i) => (
                     <Paper className="paper" key={i}>
-                        <Link to={item.enlace} target="_blank">
-                            <Image
-                                id={item.multimedia[0].id}
-                                width='110%'
-                            />
-                        </Link>
+                        {item.enlace === "Premium" ? (
+                            <Link to={'/profile2'}
+                                onClick={() => setInfoPremium(true)}
+                            >
+                                <Image
+                                    id={item.multimedia[0]?.id}
+                                    width='110%'
+                                />
+                            </Link>
+                        ) : (
+                            <Link to={item.enlace} target="_blank">
+                                <Image
+                                    id={item.multimedia[0]?.id}
+                                    width='110%'
+                                />
+                            </Link>
+                        )}
                     </Paper>
                 ))}
             </Carousel>

@@ -1,29 +1,27 @@
-import React, { useState, forwardRef, useRef, useImperativeHandle } from "react";
+import React, { useState, useEffect, forwardRef, useRef, useImperativeHandle } from "react";
 import { useDispatch, useSelector } from 'react-redux';
-import { getMetodo1, setMetodoID, removeFav } from '../../../redux/actions';
-import { useEffect } from "react";
+import { getMetodo1, setMetodoID, addFav } from '../../../redux/actions';
+import IconButton from '@mui/material/IconButton'; // Adjust the import path based on your UI library
+import Icon from '@mui/material/Icon';
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import HeartBrokenIcon from '@mui/icons-material/HeartBroken';
-import { Button, Icon, IconButton } from "@mui/material";
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import { Button } from "@mui/material";
+import Image from '../../Multimedia/Image';
 
-
-const Test5 = forwardRef(({ setInOutStatus1, setInOutStatus2, setInOutStatus3, setInOutStatus4, setInOutStatus5, favs }, ref) => {
-
+const Seleccionado = forwardRef(({ setInOutStatus1, setInOutStatus2, setInOutStatus3, setInOutStatus4, setInOutStatus5, usuario }, ref) => {
     const localRef = useRef(null);
     const dispatch = useDispatch();
-
     const results = useSelector((state) => state.results);
-    // console.log(results, "results in test5");
-    const favsToShow = results?.data?.filter((item) => favs.includes(item.id));
+    console.log(results, "results in Seleccionado.jsx");
+
+    console.log(usuario, "usuario in Seleccionado.jsx");
+
 
     const handleClick = (id) => {
-        localStorage.setItem("category", "Tu Seleccion")
+        localStorage.setItem("category", "Todos")
         localStorage.removeItem("lugar")
-        // const metodoIndex = index;
-        const idToFind = id;
-        // dispatch(setMetodoID(metodoIndex));
 
         setInOutStatus1(false);
         setInOutStatus2(false);
@@ -31,13 +29,12 @@ const Test5 = forwardRef(({ setInOutStatus1, setInOutStatus2, setInOutStatus3, s
         setInOutStatus4(false);
         setInOutStatus5(false);
 
-        if (idToFind) {
+        if (id) {
             setTimeout(() => {
-                dispatch(getMetodo1(idToFind));
-                setInOutStatus5(true);
+                dispatch(getMetodo1(id)); // lo que ejecuta ese componente
+                setInOutStatus1(true);
             }, 500);
         }
-
 
         setTimeout(() => {
             if (localRef.current) {
@@ -46,15 +43,11 @@ const Test5 = forwardRef(({ setInOutStatus1, setInOutStatus2, setInOutStatus3, s
                 window.scrollTo({ top: yCoordinate - 100, behavior: 'smooth' });
             }
         }, 600);
-
     };
 
     useImperativeHandle(ref, () => ({
         scrollToComponent: handleClick,
     }));
-
-    const slidesToShow = Math.min(4, favs.length) || 1;
-    // parece que esto esta rompiendo, mejor dejarlo asi!
 
     const settings = {
         className: "center",
@@ -93,6 +86,7 @@ const Test5 = forwardRef(({ setInOutStatus1, setInOutStatus2, setInOutStatus3, s
                     pauseOnHover: true,
                 }
             },
+
             {
                 breakpoint: 480,
                 settings: {
@@ -100,54 +94,53 @@ const Test5 = forwardRef(({ setInOutStatus1, setInOutStatus2, setInOutStatus3, s
                     slidesToScroll: 1,
                     pauseOnHover: true,
                 }
-            }
+            },
+
+            {
+                breakpoint: 380,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                    pauseOnHover: true,
+                    centerPadding: "110px",
+                }
+            },
+
         ]
     };
 
-    // const URLImage = 'http://213.218.240.192:8082/onegym-back/api/multimedia/image/'
 
+    let itemGenero = [];
 
-    // const items = results?.data?.map((item, index) => ({
-    //     icon: <img src={'public/DavidB&W.png'} alt="David" style={{ objectFit: 'cover', width: '100%', height: '100%' }} />,
-    //     // click: loadFns.loadM1,
-    //     name: item.nombre || 'Loading',
-    //     id: item.id,
-    // })) || [{
-    //     // click: loadFns.loadM1(0),
-    //     name: 'Loading',
-    //     id: 1,
-    // }];
+    if (results?.length > 0) {
+        itemGenero = results?.filter((each) => each.geneo === usuario.genero ? each : null)
+    }
 
-    // const URLImage = 'http://213.218.240.192:8082/onegym-back/api/multimedia/image/'
-    const URLImage = 'http://localhost:8082/onegym-back/api/multimedia/image/'
+    let selectedItems = [];
 
-    const items = favsToShow?.map((item, index) => ({
-        icon: <img src={URLImage + (item.multimedia && item.multimedia.length > 0 ? item.multimedia.filter((i) => i.type === 'IMAGE')[0].id : 1)} alt="David"
-            style={{ width: '60%' }}
-        />,
-        // click: loadFns.loadM1,
-        name: item.nombre || 'pepe',
-        id: item.id,
-    }))
-        || [{
-            // click: loadFns.loadM1(0),
-            name: 'Loading',
-            id: 1,
-        }];
+    if (itemGenero?.length > 0) {
+        selectedItems = itemGenero.filter((each) =>
+            each.categorias.some((categoria) =>
+                usuario?.categorias.some(
+                    (userCategoria) => categoria.nombre === userCategoria.nombre
+                )
+            )
+        );
+    }
 
     const handleClick2 = (item) => {
-        dispatch(removeFav(item));
+        dispatch(addFav(item));
     }
 
     return (
         <div className="slider-container">
-
             <Slider {...settings}>
-
-                {items.map((item, index) => (
-                    <div key={index} style={{ width: '200px', height: '170px', padding: '0px', margin: '5px' }}>
-
-                        <IconButton
+                {selectedItems.map((item, index) => (
+                    <div key={index}>
+                        <div style={{ margin: 10 }}>
+                            {item.nombre || 'Loading'}
+                        </div>
+                        {/* <IconButton
                             className="favButton"
                             sx={{ position: 'absolute', zIndex: 2 }}
                             aria-label='favorite'
@@ -157,10 +150,9 @@ const Test5 = forwardRef(({ setInOutStatus1, setInOutStatus2, setInOutStatus3, s
                             }}
                         >
                             <Icon>
-                                <HeartBrokenIcon />
+                                <FavoriteBorderIcon />
                             </Icon>
-                        </IconButton>
-
+                        </IconButton> */}
                         <Button
                             ref={localRef}
                             style={{ width: '200px', height: '170px', padding: '0px', margin: '5px', color: 'white' }}
@@ -169,17 +161,16 @@ const Test5 = forwardRef(({ setInOutStatus1, setInOutStatus2, setInOutStatus3, s
                                 handleClick(item.id);
                             }}
                         >
-                            <div>{item.icon}
-                                {/* <p>{item.name}</p> */}
-
+                            <div>
+                                <Image id={item.multimedia?.length > 0
+                                    && item.multimedia[0]?.type === 'IMAGE' ? item.multimedia[0].id : 1} width='69%' />
                             </div>
                         </Button>
                     </div>
                 ))}
-            </Slider >
-        </div >
-
+            </Slider>
+        </div>
     );
 });
 
-export default Test5;
+export default Seleccionado;

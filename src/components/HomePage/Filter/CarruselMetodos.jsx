@@ -10,10 +10,14 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { Button } from "@mui/material";
 import Image from '../../Multimedia/Image';
 
-const Test1 = forwardRef(({ setInOutStatus1, setInOutStatus2, setInOutStatus3, setInOutStatus4, setInOutStatus5 }, ref) => {
+const CarruselMetodos = forwardRef(({ setInOutStatus1, setInOutStatus2, setInOutStatus3, setInOutStatus4, setInOutStatus5, usuario }, ref) => {
     const localRef = useRef(null);
     const dispatch = useDispatch();
     const results = useSelector((state) => state.results);
+    console.log(results, "results in CarruselMetodos.jsx");
+
+    console.log(usuario, "usuario in CarruselMetodos.jsx");
+
 
     const handleClick = (id) => {
         localStorage.setItem("category", "Todos")
@@ -27,7 +31,7 @@ const Test1 = forwardRef(({ setInOutStatus1, setInOutStatus2, setInOutStatus3, s
 
         if (id) {
             setTimeout(() => {
-                dispatch(getMetodo1(id));
+                dispatch(getMetodo1(id)); // lo que ejecuta ese componente
                 setInOutStatus1(true);
             }, 500);
         }
@@ -82,6 +86,7 @@ const Test1 = forwardRef(({ setInOutStatus1, setInOutStatus2, setInOutStatus3, s
                     pauseOnHover: true,
                 }
             },
+
             {
                 breakpoint: 480,
                 settings: {
@@ -89,7 +94,18 @@ const Test1 = forwardRef(({ setInOutStatus1, setInOutStatus2, setInOutStatus3, s
                     slidesToScroll: 1,
                     pauseOnHover: true,
                 }
-            }
+            },
+
+            {
+                breakpoint: 380,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                    pauseOnHover: true,
+                    centerPadding: "110px",
+                }
+            },
+
         ]
     };
 
@@ -97,7 +113,7 @@ const Test1 = forwardRef(({ setInOutStatus1, setInOutStatus2, setInOutStatus3, s
     let itemGenero = [];
 
     if (results?.length > 0) {
-        itemGenero = results?.filter((each) => each.geneo === 'HOMBRE' ? each : null)
+        itemGenero = results?.filter((each) => each.geneo === usuario.genero ? each : null)
     }
 
     const handleClick2 = (item) => {
@@ -145,4 +161,4 @@ const Test1 = forwardRef(({ setInOutStatus1, setInOutStatus2, setInOutStatus3, s
     );
 });
 
-export default Test1;
+export default CarruselMetodos;

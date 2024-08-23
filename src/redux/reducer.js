@@ -1,5 +1,6 @@
 import {
     GET_CARDIO,
+    GET_METODO,
     GET_ESTIRAMIENTOS,
     GET_CONTACTO,
     GET_PILATES,
@@ -23,7 +24,8 @@ import {
 } from "./action-types";
 
 const initialState = {
-    results: {},
+    results: [],
+    metodoSelected: {},
     resultsFiltered: {},
     cardio: {},
     estiramientos: {},
@@ -68,6 +70,12 @@ const reducer = (state = initialState, action) => {
                 results: action.payload,
             }
 
+        case GET_METODO:
+            return {
+                ...state,
+                metodoSelected: action.payload,
+            }
+
         case GET_BANNER:
             return {
                 ...state,
@@ -98,7 +106,7 @@ const reducer = (state = initialState, action) => {
                 cardio: action.payload,
             }
 
-        case  GET_ESTIRAMIENTOS:
+        case GET_ESTIRAMIENTOS:
             return {
                 ...state,
                 estiramientos: action.payload,

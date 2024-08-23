@@ -4,7 +4,8 @@ import { useEffect } from 'react';
 import { useNavigate, useLocation, useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import './contentPlayer.css';
-import { Button, Card, CardActions, CardContent, CardHeader, Collapse, Divider, Fade, Grid, Grow, IconButton, LinearProgress, Typography, TextField } from '@mui/material';
+import { Button, Card, CardActions, CardContent, CardHeader, Collapse, Divider, Fade, Grid, Grow, IconButton, Typography, TextField } from '@mui/material';
+import LinearProgress from '@mui/joy/LinearProgress';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import ReactPlayer from 'react-player'
@@ -22,6 +23,7 @@ import DoneIcon from '@mui/icons-material/Done';
 import PlaylistAddCheckCircleIcon from '@mui/icons-material/PlaylistAddCheckCircle';
 import PlaylistAddCheckCircleOutlinedIcon from '@mui/icons-material/PlaylistAddCheckCircleOutlined';
 import Tooltip from '@mui/material/Tooltip';
+import { baseUrl } from '../../../../redux/actions';
 
 const CssTextField = styled(TextField)({
     '& label': {
@@ -66,6 +68,8 @@ function ContentPlayer({ setPlayerLoad, playerLoad, setReload, usuario }) {
     const [urlVideo, setUrlVideo] = useState('');
 
     const [expanded, setExpanded] = React.useState(true);
+    const [isPlaying, setIsPlaying] = useState(false);
+    console.log("isPlaying", isPlaying);
 
     const [expandedDescription, setExpandedDescription] = useState(
         []
@@ -82,12 +86,25 @@ function ContentPlayer({ setPlayerLoad, playerLoad, setReload, usuario }) {
 
     const homeContent = localStorage.getItem("homeContent");
 
-    const URLVideo = 'http://213.218.240.192:8082/onegym-back/api/multimedia/video/';
-
 
     useEffect(async () => {
 
-        dispatch(getProgresoActual());
+        await getProgresoActual();
+
+        if (currentProgressState.abandonada || currentProgressState.terminada) {
+            Swal.fire({
+                title: 'No hay un entrenamiento activo',
+                icon: 'warning',
+                showCancelButton: false,
+                confirmButtonColor: 'rgb(0, 128, 0)',
+                confirmButtonText: '¡Entendido!'
+            })
+                .then(() => {
+                    navigate('/home');
+                });
+        }
+
+
         try {
             const auxEntrenamiento = await getEntrenamiento(currentEntrenamientoId);
             setCurrentEntrenamiento(auxEntrenamiento);
@@ -104,6 +121,11 @@ function ContentPlayer({ setPlayerLoad, playerLoad, setReload, usuario }) {
             console.log("Error trayendo entrenamiento:", e);
             //navigate("/home");
         }
+
+        //setTimeout(() => {
+        const newProgress = { ...currentProgressState };
+        setCurrentProgressState2(newProgress);
+        // }, 3000);
 
 
 
@@ -138,21 +160,26 @@ function ContentPlayer({ setPlayerLoad, playerLoad, setReload, usuario }) {
 
     const handlePesoChange = (e, index, iPeso, totalPesos) => {
         console.log("handlePesoChange", e.target.value, index, iPeso, totalPesos);
+
+        /*if (!e.target.value || e.target.value === '') {
+            return;
+        }*/
         const newProgress = { ...currentProgressState };
         let pesoAtual = newProgress['pesoRutina' + index] || '';
 
         let pesosRutina = pesoAtual.split('-');
+        console.log(pesoAtual);
+        console.log(iPeso);
 
-        for(let i =0; i < totalPesos; i++) {
-            if(pesosRutina.length < i) {
+        for (let i = 0; i < totalPesos; i++) {
+            if (pesosRutina.length <= i) {
                 pesosRutina.push('0');
             }
         }
 
-
         pesosRutina[iPeso] = e.target.value;
         console.log(pesosRutina.join('-'));
-        newProgress['pesoRutina' + index] = pesosRutina.join('-');  
+        newProgress['pesoRutina' + index] = pesosRutina.join('-');
         console.log("handlePesoChange", newProgress);
         setCurrentProgressState2(newProgress); // Correctly update the state
         // updateCurrentProgress(newProgress); // Uncomment if needed
@@ -180,6 +207,10 @@ function ContentPlayer({ setPlayerLoad, playerLoad, setReload, usuario }) {
         }
         newExpandedDescription[index] = !newExpanded;
         setExpandedDescription(newExpandedDescription);
+
+        dispatch(getProgresoActual());
+        const newProgress = { ...currentProgressState };
+        setCurrentProgressState2(newProgress);
     };
 
     const buttonStyle = {
@@ -221,11 +252,19 @@ function ContentPlayer({ setPlayerLoad, playerLoad, setReload, usuario }) {
                     showCancelButton: false,
                     confirmButtonColor: 'rgb(0, 128, 0)',
                     confirmButtonText: '¡Entendido!'
-                });
-                if (progressNuevo.abandonada || progressNuevo.terminada) {
-                    navigate('/home');
-                    setReload(true);
-                }
+                })
+                    .then(async (response) => {
+                        if (response.isConfirmed) {
+                            setReload(true)
+                            if (progressNuevo.abandonada || progressNuevo.terminada) {
+                                navigate('/home');
+
+                            } else {
+                                handleExpandClickRutina(null);
+                            }
+                        }
+                    });
+
             }
         }
         catch (e) {
@@ -249,16 +288,19 @@ function ContentPlayer({ setPlayerLoad, playerLoad, setReload, usuario }) {
 
 
     function loadRutinas() {
-        return currentEntrenamiento?.rutinas?.map((rutina, index) => (
+        return currentEntrenamiento?.rutinas?.sort((a, b) => {
+            return a.orden - b.orden;
+        }).map((rutina, index) => (
             <div key={index}>
                 <Button
                     variant="contained"
                     style={{ backgroundColor: 'rgb(159, 28, 23)', color: 'white', fontWeight: 'bold', margin: '4px' }}
                     onClick={() => {
-                        // Assuming seekTo is defined elsewhere
-                        seekTo(rutina.segundoInicial);
                         handleExpandClickRutina(index);
-                        console.log(index, 'index');
+                        setIsPlaying(true);
+                        if (expandedDescription.every(value => !value)) {
+                            seekTo(rutina.segundoInicial);
+                        }
                     }}
                 >
                     <KeyboardArrowRightIcon
@@ -266,6 +308,11 @@ function ContentPlayer({ setPlayerLoad, playerLoad, setReload, usuario }) {
                     />
                     {rutina.nombre}
                 </Button>
+                <Fade in={expandedDescription[index] && fadeLoad} timeout={600}>
+                    <Box sx={{ width: '100%' }}>
+                        <LinearProgress size="sm" color="danger" thickness={1} variant="solid" />
+                    </Box>
+                </Fade>
                 {rutina?.nombre && (
                     <Collapse in={expandedDescription[index]} timeout="auto" unmountOnExit>
                         <CardContent>
@@ -302,57 +349,75 @@ function ContentPlayer({ setPlayerLoad, playerLoad, setReload, usuario }) {
                                                 style={{
                                                     color: 'white',
                                                     fontSize: '0.9rem',
+                                                    marginTop: '8px',
+                                                    marginBottom: '8px',
                                                 }}
                                             >
                                                 Peso anterior: {prevPeso} kg
                                             </Typography>
                                         </Grid>
 
-                                        <Grid item xs={12} sm={6}>
-                                            <CardActions>
 
-                                                <>
-                                                    {Array.from({ length: rutina.cantidadPesos }, (_, iPeso) => (
-                                                        
-                                                        <CssTextField
-                                                            style={{ color: 'white' }}
-                                                            type="number"
-                                                            name="pesos"
-                                                            label="Peso (kg)"
-                                                            // value={currentProgressState['pesoRutina' + (index + 1)]?.split('-').length > iPeso ? currentProgressState['pesoRutina' + (index + 1)]?.split('-')[iPeso] : ''}
-                                                            onChange={(e) => { handlePesoChange(e, index + 1, iPeso, rutina.cantidadPesos) }}
-                                                            helperText="Ingresa el peso que utilizaste"
-                                                            FormHelperTextProps={{ style: { color: 'white' } }}
-                                                        />
+                                        {Array.from({ length: rutina.cantidadPesos }, (_, iPeso) => (
 
-                                                    ))}
-                                                </>
-    
-                                                <IconButton aria-label="enviar"
-                                                    sx={{ color: 'rgb(0,128,0) ', marginBottom: '15px' }}
-                                                    onClick={() => {
-                                                        updateCurrentProgress(currentProgressState2);
-                                                        dispatch(getProgresoActual());
-                                                        // Swal.fire({
-                                                        //     title: 'Peso registrado',
-                                                        //     icon: 'success',
-                                                        //     showCancelButton: true,
-                                                        //     confirmButtonColor: 'rgb(0, 128, 0)',
-                                                        //     showCancelButton: false,
-                                                        //     confirmButtonText: '¡Entendido!'
-                                                        // })
-                                                    }}
-                                                >
-                                                    <PlaylistAddCheckCircleIcon />
-                                                    {/* <PlaylistAddCheckCircleOutlinedIcon /> */}
-                                                    <br />
-                                                    <Typography
-                                                        style={{ color: 'rgb(0,128,0)', fontSize: '0.8rem', marginBottom: '40px', marginLeft: '-35px' }}
+                                            <Grid item xs={12} sm={6}>
+
+                                                <CardActions>
+                                                    <CssTextField
+
+                                                        style={{ color: 'white', marginBottom: '8px', marginTop: '8px' }}
+                                                        type="number"
+                                                        name="pesos"
+                                                        label="Peso (kg)"
+                                                        //value={currentProgressState2['pesoRutina' + (index + 1)]?.split('-').length > iPeso ? currentProgressState2['pesoRutina' + (index + 1)]?.split('-')[iPeso] : ''}
+                                                        value={(currentProgressState2['pesoRutina' + (index + 1)]?.split('-') || [])[iPeso]}
+                                                        onChange={(e) => { handlePesoChange(e, index + 1, iPeso, rutina.cantidadPesos) }}
+                                                        helperText="Ingresa el peso que utilizaste"
+                                                        FormHelperTextProps={{ style: { color: 'white' } }}
+                                                    />
+
+                                                    <IconButton aria-label="enviar"
+                                                        sx={{ color: 'rgb(0,128,0) ', marginBottom: '15px', display: 'flex', justifyContent: 'center' }}
+                                                        onClick={() => {
+                                                            updateCurrentProgress(currentProgressState2);
+                                                            dispatch(getProgresoActual());
+                                                            const newProgress = { ...currentProgressState };
+                                                            setCurrentProgressState2(newProgress);
+                                                            // Swal.fire({
+                                                            //     title: 'Peso registrado',
+                                                            //     icon: 'success',
+                                                            //     showCancelButton: true,
+                                                            //     confirmButtonColor: 'rgb(0, 128, 0)',
+                                                            //     showCancelButton: false,
+                                                            //     confirmButtonText: '¡Entendido!'
+                                                            // })
+                                                        }}
                                                     >
-                                                        Registrar
-                                                    </Typography>
-                                                </IconButton>
-                                            </CardActions>
+                                                        <PlaylistAddCheckCircleIcon />
+                                                        {/* <PlaylistAddCheckCircleOutlinedIcon /> */}
+                                                        <br />
+                                                        <Typography
+                                                            style={{ color: 'rgb(0,128,0)', fontSize: '0.8rem', marginBottom: '40px', marginLeft: '-35px' }}
+                                                        >
+                                                            Registrar
+                                                        </Typography>
+                                                    </IconButton>
+                                                </CardActions>
+
+
+                                            </Grid>
+
+                                        ))}
+
+
+
+
+
+                                        <Grid item xs={12} sm={6}>
+
+
+
+
                                         </Grid>
                                     </Grid>
                                 </>
@@ -387,9 +452,8 @@ function ContentPlayer({ setPlayerLoad, playerLoad, setReload, usuario }) {
             return;
         }
 
-        const blob = await fetchBlobWithAuth(`/multimedia/video/${idVideo}`);
-        const objectURL = URL.createObjectURL(blob);
-        setUrlVideo(objectURL);
+        const id_token = localStorage.getItem('id_token');
+        setUrlVideo(`${baseUrl}/multimedia/video/${idVideo}?token=${id_token}`);
     };
 
 
@@ -397,7 +461,7 @@ function ContentPlayer({ setPlayerLoad, playerLoad, setReload, usuario }) {
         <div className="contenthome">
             <Fade in={fadeLoad} timeout={600}>
                 <Box sx={{ width: '100%' }}>
-                    <LinearProgress />
+                    <LinearProgress size="sm" color="danger" thickness={2} variant="solid" />
                 </Box>
             </Fade>
 
@@ -454,7 +518,9 @@ function ContentPlayer({ setPlayerLoad, playerLoad, setReload, usuario }) {
                                 paddingRight: '30%',
                             }}
                         />
-                        {urlVideo === '' ?
+                        {urlVideo === ''
+                            // || fadeLoad 
+                            ?
 
                             <div style={{
                                 width: '100%',
@@ -470,17 +536,31 @@ function ContentPlayer({ setPlayerLoad, playerLoad, setReload, usuario }) {
                             :
                             <ReactPlayer
                                 ref={playerRef}
-                                // url={URLVideo + ((currentEntrenamiento?.multimedia?.find(i => i.type === 'VIDEO')?.id) || (currentEntrenamiento?.multimedia?.find(i => i.type === 'VIDEO')?.id) || 'https://www.youtube.com/watch?v=9bZkp7q19f0')}
-                                // url={'https://www.youtube.com/watch?v=9bZkp7q19f0'}
                                 url={urlVideo}
                                 controls={true}
                                 width={'100%'}
                                 height={'350px'}
-                                // light={true}
+                                playing={isPlaying}
+                                light={!isPlaying && <img style={{ height: "100%", width: "auto" }} src='/videoPreview.jpg' alt='Thumbnail' />}
                                 style={{ background: 'linear-gradient(to bottom, rgb(0, 0, 0),rgb(159, 28, 23),rgb(0, 0, 0)' }}
+                                onBuffer={() => setfadeLoad(true)}
+                                onBufferEnd={() => setfadeLoad(false)}
+                                config={{
+                                    file: {
+                                        attributes: {
+                                            controlsList: 'nodownload'
+                                        }
+                                    }
+                                }}
                             />
 
                         }
+
+                        {/* <Fade in={fadeLoad} timeout={600}>
+                            <Box sx={{ width: '100%' }}>
+                                <LinearProgress size="sm" color="danger" thickness={1} variant="solid" />
+                            </Box>
+                        </Fade> */}
 
                         <CardActions
                             style={{

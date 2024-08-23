@@ -13,6 +13,7 @@ import image11 from '/Screenshot7.png'
 
 
 import {
+    GET_METODO,
     GET_CARDIO,
     GET_ESTIRAMIENTOS,
     GET_CONTACTO,
@@ -48,10 +49,9 @@ import {
 
 // const baseUrl = "http://localhost:8082/onegym-back/api";
 
-const baseUrl = "https://backdev.onetrainingteam.com/onegym-backtest/api";
+export const baseUrl = "https://backdev.onetrainingteam.com/onegym-backtest/api";
 
 export const getGoogle = async () => {
-    console.log('Executing getGoogle action');
     const id_token = localStorage.getItem('id_token');
     const response = await fetch(`${baseUrl}/users`, {
         method: 'POST',
@@ -63,8 +63,6 @@ export const getGoogle = async () => {
     });
 
     const data = await response.json();
-    console.log('Success getGoogle:', data);
-
     return data;
 };
 
@@ -98,8 +96,6 @@ export const getCardio = () => {
         });
 
         const data = await registro.json();
-        console.log(data, 'data en el action Cardio');
-        
         dispatch({ type: GET_CARDIO, payload: data });
     }
 }
@@ -136,7 +132,6 @@ export const getEntrenamiento = async (id) => {
 }
 
 export const getProgresoActual = () => {
-    console.log('Executing getProgresoActual action');
 
     return async (dispatch) => {
         const id_token = localStorage.getItem('id_token');
@@ -153,9 +148,7 @@ export const getProgresoActual = () => {
         });
 
         const data = await registro.json();
-        //localStorage.setItem('currentEntrenamiento', JSON.stringify(data));
-        console.log('Success getEntrenamientoActual:', data);
-        dispatch({ type: GET_PROGRESO_ACTUAL, payload: data });
+        dispatch({ type: GET_PROGRESO_ACTUAL, payload: data?.terminada || data?.abandonada ?  {} : data }); 
     }
 }
 
@@ -187,14 +180,11 @@ export const empezarEntrenamiento = async (entrenamientoID, currentEntrenamiento
     });
 
     const data = await response.json();
-    console.log('Success crear entrenamiento actual', data);
     return 0;
 };
 
 
 export const actualizarEntrenamiento = async (entrenamientoID, entrenamiento, currentEntrenamiento) => {
-
-    console.log('currentEntrenamiento:', currentEntrenamiento, entrenamientoID);
 
     if (!entrenamiento || !currentEntrenamiento.id) {
         return "No se puede actualizar un entrenamiento sin datos";
@@ -207,8 +197,6 @@ export const actualizarEntrenamiento = async (entrenamientoID, entrenamiento, cu
     if (currentEntrenamiento.entrenamientoId !== entrenamientoID) {
         return "Se esta intentando actualizar un entrenamiento distinto al actual";
     }
-
-    console.log('entrenamiento:', entrenamiento);
 
     const id_token = localStorage.getItem('id_token');
     const localUser = JSON.parse(localStorage.getItem('localUser'));
@@ -223,7 +211,6 @@ export const actualizarEntrenamiento = async (entrenamientoID, entrenamiento, cu
     });
 
     const data = await response.json();
-    console.log('Success actualizar entrenamiento actual', data);
     return 0;
 };
 
@@ -264,9 +251,7 @@ export const putUsuario = async (usuario) => {
             body: JSON.stringify(usuario)
         }
     );
-    console.log('registro:', registro);
     const data = await registro.json();
-    console.log('Success actrualizar:', data);
     //dispatch({ type: GET_CATEGORIES, payload: data });
 }
 
@@ -306,8 +291,6 @@ export const getCrdItem2View = (dia) => {
             // Check if entrenamientos and the dia property exist before trying to access rutinas
             if (resultsFiltered.entrenamientos && resultsFiltered.entrenamientos[dia]) {
                 const data = resultsFiltered.entrenamientos[dia].rutinas;
-                // console.log(data, "data 0 in action");
-
                 dispatch({ type: CRD_ITEM_2VIEW, payload: data });
             } else {
                 console.log("entrenamientos or dia property not found");
@@ -376,9 +359,8 @@ export const getMetodo1 = (idToFind) => {
         try {
             const { results } = getState();
 
-            const data = results?.data?.find(item => item.id === idToFind);
-
-            dispatch({ type: GET_CARDIO, payload: data });
+            const data = results?.find(item => item.id === idToFind);
+            dispatch({ type: GET_METODO, payload: data });
         } catch (error) {
             console.error(error);
         }
@@ -410,82 +392,6 @@ export const selectedEntrenamiento = (entrenamientoSeleccionado) => {
     }
 }
 
-
-export const getMetodo2 = () => {
-    return async (dispatch, getState) => {
-        try {
-            const { results } = getState();
-
-            const data = results.data[1];
-            // console.log(data, "data 1 in action");
-
-            dispatch({ type: GET_CARDIO, payload: data });
-        } catch (error) {
-            console.error(error);
-        }
-    }
-}
-
-export const getMetodo3 = () => {
-    return async (dispatch, getState) => {
-        try {
-            const { results } = getState();
-
-            const data = results.data[2];
-            // console.log(data, "data 2 in action");
-
-            dispatch({ type: GET_CARDIO, payload: data });
-        } catch (error) {
-            console.error(error);
-        }
-    }
-}
-
-export const getMetodo4 = () => {
-    return async (dispatch, getState) => {
-        try {
-            const { results } = getState();
-
-            const data = results.data[3];
-            // console.log(data, "data 3 in action");
-
-            dispatch({ type: GET_CARDIO, payload: data });
-        } catch (error) {
-            console.error(error);
-        }
-    }
-}
-
-export const getMetodo5 = () => {
-    return async (dispatch, getState) => {
-        try {
-            const { results } = getState();
-
-            const data = results.data[4];
-            // console.log(data, "data 4 in action");
-
-            dispatch({ type: GET_CARDIO, payload: data });
-        } catch (error) {
-            console.error(error);
-        }
-    }
-}
-
-export const getMetodo6 = () => {
-    return async (dispatch, getState) => {
-        try {
-            const { results } = getState();
-
-            const data = results.data[5];
-            // console.log(data, "data 5 in action");
-
-            dispatch({ type: GET_CARDIO, payload: data });
-        } catch (error) {
-            console.error(error);
-        }
-    }
-}
-
 export const getUser = (username) => {
     return (dispatch) => {
         const data = username;
@@ -496,7 +402,6 @@ export const getUser = (username) => {
 
 
 export const setHomeContent = (content) => {
-    // console.log(content, "content in action");
     return (dispatch) => {
         const data = content;
         dispatch({ type: SET_HOME_CONTENT, payload: data });

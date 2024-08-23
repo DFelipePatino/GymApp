@@ -67,8 +67,8 @@ export const infoCardsIconStyle = {
 
 
 export const buttonStyle = {
-    fontSize: '16px',
     background: 'rgb(159, 28, 23)',
+    fontSize: '16px',
     // margin: 'auto',
     paddingTop: '8px',
     paddingBottom: '10px',

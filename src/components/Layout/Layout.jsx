@@ -2,7 +2,7 @@ import React from 'react'
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Drawer, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
-import { getMetodo1, getMetodo2, getMetodo3, getMetodo4, getMetodo5, getMetodo6 } from '../../redux/actions';
+import { getMetodo1 } from '../../redux/actions';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
 import DirectionsBikeIcon from '@mui/icons-material/DirectionsBike';
@@ -10,6 +10,7 @@ import SelfImprovementIcon from '@mui/icons-material/SelfImprovement';
 import SportsGymnasticsIcon from '@mui/icons-material/SportsGymnastics';
 import SportsHandballIcon from '@mui/icons-material/SportsHandball';
 import SportsKabaddiIcon from '@mui/icons-material/SportsKabaddi';
+import WorkspacePremiumIcon from '@mui/icons-material/WorkspacePremium';
 import PropTypes from 'prop-types';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -37,7 +38,7 @@ import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 const drawerWidth = "50%";
 
 
-function Layout({ usuario, setPlayerLoad, setHeaderLoad, setBannerload, setFilterLoad, setHeaderMountIn, setContentMountIn, navigateAway, setNavigateAway, scrollToFilter1, scrollToFilter2, scrollToFilter3, scrollToFilter4, scrollToFilter5 }) {
+function Layout({ usuario, setPlayerLoad, setHeaderLoad, setBannerload, setFilterLoad, setHeaderMountIn, setContentMountIn, navigateAway, setNavigateAway, scrollToFilter1, scrollToFilter2, scrollToFilter3, scrollToFilter4, scrollToFilter5, setInfoPremium, infoPremium }) {
 
     const dispatch = useDispatch();
     const location = useLocation();
@@ -46,7 +47,7 @@ function Layout({ usuario, setPlayerLoad, setHeaderLoad, setBannerload, setFilte
     const resultsData = useSelector((state) => state.results.data);
     const currentIndex = useSelector((state) => state.rutinaID);
     const currentProgress = useSelector((state) => state.currentProgress);
-    console.log(currentProgress.entrenamientoId, 'currentProgress.entrenamientoId en layout');
+    console.log(currentProgress, 'currentProgress.entrenamientoId en layout');
 
     // console.log(resultsData, 'resultsData en layout');
 
@@ -138,6 +139,9 @@ function Layout({ usuario, setPlayerLoad, setHeaderLoad, setBannerload, setFilte
                 // scrollToFilter5();
                 // dispatch(getMetodo1(currentIndex));
                 break;
+            case 'Premium':
+                setInfoPremium(true)
+                break;
             default:
                 localStorage.removeItem("homeContent")
                 break;
@@ -179,23 +183,25 @@ function Layout({ usuario, setPlayerLoad, setHeaderLoad, setBannerload, setFilte
 
     const homeNavButtons = [
         {
-            text: 'Mi entrenamiento actual',
-            icon: <KeyboardArrowRightIcon
+            text: currentProgress?.entrenamientoId ? 'Mi entrenamiento actual' : null,
+            icon: currentProgress?.entrenamientoId ? <KeyboardArrowRightIcon
                 style={{ color: 'rgb(156, 28, 23)', cursor: 'pointer' }}
-            />,
-            fn: "Mi entrenamiento actual",
-            route: `/player/${currentProgress.entrenamientoId}`,
+            /> : null,
+            fn: currentProgress?.entrenamientoId ? "Mi entrenamiento actual" : null,
+            route: currentProgress?.entrenamientoId ? `/player/${currentProgress?.entrenamientoId}` : null,
             id: '1'
-        },
-        {
-            text: 'Tu Seleccion',
-            icon: <KeyboardArrowRightIcon
-                style={{ color: 'rgb(156, 28, 23)', cursor: 'pointer' }}
-            />,
-            fn: "Tu Seleccion",
-            route: '/home',
-            id: '2'
-        },
+        }
+
+        ,
+        // {
+        //     text: 'Mi Seleccion',
+        //     icon: <KeyboardArrowRightIcon
+        //         style={{ color: 'rgb(156, 28, 23)', cursor: 'pointer' }}
+        //     />,
+        //     fn: "Tu Seleccion",
+        //     route: '/home',
+        //     id: '2'
+        // },
         {
             text: 'Cardio',
             icon: <KeyboardArrowRightIcon
@@ -214,24 +220,24 @@ function Layout({ usuario, setPlayerLoad, setHeaderLoad, setBannerload, setFilte
             route: '/home',
             id: '4'
         },
-        {
-            text: 'Tips Alimentacion',
-            icon: <KeyboardArrowRightIcon
-                style={{ color: 'rgb(156, 28, 23)', cursor: 'pointer' }}
-            />,
-            fn: "Tips Alimentacion",
-            route: '/home',
-            id: '5'
-        },
-        {
-            text: 'Todos',
-            icon: <KeyboardArrowRightIcon
-                style={{ color: 'rgb(156, 28, 23)', cursor: 'pointer' }}
-            />,
-            fn: "Todos",
-            route: '/home',
-            id: '6'
-        },
+        // {
+        //     text: 'Tips Alimentacion',
+        //     icon: <KeyboardArrowRightIcon
+        //         style={{ color: 'rgb(156, 28, 23)', cursor: 'pointer' }}
+        //     />,
+        //     fn: "Tips Alimentacion",
+        //     route: '/home',
+        //     id: '5'
+        // },
+        // {
+        //     text: 'Todos',
+        //     icon: <KeyboardArrowRightIcon
+        //         style={{ color: 'rgb(156, 28, 23)', cursor: 'pointer' }}
+        //     />,
+        //     fn: "Todos",
+        //     route: '/home',
+        //     id: '6'
+        // },
     ];
 
     let drawer;
@@ -301,15 +307,24 @@ function Layout({ usuario, setPlayerLoad, setHeaderLoad, setBannerload, setFilte
 
                             { type: 'divider', id: 'divider-2' },
 
-                            {
-                                text: 'Chat', icon: <ChatIcon
-                                    style={iconStyles2}
-                                />, route: '/chat', id: '8'
-                            },
+                            // {
+                            //     text: 'Chat', icon: <ChatIcon
+                            //         style={iconStyles2}
+                            //     />, route: '/chat', id: '8'
+                            // },
                             {
                                 text: 'Log Out', icon: <LogoutIcon
                                     style={iconStyles}
                                 />, route: '/', shouldClearLocal: true, id: '9'
+                            },
+
+                            { type: 'divider', id: 'divider-3' },
+                            { type: 'divider', id: 'divider-4' },
+
+                            {
+                                text: 'Premium', icon: <WorkspacePremiumIcon
+                                    style={iconStyles}
+                                />, route: '/profile2', shouldClearLocal: false, id: '10', fn: 'Premium'
                             }
 
                         ].map((item, index) => (
@@ -455,7 +470,7 @@ function Layout({ usuario, setPlayerLoad, setHeaderLoad, setBannerload, setFilte
                         localStorage.removeItem("homeContent");
 
 
-                        if (location.pathname.includes('/player/')) {
+                        if (location.pathname.includes('/player')) {
                             setPlayerLoad(false);
                             setTimeout(() => {
                                 navigate("/home");
@@ -515,6 +530,7 @@ function Layout({ usuario, setPlayerLoad, setHeaderLoad, setBannerload, setFilte
                             window.scrollTo({ top: 0, behavior: 'smooth' });
 
                             if (location.pathname === '/home') {
+                                setInfoPremium(false);
                                 setNavigateAway(false);
                                 setTimeout(() => {
                                     setHeaderLoad(false);
@@ -530,7 +546,20 @@ function Layout({ usuario, setPlayerLoad, setHeaderLoad, setBannerload, setFilte
                                 }, 600);
                             }
 
-                            if (location.pathname.includes('/player/')) {
+                            if (location.pathname === '/profile2' && infoPremium) {
+                                window.scroll({ top: 0, behavior: 'smooth' });
+                                // setTimeout(() => {
+                                setHeaderMountIn(false);
+                                // }, 200);
+                                setTimeout(() => {
+                                    setInfoPremium(false)
+                                }, 400);
+                                setTimeout(() => {
+                                    setHeaderMountIn(true)
+                                }, 800);
+                            }
+
+                            if (location.pathname.includes('/player')) {
                                 setNavigateAway(false);
                                 setPlayerLoad(false);
                                 setTimeout(() => {

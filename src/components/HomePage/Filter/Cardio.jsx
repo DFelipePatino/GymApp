@@ -7,10 +7,10 @@ import "slick-carousel/slick/slick-theme.css";
 import { Button, Paper } from "@mui/material";
 import Image from "../../Multimedia/Image"
 import { Link } from "react-router-dom";
-import {useNavigate} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 
-const Test2 = forwardRef(({ setInOutStatus1, setInOutStatus2, setInOutStatus3, setInOutStatus4, setInOutStatus5 }, ref) => {
+const Cardio = forwardRef(({ setInOutStatus1, setInOutStatus2, setInOutStatus3, setInOutStatus4, setInOutStatus5 }, ref) => {
 
     const localRef = useRef(null);
     const dispatch = useDispatch();
@@ -19,34 +19,34 @@ const Test2 = forwardRef(({ setInOutStatus1, setInOutStatus2, setInOutStatus3, s
     // dispatch(getCardio());
 
     const results = useSelector((state) => state.cardio);
-    console.log(results, "results?");
-    
+    console.log(results, "cardio");
+
 
     const handleClick = (cardioEstiramiento) => {
-        setTimeout(() => navigate(`/playerCE`, {state: {cardioEstiramiento:cardioEstiramiento}}), 200);
+        setTimeout(() => navigate(`/playerCE`, { state: { cardioEstiramiento: cardioEstiramiento } }), 200);
 
         // const metodoIndex = index;
-       /* const idToFind = id;
-
-        setInOutStatus1(false);
-        setInOutStatus2(false);
-        setInOutStatus3(false);
-        setInOutStatus4(false);
-        setInOutStatus5(false);
-
-        if (idToFind) {
-            setTimeout(() => {
-                dispatch(getMetodo1(idToFind));
-                setInOutStatus2(true);
-            }, 500);
-        }
-        setTimeout(() => {
-            if (localRef.current) {
-                localRef.current.scrollIntoView({ behavior: 'smooth' });
-                const yCoordinate = localRef.current.getBoundingClientRect().top + window.pageYOffset;
-                window.scrollTo({ top: yCoordinate - 80, behavior: 'smooth' });
-            }
-        }, 600);*/
+        /* const idToFind = id;
+ 
+         setInOutStatus1(false);
+         setInOutStatus2(false);
+         setInOutStatus3(false);
+         setInOutStatus4(false);
+         setInOutStatus5(false);
+ 
+         if (idToFind) {
+             setTimeout(() => {
+                 dispatch(getMetodo1(idToFind));
+                 setInOutStatus2(true);
+             }, 500);
+         }
+         setTimeout(() => {
+             if (localRef.current) {
+                 localRef.current.scrollIntoView({ behavior: 'smooth' });
+                 const yCoordinate = localRef.current.getBoundingClientRect().top + window.pageYOffset;
+                 window.scrollTo({ top: yCoordinate - 80, behavior: 'smooth' });
+             }
+         }, 600);*/
 
     };
 
@@ -160,36 +160,36 @@ const Test2 = forwardRef(({ setInOutStatus1, setInOutStatus2, setInOutStatus3, s
 
             <Slider {...settings}
             >
-                    { results && Array.isArray(results) && results.map((item, index) => (
-                        <Button
-                            ref={localRef}
-                            key={index}
-                            style={{ width: '200px', height: '170px', padding: '0px', margin: '5px', color: 'white' }}
-                            color='error'
-                            onClick={() => {
-                                handleClick(item);
-                            }}  
-                        >
+                {results && Array.isArray(results) && results.map((item, index) => (
+                    <Button
+                        ref={localRef}
+                        key={index}
+                        style={{ width: '200px', height: '170px', padding: '0px', margin: '5px', color: 'white' }}
+                        color='error'
+                        onClick={() => {
+                            handleClick(item);
+                        }}
+                    >
 
                         <div>
                             <Image
-                                id={ (item.multimedia && item.multimedia.find( (m) => m.type === 'IMAGE') )?.id}
+                                id={(item.multimedia && item.multimedia.find((m) => m.type === 'IMAGE'))?.id}
                                 width='110%'
                             />
-                            <p
-                                style={{ marginTop: '-20px', color: 'white', fontSize: '20' }}
-                            >{item.nombre}</p>
+                            {/* <p
+                                style={{ marginTop: '-20px', color: 'rgb(159, 28, 23)', fontSize: '20' }}
+                            >{item.nombre}</p> */}
                         </div>
 
-                        </Button>
+                    </Button>
 
-                    )) }
-    
-                    
+                ))}
+
+
             </Slider>
         </div>
 
     );
 });
 
-export default Test2;
+export default Cardio;

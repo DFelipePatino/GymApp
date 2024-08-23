@@ -16,6 +16,8 @@ import {
     FormControl,
     InputLabel
 } from '@mui/material';
+import ControlPointIcon from '@mui/icons-material/ControlPoint';
+import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import { useNavigate } from 'react-router-dom';
 import { putUsuario, getGoogle } from '../../redux/actions';
 import { Dropdown } from '@mui/base/Dropdown';
@@ -348,7 +350,14 @@ function ProfileEdit({ BackToTopButton, usuario, todasLasCategorias, setReload }
         categorias: usuario.categorias ? usuario.categorias : [],
         genero: usuario.genero,
         id: usuario.id,
-        talla: usuario.talla
+        talla: usuario.talla,
+        peso: usuario.peso,
+        patologias: usuario.patologias,
+        fracturas: usuario.fracturas,
+        cirugias: usuario.cirugias,
+        alergias: usuario.alergias,
+        frecuenciaEntrenamientoSemanal: usuario.frecuenciaEntrenamientoSemanal,
+        nivelExperiencia: usuario.nivelExperiencia
     })
 
     console.log(userEdited.talla, 'talla');
@@ -619,7 +628,10 @@ function ProfileEdit({ BackToTopButton, usuario, todasLasCategorias, setReload }
                                             >
 
                                                 <Grid item xs={12}>
+
+                                                    <ControlPointIcon sx={{ position: "absolute", color: "rgb(0, 128, 0)", top: "465px" }} />
                                                     <Menu>
+
                                                         {/* <InputLabel style={{ color: 'white' }} htmlFor="name-order-select">Mis objetivos</InputLabel>
                                                         <Select
                                                             sx={{
@@ -671,6 +683,7 @@ function ProfileEdit({ BackToTopButton, usuario, todasLasCategorias, setReload }
                                                     </Menu>
                                                 </Grid>
                                                 <Grid item xs={12}>
+                                                    <RemoveCircleOutlineIcon sx={{ position: "absolute", color: "rgb(159, 28, 23)", top: "555px" }} />
                                                     <Menu>
                                                         {/* <InputLabel style={{ color: 'white' }} htmlFor="name-order-select">Mis objetivos</InputLabel>
                                                         <Select
@@ -727,98 +740,170 @@ function ProfileEdit({ BackToTopButton, usuario, todasLasCategorias, setReload }
                                             </Grid>
 
                                             {(usuario.accountType === 'PREMIUM' || usuario.accountType === 'ADMIN') && (
-                                                <Grid container>
-                                                    <Grid container>
-                                                        <Grid item xs={12}>
-                                                            <CssTextField
-                                                                id="custom-css-outlined-input"
-                                                                fullWidth
-                                                                name="talla"
-                                                                label="Talla cm"
-                                                                value={userEdited.talla}
-                                                                onChange={handleUsuarioEditedChange}
-                                                            />
-                                                        </Grid>
+
+                                                <Grid container spacing={1} >
+
+                                                    <Grid item xs={12}>
+                                                        <CssTextField
+                                                            id="custom-css-outlined-input"
+                                                            fullWidth
+                                                            name="talla"
+                                                            label="Talla cm"
+                                                            value={userEdited.talla ? userEdited.talla : ''}
+                                                            onChange={handleUsuarioEditedChange}
+                                                        />
+                                                    </Grid>
+                                                    <Grid item xs={12}>
+                                                        <CssTextField
+                                                            id="custom-css-outlined-input"
+                                                            fullWidth
+                                                            name="peso"
+                                                            label="Peso km"
+                                                            value={userEdited.peso ? userEdited.peso : ''}
+                                                            onChange={handleUsuarioEditedChange}
+                                                        />
+                                                    </Grid>
+                                                    <Grid item xs={12}>
+                                                        <CssTextField
+                                                            id="custom-css-outlined-input"
+                                                            fullWidth
+                                                            name="patologias"
+                                                            label="Patologias"
+                                                            value={userEdited.patologias ? userEdited.patologias : ''}
+                                                            onChange={handleUsuarioEditedChange}
+                                                        />
+                                                    </Grid>
+                                                    <Grid item xs={12}>
+                                                        <CssTextField
+                                                            id="custom-css-outlined-input"
+                                                            fullWidth
+                                                            name="fracturas"
+                                                            label="Fracturas"
+                                                            value={userEdited.fracturas ? userEdited.fracturas : ''}
+                                                            onChange={handleUsuarioEditedChange}
+                                                        />
+                                                    </Grid>
+                                                    <Grid item xs={12}>
+                                                        <CssTextField
+                                                            id="custom-css-outlined-input"
+                                                            fullWidth
+                                                            name="cirugias"
+                                                            label="Cirugias"
+                                                            value={userEdited.cirugias ? userEdited.cirugias : ''}
+                                                            onChange={handleUsuarioEditedChange}
+                                                        />
+                                                    </Grid>
+                                                    <Grid item xs={12}>
+                                                        <CssTextField
+                                                            id="custom-css-outlined-input"
+                                                            fullWidth
+                                                            name="alergias"
+                                                            label="Alergias"
+                                                            value={userEdited.alergias ? userEdited.alergias : ''}
+                                                            onChange={handleUsuarioEditedChange}
+                                                        />
+                                                    </Grid>
+                                                    <Grid item xs={12}>
+                                                        <CssTextField
+                                                            id="custom-css-outlined-input"
+                                                            fullWidth
+                                                            name="frecuenciaEntrenamientoSemanal"
+                                                            label="Frecuencia"
+                                                            value={userEdited.frecuenciaEntrenamientoSemanal ? userEdited.frecuenciaEntrenamientoSemanal : ''}
+                                                            onChange={handleUsuarioEditedChange}
+                                                        />
+                                                    </Grid>
+                                                    <Grid item xs={12}>
+                                                        <CssTextField
+                                                            id="custom-css-outlined-input"
+                                                            fullWidth
+                                                            name="nivelExperiencia"
+                                                            label="Nivel Experiencia"
+                                                            value={userEdited.nivelExperiencia}
+                                                            onChange={handleUsuarioEditedChange}
+                                                        />
                                                     </Grid>
                                                 </Grid>
+
                                             )}
 
 
-                                    
-                                        <Grid container
-                                            spacing={2}
-                                        >
 
-                                            <Grid item
-                                                xs={12}
+                                            <Grid container
+                                                spacing={2}
                                             >
-                                                <Button
-                                                    fullWidth
-                                                    variant="contained"
-                                                    color="primary"
-                                                    type="submit"
-                                                    onClick={(e) => {
-                                                        console.log('Usuario editado', userEdited);
-                                                        e.preventDefault();
-                                                        Swal.fire({
-                                                            title: 'Estas seguro?',
-                                                            text: "Revisa tus cambios antes de guardarlos!",
-                                                            icon: 'warning',
-                                                            showCancelButton: true,
-                                                            confirmButtonColor: '#3085d6',
-                                                            cancelButtonColor: '#d33',
-                                                            confirmButtonText: 'Si, estoy seguro!',
-                                                            color: 'rgb(255, 255, 255)',
-                                                            background: "rgb(0,0,0)",
-                                                            backdrop: `rgba(159, 28, 23, 0.4)`
-                                                        }).then(async (result) => {
-                                                            if (result.isConfirmed) {
-                                                                try {
-                                                                    const response = await putUsuario(userEdited);
-                                                                    console.log('se envio');
-                                                                    Swal.fire({
-                                                                        title: 'Hecho!',
-                                                                        text: 'Tu perfil ha sido actualizado con exito!',
-                                                                        icon: 'success',
-                                                                        color: 'rgb(255, 255, 255)',
-                                                                        background: "rgb(0,0,0)",
-                                                                        backdrop: `rgba(144, 238, 144, 0.4)`
-                                                                    })
-                                                                        .finally(() => handleReloadAndNavigate());
+
+                                                <Grid item
+                                                    xs={12}
+                                                >
+                                                    <Button
+                                                        sx={{ marginTop: '10px' }}
+                                                        fullWidth
+                                                        variant="contained"
+                                                        color="primary"
+                                                        type="submit"
+                                                        onClick={(e) => {
+                                                            console.log('Usuario editado', userEdited);
+                                                            e.preventDefault();
+                                                            Swal.fire({
+                                                                title: 'Estas seguro?',
+                                                                text: "Revisa tus cambios antes de guardarlos!",
+                                                                icon: 'warning',
+                                                                showCancelButton: true,
+                                                                confirmButtonColor: '#3085d6',
+                                                                cancelButtonColor: '#d33',
+                                                                confirmButtonText: 'Si, estoy seguro!',
+                                                                color: 'rgb(255, 255, 255)',
+                                                                background: "rgb(0,0,0)",
+                                                                backdrop: `rgba(159, 28, 23, 0.4)`
+                                                            }).then(async (result) => {
+                                                                if (result.isConfirmed) {
+                                                                    try {
+                                                                        const response = await putUsuario(userEdited);
+                                                                        console.log('se envio');
+                                                                        Swal.fire({
+                                                                            title: 'Hecho!',
+                                                                            text: 'Tu perfil ha sido actualizado con exito!',
+                                                                            icon: 'success',
+                                                                            color: 'rgb(255, 255, 255)',
+                                                                            background: "rgb(0,0,0)",
+                                                                            backdrop: `rgba(144, 238, 144, 0.4)`
+                                                                        })
+                                                                            .finally(() => handleReloadAndNavigate());
 
 
-                                                                } catch (e) {
-                                                                    console.error('Error:', e);
+                                                                    } catch (e) {
+                                                                        console.error('Error:', e);
+                                                                        Swal.fire({
+                                                                            title: 'Error!',
+                                                                            text: 'Tu perfil no ha sido actualizado, intenta de nuevo!',
+                                                                            icon: 'error',
+                                                                            color: 'rgb(255, 255, 255)',
+                                                                            background: "rgb(0,0,0)",
+                                                                            backdrop: `rgba(159, 28, 23, 0.4)`
+                                                                        })
+                                                                    }
+                                                                }
+                                                                if (result.isDismissed) {
                                                                     Swal.fire({
-                                                                        title: 'Error!',
-                                                                        text: 'Tu perfil no ha sido actualizado, intenta de nuevo!',
-                                                                        icon: 'error',
+                                                                        title: 'Cancelado!',
+                                                                        text: 'Tus cambios no han sido guardados, continua con el proceso de actualizacion!',
+                                                                        icon: 'warning',
                                                                         color: 'rgb(255, 255, 255)',
                                                                         background: "rgb(0,0,0)",
                                                                         backdrop: `rgba(159, 28, 23, 0.4)`
                                                                     })
+                                                                    // .finally(() => navigate('/profile2'));
                                                                 }
-                                                            }
-                                                            if (result.isDismissed) {
-                                                                Swal.fire({
-                                                                    title: 'Cancelado!',
-                                                                    text: 'Tus cambios no han sido guardados, continua con el proceso de actualizacion!',
-                                                                    icon: 'warning',
-                                                                    color: 'rgb(255, 255, 255)',
-                                                                    background: "rgb(0,0,0)",
-                                                                    backdrop: `rgba(159, 28, 23, 0.4)`
-                                                                })
-                                                                // .finally(() => navigate('/profile2'));
-                                                            }
-                                                        })
-                                                    }}
-                                                >
-                                                    Guardar
-                                                </Button>
-                                            </Grid>
+                                                            })
+                                                        }}
+                                                    >
+                                                        Guardar
+                                                    </Button>
+                                                </Grid>
 
 
-                                            {/* <Grid item
+                                                {/* <Grid item
                                                     xs={6}
                                                 >
                                                     <Button
@@ -850,22 +935,22 @@ function ProfileEdit({ BackToTopButton, usuario, todasLasCategorias, setReload }
                                                     </Button>
                                                 </Grid> */}
 
-                                        </Grid>
-                                    </form>
-                                </Container>
-                            </CardContent>
+                                            </Grid>
+                                        </form>
+                                    </Container>
+                                </CardContent>
 
-                        </Card>
-
-
+                            </Card>
 
 
 
-                    </Fade>
-                </Grid>
-                {/* <BackToTopButton /> */}
-            </Box>
-        </Slide>
+
+
+                        </Fade>
+                    </Grid>
+                    {/* <BackToTopButton /> */}
+                </Box>
+            </Slide>
         </div >
     );
 }

@@ -26,6 +26,7 @@ function App() {
   const [headerLoad, setHeaderLoad] = useState(false)
   const [bannerLoad, setBannerload] = useState(false)
   const [filterLoad, setFilterLoad] = useState(false)
+  const [infoPremium, setInfoPremium] = useState(false)
 
   const [headerMountIn, setHeaderMountIn] = useState(false)
   const [contentMountIn, setContentMountIn] = useState(false)
@@ -35,52 +36,12 @@ function App() {
   const [playerLoad, setPlayerLoad] = useState(false)
 
   const localUser = localStorage.getItem("localUser");
-  // console.log(localUser, "localUser in App.js");
 
   const todasLasCategorias = useSelector(state => state.allCategories)
   const currentProgress = useSelector((state) => state.currentProgress);
   const cardioState = useSelector((state) => state.cardio);
 
   let usuario = JSON.parse(localStorage.getItem("localUser"));
-
-  console.log(usuario, "usuario in App.js");
-
-
-
-
-  // const profilefoto = usuario?.foto;
-  // console.log(profilefoto, "profilefoto in App.js");
-
-  // console.log(id_token, "id_token in App.js");
-
-  const userForTesting = { // eventually this will be replaced by the user's data
-    Name: localUser,
-    DOB: "1990-01-01",
-    Age: "31",
-    Email: "email@gmail.com",
-    Gender: "Male",
-    Categorias: ['GANA MASA MUSCULAR ', 'MEJORAR ESTADO DE SALUD   ', 'REDUCIR PORCENTAJES DE GRASA ', 'MEJORAR RENDIMIENTO DEPORTIVO  ', 'TENER SU CUERPO TONIFICADO ', 'MEJORAR  ESTADO FISICO  '],
-    Premium: true,
-    Entrenamiento: [' GIMNASIO EN CASA ', ' GIMNASIO ', ' HOGAR '],
-    Objetivo: [' SALUD ', ' ACONDICIONAMIENTO FISICO ', ' DISMINUCION PORCENTAJE DE GRASA '],
-    ProfilePicture: "/Perfil.png",
-    NivelDeExperiencia: "Intermedio",
-    FrecuenciaDeEntrenamiento: "2 veces por semana",
-    Nutricion: "Come bien",
-    Patologias: "Fracturas",
-    Peso: "70KG",
-    Talla: "Medium",
-    DietPlan: "/plandedieta.pdf",
-  };
-
-
-
-  // const updateLocalUser = async () => {
-  //   console.log('updating local user2');
-
-  //   await getGoogle();
-  //   localStorage.setItem('localUser', googleResponse);
-  // }
 
   function calculateAge(dobString) {
     const dob = new Date(dobString);
@@ -204,6 +165,9 @@ function App() {
           scrollToFilter4={scrollToFilter4}
           scrollToFilter5={scrollToFilter5}
 
+          setInfoPremium={setInfoPremium}
+          infoPremium={infoPremium}
+
           usuario={usuario} />}
 
       <Routes>
@@ -238,6 +202,8 @@ function App() {
           filterRef3={filterRef3}
           filterRef4={filterRef4}
           filterRef5={filterRef5}
+          setInfoPremium={setInfoPremium}
+          usuario={usuario}
         />} />
 
         <Route path='/player/:entrenamientoId' element={<ContentPlayer
@@ -264,9 +230,11 @@ function App() {
           setNavigateAway={setNavigateAway}
           BackToTopButton={BackToTopButton}
           name={localUser}
-          userForTesting={userForTesting}
           usuario={usuario}
-          todasLasCategorias={todasLasCategorias} />} />
+          todasLasCategorias={todasLasCategorias}
+          setInfoPremium={setInfoPremium}
+          infoPremium={infoPremium}
+        />} />
 
         <Route path='/profileedit' element={<ProfileEdit
           setReload={setReload}
@@ -277,7 +245,6 @@ function App() {
           BackToTopButton={BackToTopButton}
           profilePicture="/Perfil.png"
           localUser={localUser}
-          userForTesting={userForTesting}
           usuario={usuario}
           todasLasCategorias={todasLasCategorias}
         />} />

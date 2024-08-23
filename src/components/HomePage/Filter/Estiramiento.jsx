@@ -5,45 +5,52 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Button } from "@mui/material";
+import Image from "../../Multimedia/Image"
+import { useNavigate } from 'react-router-dom';
 
 
-const Test3 = forwardRef(({ setInOutStatus1, setInOutStatus2, setInOutStatus3, setInOutStatus4, setInOutStatus5 }, ref) => {
+const Estiramiento = forwardRef(({ setInOutStatus1, setInOutStatus2, setInOutStatus3, setInOutStatus4, setInOutStatus5 }, ref) => {
 
 
     const localRef = useRef(null);
     const dispatch = useDispatch();
-    const results = useSelector((state) => state.results);
+    const navigate = useNavigate();
+
+    const results = useSelector((state) => state.estiramientos);
 
 
 
     const [display, setDisplay] = useState(true);
     const [width, setWidth] = useState(600);
 
-    const handleClick = (id) => {
+    const handleClick = (cardioEstiramiento) => {
+        setTimeout(() => navigate(`/playerCE`, { state: { cardioEstiramiento: cardioEstiramiento } }), 200);
+
+
         localStorage.setItem("category", "Estiramiento")
         // const metodoIndex = index;
-        const idToFind = id;
+        //     const idToFind = id;
 
-        setInOutStatus1(false);
-        setInOutStatus2(false);
-        setInOutStatus3(false);
-        setInOutStatus4(false);
-        setInOutStatus5(false);
+        //     setInOutStatus1(false);
+        //     setInOutStatus2(false);
+        //     setInOutStatus3(false);
+        //     setInOutStatus4(false);
+        //     setInOutStatus5(false);
 
-        if (idToFind) {
-            setTimeout(() => {
-                dispatch(getMetodo1(idToFind));
-                setInOutStatus3(true);
-            }, 500);
-        }
+        //     if (idToFind) {
+        //         setTimeout(() => {
+        //             dispatch(getMetodo1(idToFind));
+        //             setInOutStatus3(true);
+        //         }, 500);
+        //     }
 
-        setTimeout(() => {
-            if (localRef.current) {
-                localRef.current.scrollIntoView({ behavior: 'smooth' });
-                const yCoordinate = localRef.current.getBoundingClientRect().top + window.pageYOffset;
-                window.scrollTo({ top: yCoordinate - 80, behavior: 'smooth' });
-            }
-        }, 600);
+        //     setTimeout(() => {
+        //         if (localRef.current) {
+        //             localRef.current.scrollIntoView({ behavior: 'smooth' });
+        //             const yCoordinate = localRef.current.getBoundingClientRect().top + window.pageYOffset;
+        //             window.scrollTo({ top: yCoordinate - 80, behavior: 'smooth' });
+        //         }
+        //     }, 600);
 
     };
 
@@ -121,25 +128,31 @@ const Test3 = forwardRef(({ setInOutStatus1, setInOutStatus2, setInOutStatus3, s
 
             <Slider {...settings}
             >
-
-                {items.map((item, index) => (
+                {results && Array.isArray(results) && results.map((item, index) => (
                     <Button
                         ref={localRef}
                         key={index}
                         style={{ width: '200px', height: '170px', padding: '0px', margin: '5px', color: 'white' }}
                         color='error'
                         onClick={() => {
-                            handleClick(item.id);
+                            handleClick(item);
                         }}
                     >
-                        <div>{item.icon}
-                            <p
+
+                        <div>
+                            <Image
+                                id={(item.multimedia && item.multimedia.find((m) => m.type === 'IMAGE'))?.id}
+                                width='110%'
+                            />
+                            {/* <p
                                 style={{ marginTop: '-20px', color: 'white', fontSize: '20' }}
-                            >{item.name}</p>
+                            >{item.nombre}</p> */}
                         </div>
 
                     </Button>
+
                 ))}
+
 
             </Slider>
         </div>
@@ -147,4 +160,4 @@ const Test3 = forwardRef(({ setInOutStatus1, setInOutStatus2, setInOutStatus3, s
     );
 });
 
-export default Test3;
+export default Estiramiento;

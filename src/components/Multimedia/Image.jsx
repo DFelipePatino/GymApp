@@ -1,6 +1,7 @@
 import React, { useState, useEffect, forwardRef, useRef, useImperativeHandle } from "react";
 // import { getMetodo1, setMetodoID, addFav } from '../../../redux/actions';
 import { fetchBlobWithAuth } from '../../multimediaUtils';
+import { baseUrl } from "../../redux/actions";
 
 
 const Image = (imgProps) => {
@@ -9,9 +10,8 @@ const Image = (imgProps) => {
 
     async function getImageObject(idImg, imgWidth) {
         try {
-            // console.log(idImg, 'idImg')
-            const blob = await fetchBlobWithAuth(`/multimedia/image/${idImg}`);
-            const objectURL = URL.createObjectURL(blob);
+            const id_token = localStorage.getItem('id_token');
+            const objectURL = `${baseUrl}/multimedia/image/${idImg}?token=${id_token}`;
             return <img className="img-thumbnail multimedia-item" src={objectURL} alt="Multimedia item" style={{ width: imgWidth }} />;
         } catch (error) {
             console.error('Error fetching image:', error);

@@ -1,5 +1,6 @@
 export const GET_CARDIO = 'GET_CARDIO';
-export const  GET_ESTIRAMIENTOS = 'GET_ESTIRAMIENTOS';
+export const GET_METODO = 'GET_METODO';
+export const GET_ESTIRAMIENTOS = 'GET_ESTIRAMIENTOS';
 export const GET_CONTACTO = 'GET_PESAS';
 export const GET_PILATES = 'GET_PILATES';
 export const GET_CROSSFIT = 'GET_CROSSFIT';

@@ -35,6 +35,7 @@ function LogIn() {
     useEffect(() => {
         window.scrollTo(0, 0);
         loadGoogleScript();
+        isLogged();
     }, []);
 
     const baseUrl = "https://backdev.onetrainingteam.com/onegym-backtest/api";
@@ -63,6 +64,14 @@ function LogIn() {
         // google.accounts.id.prompt();
 
     };
+
+    async function isLogged() {
+        const token = await localStorage.getItem("id_token");
+
+        if (token) {
+            navigate('/home');
+        }
+    }
 
     async function handleCredentialResponse(response) {
 

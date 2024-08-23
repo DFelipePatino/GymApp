@@ -8,9 +8,8 @@ import ShareIcon from '@mui/icons-material/Share';
 import { Button, CardHeader, CardMedia, Typography } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 
-function MetodoCard({ resultsFiltered, results, setInOutStatus1 }) {
+function MetodoCard({ setInOutStatus1, metodoSelected }) {
 
-    // console.log(resultsFiltered, 'resultsFiltered en metodoCard');
 
     const handleClick = (entrenamientoId) => {
         toggleDrawer(true)();
@@ -41,9 +40,9 @@ function MetodoCard({ resultsFiltered, results, setInOutStatus1 }) {
     // console.log(localStorage.getItem("lugar"));
 
 
-    const filteredResultsGym = results?.map((each) => each.entrenamientos?.filter((each) => each.lugar === "GYM"));
-    // console.log(filteredResultsGym, 'filteredResultsGym en metodoCard');
-    const filteredResultsHome = results?.map((each) => each.entrenamientos?.filter((each) => each.lugar === "CASA"));
+    const filteredResultsGym = metodoSelected?.entrenamientos?.filter((each) => each.lugar === "GYM");
+    console.log(filteredResultsGym, 'filteredResultsGym en metodoCard');
+    const filteredResultsHome = metodoSelected?.entrenamientos?.filter((each) => each.lugar === "CASA");
     // console.log(filteredResultsHome, 'filteredResultsHome en metodoCard');
 
 
@@ -51,7 +50,9 @@ function MetodoCard({ resultsFiltered, results, setInOutStatus1 }) {
         <>
             {localStorage.getItem("lugar") === 'GYM' ? (
                 <React.Fragment>
-                    {filteredResultsGym[0]?.map((entrenamiento, index) => (
+                    {filteredResultsGym?.sort((a, b) => {
+                        return a.dia - b.dia;
+                    }).map((entrenamiento, index) => (
                         <Grid item key={index} xs={6} md={4} lg={4}>
                             <Card
                                 id={`card-${entrenamiento.id}`}
@@ -77,7 +78,9 @@ function MetodoCard({ resultsFiltered, results, setInOutStatus1 }) {
             ) :
                 localStorage.getItem("lugar") === 'CASA' ? (
                     <React.Fragment>
-                        {filteredResultsHome?.map((entrenamiento, index) => (
+                        {filteredResultsHome?.sort((a, b) => {
+                            return a.dia - b.dia;
+                        }).map((entrenamiento, index) => (
                             <Grid item key={index} xs={6} md={4} lg={4}>
                                 <Card
                                     id={`card-${entrenamiento.id}`}

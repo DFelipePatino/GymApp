@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
 import { toggleDrawer } from '../CardDrawer/CardDrawer';
 import Card from '@mui/material/Card';
@@ -25,31 +25,38 @@ import { ExpandMore } from '@mui/icons-material';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
+import ArrowOutwardIcon from '@mui/icons-material/ArrowOutward';
 import Swal from 'sweetalert2';
 
-const CardItem = ({ setHeaderLoad, setBannerload, setFilterLoad }) => {
+const CardItem = ({ setHeaderLoad, setBannerload, setFilterLoad, showInstructions }) => {
+    console.log(showInstructions, 'showInstructions en cardItem');
+
+
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
     const CardIndex = parseInt(localStorage.getItem('CardIndex'));
+
     const results = useSelector((state) => state.results);
+    console.log(results, 'results en cardItem');
+
     const currentProgressState = useSelector((state) => state.currentProgress);
     console.log(currentProgressState, 'currentProgressState en cardItem');
 
 
 
-    const filteredResultsGym = results?.map((each) => each.entrenamientos?.filter((each) => each.lugar === "GYM"));
-    const filteredResultsHome = results?.map((each) => each.entrenamientos?.filter((each) => each.lugar === "CASA"));
+    const filteredResultsGym = results?.map((each) => each.entrenamientos?.filter((each) => each.lugar === "GYM")) || [];
+    const filteredResultsHome = results?.map((each) => each.entrenamientos?.filter((each) => each.lugar === "CASA")) || [];
 
-    let entrenamientoSeleccionado;
+    let entrenamientoSeleccionado = [];
 
     if (localStorage.getItem('lugar') === 'GYM') {
         entrenamientoSeleccionado = filteredResultsGym[0]?.filter((entrenamiento) => entrenamiento?.id === CardIndex)[0];
-        console.log(filteredResultsGym, 'filteredResultsGym en cardItem');
-
-
     } else if (localStorage.getItem('lugar') === 'CASA') {
         entrenamientoSeleccionado = filteredResultsHome[0]?.filter((entrenamiento) => entrenamiento?.id === CardIndex)[0];
     }
+
+
     // console.log(entrenamientoSeleccionado, 'entrenamientoSeleccionado en cardItem');
 
     const [expanded, setExpanded] = useState(false);
@@ -127,9 +134,11 @@ const CardItem = ({ setHeaderLoad, setBannerload, setFilterLoad }) => {
     };
 
     const getImageObject = async (id) => {
+
         try {
-            const blob = await fetchBlobWithAuth(`${baseUrl}/multimedia/image/${id}`);
-            const objectURL = URL.createObjectURL(blob);
+            setImageUrl("https://st2.depositphotos.com/2815589/5747/v/450/depositphotos_57477791-stock-illustration-loading-bar-with-a-doodle.jpg");
+            const id_token = localStorage.getItem('id_token');
+            const objectURL = `${baseUrl}/multimedia/image/${id}?token=${id_token}`;
             setImageUrl(objectURL);
         } catch (error) {
             console.error('Error fetching image:', error);
@@ -140,10 +149,10 @@ const CardItem = ({ setHeaderLoad, setBannerload, setFilterLoad }) => {
         if (entrenamientoSeleccionado) {
             dispatch(selectedEntrenamiento(entrenamientoSeleccionado));
             localStorage.setItem('entrenamientoSeleccionado', JSON.stringify(entrenamientoSeleccionado));
-            const imageId = entrenamientoSeleccionado?.multimedia?.find((i) => i.type === 'IMAGE')?.id || 1;
+            const imageId = entrenamientoSeleccionado?.multimedia?.find((i) => i.type === 'IMAGE')?.id || 17;
             getImageObject(imageId);
         }
-    }, [CardIndex, entrenamientoSeleccionado]);
+    }, [entrenamientoSeleccionado?.rutinas]);
 
     return (
         <Grow in={grow} timeout={500}>
@@ -154,67 +163,117 @@ const CardItem = ({ setHeaderLoad, setBannerload, setFilterLoad }) => {
                 marginTop: '20px',
                 marginBottom: '10px',
             }}>
-                <>
-                    <CardHeader
-                        title={
-                            <div>
-                                {entrenamientoSeleccionado?.nombre || null}
-                                <br />
-                                {entrenamientoSeleccionado?.dia ? "Dia " + entrenamientoSeleccionado.dia : null}
+
+                {!showInstructions ? (
+                    <>
+                        <CardHeader
+                            title={
+                                <div>
+                                    {entrenamientoSeleccionado?.nombre || null}
+                                    <br />
+                                    {entrenamientoSeleccionado?.dia ? "Dia " + entrenamientoSeleccionado.dia : null}
+                                </div>
+                            }
+                        />
+                        <CardContent style={{ paddingTop: '0' }}>
+                            <div style={{ position: 'relative' }}>
+                                <PlayCircleOutlineIcon
+                                    style={{
+                                        position: 'absolute',
+                                        top: '50%',
+                                        left: '50%',
+                                        transform: 'translate(-50%, -50%)',
+                                        cursor: 'pointer',
+                                        fontSize: '48px',
+                                        color: 'red'
+                                    }}
+                                    onClick={toggleNavigate} />
+                                <CardMedia
+                                    style={{ borderRadius: '5%', paddingTop: '30px', paddingBottom: '30px', background: 'linear-gradient(to bottom, rgb(0, 0, 0),rgb(159, 28, 23),rgb(0, 0, 0)' }}
+                                    component="img"
+                                    height="194"
+                                    image={imageUrl}
+                                    onClick={toggleNavigate}
+                                />
                             </div>
-                        }
-                    />
-                    <CardContent style={{ paddingTop: '0' }}>
-                        <div style={{ position: 'relative' }}>
-                            <PlayCircleOutlineIcon
+                            <div
                                 style={{
-                                    position: 'absolute',
-                                    top: '50%',
-                                    left: '50%',
-                                    transform: 'translate(-50%, -50%)',
-                                    cursor: 'pointer',
-                                    fontSize: '48px',
-                                    color: 'red'
+                                    margin: '10px',
+                                    fontSize: '1.5rem',
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    alignContent: 'flex-start',
+                                    alignItems: 'flex-start'
                                 }}
-                                onClick={toggleNavigate} />
-                            <CardMedia
-                                style={{ borderRadius: '5%', paddingTop: '30px', paddingBottom: '30px', background: 'linear-gradient(to bottom, rgb(0, 0, 0),rgb(159, 28, 23),rgb(0, 0, 0)' }}
-                                component="img"
-                                height="194"
-                                image={imageUrl}
-                                onClick={toggleNavigate}
-                            />
-                        </div>
-                        <div
-                            style={{
-                                margin: '10px',
-                                fontSize: '1.5rem',
-                                display: 'flex',
-                                flexDirection: 'column',
-                                alignContent: 'flex-start',
-                                alignItems: 'flex-start'
-                            }}
-                        >
-                            <h5 style={{ color: 'rgb(159, 28, 23)', margin: '0px' }}>Contenido</h5>
-                            <h6 style={{ color: 'rgb(256, 256, 256)', margin: '15px' }}>Ejercicios</h6>
-                            <Grid container>
-                                {entrenamientoSeleccionado?.rutinas?.map((rutina, index) => (
-                                    <Grid item key={index} xs={6} md={4} lg={4}>
-                                        <Typography
-                                            // variant='contained'
-                                            style={{ fontSize: '0.8rem', textDecoration: 'underline', marginBottom: '10px', color: 'white' }}
-                                        >
-                                            {/* <KeyboardArrowRightIcon
+                            >
+                                <h5 style={{ color: 'rgb(159, 28, 23)', margin: '0px' }}>Contenido</h5>
+                                <h6 style={{ color: 'rgb(256, 256, 256)', margin: '15px' }}>Ejercicios</h6>
+                                <Grid container>
+                                    {entrenamientoSeleccionado?.rutinas?.sort((a, b) => {
+                                        return a.orden - b.orden;
+                                    }).map((rutina, index) => (
+                                        <Grid item key={index} xs={6} md={4} lg={4}>
+                                            <Typography
+                                                // variant='contained'
+                                                style={{ fontSize: '0.8rem', textDecoration: 'underline', marginBottom: '10px', color: 'white' }}
+                                            >
+                                                {/* <KeyboardArrowRightIcon
                                                 style={{ color: 'rgb(256, 256, 256)', paddingBottom: '-20px', marginLeft: '-10px' }}
                                             /> */}
-                                            {rutina.nombre}
-                                        </Typography>
-                                    </Grid>
-                                ))}
-                            </Grid>
-                        </div>
-                    </CardContent>
-                </>
+                                                {rutina.nombre}
+                                            </Typography>
+                                        </Grid>
+                                    ))}
+                                </Grid>
+                            </div>
+                        </CardContent>
+                    </>
+                ) : showInstructions ? (
+
+
+
+                    <>
+                        <CardHeader
+                            title={
+                                <div>
+                                    Instructivo de pago
+                                </div>
+                            }
+                        />
+                        <CardContent style={{ paddingTop: '0' }}>
+                            <div style={{ position: 'relative' }}>
+                                <Link to={'/instructions.jpg'} target='blank'>
+                                    <ArrowOutwardIcon
+                                        style={{
+                                            position: 'absolute',
+                                            top: '-4%',
+                                            right: '-4%',
+                                            transform: 'translate(-50%, -50%)',
+                                            cursor: 'pointer',
+                                            fontSize: '48px',
+                                            color: 'red'
+                                        }}
+                                    />
+                                </Link>
+
+                                <div style={{ height: '600px', overflow: 'auto' }}>
+                                    <CardMedia
+                                        style={{ paddingBottom: '30px', background: 'linear-gradient(to bottom, rgb(0, 0, 0),rgb(159, 28, 23),rgb(0, 0, 0)' }}
+                                        component="img"
+                                        height="auto"
+                                        image="/instructions.jpg"
+                                    />
+                                </div>
+                            </div>
+
+                        </CardContent>
+                    </>
+
+                )
+
+                    : (null)
+
+                }
             </Card>
         </Grow>
     );

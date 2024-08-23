@@ -42,9 +42,12 @@ export const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
 };
 
-function CardDrawer({ inOutStatus, setHeaderLoad, setBannerload, setFilterLoad }) {
+function CardDrawer({ inOutStatus, setHeaderLoad, setBannerload, setFilterLoad, showInstructions }) {
 
     [open, setOpen] = React.useState(false);
+
+    console.log(showInstructions, 'showInstructions en cardDrawer');
+
 
     // console.log(open, 'open en cardDrawer');
 
@@ -113,10 +116,13 @@ function CardDrawer({ inOutStatus, setHeaderLoad, setBannerload, setFilterLoad }
                     }}
                 >
 
-                    <CardItem toggleDrawer={toggleDrawer} setHeaderLoad={setHeaderLoad} setBannerload={setBannerload} setFilterLoad={setFilterLoad} />
 
-                    {/* <Skeleton variant="rectangular" height="100%" /> */}
-                    {/* <Typography sx={{ p: 2, color: 'text.secondary' }}>Hola</Typography> */}
+
+
+                    <CardItem toggleDrawer={toggleDrawer} setHeaderLoad={setHeaderLoad} setBannerload={setBannerload} setFilterLoad={setFilterLoad} showInstructions={showInstructions} />
+
+
+
                 </StyledBox>
             </SwipeableDrawer>
         </Root>

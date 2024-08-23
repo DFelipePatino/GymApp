@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { getDefault, getMetodo1, getMetodo2, getMetodo3, getMetodo4, getMetodo5, getMetodo6, emptyState, getProgresoActual, getMethods, getBanner, getCategories, getCardio, getEstiramientos } from '../../../redux/actions';
+import { getDefault, getMetodo1, getProgresoActual, getMethods, getBanner, getCategories, getCardio, getEstiramientos } from '../../../redux/actions';
 import HeaderNav from '../../HeaderNav/HeaderNav';
 import NavBar from '../NavBar/NavBar';
 import Banner from '../Banner/banner';
@@ -12,12 +12,12 @@ import Banner from '../Banner/banner';
 // import Filter3 from '../Filter/Filter3';
 // import Filter4 from '../Filter/Filter4';
 // import Filter5 from '../Filter/Filter5';
-import Test1 from '../Filter/Test1';
-import Test2 from '../Filter/Test2';
-import Test3 from '../Filter/Test3';
+import CarruselMetodos from '../Filter/CarruselMetodos';
+import Cardio from '../Filter/Cardio';
+import Estiramiento from '../Filter/Estiramiento';
 import Test4 from '../Filter/Test4';
-import Test5 from '../Filter/Test5';
-import Cards1 from '../../cards/Cards1'
+import Seleccionado from '../Filter/Seleccionado';
+import BotonesCarrulesMetodos from '../../cards/BotonesCarrulesMetodos'
 import Cards2 from '../../cards/Cards2'
 import Cards3 from '../../cards/Cards3'
 import Cards4 from '../../cards/Cards4'
@@ -35,7 +35,7 @@ import { containerStyles } from '../Filter/filterStyles';
 import { TroubleshootRounded } from '@mui/icons-material';
 // import colorPallet from '../../ColorPallet';
 
-function HomePage({ BackToTopButton, headerLoad, bannerLoad, filterLoad, setHeaderLoad, setBannerload, setFilterLoad, scrollToFilter1, filterRef1, scrollToFilter2, filterRef2, scrollToFilter3, filterRef3, scrollToFilter4, filterRef4, scrollToFilter5, filterRef5, reload }) {
+function HomePage({ BackToTopButton, headerLoad, bannerLoad, filterLoad, setHeaderLoad, setBannerload, setFilterLoad, scrollToFilter1, filterRef1, scrollToFilter2, filterRef2, scrollToFilter3, filterRef3, scrollToFilter4, filterRef4, scrollToFilter5, filterRef5, reload, setInfoPremium, usuario }) {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -43,7 +43,8 @@ function HomePage({ BackToTopButton, headerLoad, bannerLoad, filterLoad, setHead
     const reLoad = reload;
 
     const results = useSelector((state) => state.results);
-    // console.log('results:', results);
+    const metodoSelected = useSelector((state) => state.metodoSelected);
+    console.log('metodoSelected:', metodoSelected);
     const favs = useSelector((state) => state.favorites);
 
     const entrenamientoSeleccionadoLocalStorage = JSON.parse(localStorage.getItem("entrenamientoSeleccionado"));
@@ -52,8 +53,7 @@ function HomePage({ BackToTopButton, headerLoad, bannerLoad, filterLoad, setHead
     const homeContent = localStorage.getItem("homeContent")
     const lastCategory = localStorage.getItem("category")
     const categoryToDispatch = localStorage.getItem("categorytoDispatch")
-    const usuario = JSON.parse(localStorage.getItem("localUser"));
-    // console.log('usuario:', usuario);
+
 
 
 
@@ -331,7 +331,8 @@ function HomePage({ BackToTopButton, headerLoad, bannerLoad, filterLoad, setHead
                 <div
                     style={dynamicStyle}
                 >
-                    <Banner />
+                    <Banner
+                        setInfoPremium={setInfoPremium} />
                 </div>
             </Grow>
 
@@ -369,25 +370,26 @@ function HomePage({ BackToTopButton, headerLoad, bannerLoad, filterLoad, setHead
                         ref={filterRef1}
                         /> */}
 
-                    {favs.length > 0 ? <h3>Tu seleccion</h3> : null}
+                    {/* {favs.length > 0 ? <h3>Tu seleccion</h3> : null} */}
+                    <h3>Tu seleccion</h3>
 
-                    {/* <Test5
-                        favs={favs}
+                    <Seleccionado
+                        usuario={usuario}
                         setInOutStatus1={setInOutStatus1}
                         setInOutStatus2={setInOutStatus2}
                         setInOutStatus3={setInOutStatus3}
                         setInOutStatus4={setInOutStatus4}
                         setInOutStatus5={setInOutStatus5}
                         ref={filterRef1}
-                    /> */}
+                    />
 
 
 
-                    {/* 
+
                     {inOutStatus5 ?
                         <Cards5 inOutStatus5={inOutStatus5} setHeaderLoad={setHeaderLoad} setBannerload={setBannerload} setFilterLoad={setFilterLoad} />
 
-                        : null} */}
+                        : null}
 
                     <br />
 
@@ -405,7 +407,8 @@ function HomePage({ BackToTopButton, headerLoad, bannerLoad, filterLoad, setHead
 
 
 
-                    <Test1
+                    <CarruselMetodos
+                        usuario={usuario}
                         setInOutStatus1={setInOutStatus1}
                         setInOutStatus2={setInOutStatus2}
                         setInOutStatus3={setInOutStatus3}
@@ -418,14 +421,14 @@ function HomePage({ BackToTopButton, headerLoad, bannerLoad, filterLoad, setHead
 
                     {inOutStatus1 ?
 
-                        <Cards1 inOutStatus1={inOutStatus1} setInOutStatus1={setInOutStatus1} setHeaderLoad={setHeaderLoad} setBannerload={setBannerload} setFilterLoad={setFilterLoad} results={results} />
+                        <BotonesCarrulesMetodos inOutStatus1={inOutStatus1} setInOutStatus1={setInOutStatus1} setHeaderLoad={setHeaderLoad} setBannerload={setBannerload} setFilterLoad={setFilterLoad} metodoSelected={metodoSelected} />
 
                         : null}
 
                     <br />
 
-                    <h3>Cardio</h3> 
-{/* 
+                    <h3>Cardio</h3>
+                    {/* 
                     <Filter2
                         setInOutStatus1={setInOutStatus1}
                         setInOutStatus2={setInOutStatus2}
@@ -436,7 +439,7 @@ function HomePage({ BackToTopButton, headerLoad, bannerLoad, filterLoad, setHead
                     /> */}
 
 
-                    <Test2
+                    <Cardio
                         setInOutStatus1={setInOutStatus1}
                         setInOutStatus2={setInOutStatus2}
                         setInOutStatus3={setInOutStatus3}
@@ -472,7 +475,7 @@ function HomePage({ BackToTopButton, headerLoad, bannerLoad, filterLoad, setHead
 
                     <br />
 
-                    {/* <h3>Estiramiento</h3> */}
+                    <h3>Estiramiento</h3>
 
                     {/* <Filter3
 setInOutStatus1={setInOutStatus1}
@@ -485,14 +488,14 @@ ref={filterRef3}
 
 
 
-                    {/* <Test3
+                    <Estiramiento
                         setInOutStatus1={setInOutStatus1}
                         setInOutStatus2={setInOutStatus2}
                         setInOutStatus3={setInOutStatus3}
                         setInOutStatus4={setInOutStatus4}
                         setInOutStatus5={setInOutStatus5}
                         ref={filterRef3}
-                    /> */}
+                    />
 
                     {/* <Test1
                         setInOutStatus1={setInOutStatus1}
@@ -511,10 +514,10 @@ ref={filterRef3}
                         : null} */}
 
 
-                    {/* {inOutStatus3 ?
+                    {inOutStatus3 ?
                         <Cards3 inOutStatus3={inOutStatus3} setHeaderLoad={setHeaderLoad} setBannerload={setBannerload} setFilterLoad={setFilterLoad} />
 
-                        : null} */}
+                        : null}
 
 
                     <br />

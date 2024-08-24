@@ -10,18 +10,14 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import ReactPlayer from 'react-player'
 import { Box } from '@mui/system';
-import { ExpandMore, FavoriteBorder, Gradient } from '@mui/icons-material';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import ShareIcon from '@mui/icons-material/Share';
+import { ExpandMore } from '@mui/icons-material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { fetchBlobWithAuth } from '../../../../multimediaUtils';
 import { actualizarEntrenamiento, getProgresoActual, getEntrenamiento } from '../../../../redux/actions';
 import Swal from 'sweetalert2';
 import { styled } from '@mui/system';
 import ClearIcon from '@mui/icons-material/Clear';
 import DoneIcon from '@mui/icons-material/Done';
 import PlaylistAddCheckCircleIcon from '@mui/icons-material/PlaylistAddCheckCircle';
-import PlaylistAddCheckCircleOutlinedIcon from '@mui/icons-material/PlaylistAddCheckCircleOutlined';
 import Tooltip from '@mui/material/Tooltip';
 import { baseUrl } from '../../../../redux/actions';
 
@@ -54,22 +50,16 @@ const CssTextField = styled(TextField)({
 
 function ContentPlayer({ setPlayerLoad, playerLoad, setReload, usuario }) {
 
-
-    // console.log("usuario en contentPlayer", usuario);
-
-
     const dispatch = useDispatch();
 
     const location = useLocation();
     const navigate = useNavigate();
 
     const [fadeLoad, setfadeLoad] = useState(true);
-    const [headerLoad, setHeaderLoad] = useState(false);
     const [urlVideo, setUrlVideo] = useState('');
 
     const [expanded, setExpanded] = React.useState(true);
     const [isPlaying, setIsPlaying] = useState(false);
-    // console.log("isPlaying", isPlaying);
 
     const [expandedDescription, setExpandedDescription] = useState(
         []
@@ -116,7 +106,6 @@ function ContentPlayer({ setPlayerLoad, playerLoad, setReload, usuario }) {
 
             getVideoLink(auxEntrenamiento);
 
-            // console.log("Rutinas:", rutinasButtons);
         } catch (e) {
             console.log("Error trayendo entrenamiento:", e);
             //navigate("/home");
@@ -137,14 +126,7 @@ function ContentPlayer({ setPlayerLoad, playerLoad, setReload, usuario }) {
             setPlayerLoad(true);
         }, 350);
 
-        // const localUser = localStorage.getItem("localUserName");
 
-        // const verifyLogin = (localUser) => {
-        //     if (!localUser) {
-        //         navigate("/");
-        //     }
-        // };
-        // verifyLogin(localUser);
 
         window.scrollTo(0, 0);
 
@@ -159,17 +141,12 @@ function ContentPlayer({ setPlayerLoad, playerLoad, setReload, usuario }) {
     const [currentProgressState2, setCurrentProgressState2] = useState({});
 
     const handlePesoChange = (e, index, iPeso, totalPesos) => {
-        // console.log("handlePesoChange", e.target.value, index, iPeso, totalPesos);
 
-        /*if (!e.target.value || e.target.value === '') {
-            return;
-        }*/
         const newProgress = { ...currentProgressState };
         let pesoAtual = newProgress['pesoRutina' + index] || '';
 
         let pesosRutina = pesoAtual.split('-');
-        // console.log(pesoAtual);
-        // console.log(iPeso);
+
 
         for (let i = 0; i < totalPesos; i++) {
             if (pesosRutina.length <= i) {
@@ -178,11 +155,10 @@ function ContentPlayer({ setPlayerLoad, playerLoad, setReload, usuario }) {
         }
 
         pesosRutina[iPeso] = e.target.value;
-        // console.log(pesosRutina.join('-'));
+
         newProgress['pesoRutina' + index] = pesosRutina.join('-');
-        // console.log("handlePesoChange", newProgress);
-        setCurrentProgressState2(newProgress); // Correctly update the state
-        // updateCurrentProgress(newProgress); // Uncomment if needed
+        setCurrentProgressState2(newProgress);
+
     };
 
 

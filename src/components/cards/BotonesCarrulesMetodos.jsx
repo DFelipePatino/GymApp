@@ -27,7 +27,7 @@ function BotonesCarrulesMetodos({ inOutStatus1, setHeaderLoad, setBannerload, se
                 {...(checked ? { timeout: 400 } : {})}
             >
                 <Grid container>
-                    <MetodoCard setInOutStatus1={setInOutStatus1} metodoSelected={metodoSelected} />
+                    <MetodoCard setInOutStatus1={setInOutStatus1} inOutStatus1={inOutStatus1} metodoSelected={metodoSelected} />
                 </Grid>
 
             </Grow>

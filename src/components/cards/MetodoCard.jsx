@@ -8,7 +8,7 @@ import ShareIcon from '@mui/icons-material/Share';
 import { Button, CardHeader, CardMedia, Typography } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 
-function MetodoCard({ setInOutStatus1, metodoSelected }) {
+function MetodoCard({ setInOutStatus1, inOutStatus1, setInOutStatus5, inOutStatus5, metodoSelected }) {
 
 
     const handleClick = (entrenamientoId) => {
@@ -17,31 +17,51 @@ function MetodoCard({ setInOutStatus1, metodoSelected }) {
     }
 
 
-    const handleExpandClick = () => {
+    const handleExpandClickGYM = () => {
         // console.log(expanded, 'expanded');
         localStorage.setItem('lugar', 'GYM');
-        setInOutStatus1(false);
+        if (inOutStatus1) {
+            setInOutStatus1(false);
+            setTimeout(() => {
+                setInOutStatus1(true);
+            }
+            , 500);
+        }
+
+        if (inOutStatus5) {
+        setInOutStatus5(false);
         setTimeout(() => {
-            setInOutStatus1(true);
+            setInOutStatus5(true);
         }
             , 500);
+    }
     };
 
-    const handleExpandClick2 = () => {
+    const handleExpandClickCASA = () => {
         // console.log(expanded, 'expanded');
         localStorage.setItem('lugar', 'CASA');
-        setInOutStatus1(false);
+        if (inOutStatus1) {
+            setInOutStatus1(false);
+            setTimeout(() => {
+                setInOutStatus1(true);
+            }
+            , 500);
+        }
+
+        if (inOutStatus5) {
+        setInOutStatus5(false);
         setTimeout(() => {
-            setInOutStatus1(true);
+            setInOutStatus5(true);
         }
             , 500);
+    }
     };
 
     // console.log(localStorage.getItem("lugar"));
 
 
     const filteredResultsGym = metodoSelected?.entrenamientos?.filter((each) => each.lugar === "GYM");
-    console.log(filteredResultsGym, 'filteredResultsGym en metodoCard');
+    // console.log(filteredResultsGym, 'filteredResultsGym en metodoCard');
     const filteredResultsHome = metodoSelected?.entrenamientos?.filter((each) => each.lugar === "CASA");
     // console.log(filteredResultsHome, 'filteredResultsHome en metodoCard');
 
@@ -85,7 +105,7 @@ function MetodoCard({ setInOutStatus1, metodoSelected }) {
                                 <Card
                                     id={`card-${entrenamiento.id}`}
                                     style={{ margin: '10px', cursor: 'pointer', backgroundColor: 'rgb(0,0,0)', border: '2px solid rgb(156, 28, 23)', borderRadius: '20px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', padding: '10px', color: 'white' }}
-                                    onClick={() => { handleClick(entrenamiento.id), console.log(entrenamiento.id); }}
+                                    onClick={() => { handleClick(entrenamiento.id) }}
                                 >
                                     <h4 style={{ marginBottom: '10px', marginTop: '0' }}>
                                         Dia: {entrenamiento.dia}</h4>
@@ -122,7 +142,7 @@ function MetodoCard({ setInOutStatus1, metodoSelected }) {
                                             backgroundColor: 'rgb(159, 28, 23)', marginRight: '10px'
                                         }}
                                         // onClick={() => { console.log("hola") }}
-                                        onClick={handleExpandClick}
+                                        onClick={handleExpandClickGYM}
                                     >
                                         En el Gym
                                     </Button>
@@ -130,7 +150,7 @@ function MetodoCard({ setInOutStatus1, metodoSelected }) {
                                         style={{
                                             backgroundColor: 'rgb(159, 28, 23)', marginRight: '10px'
                                         }}
-                                        onClick={handleExpandClick2}
+                                        onClick={handleExpandClickCASA}
                                     >En Casa</Button>
                                 </div>
                             </CardContent>

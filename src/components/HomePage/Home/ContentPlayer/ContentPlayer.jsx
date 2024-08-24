@@ -55,7 +55,7 @@ const CssTextField = styled(TextField)({
 function ContentPlayer({ setPlayerLoad, playerLoad, setReload, usuario }) {
 
 
-    console.log("usuario en contentPlayer", usuario);
+    // console.log("usuario en contentPlayer", usuario);
 
 
     const dispatch = useDispatch();
@@ -69,7 +69,7 @@ function ContentPlayer({ setPlayerLoad, playerLoad, setReload, usuario }) {
 
     const [expanded, setExpanded] = React.useState(true);
     const [isPlaying, setIsPlaying] = useState(false);
-    console.log("isPlaying", isPlaying);
+    // console.log("isPlaying", isPlaying);
 
     const [expandedDescription, setExpandedDescription] = useState(
         []
@@ -108,7 +108,7 @@ function ContentPlayer({ setPlayerLoad, playerLoad, setReload, usuario }) {
         try {
             const auxEntrenamiento = await getEntrenamiento(currentEntrenamientoId);
             setCurrentEntrenamiento(auxEntrenamiento);
-            console.log("Entrenamiento:", auxEntrenamiento);
+            // console.log("Entrenamiento:", auxEntrenamiento);
             if (!auxEntrenamiento || !auxEntrenamiento?.nombre) {
                 throw new Error("Entrenamiento no encontrado");
             }
@@ -116,7 +116,7 @@ function ContentPlayer({ setPlayerLoad, playerLoad, setReload, usuario }) {
 
             getVideoLink(auxEntrenamiento);
 
-            console.log("Rutinas:", rutinasButtons);
+            // console.log("Rutinas:", rutinasButtons);
         } catch (e) {
             console.log("Error trayendo entrenamiento:", e);
             //navigate("/home");
@@ -159,7 +159,7 @@ function ContentPlayer({ setPlayerLoad, playerLoad, setReload, usuario }) {
     const [currentProgressState2, setCurrentProgressState2] = useState({});
 
     const handlePesoChange = (e, index, iPeso, totalPesos) => {
-        console.log("handlePesoChange", e.target.value, index, iPeso, totalPesos);
+        // console.log("handlePesoChange", e.target.value, index, iPeso, totalPesos);
 
         /*if (!e.target.value || e.target.value === '') {
             return;
@@ -168,8 +168,8 @@ function ContentPlayer({ setPlayerLoad, playerLoad, setReload, usuario }) {
         let pesoAtual = newProgress['pesoRutina' + index] || '';
 
         let pesosRutina = pesoAtual.split('-');
-        console.log(pesoAtual);
-        console.log(iPeso);
+        // console.log(pesoAtual);
+        // console.log(iPeso);
 
         for (let i = 0; i < totalPesos; i++) {
             if (pesosRutina.length <= i) {
@@ -178,9 +178,9 @@ function ContentPlayer({ setPlayerLoad, playerLoad, setReload, usuario }) {
         }
 
         pesosRutina[iPeso] = e.target.value;
-        console.log(pesosRutina.join('-'));
+        // console.log(pesosRutina.join('-'));
         newProgress['pesoRutina' + index] = pesosRutina.join('-');
-        console.log("handlePesoChange", newProgress);
+        // console.log("handlePesoChange", newProgress);
         setCurrentProgressState2(newProgress); // Correctly update the state
         // updateCurrentProgress(newProgress); // Uncomment if needed
     };
@@ -198,7 +198,7 @@ function ContentPlayer({ setPlayerLoad, playerLoad, setReload, usuario }) {
     };
 
     const handleExpandClickRutina = (index) => {
-        console.log("entra al hanlde click");
+        // console.log("entra al hanlde click");
 
         const newExpandedDescription = [...expandedDescription];
         const newExpanded = newExpandedDescription[index];
@@ -228,7 +228,7 @@ function ContentPlayer({ setPlayerLoad, playerLoad, setReload, usuario }) {
     };
 
     async function updateCurrentProgress(progressNuevo) {
-        console.log("updateCurrentProgress", progressNuevo);
+        // console.log("updateCurrentProgress", progressNuevo);
         try {
             const respuesta = await actualizarEntrenamiento(currentEntrenamiento?.id, progressNuevo, currentProgressState);
             if (respuesta !== 0) {

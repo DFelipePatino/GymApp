@@ -10,10 +10,10 @@ const HeaderNav = ({ localUser }) => {
 
     const navigate = useNavigate();
 
-    console.log(localUser, "lu en headerNav");
+    // console.log(localUser, "lu en headerNav");
 
     const user = useSelector((state) => state.user);
-    console.log(user, "user at navbar");
+    // console.log(user, "user at navbar");
 
     const userInitials = localUser?.split(' ').map((n) => n ? n[0].toUpperCase() : '').join('');
 

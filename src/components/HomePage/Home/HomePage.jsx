@@ -18,10 +18,10 @@ import Estiramiento from '../Filter/Estiramiento';
 import Test4 from '../Filter/Test4';
 import Seleccionado from '../Filter/Seleccionado';
 import BotonesCarrulesMetodos from '../../cards/BotonesCarrulesMetodos'
-import Cards2 from '../../cards/Cards2'
+// import BotonesCarruselCardio from '../../cards/BotonesCarruselCardio'
 import Cards3 from '../../cards/Cards3'
 import Cards4 from '../../cards/Cards4'
-import Cards5 from '../../cards/Cards5'
+import BotonesCarruselSeleccionado from '../../cards/BotonesCarruselSeleccionado'
 
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
@@ -35,7 +35,7 @@ import { containerStyles } from '../Filter/filterStyles';
 import { TroubleshootRounded } from '@mui/icons-material';
 // import colorPallet from '../../ColorPallet';
 
-function HomePage({ BackToTopButton, headerLoad, bannerLoad, filterLoad, setHeaderLoad, setBannerload, setFilterLoad, scrollToFilter1, filterRef1, scrollToFilter2, filterRef2, scrollToFilter3, filterRef3, scrollToFilter4, filterRef4, scrollToFilter5, filterRef5, reload, setInfoPremium, usuario }) {
+function HomePage({ BackToTopButton, headerLoad, bannerLoad, filterLoad, setHeaderLoad, setBannerload, setFilterLoad, scrollToFilter1, filterRef1, scrollToCardio, filterRef2, scrollToEstiramiento, filterRef3, scrollToFilter4, filterRef4, scrollToTodos, filterRef5, reload, setInfoPremium, usuario }) {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -44,7 +44,7 @@ function HomePage({ BackToTopButton, headerLoad, bannerLoad, filterLoad, setHead
 
     const results = useSelector((state) => state.results);
     const metodoSelected = useSelector((state) => state.metodoSelected);
-    console.log('metodoSelected:', metodoSelected);
+    // console.log('metodoSelected:', metodoSelected);
     const favs = useSelector((state) => state.favorites);
 
     const entrenamientoSeleccionadoLocalStorage = JSON.parse(localStorage.getItem("entrenamientoSeleccionado"));
@@ -115,7 +115,7 @@ function HomePage({ BackToTopButton, headerLoad, bannerLoad, filterLoad, setHead
     // }
 
     const shouldReload = (reLoad) => {
-        console.log('reload:', reLoad);
+        // console.log('reload:', reLoad);
         if (reLoad) {
             window.location.reload();
         }
@@ -206,13 +206,13 @@ function HomePage({ BackToTopButton, headerLoad, bannerLoad, filterLoad, setHead
         if (homeContent === "Cardio") {
             // localStorage.setItem("category", "Metodo 6");
             // dispatch(getMetodo1(5));
-            scrollToFilter2();
+            scrollToCardio();
         }
 
         if (homeContent === "Estiramiento") {
             // localStorage.setItem("category", "Metodo 6");
             // dispatch(getMetodo1(5));
-            scrollToFilter3();
+            scrollToEstiramiento();
         }
 
         if (homeContent === "Tips Alimentacion") {
@@ -224,7 +224,7 @@ function HomePage({ BackToTopButton, headerLoad, bannerLoad, filterLoad, setHead
         if (homeContent === "Todos") {
             // localStorage.setItem("category", "Metodo 6");
             // dispatch(getMetodo1(5));
-            scrollToFilter5();
+            scrollToTodos();
         }
 
         // console.log('homeContent:', homeContent);
@@ -263,11 +263,11 @@ function HomePage({ BackToTopButton, headerLoad, bannerLoad, filterLoad, setHead
                     break;
                 case 'Cardio':
                     // dispatch(getMetodo1(5));
-                    scrollToFilter2();
+                    scrollToCardio();
                     break;
                 case 'Estiramiento':
                     // dispatch(getMetodo1(5));
-                    scrollToFilter3();
+                    scrollToEstiramiento();
                     break;
                 case 'Tips Alimentacion':
                     // dispatch(getMetodo1(5));
@@ -275,7 +275,7 @@ function HomePage({ BackToTopButton, headerLoad, bannerLoad, filterLoad, setHead
                     break;
                 case 'Todos':
                     // dispatch(getMetodo1(5));
-                    scrollToFilter5();
+                    scrollToTodos();
                     break;
                 default:
                     console.log('Unknown category:', lastCategory);
@@ -343,10 +343,10 @@ function HomePage({ BackToTopButton, headerLoad, bannerLoad, filterLoad, setHead
                 style={{ display: 'flex', justifyContent: 'center', marginTop: '20px', paddingLeft: '50px', paddingRight: '50px', fontSize: '0.8rem', color: 'rgb(146, 144, 144)', paddingBottom: '20px' }}
             >
                 <button onClick={scrollToFilter1}>Tu Seleccion</button>
-                <button onClick={scrollToFilter2}>Estiramiento</button>
-                <button onClick={scrollToFilter3}>Tips Alimentacion</button>
+                <button onClick={scrollToCardio}>Estiramiento</button>
+                <button onClick={scrollToEstiramiento}>Tips Alimentacion</button>
                 <button onClick={scrollToFilter4}>Cardio</button>
-                <button onClick={scrollToFilter5}>Todos</button>
+                <button onClick={scrollToTodos}>Todos</button>
             </div> */}
 
             <Grow
@@ -383,11 +383,8 @@ function HomePage({ BackToTopButton, headerLoad, bannerLoad, filterLoad, setHead
                         ref={filterRef1}
                     />
 
-
-
-
                     {inOutStatus5 ?
-                        <Cards5 inOutStatus5={inOutStatus5} setHeaderLoad={setHeaderLoad} setBannerload={setBannerload} setFilterLoad={setFilterLoad} />
+                        <BotonesCarruselSeleccionado inOutStatus5={inOutStatus5} setHeaderLoad={setHeaderLoad} setBannerload={setBannerload} setFilterLoad={setFilterLoad} setInOutStatus5={setInOutStatus5} metodoSelected={metodoSelected} />
 
                         : null}
 
@@ -420,7 +417,6 @@ function HomePage({ BackToTopButton, headerLoad, bannerLoad, filterLoad, setHead
 
 
                     {inOutStatus1 ?
-
                         <BotonesCarrulesMetodos inOutStatus1={inOutStatus1} setInOutStatus1={setInOutStatus1} setHeaderLoad={setHeaderLoad} setBannerload={setBannerload} setFilterLoad={setFilterLoad} metodoSelected={metodoSelected} />
 
                         : null}
@@ -467,10 +463,10 @@ function HomePage({ BackToTopButton, headerLoad, bannerLoad, filterLoad, setHead
                         : null} */}
 
 
-                    {inOutStatus2 ?
-                        <Cards2 inOutStatus2={inOutStatus2} setHeaderLoad={setHeaderLoad} setBannerload={setBannerload} setFilterLoad={setFilterLoad} />
+                    {/* {inOutStatus2 ?
+                        <BotonesCarruselCardio inOutStatus2={inOutStatus2} setHeaderLoad={setHeaderLoad} setBannerload={setBannerload} setFilterLoad={setFilterLoad} />
 
-                        : null}
+                        : null} */}
 
 
                     <br />

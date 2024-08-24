@@ -38,7 +38,7 @@ import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 const drawerWidth = "50%";
 
 
-function Layout({ usuario, setPlayerLoad, setHeaderLoad, setBannerload, setFilterLoad, setHeaderMountIn, setContentMountIn, navigateAway, setNavigateAway, scrollToFilter1, scrollToFilter2, scrollToFilter3, scrollToFilter4, scrollToFilter5, setInfoPremium, infoPremium }) {
+function Layout({ usuario, setPlayerLoad, setHeaderLoad, setBannerload, setFilterLoad, setHeaderMountIn, setContentMountIn, navigateAway, setNavigateAway, scrollToFilter1, scrollToCardio, scrollToEstiramiento, scrollToFilter4, scrollToTodos, setInfoPremium, infoPremium }) {
 
     const dispatch = useDispatch();
     const location = useLocation();
@@ -47,18 +47,18 @@ function Layout({ usuario, setPlayerLoad, setHeaderLoad, setBannerload, setFilte
     const resultsData = useSelector((state) => state.results.data);
     const currentIndex = useSelector((state) => state.rutinaID);
     const currentProgress = useSelector((state) => state.currentProgress);
-    console.log(currentProgress, 'currentProgress.entrenamientoId en layout');
+    // console.log(currentProgress, 'currentProgress.entrenamientoId en layout');
 
     // console.log(resultsData, 'resultsData en layout');
 
     // const localUser = null;
 
     const localUserName = usuario?.nombres + ' ' + usuario?.apellidos;
-    console.log(localUserName, 'localUserName en layout');
+    // console.log(localUserName, 'localUserName en layout');
 
 
     const userInitials = localUserName?.split(' ').map((n) => n ? n[0].toUpperCase() : '').join('');
-    console.log(userInitials, 'userInitials');
+    // console.log(userInitials, 'userInitials');
 
 
     const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -116,27 +116,29 @@ function Layout({ usuario, setPlayerLoad, setHeaderLoad, setBannerload, setFilte
                 break;
             case 'Estiramiento':
                 localStorage.setItem("homeContent", "Estiramiento");
-                scrollToFilter2();
-                dispatch(getMetodo1(currentIndex));
+                scrollToEstiramiento();
+                // dispatch(getMetodo1(currentIndex));
                 break;
             case 'Tips Alimentacion':
                 localStorage.setItem("homeContent", "Tips Alimentacion");
-                scrollToFilter3();
+                scrollToEstiramiento();
                 dispatch(getMetodo1(currentIndex));
                 break;
             case 'Cardio':
                 localStorage.setItem("homeContent", "Cardio");
-                scrollToFilter4();
-                dispatch(getMetodo1(currentIndex));
+                scrollToCardio();
+                console.log('scrolling to filter 2 layout');
+                
+                // dispatch(getMetodo1(currentIndex));
                 break;
             case 'Todos':
                 localStorage.setItem("homeContent", "Todos");
-                scrollToFilter5();
-                dispatch(getMetodo1(currentIndex));
+                scrollToTodos();
+                // dispatch(getMetodo1(currentIndex));
                 break;
             case 'Mi entrenamiento actual':
                 // localStorage.setItem("homeContent", "Todos");
-                // scrollToFilter5();
+                // scrollToTodos();
                 // dispatch(getMetodo1(currentIndex));
                 break;
             case 'Premium':
@@ -171,15 +173,6 @@ function Layout({ usuario, setPlayerLoad, setHeaderLoad, setBannerload, setFilte
 
     };
 
-    const mappedData = resultsData?.map((item, index) => ({
-        text: item.nombre,
-        icon: <DirectionsBikeIcon style={iconStyles} />, // replace with your actual icon logic
-        fn: `homeM${index + 1}`,
-        // fn: 'homeM1',
-        route: '/home',
-        shouldClearLocal: false,
-        id: item.id.toString(),
-    }));
 
     const homeNavButtons = [
         {
@@ -190,9 +183,7 @@ function Layout({ usuario, setPlayerLoad, setHeaderLoad, setBannerload, setFilte
             fn: currentProgress?.entrenamientoId ? "Mi entrenamiento actual" : null,
             route: currentProgress?.entrenamientoId ? `/player/${currentProgress?.entrenamientoId}` : null,
             id: '1'
-        }
-
-        ,
+        },
         // {
         //     text: 'Mi Seleccion',
         //     icon: <KeyboardArrowRightIcon
@@ -229,15 +220,15 @@ function Layout({ usuario, setPlayerLoad, setHeaderLoad, setBannerload, setFilte
         //     route: '/home',
         //     id: '5'
         // },
-        // {
-        //     text: 'Todos',
-        //     icon: <KeyboardArrowRightIcon
-        //         style={{ color: 'rgb(156, 28, 23)', cursor: 'pointer' }}
-        //     />,
-        //     fn: "Todos",
-        //     route: '/home',
-        //     id: '6'
-        // },
+        {
+            text: 'Todos',
+            icon: <KeyboardArrowRightIcon
+                style={{ color: 'rgb(156, 28, 23)', cursor: 'pointer' }}
+            />,
+            fn: "Todos",
+            route: '/home',
+            id: '6'
+        },
     ];
 
     let drawer;

@@ -46,7 +46,7 @@ function CardDrawer({ inOutStatus, setHeaderLoad, setBannerload, setFilterLoad, 
 
     [open, setOpen] = React.useState(false);
 
-    console.log(showInstructions, 'showInstructions en cardDrawer');
+    // console.log(showInstructions, 'showInstructions en cardDrawer');
 
 
     // console.log(open, 'open en cardDrawer');

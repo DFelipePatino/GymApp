@@ -19,14 +19,17 @@ const Cardio = forwardRef(({ setInOutStatus1, setInOutStatus2, setInOutStatus3, 
     // dispatch(getCardio());
 
     const results = useSelector((state) => state.cardio);
-    console.log(results, "cardio");
+    // console.log(results, "cardio");
 
-
-    const handleClick = (cardioEstiramiento) => {
+    const localHandleClick = (cardioEstiramiento) => {
         setTimeout(() => navigate(`/playerCE`, { state: { cardioEstiramiento: cardioEstiramiento } }), 200);
+    }
+
+    const handleClick = () => {
+        // setTimeout(() => navigate(`/playerCE`, { state: { cardioEstiramiento: cardioEstiramiento } }), 200);
 
         // const metodoIndex = index;
-        /* const idToFind = id;
+        //  const idToFind = id;
  
          setInOutStatus1(false);
          setInOutStatus2(false);
@@ -34,19 +37,19 @@ const Cardio = forwardRef(({ setInOutStatus1, setInOutStatus2, setInOutStatus3, 
          setInOutStatus4(false);
          setInOutStatus5(false);
  
-         if (idToFind) {
-             setTimeout(() => {
-                 dispatch(getMetodo1(idToFind));
-                 setInOutStatus2(true);
-             }, 500);
-         }
+        //  if (idToFind) {
+            //  setTimeout(() => {
+            //      dispatch(getMetodo1(idToFind));
+            //      setInOutStatus2(true);
+            //  }, 500);
+        //  }
          setTimeout(() => {
              if (localRef.current) {
                  localRef.current.scrollIntoView({ behavior: 'smooth' });
                  const yCoordinate = localRef.current.getBoundingClientRect().top + window.pageYOffset;
                  window.scrollTo({ top: yCoordinate - 80, behavior: 'smooth' });
              }
-         }, 600);*/
+         }, 600);
 
     };
 
@@ -167,7 +170,7 @@ const Cardio = forwardRef(({ setInOutStatus1, setInOutStatus2, setInOutStatus3, 
                         style={{ width: '200px', height: '170px', padding: '0px', margin: '5px', color: 'white' }}
                         color='error'
                         onClick={() => {
-                            handleClick(item);
+                            localHandleClick();
                         }}
                     >
 

@@ -392,14 +392,14 @@ function Profile2({ userForTesting, BackToTopButton, name, headerMountIn, conten
                                         <Fade in={displayLink} timeout={400}>
 
                                             <div className='link'>
-                                                <a href="https://checkout.bold.co/payment/LNK_TRZQRYD07V" target="_blank" rel="noopener noreferrer">Basico de 3 meses <ArrowOutwardIcon /></a>
+                                                <a href="https://checkout.bold.co/payment/LNK_TRZQRYD07V" target="_blank" rel="noopener noreferrer">Basico de 1 mese <ArrowOutwardIcon /></a>
                                             </div>
                                         </Fade>
 
                                     ) : activeButton === "Basic" && showLink === 6 ? (
                                         <Fade in={displayLink} timeout={400}>
                                             <div className='link'>
-                                                <a href="https://checkout.bold.co/payment/LNK_U3DQ8U24CM" target="_blank" rel="noopener noreferrer">Basico de 1 mes <ArrowOutwardIcon /></a>
+                                                <a href="https://checkout.bold.co/payment/LNK_U3DQ8U24CM" target="_blank" rel="noopener noreferrer">Basico de 6 meses <ArrowOutwardIcon /></a>
                                             </div>
                                         </Fade>
 

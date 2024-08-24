@@ -14,9 +14,9 @@ const CarruselMetodos = forwardRef(({ setInOutStatus1, setInOutStatus2, setInOut
     const localRef = useRef(null);
     const dispatch = useDispatch();
     const results = useSelector((state) => state.results);
-    console.log(results, "results in CarruselMetodos.jsx");
+    // console.log(results, "results in CarruselMetodos.jsx");
 
-    console.log(usuario, "usuario in CarruselMetodos.jsx");
+    // console.log(usuario, "usuario in CarruselMetodos.jsx");
 
 
     const handleClick = (id) => {

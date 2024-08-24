@@ -29,7 +29,7 @@ import ArrowOutwardIcon from '@mui/icons-material/ArrowOutward';
 import Swal from 'sweetalert2';
 
 const CardItem = ({ setHeaderLoad, setBannerload, setFilterLoad, showInstructions }) => {
-    console.log(showInstructions, 'showInstructions en cardItem');
+    // console.log(showInstructions, 'showInstructions en cardItem');
 
 
     const dispatch = useDispatch();
@@ -38,10 +38,10 @@ const CardItem = ({ setHeaderLoad, setBannerload, setFilterLoad, showInstruction
     const CardIndex = parseInt(localStorage.getItem('CardIndex'));
 
     const results = useSelector((state) => state.results);
-    console.log(results, 'results en cardItem');
+    // console.log(results, 'results en cardItem');
 
     const currentProgressState = useSelector((state) => state.currentProgress);
-    console.log(currentProgressState, 'currentProgressState en cardItem');
+    // console.log(currentProgressState, 'currentProgressState en cardItem');
 
 
 
@@ -105,7 +105,7 @@ const CardItem = ({ setHeaderLoad, setBannerload, setFilterLoad, showInstruction
                 }
             });
         } else {
-            console.log(entrenamientoSeleccionado.id, 'entrenamientoSeleccionado.id');
+            // console.log(entrenamientoSeleccionado.id, 'entrenamientoSeleccionado.id');
             toggleDrawer(false)();
             window.scrollTo({ top: 0, behavior: 'smooth' });
             setTimeout(() => setBannerload(false), 300);

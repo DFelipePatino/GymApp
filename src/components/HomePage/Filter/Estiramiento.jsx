@@ -19,23 +19,25 @@ const Estiramiento = forwardRef(({ setInOutStatus1, setInOutStatus2, setInOutSta
     const results = useSelector((state) => state.estiramientos);
 
 
-
+    const [localClick, setLocalClick] = useState(false);
     const [display, setDisplay] = useState(true);
     const [width, setWidth] = useState(600);
 
-    const handleClick = (cardioEstiramiento) => {
+    const localHandleClick = (cardioEstiramiento) => {
         setTimeout(() => navigate(`/playerCE`, { state: { cardioEstiramiento: cardioEstiramiento } }), 200);
+    }
 
+    const handleClick = () => {
 
         localStorage.setItem("category", "Estiramiento")
         // const metodoIndex = index;
         //     const idToFind = id;
 
-        //     setInOutStatus1(false);
-        //     setInOutStatus2(false);
-        //     setInOutStatus3(false);
-        //     setInOutStatus4(false);
-        //     setInOutStatus5(false);
+        setInOutStatus1(false);
+        setInOutStatus2(false);
+        setInOutStatus3(false);
+        setInOutStatus4(false);
+        setInOutStatus5(false);
 
         //     if (idToFind) {
         //         setTimeout(() => {
@@ -44,13 +46,13 @@ const Estiramiento = forwardRef(({ setInOutStatus1, setInOutStatus2, setInOutSta
         //         }, 500);
         //     }
 
-        //     setTimeout(() => {
-        //         if (localRef.current) {
-        //             localRef.current.scrollIntoView({ behavior: 'smooth' });
-        //             const yCoordinate = localRef.current.getBoundingClientRect().top + window.pageYOffset;
-        //             window.scrollTo({ top: yCoordinate - 80, behavior: 'smooth' });
-        //         }
-        //     }, 600);
+        setTimeout(() => {
+            if (localRef.current) {
+                localRef.current.scrollIntoView({ behavior: 'smooth' });
+                const yCoordinate = localRef.current.getBoundingClientRect().top + window.pageYOffset;
+                window.scrollTo({ top: yCoordinate - 80, behavior: 'smooth' });
+            }
+        }, 600);
 
     };
 
@@ -135,7 +137,7 @@ const Estiramiento = forwardRef(({ setInOutStatus1, setInOutStatus2, setInOutSta
                         style={{ width: '200px', height: '170px', padding: '0px', margin: '5px', color: 'white' }}
                         color='error'
                         onClick={() => {
-                            handleClick(item);
+                            localHandleClick(item);
                         }}
                     >
 

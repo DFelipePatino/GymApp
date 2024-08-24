@@ -14,9 +14,9 @@ const Seleccionado = forwardRef(({ setInOutStatus1, setInOutStatus2, setInOutSta
     const localRef = useRef(null);
     const dispatch = useDispatch();
     const results = useSelector((state) => state.results);
-    console.log(results, "results in Seleccionado.jsx");
+    // console.log(results, "results in Seleccionado.jsx");
 
-    console.log(usuario, "usuario in Seleccionado.jsx");
+    // console.log(usuario, "usuario in Seleccionado.jsx");
 
 
     const handleClick = (id) => {
@@ -32,7 +32,7 @@ const Seleccionado = forwardRef(({ setInOutStatus1, setInOutStatus2, setInOutSta
         if (id) {
             setTimeout(() => {
                 dispatch(getMetodo1(id)); // lo que ejecuta ese componente
-                setInOutStatus1(true);
+                setInOutStatus5(true);
             }, 500);
         }
 

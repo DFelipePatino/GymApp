@@ -107,28 +107,28 @@ function App() {
       // dispatch(getMetodo1(0));
     }
   };
-  const scrollToFilter2 = () => {
+  const scrollToCardio = () => {
+    console.log('scrolling f2?');
     if (filterRef2.current) {
       filterRef2.current.scrollToComponent();
-      // console.log('scrolling f2?');
     }
   };
-  const scrollToFilter3 = () => {
+  const scrollToEstiramiento = () => {
     if (filterRef3.current) {
       filterRef3.current.scrollToComponent();
-      // console.log('scrolling f3?');
+      console.log('scrolling f3?');
     }
   };
   const scrollToFilter4 = () => {
     if (filterRef4.current) {
       filterRef4.current.scrollToComponent();
-      // console.log('scrolling f4?');
+      console.log('scrolling f4?');
     }
   };
-  const scrollToFilter5 = () => {
+  const scrollToTodos = () => {
     if (filterRef5.current) {
       filterRef5.current.scrollToComponent();
-      // console.log('scrolling f5?');
+      console.log('scrolling f5?');
     }
   };
 
@@ -160,10 +160,10 @@ function App() {
           setNavigateAway={setNavigateAway}
 
           scrollToFilter1={scrollToFilter1}
-          scrollToFilter2={scrollToFilter2}
-          scrollToFilter3={scrollToFilter3}
+          scrollToCardio={scrollToCardio}
+          scrollToEstiramiento={scrollToEstiramiento}
           scrollToFilter4={scrollToFilter4}
-          scrollToFilter5={scrollToFilter5}
+          scrollToTodos={scrollToTodos}
 
           setInfoPremium={setInfoPremium}
           infoPremium={infoPremium}
@@ -193,10 +193,10 @@ function App() {
           BackToTopButton={BackToTopButton}
           localUser={localUser}
           scrollToFilter1={scrollToFilter1}
-          scrollToFilter2={scrollToFilter2}
-          scrollToFilter3={scrollToFilter3}
+          scrollToCardio={scrollToCardio}
+          scrollToEstiramiento={scrollToEstiramiento}
           scrollToFilter4={scrollToFilter4}
-          scrollToFilter5={scrollToFilter5}
+          scrollToTodos={scrollToTodos}
           filterRef1={filterRef1}
           filterRef2={filterRef2}
           filterRef3={filterRef3}

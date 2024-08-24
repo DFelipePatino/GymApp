@@ -13,7 +13,7 @@ function Banner({ setInfoPremium }) {
     const dispatch = useDispatch();
     const [items, setItems] = useState([]);
     const allBanners = useSelector(state => state.banner);
-    console.log(allBanners, "allBanners in Banner.jsx");
+    // console.log(allBanners, "allBanners in Banner.jsx");
 
 
     return (

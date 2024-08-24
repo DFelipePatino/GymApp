@@ -9,7 +9,7 @@ import './cards.css';
 import { Grow } from '@mui/material';
 import MetodoCard from './MetodoCard';
 
-function Cards5({ inOutStatus5, setHeaderLoad, setBannerload, setFilterLoad }) {
+function BotonesCarruselSeleccionado({ inOutStatus5, setHeaderLoad, setBannerload, setFilterLoad, setInOutStatus5, metodoSelected }) {
 
     const [checked, setChecked] = React.useState(true);
 
@@ -17,7 +17,7 @@ function Cards5({ inOutStatus5, setHeaderLoad, setBannerload, setFilterLoad }) {
 
     return (
         <Container className='results'>
-            <Grow
+            {/* <Grow
                 in={inOutStatus5}
                 // out={checked}
                 style={{ transformOrigin: '0 0 0' }}
@@ -28,7 +28,7 @@ function Cards5({ inOutStatus5, setHeaderLoad, setBannerload, setFilterLoad }) {
                     <h2 className='resultsTitle'>{resultsFiltered?.nombre}</h2>
                     : <h3 className='resultsTitle'></h3>}
 
-            </Grow>
+            </Grow> */}
             <Grow
                 in={inOutStatus5}
                 // out={checked}
@@ -61,7 +61,7 @@ function Cards5({ inOutStatus5, setHeaderLoad, setBannerload, setFilterLoad }) {
 
                     </Card> */}
 
-                    <MetodoCard resultsFiltered={resultsFiltered} />
+                    <MetodoCard resultsFiltered={resultsFiltered} setInOutStatus5={setInOutStatus5} inOutStatus5={inOutStatus5} metodoSelected={metodoSelected}/>
 
                 </Grid>
             </Grow>
@@ -71,7 +71,7 @@ function Cards5({ inOutStatus5, setHeaderLoad, setBannerload, setFilterLoad }) {
         </Container >
     );
 }
-export default Cards5
+export default BotonesCarruselSeleccionado
 
 
 

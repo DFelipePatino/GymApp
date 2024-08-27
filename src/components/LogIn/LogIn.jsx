@@ -52,7 +52,7 @@ function LogIn() {
 
     const autenticarCongoogle = () => {
         google.accounts.id.initialize({
-            client_id: '440245761376-4n8f17fi52g5ce2cf5hjakqonfmh4bji.apps.googleusercontent.com',
+            client_id: '662569833008-v986m84utq416ms5677qrjqcns89eldu.apps.googleusercontent.com',
             callback: handleCredentialResponse
         });
 

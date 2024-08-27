@@ -47,11 +47,7 @@ function Layout({ usuario, setPlayerLoad, setHeaderLoad, setBannerload, setFilte
     const resultsData = useSelector((state) => state.results.data);
     const currentIndex = useSelector((state) => state.rutinaID);
     const currentProgress = useSelector((state) => state.currentProgress);
-    // console.log(currentProgress, 'currentProgress.entrenamientoId en layout');
-
-    // console.log(resultsData, 'resultsData en layout');
-
-    // const localUser = null;
+  
 
     const localUserName = usuario?.nombres + ' ' + usuario?.apellidos;
     // console.log(localUserName, 'localUserName en layout');

@@ -27,9 +27,17 @@ import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
 import ArrowOutwardIcon from '@mui/icons-material/ArrowOutward';
 import Swal from 'sweetalert2';
+import { baseUrl } from "../../../redux/actions";
+import { Worker, Viewer } from "@react-pdf-viewer/core";
+import { defaultLayoutPlugin } from "@react-pdf-viewer/default-layout";
+import "@react-pdf-viewer/core/lib/styles/index.css";
+import "@react-pdf-viewer/default-layout/lib/styles/index.css";
 
-const CardItem = ({ setHeaderLoad, setBannerload, setFilterLoad, showInstructions }) => {
+const CardItem = ({ setHeaderLoad, setBannerload, setFilterLoad, showInstructions, usuario, setShowPlanDeDieta, showPlanDeDieta }) => {
     // console.log(showInstructions, 'showInstructions en cardItem');
+    console.log(showPlanDeDieta, 'showPlanDeDieta en cardItem');
+
+    const defaultLayoutPluginInstance = defaultLayoutPlugin();
 
 
     const dispatch = useDispatch();
@@ -64,6 +72,10 @@ const CardItem = ({ setHeaderLoad, setBannerload, setFilterLoad, showInstruction
     const [showGym, setShowGym] = useState(false);
     const [showHome, setShowHome] = useState(false);
     const [imageUrl, setImageUrl] = useState('');
+    const [dietaPlanUrl, setDietaPlanUrl] = useState(`${baseUrl}/multimedia/download/{id}?token={id_token}`);
+
+
+
 
     const handleExpandClick = () => {
         setGrow(false);
@@ -114,7 +126,7 @@ const CardItem = ({ setHeaderLoad, setBannerload, setFilterLoad, showInstruction
         }
     }
 
-    const baseUrl = "https://backdev.onetrainingteam.com/onegym-backtest/api";
+
 
     const getHeaders = () => {
         const id_token = localStorage.getItem('id_token');
@@ -152,7 +164,11 @@ const CardItem = ({ setHeaderLoad, setBannerload, setFilterLoad, showInstruction
             const imageId = entrenamientoSeleccionado?.multimedia?.find((i) => i.type === 'IMAGE')?.id || 17;
             getImageObject(imageId);
         }
+        const id_token = localStorage.getItem('id_token');
+        setDietaPlanUrl(dietaPlanUrl.replace('{id_token}', id_token));
     }, [entrenamientoSeleccionado?.rutinas]);
+
+    const document = usuario?.multimedia?.find((m) => m.type === 'DOCUMENT');
 
     return (
         <Grow in={grow} timeout={500}>
@@ -164,7 +180,7 @@ const CardItem = ({ setHeaderLoad, setBannerload, setFilterLoad, showInstruction
                 marginBottom: '10px',
             }}>
 
-                {!showInstructions ? (
+                {!showInstructions && !showPlanDeDieta ? (
                     <>
                         <CardHeader
                             title={
@@ -217,9 +233,9 @@ const CardItem = ({ setHeaderLoad, setBannerload, setFilterLoad, showInstruction
                                                 // variant='contained'
                                                 style={{ fontSize: '0.8rem', textDecoration: 'underline', marginBottom: '10px', color: 'white' }}
                                             >
-                                                {/* <KeyboardArrowRightIcon
-                                                style={{ color: 'rgb(256, 256, 256)', paddingBottom: '-20px', marginLeft: '-10px' }}
-                                            /> */}
+                                                <KeyboardArrowRightIcon
+                                                    style={{ color: 'rgb(256, 256, 256)', paddingBottom: '-20px', marginLeft: '-10px' }}
+                                                />
                                                 {rutina.nombre}
                                             </Typography>
                                         </Grid>
@@ -228,21 +244,73 @@ const CardItem = ({ setHeaderLoad, setBannerload, setFilterLoad, showInstruction
                             </div>
                         </CardContent>
                     </>
-                ) : showInstructions ? (
+                ) :
+                    showInstructions ? (
+                        <>
+                            <CardHeader
+                                title={
+                                    <div>
+                                        Instructivo de pago
+                                    </div>
+                                }
+                            />
+                            <CardContent style={{ paddingTop: '0' }}>
+                                <div style={{ position: 'relative' }}>
+                                    <Link to={'/instructions.jpg'} target='blank'>
+                                        <ArrowOutwardIcon
+                                            style={{
+                                                position: 'absolute',
+                                                top: '-4%',
+                                                right: '-4%',
+                                                transform: 'translate(-50%, -50%)',
+                                                cursor: 'pointer',
+                                                fontSize: '48px',
+                                                color: 'red'
+                                            }}
+                                        />
+                                    </Link>
 
-
-
-                    <>
-                        <CardHeader
-                            title={
-                                <div>
-                                    Instructivo de pago
+                                    <div style={{ height: '600px', overflow: 'auto' }}>
+                                        <CardMedia
+                                            style={{ paddingBottom: '30px', background: 'linear-gradient(to bottom, rgb(0, 0, 0),rgb(159, 28, 23),rgb(0, 0, 0)' }}
+                                            component="img"
+                                            height="auto"
+                                            image="/instructions.jpg"
+                                        />
+                                    </div>
                                 </div>
-                            }
-                        />
-                        <CardContent style={{ paddingTop: '0' }}>
-                            <div style={{ position: 'relative' }}>
-                                <Link to={'/instructions.jpg'} target='blank'>
+
+                            </CardContent>
+                        </>)
+                        : showPlanDeDieta ?
+                            (<>
+                                <CardHeader
+                                    title={
+                                        <div>
+                                            Plan de Dieta
+                                        </div>
+                                    }
+                                />
+                                <CardContent style={{ paddingTop: '0' }}>
+                                    <div style={{ position: 'relative' }}>
+                                        <Link
+                                            to={document ? dietaPlanUrl.replace('{id}', document.id) : '#'}
+                                            target="_blank"
+                                            rel="noopener noreferrer" // Recommended for security reasons when using target="_blank"
+                                        >
+                                            <ArrowOutwardIcon
+                                                style={{
+                                                    position: 'absolute',
+                                                    top: '-4%',
+                                                    right: '-4%',
+                                                    transform: 'translate(-50%, -50%)',
+                                                    cursor: 'pointer',
+                                                    fontSize: '48px',
+                                                    color: 'red'
+                                                }}
+                                            />
+                                        </Link>
+                                        {/* <Link to={`http://${usuario.multimedia[0].ruta}`} target='blank'>
                                     <ArrowOutwardIcon
                                         style={{
                                             position: 'absolute',
@@ -254,26 +322,29 @@ const CardItem = ({ setHeaderLoad, setBannerload, setFilterLoad, showInstruction
                                             color: 'red'
                                         }}
                                     />
-                                </Link>
+                                </Link> */}
+                                        <div style={{ height: "750px" }}>
+                                            <Worker workerUrl={`https://unpkg.com/pdfjs-dist@3.11.174/build/pdf.worker.min.js`}>
+                                                <Viewer fileUrl={usuario.multimedia[0].ruta} plugins={[defaultLayoutPluginInstance]} />
+                                            </Worker>
+                                        </div>
 
-                                <div style={{ height: '600px', overflow: 'auto' }}>
+                                        {/* <div style={{ height: '600px', overflow: 'auto' }}>
                                     <CardMedia
                                         style={{ paddingBottom: '30px', background: 'linear-gradient(to bottom, rgb(0, 0, 0),rgb(159, 28, 23),rgb(0, 0, 0)' }}
                                         component="img"
                                         height="auto"
                                         image="/instructions.jpg"
                                     />
-                                </div>
-                            </div>
+                                </div> */}
+                                    </div>
 
-                        </CardContent>
-                    </>
+                                </CardContent>
+                            </>
 
-                )
+                            ) : (null)}
 
-                    : (null)
 
-                }
             </Card>
         </Grow>
     );

@@ -26,7 +26,7 @@ import { toggleDrawer } from '../HomePage/CardDrawer/CardDrawer';
 import CardDrawer from '../HomePage/CardDrawer/CardDrawer';
 
 
-function Profile2({ userForTesting, BackToTopButton, name, headerMountIn, contentMountIn, setHeaderMountIn, setContentMountIn, navigateAway, setNavigateAway, todasLasCategotias, usuario, reload, setInfoPremium, infoPremium }) {
+function Profile2({ BackToTopButton, name, headerMountIn, contentMountIn, setHeaderMountIn, setContentMountIn, navigateAway, setNavigateAway, todasLasCategotias, usuario, reload, setInfoPremium, infoPremium }) {
 
     const navigate = useNavigate();
 
@@ -43,6 +43,7 @@ function Profile2({ userForTesting, BackToTopButton, name, headerMountIn, conten
     const [fadeLoad, setfadeLoad] = useState(true)
     const [activeButton, setActiveButton] = useState("");
     const [showInstructions, setShowInstructions] = useState(false);
+    const [showPlanDeDieta, setShowPlanDeDieta] = useState(false);
     const [planLength, setPlanLength] = useState(false);
     const [showLink, setShowLink] = useState(false);
     const [selectedValue, setSelectedValue] = React.useState('a');
@@ -462,6 +463,25 @@ function Profile2({ userForTesting, BackToTopButton, name, headerMountIn, conten
                                                 <br />
                                                 <br />
 
+                                                <CardDrawer usuario={usuario} showPlanDeDieta={showPlanDeDieta} setShowPlanDeDieta={setShowPlanDeDieta} />
+
+                                                <Button
+                                                    style={buttonStyle}
+                                                    variant='contained'
+                                                    onClick={() => {
+                                                        setShowPlanDeDieta(true);
+                                                        setTimeout(() => {
+                                                            toggleDrawer(true)();
+                                                        }
+                                                            , 800);
+                                                    }}
+                                                >
+                                                    <PictureAsPdfTwoToneIcon style={{ marginRight: '10px' }} />
+                                                    Plan de dieta
+                                                    <br />
+                                                </Button>
+
+                                                <br />
                                                 <Button
                                                     style={{ backgroundColor: 'rgb(0, 128, 0)', color: 'white' }}
                                                     variant='contained'
@@ -473,11 +493,13 @@ function Profile2({ userForTesting, BackToTopButton, name, headerMountIn, conten
                                                         anchor.click();
                                                     }}
                                                 >
-                                                    <WhatsAppIcon />
-
+                                                    <WhatsAppIcon style={{ marginRight: '10px' }} />
+                                                    Contactanos
                                                 </Button>
                                                 <br />
                                                 <br />
+
+
                                             </>
                                         )
                                             : (null)
@@ -492,7 +514,11 @@ function Profile2({ userForTesting, BackToTopButton, name, headerMountIn, conten
                                             }} />
 
                                         <h2>Objetivos:</h2>
-                                        {`${usuario.categorias.map((categoria) => { return ' ' + categoria.nombre })}`}
+                                        {usuario.categorias.map((categoria, index) => (
+                                            <div key={index}>
+                                                {'* ' + categoria.nombre}
+                                            </div>
+                                        ))}
                                     </div>
 
 

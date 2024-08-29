@@ -42,7 +42,7 @@ export const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
 };
 
-function CardDrawer({ inOutStatus, setHeaderLoad, setBannerload, setFilterLoad, showInstructions }) {
+function CardDrawer({ inOutStatus, setHeaderLoad, setBannerload, setFilterLoad, showInstructions, usuario, showPlanDeDieta, setShowPlanDeDieta }) {
 
     [open, setOpen] = React.useState(false);
 
@@ -119,7 +119,7 @@ function CardDrawer({ inOutStatus, setHeaderLoad, setBannerload, setFilterLoad, 
 
 
 
-                    <CardItem toggleDrawer={toggleDrawer} setHeaderLoad={setHeaderLoad} setBannerload={setBannerload} setFilterLoad={setFilterLoad} showInstructions={showInstructions} />
+                    <CardItem toggleDrawer={toggleDrawer} setHeaderLoad={setHeaderLoad} setBannerload={setBannerload} setFilterLoad={setFilterLoad} showInstructions={showInstructions} usuario={usuario} setShowPlanDeDieta={setShowPlanDeDieta} showPlanDeDieta={showPlanDeDieta} />
 
 
 

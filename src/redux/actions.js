@@ -34,7 +34,8 @@ import {
     GET_BANNER,
     GET_CATEGORIES,
     GET_GOOGLE,
-    GET_PROGRESO_ACTUAL
+    GET_PROGRESO_ACTUAL,
+    GET_ULTIMOS_PROGRESOS_ENTRENAMIENTO
 } from "./action-types";
 
 
@@ -85,18 +86,29 @@ export const getBanner = () => {
 
 export const getCardio = () => {
     return async (dispatch) => {
-        const id_token = localStorage.getItem('id_token');
-        const registro = await fetch(`${baseUrl}/cardio`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': "Bearer " + id_token
-            },
-            body: null
-        });
+        try {
+            console.log('enters the cardio try');
+            
+            const id_token = localStorage.getItem('id_token');
+            const registro = await fetch(`${baseUrl}/cardio`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': "Bearer " + id_token
+                }
+            });
 
-        const data = await registro.json();
-        dispatch({ type: GET_CARDIO, payload: data });
+            const data = await registro.json();
+            dispatch({ type: GET_CARDIO, payload: data });
+        } catch (error) {
+            console.log(error, 'error');
+                   
+            if (error) {
+                console.log('Error 401');
+                localStorage.clear();
+            }
+            console.error(error);
+        }
     }
 }
 
@@ -136,7 +148,6 @@ export const getProgresoActual = () => {
     return async (dispatch) => {
         const id_token = localStorage.getItem('id_token');
         const localUser = JSON.parse(localStorage.getItem('localUser'));
-        console.log('localUser:', localUser);
 
         const registro = await fetch(`${baseUrl}/progreso/last/${localUser?.id}`, {
             method: 'GET',
@@ -149,6 +160,28 @@ export const getProgresoActual = () => {
 
         const data = await registro.json();
         dispatch({ type: GET_PROGRESO_ACTUAL, payload: data?.terminada || data?.abandonada ?  {} : data }); 
+    }
+}
+
+
+export const get2UltimosProgresoActualPorEntrenamiento = (entrenamientoId) => {
+
+    return async (dispatch) => {
+        const id_token = localStorage.getItem('id_token');
+        const localUser = JSON.parse(localStorage.getItem('localUser'));
+
+        const registro = await fetch(`${baseUrl}/progreso/last2ByEntrenamiento/${localUser?.id}/${entrenamientoId}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': "Bearer " + id_token
+            },
+            body: null
+        });
+
+        const data = await registro.json();
+        console.log('data progresos  45we1f5we1fwe14fwe:',entrenamientoId, data); 
+        dispatch({ type: GET_ULTIMOS_PROGRESOS_ENTRENAMIENTO, payload: data }); 
     }
 }
 
@@ -219,21 +252,28 @@ export const actualizarEntrenamiento = async (entrenamientoID, entrenamiento, cu
 
 export const getCategories = () => {
     return async (dispatch) => {
-        const id_token = localStorage.getItem('id_token');
-        const registro = await fetch(`${baseUrl}/categorias`,
-            {
+        try {
+            const id_token = localStorage.getItem('id_token');
+
+            const registro = await fetch(`${baseUrl}/categorias`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': "Bearer " + id_token
                 }
+            });
+
+            const data = await registro.json();
+            dispatch({ type: GET_CATEGORIES, payload: data });
+        } catch (error) {
+            if (error.response && error.response.status === 401) {
+                console.log('Error 401');
+                localStorage.clear();
             }
-        );
-        const data = await registro.json();
-        dispatch({ type: GET_CATEGORIES, payload: data });
+            console.error(error);
+        }
     }
 }
-
 export const putUsuario = async (usuario) => {
     console.log('usuario Perro:', usuario);
     //usuario.fechaNacimiento = null;
@@ -326,31 +366,27 @@ export const setMetodoID = (metodoIndex) => {
 
 export const getMethods = () => {
     return async (dispatch) => {
-        const id_token = localStorage.getItem('id_token');
-        // const config = {
-        //     headers: {
-        //         'Authorization': 'Bearer ' + id_token
-        //     }
-        // };
-        // try {
-        //     const data = await axios.get('http://localhost:8082/onegym-back/api/metodos', config);
-        //     dispatch({ type: GET_METHODS, payload: data });
+        try {
+            const id_token = localStorage.getItem('id_token');
 
-        // } catch (error) {
-        //     console.error(error);
-        // }
+            const registro = await fetch(`${baseUrl}/metodos`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': "Bearer " + id_token
+                },
+                body: null
+            });
 
-        const registro = await fetch(`${baseUrl}/metodos`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': "Bearer " + id_token
-            },
-            body: null
-        });
-
-        const data = await registro.json();
-        dispatch({ type: GET_METHODS, payload: data });
+            const data = await registro.json();
+            dispatch({ type: GET_METHODS, payload: data });
+        } catch (error) {
+            if (error.response && error.response.status === 401) {
+                console.log('Error 401');
+                localStorage.clear();
+            }
+            console.error(error);
+        }
     }
 }
 

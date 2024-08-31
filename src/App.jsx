@@ -65,6 +65,9 @@ function App() {
     dispatch(getProgresoActual());
   }
 
+  // console.log(localStorage.getItem("id_token"), 'localUser.getItem("id_token")');
+  
+
 
   useEffect(async () => {
 
@@ -72,7 +75,6 @@ function App() {
 
     const token = await localStorage.getItem("id_token");
     if (token) {
-
 
       try {
         let pUsuario = await getGoogle();

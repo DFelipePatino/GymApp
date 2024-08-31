@@ -1,21 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { Card, CardHeader, CardContent, Typography, Avatar } from '@material-ui/core';
+import { Card } from '@material-ui/core';
 import './Profile2.css';
-import { Button, Divider, Fade, Grid, Grow, LinearProgress, Slide } from '@mui/material';
-import { Link, useNavigate } from 'react-router-dom';
+import { Button, Divider, Fade, LinearProgress, Slide } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 import PictureAsPdfTwoToneIcon from '@mui/icons-material/PictureAsPdfTwoTone';
 import ListAltIcon from '@mui/icons-material/ListAlt';
 import EditIcon from '@mui/icons-material/Edit';
-import { infoCardsStyle, profile2divCardStyle, cardHeaderStyle, avatarStyle, buttonStyle, cardContentCard, infoCardsIconStyle } from './Profile2'
-import { Troubleshoot } from '@mui/icons-material';
+import { cardHeaderStyle, buttonStyle, infoCardsIconStyle } from './Profile2'
 import { Box } from '@mui/system';
-import profilePic from "/Perfil.png"
-import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import WorkspacePremiumIcon from '@mui/icons-material/WorkspacePremium';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
-import DropDownCategorias from './DropDownCategorias';
-import { pink } from '@mui/material/colors';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -26,16 +20,16 @@ import { toggleDrawer } from '../HomePage/CardDrawer/CardDrawer';
 import CardDrawer from '../HomePage/CardDrawer/CardDrawer';
 
 
-function Profile2({ BackToTopButton, name, headerMountIn, contentMountIn, setHeaderMountIn, setContentMountIn, navigateAway, setNavigateAway, todasLasCategotias, usuario, reload, setInfoPremium, infoPremium }) {
+function Profile2({ headerMountIn, setHeaderMountIn, setContentMountIn, navigateAway, setNavigateAway, usuario, reload, setInfoPremium, infoPremium }) {
 
     const navigate = useNavigate();
 
-    console.log(usuario, 'usuario en Profile2');
+    console.log(usuario, 'usuario');
 
 
     const localUserName = usuario?.nombres + ' ' + usuario?.apellidos;
     const tipoDeCuenta = usuario?.accountType === "GENERAL" ? 'BASIC' : usuario?.accountType;
-    const formattedExpitarion = new Date(usuario.fechaExpiracionPlan).toLocaleDateString();
+    const formattedExpitarion = new Date(usuario?.fechaExpiracionPlan).toLocaleDateString();
 
     const userInitials = localUserName?.split(' ').map((n) => n ? n[0].toUpperCase() : '').join('');
     console.log(userInitials, 'userInitials');
@@ -71,6 +65,9 @@ function Profile2({ BackToTopButton, name, headerMountIn, contentMountIn, setHea
             }, 300);
             contentMountTimeout = setTimeout(() => {
                 setContentMountIn(true)
+                if (usuario === null) {
+                    navigate('/login')
+                }
             }, 500);
         }
 
@@ -136,8 +133,8 @@ function Profile2({ BackToTopButton, name, headerMountIn, contentMountIn, setHea
                         <div className='gradiant'> </div>
                         <div className='profile'>
 
-                            <div class="profile-image-container">
-                                <img src={usuario.foto} alt={userInitials} />
+                            <div className="profile-image-container">
+                                <img src={usuario?.foto} alt={userInitials} />
                             </div>
 
                             <br />
@@ -147,7 +144,7 @@ function Profile2({ BackToTopButton, name, headerMountIn, contentMountIn, setHea
                             </div>
 
 
-                            {infoPremium && usuario.accountType !== "FREE" ? (
+                            {infoPremium && usuario?.accountType !== "FREE" ? (
 
                                 <>
 
@@ -242,8 +239,6 @@ function Profile2({ BackToTopButton, name, headerMountIn, contentMountIn, setHea
                                         <div
                                             className='lastDiv'
                                         >
-
-
                                             <Fade in={planLength} timeout={800}>
 
                                                 <FormControl>
@@ -353,19 +348,19 @@ function Profile2({ BackToTopButton, name, headerMountIn, contentMountIn, setHea
                                                 </FormControl>
 
                                             </Fade>
-
-
-
                                         </div >
-                                    ) : <br />}
+
+                                    ) :
+
+                                        <br />}
 
                                     {activeButton === "Premium" && showLink === 3 ? (
                                         <Fade in={displayLink} timeout={400}>
 
                                             <div className='link'>
                                                 <a href="https://checkout.bold.co/payment/LNK_RQR0AJZR11" target="_blank" rel="noopener noreferrer">Premium de 3 meses <ArrowOutwardIcon /> </a>
+                                                <p>Click para ir a pagar</p>
                                             </div>
-
                                         </Fade>
 
                                     ) : activeButton === "Premium" && showLink === 6 ? (
@@ -373,9 +368,8 @@ function Profile2({ BackToTopButton, name, headerMountIn, contentMountIn, setHea
                                         <Fade in={displayLink} timeout={400}>
                                             <div className='link'>
                                                 <a href="https://checkout.bold.co/payment/LNK_CAQS6CWBIF" target="_blank" rel="noopener noreferrer">Premium de 6 meses <ArrowOutwardIcon /></a>
+                                                <p>Click para ir a pagar</p>
                                             </div>
-
-
                                         </Fade>
 
                                     ) : activeButton === "Premium" && showLink === 12 ? (
@@ -384,6 +378,7 @@ function Profile2({ BackToTopButton, name, headerMountIn, contentMountIn, setHea
 
                                             <div className='link'>
                                                 <a href="https://checkout.bold.co/payment/LNK_ZYU6G0PEA3" target="_blank" rel="noopener noreferrer">Premium de 12 meses <ArrowOutwardIcon /></a>
+                                                <p>Click para ir a pagar</p>
                                             </div>
 
                                         </Fade>
@@ -394,6 +389,7 @@ function Profile2({ BackToTopButton, name, headerMountIn, contentMountIn, setHea
 
                                             <div className='link'>
                                                 <a href="https://checkout.bold.co/payment/LNK_TRZQRYD07V" target="_blank" rel="noopener noreferrer">Basico de 1 mese <ArrowOutwardIcon /></a>
+                                                <p>Click para ir a pagar</p>
                                             </div>
                                         </Fade>
 
@@ -401,6 +397,7 @@ function Profile2({ BackToTopButton, name, headerMountIn, contentMountIn, setHea
                                         <Fade in={displayLink} timeout={400}>
                                             <div className='link'>
                                                 <a href="https://checkout.bold.co/payment/LNK_U3DQ8U24CM" target="_blank" rel="noopener noreferrer">Basico de 6 meses <ArrowOutwardIcon /></a>
+                                                <p>Click para ir a pagar</p>
                                             </div>
                                         </Fade>
 
@@ -408,6 +405,7 @@ function Profile2({ BackToTopButton, name, headerMountIn, contentMountIn, setHea
                                         <Fade in={displayLink} timeout={400}>
                                             <div className='link'>
                                                 <a href="https://checkout.bold.co/payment/LNK_JF0U1E5QXP" target="_blank" rel="noopener noreferrer">Basico de 12 meses <ArrowOutwardIcon /></a>
+                                                <p>Click para ir a pagar</p>
                                             </div>
                                         </Fade>
 
@@ -428,38 +426,38 @@ function Profile2({ BackToTopButton, name, headerMountIn, contentMountIn, setHea
                                 <>
                                     <div className='description'>
                                         <h2>Info:</h2>
-                                        {`Edad: ${usuario.age}`}
+                                        {`Edad: ${usuario?.age}`}
                                         <br />
-                                        {`Genero: ${usuario.genero}`}
+                                        {`Genero: ${usuario?.genero}`}
                                         <br />
-                                        {`Email: ${usuario.email}`}
+                                        {`Email: ${usuario?.email}`}
                                         <br />
                                         <br />
                                         {`Suscripcion: ${tipoDeCuenta}`}
                                         <br />
-                                        {`Estado: ${usuario.state}`}
+                                        {`Estado: ${usuario?.state}`}
                                         <br />
                                         {`Valido hasta: ${formattedExpitarion}`}
                                         <br />
                                         <br />
 
-                                        {usuario.accountType === "PREMIUM" ? (
+                                        {usuario?.accountType === "PREMIUM" ? (
                                             <>
-                                                {`Talla: ${usuario.talla ? usuario.talla + " cm" : ''}`}
+                                                {`Talla: ${usuario?.talla ? usuario?.talla + " cm" : ''}`}
                                                 <br />
-                                                {`Peso: ${usuario.peso ? usuario.peso + " kg" : ''}`}
+                                                {`Peso: ${usuario?.peso ? usuario?.peso + " kg" : ''}`}
                                                 <br />
-                                                {`Patologias: ${usuario.patologias ? usuario.patologias : ''}`}
+                                                {`Patologias: ${usuario?.patologias ? usuario?.patologias : ''}`}
                                                 <br />
-                                                {`Fracturas: ${usuario.fracturas ? usuario.fracturas : ''}`}
+                                                {`Fracturas: ${usuario?.fracturas ? usuario?.fracturas : ''}`}
                                                 <br />
-                                                {`Cirugias: ${usuario.cirugias ? usuario.cirugias : ''}`}
+                                                {`Cirugias: ${usuario?.cirugias ? usuario?.cirugias : ''}`}
                                                 <br />
-                                                {`Alergias: ${usuario.alergias ? usuario.alergias : ''}`}
+                                                {`Alergias: ${usuario?.alergias ? usuario?.alergias : ''}`}
                                                 <br />
-                                                {`Frecuencia entrenamiento: ${usuario.frecuenciaEntrenamientoSemanal ? usuario.frecuenciaEntrenamientoSemanal : ''}`}
+                                                {`Frecuencia entrenamiento: ${usuario?.frecuenciaEntrenamientoSemanal ? usuario?.frecuenciaEntrenamientoSemanal : ''}`}
                                                 <br />
-                                                {`Experiencia: ${usuario.nivelExperiencia ? usuario.nivelExperiencia : ''}`}
+                                                {`Experiencia: ${usuario?.nivelExperiencia ? usuario?.nivelExperiencia : ''}`}
                                                 <br />
                                                 <br />
 
@@ -486,7 +484,7 @@ function Profile2({ BackToTopButton, name, headerMountIn, contentMountIn, setHea
                                                     style={{ backgroundColor: 'rgb(0, 128, 0)', color: 'white' }}
                                                     variant='contained'
                                                     onClick={() => {
-                                                        const whatsappUrl = 'https://api.whatsapp.com/send/?phone=%2B573107709118&text=Hola+David%2C+soy+usuario+de+Onegym+Premium&type=phone_number&app_absent=0';
+                                                        const whatsappUrl = 'https://api.whatsapp.com/send/?phone=%2B573107709118&text=Hola+David%2C+soy+usuario+One+Premium&type=phone_number&app_absent=0';
                                                         const anchor = document.createElement('a');
                                                         anchor.href = whatsappUrl;
                                                         anchor.target = '_blank';
@@ -514,9 +512,9 @@ function Profile2({ BackToTopButton, name, headerMountIn, contentMountIn, setHea
                                             }} />
 
                                         <h2>Objetivos:</h2>
-                                        {usuario.categorias.map((categoria, index) => (
+                                        {usuario?.categorias?.map((categoria, index) => (
                                             <div key={index}>
-                                                {'* ' + categoria.nombre}
+                                                {'* ' + categoria?.nombre}
                                             </div>
                                         ))}
                                     </div>
@@ -524,23 +522,19 @@ function Profile2({ BackToTopButton, name, headerMountIn, contentMountIn, setHea
 
                                     <div className='contact'>
 
-                                        {usuario.accountType ? (<Button
+                                        {usuario?.accountType ? (<Button
                                             style={buttonStyle}
                                             variant='contained'
                                             onClick={() => {
                                                 window.scroll({ top: 0, behavior: 'smooth' });
-                                                // setTimeout(() => {
                                                 setHeaderMountIn(false);
-                                                // }, 200);
                                                 setTimeout(() => {
                                                     setInfoPremium(true)
                                                 }, 400);
                                                 setTimeout(() => {
                                                     setHeaderMountIn(true)
                                                 }, 800);
-                                                // setTimeout(() => {
-                                                // setInfoPremium(true)
-                                                // }, 600);
+
                                             }}
                                         >
                                             <WorkspacePremiumIcon />

@@ -14,6 +14,24 @@
     /* border: 1px solid rgb(156, 28, 23); */
 }
 
+.fade-wrapper {
+    position: relative;
+    overflow: hidden; 
+    z-index: 0;/* Ensure content doesn't overflow out of the wrapper */
+  }
+  
+  .fade-wrapper::before {
+    content: '';
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 50%; /* Adjust this value if you want to start fading from a different point */
+ /* Fade from transparent to black */
+    pointer-events: none; /* Ensures the gradient does not interfere with clicks */
+  }
+  
+
 .paper {
     margin: 0 10px;
     /* background-color: #426E92; */

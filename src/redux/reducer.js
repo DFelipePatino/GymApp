@@ -20,7 +20,8 @@ import {
     GET_BANNER,
     GET_CATEGORIES,
     GET_GOOGLE,
-    GET_PROGRESO_ACTUAL
+    GET_PROGRESO_ACTUAL,
+    GET_ULTIMOS_PROGRESOS_ENTRENAMIENTO
 } from "./action-types";
 
 const initialState = {
@@ -41,6 +42,7 @@ const initialState = {
     allCategories: [],
     googleResponse: null,
     currentProgress: {},
+    lastProgresses: [],
 
 }
 
@@ -176,6 +178,12 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 currentProgress: action.payload,
+            }
+
+        case GET_ULTIMOS_PROGRESOS_ENTRENAMIENTO:
+            return {
+                ...state,
+                lastProgresses: action.payload,
             }
 
         default:

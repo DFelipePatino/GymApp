@@ -14,10 +14,6 @@ const Seleccionado = forwardRef(({ setInOutStatus1, setInOutStatus2, setInOutSta
     const localRef = useRef(null);
     const dispatch = useDispatch();
     const results = useSelector((state) => state.results);
-    // console.log(results, "results in Seleccionado.jsx");
-
-    // console.log(usuario, "usuario in Seleccionado.jsx");
-
 
     const handleClick = (id) => {
         localStorage.setItem("category", "Todos")
@@ -138,7 +134,7 @@ const Seleccionado = forwardRef(({ setInOutStatus1, setInOutStatus2, setInOutSta
                 {selectedItems.map((item, index) => (
                     <div key={index}>
                         <div style={{ margin: 10 }}>
-                            {item.nombre || 'Loading'}
+                            {/* {item.nombre || 'Loading'} */}
                         </div>
                         {/* <IconButton
                             className="favButton"
@@ -152,7 +148,7 @@ const Seleccionado = forwardRef(({ setInOutStatus1, setInOutStatus2, setInOutSta
                             <Icon>
                                 <FavoriteBorderIcon />
                             </Icon>
-                        </IconButton> */}
+                        </IconButton> */}  
                         <Button
                             ref={localRef}
                             style={{ width: '200px', height: '170px', padding: '0px', margin: '5px', color: 'white' }}

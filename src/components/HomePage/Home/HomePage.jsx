@@ -4,36 +4,21 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { getDefault, getMetodo1, getProgresoActual, getMethods, getBanner, getCategories, getCardio, getEstiramientos } from '../../../redux/actions';
-import HeaderNav from '../../HeaderNav/HeaderNav';
-import NavBar from '../NavBar/NavBar';
 import Banner from '../Banner/banner';
-// import Filter1 from '../Filter/Filter1';
-// import Filter2 from '../Filter/Filter2';
-// import Filter3 from '../Filter/Filter3';
-// import Filter4 from '../Filter/Filter4';
-// import Filter5 from '../Filter/Filter5';
 import CarruselMetodos from '../Filter/CarruselMetodos';
 import Cardio from '../Filter/Cardio';
 import Estiramiento from '../Filter/Estiramiento';
 import Test4 from '../Filter/Test4';
 import Seleccionado from '../Filter/Seleccionado';
 import BotonesCarrulesMetodos from '../../cards/BotonesCarrulesMetodos'
-// import BotonesCarruselCardio from '../../cards/BotonesCarruselCardio'
 import Cards3 from '../../cards/Cards3'
 import Cards4 from '../../cards/Cards4'
 import BotonesCarruselSeleccionado from '../../cards/BotonesCarruselSeleccionado'
-
-import Container from '@mui/material/Container';
-import Grid from '@mui/material/Grid';
-import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import './HomePage.css';
-import CardDrawer from '../CardDrawer/CardDrawer';
 import { Fade, Grow, LinearProgress } from '@mui/material';
 import { Box } from '@mui/system';
 import { containerStyles } from '../Filter/filterStyles';
-import { TroubleshootRounded } from '@mui/icons-material';
-// import colorPallet from '../../ColorPallet';
+
 
 function HomePage({ BackToTopButton, headerLoad, bannerLoad, filterLoad, setHeaderLoad, setBannerload, setFilterLoad, scrollToFilter1, filterRef1, scrollToCardio, filterRef2, scrollToEstiramiento, filterRef3, scrollToFilter4, filterRef4, scrollToTodos, filterRef5, reload, setInfoPremium, usuario }) {
 
@@ -42,13 +27,9 @@ function HomePage({ BackToTopButton, headerLoad, bannerLoad, filterLoad, setHead
 
     const reLoad = reload;
 
-    const results = useSelector((state) => state.results);
     const metodoSelected = useSelector((state) => state.metodoSelected);
-    // console.log('metodoSelected:', metodoSelected);
-    const favs = useSelector((state) => state.favorites);
 
-    const entrenamientoSeleccionadoLocalStorage = JSON.parse(localStorage.getItem("entrenamientoSeleccionado"));
-    // console.log(entrenamientoSeleccionadoLocalStorage, 'entrenamientoSeleccionadoLocalStorage');
+
 
     const homeContent = localStorage.getItem("homeContent")
     const lastCategory = localStorage.getItem("category")
@@ -74,7 +55,7 @@ function HomePage({ BackToTopButton, headerLoad, bannerLoad, filterLoad, setHead
     useEffect(() => {
         const handleResize = () => {
             if (window.innerWidth < 600) {
-                if (isMounted.current) setDynamicStyle({ marginBottom: '-40px' }); // Adjust style for smaller screens
+                if (isMounted.current) setDynamicStyle({ marginBottom: '-10px' }); // Adjust style for smaller screens
             } else {
                 if (isMounted.current) setDynamicStyle({ marginBottom: '-80px' }); // Default style for larger screens
             }
@@ -82,7 +63,7 @@ function HomePage({ BackToTopButton, headerLoad, bannerLoad, filterLoad, setHead
 
         // Set the initial style based on the current window width
         handleResize();
-        // isLoggedIn();
+
 
         // Add event listener
         window.addEventListener('resize', handleResize);
@@ -91,31 +72,9 @@ function HomePage({ BackToTopButton, headerLoad, bannerLoad, filterLoad, setHead
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
-    const baseUrl = "https://backdev.onetrainingteam.com/onegym-backtest/api";
 
-    // async function isLoggedIn() {
-
-    //     const id_token = localStorage.getItem('id_token');
-    //     if (!id_token) {
-    //         navigate('/');
-    //         return;
-    //     }
-
-    //     const registro = await fetch(`${baseUrl}/users`, {
-    //         method: 'POST',
-    //         headers: {
-    //             'Content-Type': 'application/json',
-    //             'Authorization': "Bearer " + id_token
-    //         },
-    //         body: null
-    //     });
-
-    //     const respuesta = await registro.json();
-
-    // }
 
     const shouldReload = (reLoad) => {
-        // console.log('reload:', reLoad);
         if (reLoad) {
             window.location.reload();
         }
@@ -291,9 +250,6 @@ function HomePage({ BackToTopButton, headerLoad, bannerLoad, filterLoad, setHead
     }, [navigate, homeContent, reLoad]);
 
 
-    const todasLasCategotias = useSelector(state => state.allCategories)
-    // console.log('todasLasCategotias:', todasLasCategotias);
-
     return (
 
 
@@ -308,25 +264,12 @@ function HomePage({ BackToTopButton, headerLoad, bannerLoad, filterLoad, setHead
 
             </Fade>
 
-            {/* <Grow
-                in={headerLoad}
-                style={{ transformOrigin: '1 1 1' }}
-                {...(headerLoad ? { timeout: 800 } : {})}
-            >
-                <div className='welcomeUser' >
-                    <h1>Bienvenid{lastNameLetter} {userFisrtName}</h1>
-                    <br />
-                    <br />
-                </div>
-            </Grow> */}
 
-
-            {/* <NavBar /> */}
 
             <Grow
                 in={bannerLoad}
                 style={{ transformOrigin: '1 1 1' }}
-                {...(bannerLoad ? { timeout: 600 } : {})}
+                {...(bannerLoad ? { timeout: 1000 } : {})}
             >
                 <div
                     style={dynamicStyle}
@@ -337,42 +280,17 @@ function HomePage({ BackToTopButton, headerLoad, bannerLoad, filterLoad, setHead
             </Grow>
 
 
-
-
-            {/* <div
-                style={{ display: 'flex', justifyContent: 'center', marginTop: '20px', paddingLeft: '50px', paddingRight: '50px', fontSize: '0.8rem', color: 'rgb(146, 144, 144)', paddingBottom: '20px' }}
-            >
-                <button onClick={scrollToFilter1}>Tu Seleccion</button>
-                <button onClick={scrollToCardio}>Estiramiento</button>
-                <button onClick={scrollToEstiramiento}>Tips Alimentacion</button>
-                <button onClick={scrollToFilter4}>Cardio</button>
-                <button onClick={scrollToTodos}>Todos</button>
-            </div> */}
-
             <Grow
                 in={filterLoad}
                 style={{ transformOrigin: '1 1 1' }}
-                {...(filterLoad ? { timeout: 600 } : {})}
+                {...(filterLoad ? { timeout: 1800 } : {})}
             >
                 <div
                     className='filterContainerDivHome'
                     style={containerStyles}  >
 
 
-
-
-                    {/* <Filter1
-                        setInOutStatus1={setInOutStatus1}
-                        setInOutStatus2={setInOutStatus2}
-                        setInOutStatus3={setInOutStatus3}
-                        setInOutStatus4={setInOutStatus4}
-                        setInOutStatus5={setInOutStatus5}
-                        ref={filterRef1}
-                        /> */}
-
-                    {/* {favs.length > 0 ? <h3>Tu seleccion</h3> : null} */}
                     <h3>Tu seleccion</h3>
-
                     <Seleccionado
                         usuario={usuario}
                         setInOutStatus1={setInOutStatus1}
@@ -392,18 +310,6 @@ function HomePage({ BackToTopButton, headerLoad, bannerLoad, filterLoad, setHead
 
 
                     <h3>Todo el contenido</h3>
-
-                    {/* <Filter5
-    setInOutStatus1={setInOutStatus1}
-    setInOutStatus2={setInOutStatus2}
-    setInOutStatus3={setInOutStatus3}
-    setInOutStatus4={setInOutStatus4}
-    setInOutStatus5={setInOutStatus5}
-    ref={filterRef5}
-/> */}
-
-
-
                     <CarruselMetodos
                         usuario={usuario}
                         setInOutStatus1={setInOutStatus1}
@@ -424,17 +330,6 @@ function HomePage({ BackToTopButton, headerLoad, bannerLoad, filterLoad, setHead
                     <br />
 
                     <h3>Cardio</h3>
-                    {/* 
-                    <Filter2
-                        setInOutStatus1={setInOutStatus1}
-                        setInOutStatus2={setInOutStatus2}
-                        setInOutStatus3={setInOutStatus3}
-                        setInOutStatus4={setInOutStatus4}
-                        setInOutStatus5={setInOutStatus5}
-                        ref={filterRef2}
-                    /> */}
-
-
                     <Cardio
                         setInOutStatus1={setInOutStatus1}
                         setInOutStatus2={setInOutStatus2}
@@ -444,46 +339,10 @@ function HomePage({ BackToTopButton, headerLoad, bannerLoad, filterLoad, setHead
                         ref={filterRef2}
                     />
 
-                    {/* <Test5
-                        favs={favs}
-                        setInOutStatus1={setInOutStatus1}
-                        setInOutStatus2={setInOutStatus2}
-                        setInOutStatus3={setInOutStatus3}
-                        setInOutStatus4={setInOutStatus4}
-                        setInOutStatus5={setInOutStatus5}
-                        ref={filterRef1}
-                    /> */}
-
-
-
-
-                    {/* {inOutStatus5 ?
-                        <Cards5 inOutStatus5={inOutStatus5} setHeaderLoad={setHeaderLoad} setBannerload={setBannerload} setFilterLoad={setFilterLoad} />
-
-                        : null} */}
-
-
-                    {/* {inOutStatus2 ?
-                        <BotonesCarruselCardio inOutStatus2={inOutStatus2} setHeaderLoad={setHeaderLoad} setBannerload={setBannerload} setFilterLoad={setFilterLoad} />
-
-                        : null} */}
-
 
                     <br />
 
                     <h3>Estiramiento</h3>
-
-                    {/* <Filter3
-setInOutStatus1={setInOutStatus1}
-setInOutStatus2={setInOutStatus2}
-setInOutStatus3={setInOutStatus3}
-setInOutStatus4={setInOutStatus4}
-setInOutStatus5={setInOutStatus5}
-ref={filterRef3}
-/> */}
-
-
-
                     <Estiramiento
                         setInOutStatus1={setInOutStatus1}
                         setInOutStatus2={setInOutStatus2}
@@ -493,23 +352,6 @@ ref={filterRef3}
                         ref={filterRef3}
                     />
 
-                    {/* <Test1
-                        setInOutStatus1={setInOutStatus1}
-                        setInOutStatus2={setInOutStatus2}
-                        setInOutStatus3={setInOutStatus3}
-                        setInOutStatus4={setInOutStatus4}
-                        setInOutStatus5={setInOutStatus5}
-                        ref={filterRef5}
-                    /> */}
-
-
-                    {/* {inOutStatus1 ?
-
-                        <Cards1 inOutStatus1={inOutStatus1} setHeaderLoad={setHeaderLoad} setBannerload={setBannerload} setFilterLoad={setFilterLoad} />
-
-                        : null} */}
-
-
                     {inOutStatus3 ?
                         <Cards3 inOutStatus3={inOutStatus3} setHeaderLoad={setHeaderLoad} setBannerload={setBannerload} setFilterLoad={setFilterLoad} />
 
@@ -517,55 +359,6 @@ ref={filterRef3}
 
 
                     <br />
-
-                    {/* <h3>Tips Alimentacion</h3> */}
-
-                    {/* <Filter4
-setInOutStatus1={setInOutStatus1}
-setInOutStatus2={setInOutStatus2}
-setInOutStatus3={setInOutStatus3}
-setInOutStatus4={setInOutStatus4}
-setInOutStatus5={setInOutStatus5}
-ref={filterRef4}
-/> */}
-
-
-                    {/* <Test4
-                        setInOutStatus1={setInOutStatus1}
-                        setInOutStatus2={setInOutStatus2}
-                        setInOutStatus3={setInOutStatus3}
-                        setInOutStatus4={setInOutStatus4}
-                        setInOutStatus5={setInOutStatus5}
-                        ref={filterRef4}
-                    /> */}
-
-                    {/* <Test5
-                        favs={favs}
-                        setInOutStatus1={setInOutStatus1}
-                        setInOutStatus2={setInOutStatus2}
-                        setInOutStatus3={setInOutStatus3}
-                        setInOutStatus4={setInOutStatus4}
-                        setInOutStatus5={setInOutStatus5}
-                        ref={filterRef1}
-                    /> */}
-
-
-
-
-                    {/* {inOutStatus5 ?
-                        <Cards5 inOutStatus5={inOutStatus5} setHeaderLoad={setHeaderLoad} setBannerload={setBannerload} setFilterLoad={setFilterLoad} />
-
-                        : null} */}
-
-
-                    {/* {inOutStatus4 ?
-                        <Cards4 inOutStatus4={inOutStatus4} setHeaderLoad={setHeaderLoad} setBannerload={setBannerload} setFilterLoad={setFilterLoad} />
-
-                        : null} */}
-
-
-                    {/* //here goes the rest of the code// */}
-
                     <br />
 
 
@@ -574,15 +367,6 @@ ref={filterRef4}
                 </div>
 
             </Grow >
-
-
-
-
-
-
-            {/* <SwipeableEdgeDrawer /> */}
-
-            {/* <BackToTopButton /> */}
 
         </div >
     );

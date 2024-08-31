@@ -10,12 +10,9 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import ReactPlayer from 'react-player'
 import { Box } from '@mui/system';
-import { ExpandMore, FavoriteBorder, Gradient } from '@mui/icons-material';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import ShareIcon from '@mui/icons-material/Share';
+import { ExpandMore } from '@mui/icons-material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { fetchBlobWithAuth } from '../../../../multimediaUtils';
-import { actualizarEntrenamiento, getProgresoActual, getEntrenamiento } from '../../../../redux/actions';
+import { actualizarEntrenamiento, getProgresoActual, getEntrenamiento, get2UltimosProgresoActualPorEntrenamiento } from '../../../../redux/actions';
 import Swal from 'sweetalert2';
 import { styled } from '@mui/system';
 import ClearIcon from '@mui/icons-material/Clear';
@@ -54,10 +51,6 @@ const CssTextField = styled(TextField)({
 
 function ContentPlayer({ setPlayerLoad, playerLoad, setReload, usuario }) {
 
-
-    // console.log("usuario en contentPlayer", usuario);
-
-
     const dispatch = useDispatch();
 
     const location = useLocation();
@@ -69,7 +62,7 @@ function ContentPlayer({ setPlayerLoad, playerLoad, setReload, usuario }) {
 
     const [expanded, setExpanded] = React.useState(true);
     const [isPlaying, setIsPlaying] = useState(false);
-    // console.log("isPlaying", isPlaying);
+
 
     const [expandedDescription, setExpandedDescription] = useState(
         []
@@ -77,17 +70,20 @@ function ContentPlayer({ setPlayerLoad, playerLoad, setReload, usuario }) {
 
     const [currentEntrenamiento, setCurrentEntrenamiento] = useState(null);
 
-    const user = useSelector((state) => state.user);
     const currentEntrenamientoId = useParams().entrenamientoId;
 
     const currentProgressState = useSelector((state) => state.currentProgress);
-
-
+    const lastProgresses = useSelector((state) => state.lastProgresses);
 
     const homeContent = localStorage.getItem("homeContent");
 
 
     useEffect(async () => {
+
+        setTimeout(() => {
+            dispatch(get2UltimosProgresoActualPorEntrenamiento(currentEntrenamientoId));
+        }, 500);
+
 
         await getProgresoActual();
 
@@ -108,7 +104,6 @@ function ContentPlayer({ setPlayerLoad, playerLoad, setReload, usuario }) {
         try {
             const auxEntrenamiento = await getEntrenamiento(currentEntrenamientoId);
             setCurrentEntrenamiento(auxEntrenamiento);
-            // console.log("Entrenamiento:", auxEntrenamiento);
             if (!auxEntrenamiento || !auxEntrenamiento?.nombre) {
                 throw new Error("Entrenamiento no encontrado");
             }
@@ -116,19 +111,13 @@ function ContentPlayer({ setPlayerLoad, playerLoad, setReload, usuario }) {
 
             getVideoLink(auxEntrenamiento);
 
-            // console.log("Rutinas:", rutinasButtons);
         } catch (e) {
             console.log("Error trayendo entrenamiento:", e);
             //navigate("/home");
         }
 
-        //setTimeout(() => {
         const newProgress = { ...currentProgressState };
         setCurrentProgressState2(newProgress);
-        // }, 3000);
-
-
-
 
         let fadeLoadTimeout = setTimeout(() => {
             setfadeLoad(false);
@@ -137,14 +126,6 @@ function ContentPlayer({ setPlayerLoad, playerLoad, setReload, usuario }) {
             setPlayerLoad(true);
         }, 350);
 
-        // const localUser = localStorage.getItem("localUserName");
-
-        // const verifyLogin = (localUser) => {
-        //     if (!localUser) {
-        //         navigate("/");
-        //     }
-        // };
-        // verifyLogin(localUser);
 
         window.scrollTo(0, 0);
 
@@ -159,17 +140,10 @@ function ContentPlayer({ setPlayerLoad, playerLoad, setReload, usuario }) {
     const [currentProgressState2, setCurrentProgressState2] = useState({});
 
     const handlePesoChange = (e, index, iPeso, totalPesos) => {
-        // console.log("handlePesoChange", e.target.value, index, iPeso, totalPesos);
-
-        /*if (!e.target.value || e.target.value === '') {
-            return;
-        }*/
         const newProgress = { ...currentProgressState };
         let pesoAtual = newProgress['pesoRutina' + index] || '';
-
         let pesosRutina = pesoAtual.split('-');
-        // console.log(pesoAtual);
-        // console.log(iPeso);
+
 
         for (let i = 0; i < totalPesos; i++) {
             if (pesosRutina.length <= i) {
@@ -178,11 +152,9 @@ function ContentPlayer({ setPlayerLoad, playerLoad, setReload, usuario }) {
         }
 
         pesosRutina[iPeso] = e.target.value;
-        // console.log(pesosRutina.join('-'));
         newProgress['pesoRutina' + index] = pesosRutina.join('-');
-        // console.log("handlePesoChange", newProgress);
         setCurrentProgressState2(newProgress); // Correctly update the state
-        // updateCurrentProgress(newProgress); // Uncomment if needed
+
     };
 
 
@@ -193,13 +165,11 @@ function ContentPlayer({ setPlayerLoad, playerLoad, setReload, usuario }) {
             window.scrollTo({ top: 600, behavior: 'smooth' });
         }
         else if (expanded === true) {
-            window.scrollTo({ top: 200, behavior: 'smooth' });
+            window.scrollTo({ top: 100, behavior: 'smooth' });
         }
     };
 
     const handleExpandClickRutina = (index) => {
-        // console.log("entra al hanlde click");
-
         const newExpandedDescription = [...expandedDescription];
         const newExpanded = newExpandedDescription[index];
         if (!newExpandedDescription[index]) {
@@ -228,7 +198,6 @@ function ContentPlayer({ setPlayerLoad, playerLoad, setReload, usuario }) {
     };
 
     async function updateCurrentProgress(progressNuevo) {
-        // console.log("updateCurrentProgress", progressNuevo);
         try {
             const respuesta = await actualizarEntrenamiento(currentEntrenamiento?.id, progressNuevo, currentProgressState);
             if (respuesta !== 0) {
@@ -291,7 +260,7 @@ function ContentPlayer({ setPlayerLoad, playerLoad, setReload, usuario }) {
         return currentEntrenamiento?.rutinas?.sort((a, b) => {
             return a.orden - b.orden;
         }).map((rutina, index) => (
-            <div key={index}>
+            <div key={rutina.id || index}>
                 <Button
                     variant="contained"
                     style={{ backgroundColor: 'rgb(159, 28, 23)', color: 'white', fontWeight: 'bold', margin: '4px' }}
@@ -322,22 +291,20 @@ function ContentPlayer({ setPlayerLoad, playerLoad, setReload, usuario }) {
                             <Typography style={{ color: 'white' }} paragraph>
                                 {rutina?.descripcion}
                             </Typography>
-
+    
                             <Divider flexItem
-                                sx={
-                                    {
-                                        weight: '1px',
-                                        height: '0.5px',
-                                        backgroundColor: 'rgb(159, 28, 23)',
-                                    }
-                                } />
-
+                                sx={{
+                                    weight: '1px',
+                                    height: '0.5px',
+                                    backgroundColor: 'rgb(159, 28, 23)',
+                                }} />
+    
                             {(usuario?.accountType !== "FREE" && usuario?.accountType !== "GENERAL") && (
                                 <>
                                     <Typography style={{ color: 'white' }} >
                                         Control de peso:
                                     </Typography>
-
+    
                                     <Grid container spacing={0}>
                                         <Grid item xs={12} sm={3}
                                             sx={{
@@ -353,29 +320,24 @@ function ContentPlayer({ setPlayerLoad, playerLoad, setReload, usuario }) {
                                                     marginBottom: '8px',
                                                 }}
                                             >
-                                                Peso anterior: {prevPeso} kg
+                                                {lastProgresses?.length > 1 ? 'Peso anterior: ' + lastProgresses[1]['pesoRutina' + (index + 1)] + ' kg' : ''}
                                             </Typography>
                                         </Grid>
-
-
+    
                                         {Array.from({ length: rutina.cantidadPesos }, (_, iPeso) => (
-
-                                            <Grid item xs={12} sm={6}>
-
+                                            <Grid item xs={12} sm={6} key={iPeso}>
                                                 <CardActions>
                                                     <CssTextField
-
                                                         style={{ color: 'white', marginBottom: '8px', marginTop: '8px' }}
                                                         type="number"
                                                         name="pesos"
                                                         label="Peso (kg)"
-                                                        //value={currentProgressState2['pesoRutina' + (index + 1)]?.split('-').length > iPeso ? currentProgressState2['pesoRutina' + (index + 1)]?.split('-')[iPeso] : ''}
                                                         value={(currentProgressState2['pesoRutina' + (index + 1)]?.split('-') || [])[iPeso]}
                                                         onChange={(e) => { handlePesoChange(e, index + 1, iPeso, rutina.cantidadPesos) }}
                                                         helperText="Ingresa el peso que utilizaste"
                                                         FormHelperTextProps={{ style: { color: 'white' } }}
                                                     />
-
+    
                                                     <IconButton aria-label="enviar"
                                                         sx={{ color: 'rgb(0,128,0) ', marginBottom: '15px', display: 'flex', justifyContent: 'center' }}
                                                         onClick={() => {
@@ -383,18 +345,9 @@ function ContentPlayer({ setPlayerLoad, playerLoad, setReload, usuario }) {
                                                             dispatch(getProgresoActual());
                                                             const newProgress = { ...currentProgressState };
                                                             setCurrentProgressState2(newProgress);
-                                                            // Swal.fire({
-                                                            //     title: 'Peso registrado',
-                                                            //     icon: 'success',
-                                                            //     showCancelButton: true,
-                                                            //     confirmButtonColor: 'rgb(0, 128, 0)',
-                                                            //     showCancelButton: false,
-                                                            //     confirmButtonText: '¡Entendido!'
-                                                            // })
                                                         }}
                                                     >
                                                         <PlaylistAddCheckCircleIcon />
-                                                        {/* <PlaylistAddCheckCircleOutlinedIcon /> */}
                                                         <br />
                                                         <Typography
                                                             style={{ color: 'rgb(0,128,0)', fontSize: '0.8rem', marginBottom: '40px', marginLeft: '-35px' }}
@@ -403,44 +356,24 @@ function ContentPlayer({ setPlayerLoad, playerLoad, setReload, usuario }) {
                                                         </Typography>
                                                     </IconButton>
                                                 </CardActions>
-
-
                                             </Grid>
-
                                         ))}
-
-
-
-
-
-                                        <Grid item xs={12} sm={6}>
-
-
-
-
-                                        </Grid>
                                     </Grid>
                                 </>
                             )}
-
+    
                             <Divider flexItem
-                                sx={
-                                    {
-                                        weight: '1px',
-                                        height: '0.5px',
-                                        backgroundColor: 'rgb(159, 28, 23)',
-                                    }
-                                } />
+                                sx={{
+                                    weight: '1px',
+                                    height: '0.5px',
+                                    backgroundColor: 'rgb(159, 28, 23)',
+                                }} />
                         </CardContent>
                     </Collapse>
-
                 )}
-            </div >
-        )) || <>    </>;
+            </div>
+        )) || <></>;
     }
-
-
-
 
 
     const getVideoLink = async (auxEntrenamiento) => {
@@ -556,12 +489,6 @@ function ContentPlayer({ setPlayerLoad, playerLoad, setReload, usuario }) {
 
                         }
 
-                        {/* <Fade in={fadeLoad} timeout={600}>
-                            <Box sx={{ width: '100%' }}>
-                                <LinearProgress size="sm" color="danger" thickness={1} variant="solid" />
-                            </Box>
-                        </Fade> */}
-
                         <CardActions
                             style={{
                                 display: 'flex',
@@ -585,15 +512,6 @@ function ContentPlayer({ setPlayerLoad, playerLoad, setReload, usuario }) {
                             <div
                                 style={{ display: 'flex', width: '100%' }}
                             >
-                                {/* 
-                                <Button
-                                    variant="outlined"
-                                    // color='rgb(159, 28, 23)'
-                                    style={{ backgroundColor: 'rgb(0,0,0)', color: 'rgb(159, 28, 23)', fontWeight: 'bold', border: '1px solid rgb(159, 28, 23)' }}
-                                // sx={{ mr: 'auto' }}
-                                >
-                                    Chat
-                                </Button> */}
 
                                 <br />
 
@@ -661,12 +579,6 @@ function ContentPlayer({ setPlayerLoad, playerLoad, setReload, usuario }) {
 
                                 <br />
 
-                                {/* <IconButton aria-label="add to favorites">
-                                <FavoriteIcon />
-                            </IconButton>
-                            <IconButton aria-label="share">
-                                <ShareIcon />
-                            </IconButton> */}
                                 <ExpandMore
                                     expand={expanded ? 'true' : undefined}
                                     onClick={handleExpandClick}
@@ -694,7 +606,6 @@ function ContentPlayer({ setPlayerLoad, playerLoad, setReload, usuario }) {
                                 <Typography
                                     style={{ color: 'white' }}
                                     paragraph>
-                                    {/* ¡Bienvenidos a nuestro Entrenamiento Completo para Todos los Niveles! Esta rutina de ejercicio de 30 minutos está diseñada para ayudarte a construir fuerza, aumentar la resistencia y mejorar la flexibilidad, todo desde la comodidad de tu hogar. Ya seas principiante o un entusiasta del fitness con experiencia, este entrenamiento se adapta a tus necesidades. */}
                                     Dia:
                                     {" " + currentEntrenamiento?.dia}
                                     <br />
@@ -704,31 +615,11 @@ function ContentPlayer({ setPlayerLoad, playerLoad, setReload, usuario }) {
                                 <Typography
                                     style={{ color: 'white' }}
                                     paragraph>
-                                    {/* En este video, harás:
-
-                                    Calentamiento con estiramientos dinámicos para preparar tus músculos y articulaciones.
-                                    Una serie de ejercicios con el peso corporal que trabajan todos los grupos musculares principales.
-                                    Ejercicios con modificaciones para hacer cada movimiento más fácil o más desafiante.
-                                    Enfriamiento con una serie de estiramientos para ayudar en la recuperación y mejorar la flexibilidad. */}
                                     Descripcion:
                                     <br />
                                     {currentEntrenamiento?.descripcion}
                                 </Typography>
-                                {/* <Typography
-                                    style={{ color: 'white' }}
-                                    paragraph>
-                                    Lo que necesitas:
 
-                                    Una esterilla o toalla para los ejercicios en el suelo.
-                                    Una botella de agua para mantenerte hidratado.
-                                    Opcional: Pesas ligeras o bandas de resistencia para mayor intensidad.
-                                    Únete a nosotros y da un paso hacia una vida más saludable y fuerte. Recuerda escuchar a tu cuerpo, tomar descansos cuando sea necesario y, lo más importante, ¡diviértete! ¡Vamos a comenzar y a superar este entrenamiento juntos!
-                                </Typography>
-                                <Typography
-                                    style={{ color: 'white' }}
-                                >
-                                    No olvides darle like, suscribirte y hacer clic en el icono de la campana para mantenerte al día con más videos de fitness. Comparte tu progreso y conéctate con nuestra comunidad usando #OneGymApp.
-                                </Typography> */}
                             </CardContent>
                         </Collapse>
                     </Card>

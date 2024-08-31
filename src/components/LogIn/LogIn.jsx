@@ -15,7 +15,7 @@ function LogIn() {
 
     const [isLoading, setIsLoading] = useState(false);
     const [formShown, setFormShown] = useState(true);
-    const [loadingShown, setLoadingShown] = useState(false);
+
 
     function calculateAge(dobString) {
         const dob = new Date(dobString);
@@ -75,14 +75,12 @@ function LogIn() {
 
     async function handleCredentialResponse(response) {
 
-        setLoadingShown(true);
+      
         setIsLoading(true);
 
         const id_token = response.credential;
         localStorage.setItem('id_token', id_token);
-        // console.log(response, 'response');
-        // console.log(localStorage.getItem('id_token'), 'id_token');
-
+   
         const registro = await fetch(`${baseUrl}/users`, {
             method: 'POST',
             headers: {
@@ -119,17 +117,31 @@ function LogIn() {
             navigate('/registro');
         }
         else {
+
+            // setFormShown(false)
+
             const age = calculateAge(respuesta.fechaNacimiento);
 
             const updatedRespuesta = {
                 ...respuesta,
                 age: age
             };
-            console.log(updatedRespuesta, 'updatedRespuesta');
-
-
+              
             localStorage.setItem('localUser', JSON.stringify(updatedRespuesta));
-            navigate('/home');
+
+            setTimeout(() => {
+            setIsLoading(false)
+            }, 2000);
+
+            setTimeout(() => {
+            setFormShown(true)
+            }, 2500);
+            
+            setTimeout(() => {
+            navigate('/home')
+            } , 3500);
+
+
         }
     }
 
@@ -145,9 +157,9 @@ function LogIn() {
 
             {isLoading ? (
                 <Grow
-                    in={loadingShown}
+                    in={isLoading}
                     style={{ transformOrigin: '1 1 1' }}
-                    {...(loadingShown ? { timeout: 1000 } : {})}
+                    {...(isLoading ? { timeout: 1000 } : {})}
                 >
                     <div className='loading'>
                         <br />

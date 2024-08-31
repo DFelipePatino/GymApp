@@ -126,7 +126,7 @@ const CarruselMetodos = forwardRef(({ setInOutStatus1, setInOutStatus2, setInOut
                 {itemGenero.map((item, index) => (
                     <div key={index}>
                         <div style={{ margin: 10 }}>
-                            {item.nombre || 'Loading'}
+                            {/* {item.nombre || 'Loading'} */}
                         </div>
                         {/* <IconButton
                             className="favButton"

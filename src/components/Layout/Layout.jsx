@@ -15,6 +15,7 @@ import PropTypes from 'prop-types';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
+import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
@@ -47,7 +48,7 @@ function Layout({ usuario, setPlayerLoad, setHeaderLoad, setBannerload, setFilte
     const resultsData = useSelector((state) => state.results.data);
     const currentIndex = useSelector((state) => state.rutinaID);
     const currentProgress = useSelector((state) => state.currentProgress);
-  
+
 
     const localUserName = usuario?.nombres + ' ' + usuario?.apellidos;
     // console.log(localUserName, 'localUserName en layout');
@@ -124,7 +125,7 @@ function Layout({ usuario, setPlayerLoad, setHeaderLoad, setBannerload, setFilte
                 localStorage.setItem("homeContent", "Cardio");
                 scrollToCardio();
                 console.log('scrolling to filter 2 layout');
-                
+
                 // dispatch(getMetodo1(currentIndex));
                 break;
             case 'Todos':
@@ -138,7 +139,21 @@ function Layout({ usuario, setPlayerLoad, setHeaderLoad, setBannerload, setFilte
                 // dispatch(getMetodo1(currentIndex));
                 break;
             case 'Premium':
-                setInfoPremium(true)
+                window.scroll({ top: 0, behavior: 'smooth' });
+                setHeaderMountIn(false);
+                setTimeout(() => {
+                    setInfoPremium(true)
+                }, 400);
+                setTimeout(() => {
+                    setHeaderMountIn(true)
+                }, 800);
+                break;
+            case 'wa':
+                const whatsappUrl = 'https://api.whatsapp.com/send/?phone=%2B573107709118&text=Hola+David%2C+soy+usuario+One&type=phone_number&app_absent=0';
+                const anchor = document.createElement('a');
+                anchor.href = whatsappUrl;
+                anchor.target = '_blank';
+                anchor.click();
                 break;
             default:
                 localStorage.removeItem("homeContent")
@@ -229,49 +244,7 @@ function Layout({ usuario, setPlayerLoad, setHeaderLoad, setBannerload, setFilte
 
     let drawer;
 
-    // if (location.pathname === "/home") {
-    //     drawer = (
-    //         <div
-    //             style={{
-    //                 backgroundColor: 'rgb(146, 144, 144)',
-    //             }}
-    //         >
-    //             <Toolbar />
-    //             <List>
-    //                 {[
-    //                     // { text: 'Home', icon: <HomeIcon />, fn: "clear", route: '/home' },
-    //                     // { text: 'Profile Card', icon: <AccountCircleIcon />, route: '/profileCard' },
-
-    //                     {
-    //                         text: 'Chat', icon: <ChatIcon
-    //                             style={iconStyles2}
-    //                         />, route: '/chat', id: '1'
-    //                     },
-
-
-    //                     {
-    //                         text: 'Log Out', icon: <LogoutIcon
-    //                             style={iconStyles}
-    //                         />, route: '/', shouldClearLocal: true, id: '2'
-    //                     }
-
-    //                 ].map((item, index) => (
-    //                     <ListItem key={item.id} disablePadding>
-    //                         <ListItemButton onClick={() => handleMenuClick(item.fn, item.route, item.shouldClearLocal)}>
-    //                             <ListItemIcon>
-    //                                 {item.icon}
-    //                             </ListItemIcon>
-    //                             <ListItemText primary={item.text} />
-    //                         </ListItemButton>
-    //                     </ListItem>
-    //                 ))}
-    //             </List>
-    //         </div>
-    //     );
-    // }
-
     if (
-        // location.pathname !== "/home" && 
         location.pathname !== "/profileedit") {
         drawer = (
             <div>
@@ -287,32 +260,33 @@ function Layout({ usuario, setPlayerLoad, setHeaderLoad, setBannerload, setFilte
 
                             { type: 'divider', id: 'divider-1' },
 
-                            // ...mappedData, // spread mappedData into the parent array
-
                             ...homeNavButtons,
-
 
                             { type: 'divider', id: 'divider-2' },
 
-                            // {
-                            //     text: 'Chat', icon: <ChatIcon
-                            //         style={iconStyles2}
-                            //     />, route: '/chat', id: '8'
-                            // },
+                            {
+                                text: 'WA', icon: <WhatsAppIcon
+                                    style={iconStyles2}
+                                />, fn: "wa", id: '8'
+                            },
+
+                            {
+                                text: 'Premium', icon: <WorkspacePremiumIcon
+                                    style={iconStyles2}
+                                />, route: '/profile2', shouldClearLocal: false, id: '10', fn: 'Premium'
+                            },
+
+                            { type: 'divider', id: 'divider-5' },
+                            { type: 'divider', id: 'divider-6' },
+
                             {
                                 text: 'Log Out', icon: <LogoutIcon
                                     style={iconStyles}
                                 />, route: '/', shouldClearLocal: true, id: '9'
                             },
 
-                            { type: 'divider', id: 'divider-3' },
-                            { type: 'divider', id: 'divider-4' },
 
-                            {
-                                text: 'Premium', icon: <WorkspacePremiumIcon
-                                    style={iconStyles}
-                                />, route: '/profile2', shouldClearLocal: false, id: '10', fn: 'Premium'
-                            }
+
 
                         ].map((item, index) => (
                             item.type === 'divider' ?
@@ -390,12 +364,6 @@ function Layout({ usuario, setPlayerLoad, setHeaderLoad, setBannerload, setFilte
                             style={{ color: 'rgb(256, 256, 256)' }}
                             primary="Log Out" />
                     </ListItemButton>
-                    {/* 
-                <IconButton>
-                    <LogoutIcon />
-                    <ListItemText primary="Log Out" />
-
-                </IconButton> */}
 
                 </List>
             </div >

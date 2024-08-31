@@ -46,26 +46,28 @@ const CardItem = ({ setHeaderLoad, setBannerload, setFilterLoad, showInstruction
     const CardIndex = parseInt(localStorage.getItem('CardIndex'));
 
     const results = useSelector((state) => state.results);
-    // console.log(results, 'results en cardItem');
+    console.log(results, 'results en cardItem');
 
     const currentProgressState = useSelector((state) => state.currentProgress);
     // console.log(currentProgressState, 'currentProgressState en cardItem');
 
 
 
-    const filteredResultsGym = results?.map((each) => each.entrenamientos?.filter((each) => each.lugar === "GYM")) || [];
-    const filteredResultsHome = results?.map((each) => each.entrenamientos?.filter((each) => each.lugar === "CASA")) || [];
+    const filteredResultsGym = results?.map((each) => each.entrenamientos?.filter((each) => each.lugar === "GYM"));
+    console.log(filteredResultsGym, 'filteredResultsGym en cardItem');
+    
+    const filteredResultsHome = results?.map((each) => each.entrenamientos?.filter((each) => each.lugar === "CASA"));
 
     let entrenamientoSeleccionado = [];
 
     if (localStorage.getItem('lugar') === 'GYM') {
-        entrenamientoSeleccionado = filteredResultsGym[0]?.filter((entrenamiento) => entrenamiento?.id === CardIndex)[0];
+        entrenamientoSeleccionado = filteredResultsGym?.filter((entrenamiento) => entrenamiento?.id === CardIndex)[0];
     } else if (localStorage.getItem('lugar') === 'CASA') {
-        entrenamientoSeleccionado = filteredResultsHome[0]?.filter((entrenamiento) => entrenamiento?.id === CardIndex)[0];
+        entrenamientoSeleccionado = filteredResultsHome?.filter((entrenamiento) => entrenamiento?.id === CardIndex)[0];
     }
 
 
-    // console.log(entrenamientoSeleccionado, 'entrenamientoSeleccionado en cardItem');
+    console.log(entrenamientoSeleccionado, 'entrenamientoSeleccionado en cardItem');
 
     const [expanded, setExpanded] = useState(false);
     const [grow, setGrow] = useState(true);
@@ -93,7 +95,7 @@ const CardItem = ({ setHeaderLoad, setBannerload, setFilterLoad, showInstruction
     };
 
     const toggleNavigate = async () => {
-        const resultadoCrearEntrenamiento = await empezarEntrenamiento(entrenamientoSeleccionado.id, currentProgressState);
+        const resultadoCrearEntrenamiento = await empezarEntrenamiento(entrenamientoSeleccionado?.id, currentProgressState);
         if (resultadoCrearEntrenamiento !== 0) {
             toggleDrawer(false)();
             Swal.fire({
@@ -323,20 +325,20 @@ const CardItem = ({ setHeaderLoad, setBannerload, setFilterLoad, showInstruction
                                         }}
                                     />
                                 </Link> */}
-                                        <div style={{ height: "750px" }}>
+                                        {/* <div style={{ height: "750px" }}>
                                             <Worker workerUrl={`https://unpkg.com/pdfjs-dist@3.11.174/build/pdf.worker.min.js`}>
                                                 <Viewer fileUrl={usuario.multimedia[0].ruta} plugins={[defaultLayoutPluginInstance]} />
                                             </Worker>
-                                        </div>
+                                        </div> */}
 
-                                        {/* <div style={{ height: '600px', overflow: 'auto' }}>
+                                        <div style={{ height: '600px', overflow: 'auto' }}>
                                     <CardMedia
                                         style={{ paddingBottom: '30px', background: 'linear-gradient(to bottom, rgb(0, 0, 0),rgb(159, 28, 23),rgb(0, 0, 0)' }}
                                         component="img"
                                         height="auto"
-                                        image="/instructions.jpg"
+                                        image="/Plandedietacard.jpg"
                                     />
-                                </div> */}
+                                </div>
                                     </div>
 
                                 </CardContent>

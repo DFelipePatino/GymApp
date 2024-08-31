@@ -87,8 +87,7 @@ export const getBanner = () => {
 export const getCardio = () => {
     return async (dispatch) => {
         try {
-            console.log('enters the cardio try');
-            
+                 
             const id_token = localStorage.getItem('id_token');
             const registro = await fetch(`${baseUrl}/cardio`, {
                 method: 'GET',
@@ -180,7 +179,7 @@ export const get2UltimosProgresoActualPorEntrenamiento = (entrenamientoId) => {
         });
 
         const data = await registro.json();
-        console.log('data progresos  45we1f5we1fwe14fwe:',entrenamientoId, data); 
+        // console.log('data progresos  45we1f5we1fwe14fwe:',entrenamientoId, data); 
         dispatch({ type: GET_ULTIMOS_PROGRESOS_ENTRENAMIENTO, payload: data }); 
     }
 }
@@ -275,7 +274,7 @@ export const getCategories = () => {
     }
 }
 export const putUsuario = async (usuario) => {
-    console.log('usuario Perro:', usuario);
+    // console.log('usuario Perro:', usuario);
     //usuario.fechaNacimiento = null;
     // usuario.genero = 'HOMBRE';
     // usuario.accountType = 'FREE';

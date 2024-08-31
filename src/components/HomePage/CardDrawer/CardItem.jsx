@@ -46,26 +46,20 @@ const CardItem = ({ setHeaderLoad, setBannerload, setFilterLoad, showInstruction
     const CardIndex = parseInt(localStorage.getItem('CardIndex'));
 
     const results = useSelector((state) => state.results);
-    console.log(results, 'results en cardItem');
-
+  
     const currentProgressState = useSelector((state) => state.currentProgress);
-    // console.log(currentProgressState, 'currentProgressState en cardItem');
 
-
-
-    const filteredResultsGym = results?.map((each) => each.entrenamientos?.filter((each) => each.lugar === "GYM"));
-    console.log(filteredResultsGym, 'filteredResultsGym en cardItem');
+    const filteredResultsGym = results?.flatMap((each) => each.entrenamientos?.filter((each) => each.lugar === "GYM"));
+    const filteredResultsHome = results?.flatMap((each) => each.entrenamientos?.filter((each) => each.lugar === "CASA"));
     
-    const filteredResultsHome = results?.map((each) => each.entrenamientos?.filter((each) => each.lugar === "CASA"));
-
     let entrenamientoSeleccionado = [];
-
+    
     if (localStorage.getItem('lugar') === 'GYM') {
-        entrenamientoSeleccionado = filteredResultsGym?.filter((entrenamiento) => entrenamiento?.id === CardIndex)[0];
+        entrenamientoSeleccionado = filteredResultsGym?.find((entrenamiento) => entrenamiento?.id === CardIndex);
     } else if (localStorage.getItem('lugar') === 'CASA') {
-        entrenamientoSeleccionado = filteredResultsHome?.filter((entrenamiento) => entrenamiento?.id === CardIndex)[0];
+        entrenamientoSeleccionado = filteredResultsHome?.find((entrenamiento) => entrenamiento?.id === CardIndex);
     }
-
+    
 
     console.log(entrenamientoSeleccionado, 'entrenamientoSeleccionado en cardItem');
 

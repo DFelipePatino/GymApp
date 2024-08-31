@@ -77,7 +77,7 @@ const Estiramiento = forwardRef(({ setInOutStatus1, setInOutStatus2, setInOutSta
         autoplaySpeed: 4000,
         slidesToShow: 5,
         slidesToScroll: 1,
-        rtl: false,
+        rtl: true,
         responsive: [
             {
                 breakpoint: 1024,
@@ -98,6 +98,7 @@ const Estiramiento = forwardRef(({ setInOutStatus1, setInOutStatus2, setInOutSta
                     pauseOnHover: true,
                 }
             },
+
             {
                 breakpoint: 480,
                 settings: {
@@ -105,7 +106,18 @@ const Estiramiento = forwardRef(({ setInOutStatus1, setInOutStatus2, setInOutSta
                     slidesToScroll: 1,
                     pauseOnHover: true,
                 }
-            }
+            },
+
+            {
+                breakpoint: 380,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                    pauseOnHover: true,
+                    centerPadding: "110px",
+                }
+            },
+
         ]
     };
 
@@ -144,7 +156,7 @@ const Estiramiento = forwardRef(({ setInOutStatus1, setInOutStatus2, setInOutSta
                         <div>
                             <Image
                                 id={(item.multimedia && item.multimedia.find((m) => m.type === 'IMAGE'))?.id}
-                                width='110%'
+                                width='70%'
                             />
                             {/* <p
                                 style={{ marginTop: '-20px', color: 'white', fontSize: '20' }}

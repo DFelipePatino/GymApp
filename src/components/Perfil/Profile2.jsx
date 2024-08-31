@@ -20,11 +20,10 @@ import { toggleDrawer } from '../HomePage/CardDrawer/CardDrawer';
 import CardDrawer from '../HomePage/CardDrawer/CardDrawer';
 
 
-function Profile2({ headerMountIn, setHeaderMountIn, setContentMountIn, navigateAway, setNavigateAway, usuario, reload, setInfoPremium, infoPremium }) {
+function Profile2({ headerMountIn, setHeaderMountIn, setContentMountIn, navigateAway, setNavigateAway, usuario, reload, setInfoPremium, infoPremium, activeButton,
+    setActiveButton }) {
 
     const navigate = useNavigate();
-
-    console.log(usuario, 'usuario');
 
 
     const localUserName = usuario?.nombres + ' ' + usuario?.apellidos;
@@ -32,10 +31,10 @@ function Profile2({ headerMountIn, setHeaderMountIn, setContentMountIn, navigate
     const formattedExpitarion = new Date(usuario?.fechaExpiracionPlan).toLocaleDateString();
 
     const userInitials = localUserName?.split(' ').map((n) => n ? n[0].toUpperCase() : '').join('');
-    console.log(userInitials, 'userInitials');
+
 
     const [fadeLoad, setfadeLoad] = useState(true)
-    const [activeButton, setActiveButton] = useState("");
+    // const [activeButton, setActiveButton] = useState("");
     const [showInstructions, setShowInstructions] = useState(false);
     const [showPlanDeDieta, setShowPlanDeDieta] = useState(false);
     const [planLength, setPlanLength] = useState(false);
@@ -46,7 +45,6 @@ function Profile2({ headerMountIn, setHeaderMountIn, setContentMountIn, navigate
     const reLoad = reload
 
     const shouldReload = (reLoad) => {
-        console.log('reload:', reLoad);
         if (reLoad) {
             window.location.reload();
         }
@@ -512,11 +510,15 @@ function Profile2({ headerMountIn, setHeaderMountIn, setContentMountIn, navigate
                                             }} />
 
                                         <h2>Objetivos:</h2>
-                                        {usuario?.categorias?.map((categoria, index) => (
-                                            <div key={index}>
-                                                {'* ' + categoria?.nombre}
-                                            </div>
-                                        ))}
+                                        {usuario?.categorias?.length > 0 ? (
+                                            usuario.categorias.map((categoria, index) => (
+                                                <div key={index}>
+                                                    {'* ' + (categoria?.nombre || 'Loading')}
+                                                </div>
+                                            ))
+                                        ) : (
+                                            <div>Aqui verás tus objetivos</div>
+                                        )}
                                     </div>
 
 

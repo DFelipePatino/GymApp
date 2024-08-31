@@ -94,6 +94,7 @@ const Cardio = forwardRef(({ setInOutStatus1, setInOutStatus2, setInOutStatus3, 
                     pauseOnHover: true,
                 }
             },
+
             {
                 breakpoint: 480,
                 settings: {
@@ -101,62 +102,22 @@ const Cardio = forwardRef(({ setInOutStatus1, setInOutStatus2, setInOutStatus3, 
                     slidesToScroll: 1,
                     pauseOnHover: true,
                 }
-            }
+            },
+
+            {
+                breakpoint: 380,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                    pauseOnHover: true,
+                    centerPadding: "110px",
+                }
+            },
+
         ]
     };
 
 
-    // const items = results??.data?.map((item, index) => ({
-    //       icon: <img src={'public/DavidB&W.png'} alt="David" style={{ objectFit: 'cover', width: '100%', height: '100%' }} />,
-    //     // click: loadFns.loadM1,
-    //     name: item.nombre || 'Loading',
-    //     id: item.id,
-    // })) || [{
-    //     // click: loadFns.loadM1(0),
-    //     name: 'Loading',
-    //     id: 1,
-    // }];
-
-    const items = [{
-        icon: <img src={'public/DavidB&W.png'} alt="David" style={{ objectFit: 'cover', width: '100%', height: '100%' }} />,
-        // click: loadFns.loadM1,
-        name: 'Loading',
-        id: 1,
-    },
-    {
-        icon: <img src={'public/DavidB&W.png'} alt="David" style={{ objectFit: 'cover', width: '100%', height: '100%' }} />,
-        // click: loadFns.loadM1,
-        name: 'Loading',
-        id: 1,
-    },
-    {
-        icon: <img src={'public/DavidB&W.png'} alt="David" style={{ objectFit: 'cover', width: '100%', height: '100%' }} />,
-        // click: loadFns.loadM1,
-        name: 'Loading',
-        id: 1,
-    },
-    {
-        icon: <img src={'public/DavidB&W.png'} alt="David" style={{ objectFit: 'cover', width: '100%', height: '100%' }} />,
-        // click: loadFns.loadM1,
-        name: 'Loading',
-        id: 1,
-    },
-    {
-        icon: <img src={'public/DavidB&W.png'} alt="David" style={{ objectFit: 'cover', width: '100%', height: '100%' }} />,
-        // click: loadFns.loadM1,
-        name: 'Loading',
-        id: 1,
-    },
-    {
-        icon: <img src={'public/DavidB&W.png'} alt="David" style={{ objectFit: 'cover', width: '100%', height: '100%' }} />,
-        // click: loadFns.loadM1,
-        name: 'Loading',
-        id: 1,
-    }] || [{
-        // click: loadFns.loadM1(0),
-        name: 'Loading',
-        id: 1,
-    }];
 
     return (
         <div className="slider-container">
@@ -177,7 +138,7 @@ const Cardio = forwardRef(({ setInOutStatus1, setInOutStatus2, setInOutStatus3, 
                         <div>
                             <Image
                                 id={(item.multimedia && item.multimedia.find((m) => m.type === 'IMAGE'))?.id}
-                                width='110%'
+                                width='70%'
                             />
                             {/* <p
                                 style={{ marginTop: '-20px', color: 'rgb(159, 28, 23)', fontSize: '20' }}

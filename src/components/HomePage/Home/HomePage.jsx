@@ -37,7 +37,7 @@ function HomePage({ BackToTopButton, headerLoad, bannerLoad, filterLoad, setHead
 
 
 
-
+    const [mostrarElementos, setMostrarElementos] = useState(true);
     const [userFisrtName, setUserFirstName] = useState("")
     const [lastNameLetter, setLastLetterName] = useState('')
     const [fadeLoad, setfadeLoad] = useState(true)
@@ -84,8 +84,11 @@ function HomePage({ BackToTopButton, headerLoad, bannerLoad, filterLoad, setHead
     useEffect(() => {
         isMounted.current = true;
 
+        setTimeout(() => {
+            shouldReload(reLoad)
+        }, 1500);
 
-        shouldReload(reLoad);
+
         dispatch(getProgresoActual());
         dispatch(getMethods());
         dispatch(getBanner());
@@ -96,35 +99,22 @@ function HomePage({ BackToTopButton, headerLoad, bannerLoad, filterLoad, setHead
         // localStorage.removeItem('entrenamientoSeleccionado');
         // localStorage.removeItem('CardIndex');
 
-        setTimeout(() => {
-            if (isMounted.current) setfadeLoad(false);
-        }, 900);
-        setTimeout(() => {
-            if (isMounted.current) setHeaderLoad(true);
-        }, 600);
-        setTimeout(() => {
-            if (isMounted.current) setBannerload(true);
-        }, 500);
-        setTimeout(() => {
-            if (isMounted.current) setFilterLoad(true);
-        }, 300);
+        if (!reLoad) {
 
-        const localUser = localStorage.getItem("localUserName");
+            setTimeout(() => {
+                if (isMounted.current) setfadeLoad(false);
+            }, 900);
+            setTimeout(() => {
+                if (isMounted.current) setHeaderLoad(true);
+            }, 600);
+            setTimeout(() => {
+                if (isMounted.current) setBannerload(true);
+            }, 500);
+            setTimeout(() => {
+                if (isMounted.current) setFilterLoad(true);
+            }, 300);
+        }
 
-        // if (localUser.split(' ')[0].endsWith('a')) {
-        //     if (isMounted.current) setLastLetterName('a');
-        // } else {
-        //     if (isMounted.current) setLastLetterName('o');
-        // }
-
-        // const verifyLogin = (localUser) => {
-        //     if (!localUser) {
-        //         navigate("/");
-        //     } else {
-        //         if (isMounted.current) setUserFirstName(localUser.split(' ')[0]);
-        //     }
-        // };
-        // verifyLogin(localUser);
 
         if (homeContent === "Tu Seleccion") {
             // dispatch(getMetodo1(0));
@@ -290,21 +280,31 @@ function HomePage({ BackToTopButton, headerLoad, bannerLoad, filterLoad, setHead
                     style={containerStyles}  >
 
 
-                    <h3>Tu seleccion</h3>
-                    <Seleccionado
-                        usuario={usuario}
-                        setInOutStatus1={setInOutStatus1}
-                        setInOutStatus2={setInOutStatus2}
-                        setInOutStatus3={setInOutStatus3}
-                        setInOutStatus4={setInOutStatus4}
-                        setInOutStatus5={setInOutStatus5}
-                        ref={filterRef1}
-                    />
-
-                    {inOutStatus5 ?
-                        <BotonesCarruselSeleccionado inOutStatus5={inOutStatus5} setHeaderLoad={setHeaderLoad} setBannerload={setBannerload} setFilterLoad={setFilterLoad} setInOutStatus5={setInOutStatus5} metodoSelected={metodoSelected} />
-
-                        : null}
+                    {mostrarElementos ? (
+                        <>
+                            <h3>Tu seleccion</h3>
+                            <Seleccionado
+                                usuario={usuario}
+                                setInOutStatus1={setInOutStatus1}
+                                setInOutStatus2={setInOutStatus2}
+                                setInOutStatus3={setInOutStatus3}
+                                setInOutStatus4={setInOutStatus4}
+                                setInOutStatus5={setInOutStatus5}
+                                setMostrarElementos={setMostrarElementos}
+                                ref={filterRef1}
+                            />
+                            {inOutStatus5 && (
+                                <BotonesCarruselSeleccionado
+                                    inOutStatus5={inOutStatus5}
+                                    setHeaderLoad={setHeaderLoad}
+                                    setBannerload={setBannerload}
+                                    setFilterLoad={setFilterLoad}
+                                    setInOutStatus5={setInOutStatus5}
+                                    metodoSelected={metodoSelected}
+                                />
+                            )}
+                        </>
+                    ) : null}
 
                     <br />
 

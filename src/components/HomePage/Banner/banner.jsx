@@ -31,7 +31,7 @@ function Banner({ setInfoPremium }) {
                     {allBanners.map((item, i) => (
                         <Paper className="paper" key={i}>
                             {item.enlace === "Premium" ? (
-                                <Link to={'/profile2'}
+                                <Link to={'/profile'}
                                     onClick={() => setInfoPremium(true)}
                                 >
 

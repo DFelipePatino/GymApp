@@ -19,7 +19,7 @@ import ShareIcon from '@mui/icons-material/Share';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { Button, Divider, Grid, Grow } from '@mui/material';
-import { emptyState, selectedEntrenamiento, empezarEntrenamiento } from '../../../redux/actions';
+import { emptyState, selectedEntrenamiento, empezarEntrenamiento, getProgresoActual } from '../../../redux/actions';
 import { useEffect, useState } from 'react';
 import { ExpandMore } from '@mui/icons-material';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
@@ -34,8 +34,6 @@ import "@react-pdf-viewer/core/lib/styles/index.css";
 import "@react-pdf-viewer/default-layout/lib/styles/index.css";
 
 const CardItem = ({ setHeaderLoad, setBannerload, setFilterLoad, showInstructions, usuario, setShowPlanDeDieta, showPlanDeDieta }) => {
-    // console.log(showInstructions, 'showInstructions en cardItem');
-    console.log(showPlanDeDieta, 'showPlanDeDieta en cardItem');
 
     const defaultLayoutPluginInstance = defaultLayoutPlugin();
 
@@ -46,22 +44,20 @@ const CardItem = ({ setHeaderLoad, setBannerload, setFilterLoad, showInstruction
     const CardIndex = parseInt(localStorage.getItem('CardIndex'));
 
     const results = useSelector((state) => state.results);
-  
+
     const currentProgressState = useSelector((state) => state.currentProgress);
 
     const filteredResultsGym = results?.flatMap((each) => each.entrenamientos?.filter((each) => each.lugar === "GYM"));
     const filteredResultsHome = results?.flatMap((each) => each.entrenamientos?.filter((each) => each.lugar === "CASA"));
-    
+
     let entrenamientoSeleccionado = [];
-    
+
     if (localStorage.getItem('lugar') === 'GYM') {
         entrenamientoSeleccionado = filteredResultsGym?.find((entrenamiento) => entrenamiento?.id === CardIndex);
     } else if (localStorage.getItem('lugar') === 'CASA') {
         entrenamientoSeleccionado = filteredResultsHome?.find((entrenamiento) => entrenamiento?.id === CardIndex);
     }
-    
 
-    console.log(entrenamientoSeleccionado, 'entrenamientoSeleccionado en cardItem');
 
     const [expanded, setExpanded] = useState(false);
     const [grow, setGrow] = useState(true);
@@ -91,6 +87,7 @@ const CardItem = ({ setHeaderLoad, setBannerload, setFilterLoad, showInstruction
     const toggleNavigate = async () => {
         const resultadoCrearEntrenamiento = await empezarEntrenamiento(entrenamientoSeleccionado?.id, currentProgressState);
         if (resultadoCrearEntrenamiento !== 0) {
+            // dispatch(getProgresoActual());
             toggleDrawer(false)();
             Swal.fire({
                 title: 'Atencion',
@@ -113,7 +110,6 @@ const CardItem = ({ setHeaderLoad, setBannerload, setFilterLoad, showInstruction
                 }
             });
         } else {
-            // console.log(entrenamientoSeleccionado.id, 'entrenamientoSeleccionado.id');
             toggleDrawer(false)();
             window.scrollTo({ top: 0, behavior: 'smooth' });
             setTimeout(() => setBannerload(false), 300);
@@ -326,13 +322,13 @@ const CardItem = ({ setHeaderLoad, setBannerload, setFilterLoad, showInstruction
                                         </div> */}
 
                                         <div style={{ height: '600px', overflow: 'auto' }}>
-                                    <CardMedia
-                                        style={{ paddingBottom: '30px', background: 'linear-gradient(to bottom, rgb(0, 0, 0),rgb(159, 28, 23),rgb(0, 0, 0)' }}
-                                        component="img"
-                                        height="auto"
-                                        image="/Plandedietacard.jpg"
-                                    />
-                                </div>
+                                            <CardMedia
+                                                style={{ paddingBottom: '30px', background: 'linear-gradient(to bottom, rgb(0, 0, 0),rgb(159, 28, 23),rgb(0, 0, 0)' }}
+                                                component="img"
+                                                height="auto"
+                                                image="/Plandedietacard.jpg"
+                                            />
+                                        </div>
                                     </div>
 
                                 </CardContent>

@@ -10,10 +10,12 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { Button } from "@mui/material";
 import Image from '../../Multimedia/Image';
 
-const Seleccionado = forwardRef(({ setInOutStatus1, setInOutStatus2, setInOutStatus3, setInOutStatus4, setInOutStatus5, usuario }, ref) => {
+const Seleccionado = forwardRef(({ setInOutStatus1, setInOutStatus2, setInOutStatus3, setInOutStatus4, setInOutStatus5, usuario, setMostrarElementos }, ref) => {
     const localRef = useRef(null);
     const dispatch = useDispatch();
     const results = useSelector((state) => state.results);
+
+
 
     const handleClick = (id) => {
         localStorage.setItem("category", "Todos")
@@ -128,9 +130,26 @@ const Seleccionado = forwardRef(({ setInOutStatus1, setInOutStatus2, setInOutSta
         dispatch(addFav(item));
     }
 
+
+    useEffect(() => {
+        const handle = setTimeout(() => {
+            if (selectedItems.length === 0) {
+                setMostrarElementos(false);
+            } else {
+                setMostrarElementos(true);
+            }
+        }, 800); // debounce delay, shorter than the original timeout
+
+        return () => clearTimeout(handle); // cleanup timeout if `selectedItems` changes
+    }, [selectedItems]);
+
+
+
+
     return (
         <div className="slider-container">
             <Slider {...settings}>
+                {/* {selectedItems.length === 0 && <div>Aqui veras tus entrenamientos favoritos</div>} */}
                 {selectedItems.map((item, index) => (
                     <div key={index}>
                         <div style={{ margin: 10 }}>
@@ -148,7 +167,7 @@ const Seleccionado = forwardRef(({ setInOutStatus1, setInOutStatus2, setInOutSta
                             <Icon>
                                 <FavoriteBorderIcon />
                             </Icon>
-                        </IconButton> */}  
+                        </IconButton> */}
                         <Button
                             ref={localRef}
                             style={{ width: '200px', height: '170px', padding: '0px', margin: '5px', color: 'white' }}

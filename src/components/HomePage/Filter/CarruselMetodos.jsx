@@ -126,7 +126,7 @@ const CarruselMetodos = forwardRef(({ setInOutStatus1, setInOutStatus2, setInOut
                 {itemGenero.map((item, index) => (
                     <div key={index}>
                         <div style={{ margin: 10 }}>
-                            {item.nombre || 'Loading'}
+                            {/* {item.nombre || 'Loading'} */}
                         </div>
                         {/* <IconButton
                             className="favButton"
@@ -151,7 +151,7 @@ const CarruselMetodos = forwardRef(({ setInOutStatus1, setInOutStatus2, setInOut
                         >
                             <div>
                                 <Image id={item.multimedia?.length > 0
-                                    && item.multimedia[0]?.type === 'IMAGE' ? item.multimedia[0].id : 1} width='69%' />
+                                    && item.multimedia[0]?.type === 'IMAGE' ? item.multimedia[0].id : 1} width='70%' />
                             </div>
                         </Button>
                     </div>

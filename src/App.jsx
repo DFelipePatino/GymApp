@@ -27,6 +27,7 @@ function App() {
   const [bannerLoad, setBannerload] = useState(false)
   const [filterLoad, setFilterLoad] = useState(false)
   const [infoPremium, setInfoPremium] = useState(false)
+  const [activeButton, setActiveButton] = useState("");
 
   const [headerMountIn, setHeaderMountIn] = useState(false)
   const [contentMountIn, setContentMountIn] = useState(false)
@@ -167,6 +168,9 @@ function App() {
           scrollToFilter4={scrollToFilter4}
           scrollToTodos={scrollToTodos}
 
+          activeButton={activeButton}
+          setActiveButton={setActiveButton}
+
           setInfoPremium={setInfoPremium}
           infoPremium={infoPremium}
 
@@ -219,10 +223,10 @@ function App() {
           setPlayerLoad={setPlayerLoad}
           playerLoad={playerLoad} />} />
 
-        <Route path='/profile' element={<Profile
-          localUser={localUser} />} />
+        {/* <Route path='/profile' element={<Profile
+          localUser={localUser} />} /> */}
 
-        <Route path='/profile2' element={<Profile2
+        <Route path='/profile' element={<Profile2
           reload={reload}
           headerMountIn={headerMountIn}
           contentMountIn={contentMountIn}
@@ -236,6 +240,8 @@ function App() {
           todasLasCategorias={todasLasCategorias}
           setInfoPremium={setInfoPremium}
           infoPremium={infoPremium}
+          activeButton={activeButton}
+          setActiveButton={setActiveButton}
         />} />
 
         <Route path='/profileedit' element={<ProfileEdit

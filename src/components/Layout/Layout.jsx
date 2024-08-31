@@ -39,7 +39,8 @@ import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 const drawerWidth = "50%";
 
 
-function Layout({ usuario, setPlayerLoad, setHeaderLoad, setBannerload, setFilterLoad, setHeaderMountIn, setContentMountIn, navigateAway, setNavigateAway, scrollToFilter1, scrollToCardio, scrollToEstiramiento, scrollToFilter4, scrollToTodos, setInfoPremium, infoPremium }) {
+function Layout({ usuario, setPlayerLoad, setHeaderLoad, setBannerload, setFilterLoad, setHeaderMountIn, setContentMountIn, navigateAway, setNavigateAway, scrollToFilter1, scrollToCardio, scrollToEstiramiento, scrollToFilter4, scrollToTodos, setInfoPremium, infoPremium, activeButton,
+    setActiveButton }) {
 
     const dispatch = useDispatch();
     const location = useLocation();
@@ -273,7 +274,7 @@ function Layout({ usuario, setPlayerLoad, setHeaderLoad, setBannerload, setFilte
                             {
                                 text: 'Premium', icon: <WorkspacePremiumIcon
                                     style={iconStyles2}
-                                />, route: '/profile2', shouldClearLocal: false, id: '10', fn: 'Premium'
+                                />, route: '/profile', shouldClearLocal: false, id: '10', fn: 'Premium'
                             },
 
                             { type: 'divider', id: 'divider-5' },
@@ -452,7 +453,7 @@ function Layout({ usuario, setPlayerLoad, setHeaderLoad, setBannerload, setFilte
                             });
                         }
 
-                        if (location.pathname === '/profile2') {
+                        if (location.pathname === '/profile') {
                             // setNavigateAway(true);
                             setTimeout(() => {
                                 setHeaderMountIn(false);
@@ -478,13 +479,14 @@ function Layout({ usuario, setPlayerLoad, setHeaderLoad, setBannerload, setFilte
                 {userInitials === "" ? (
                     <AccountCircleIcon style={ACI} />
                 ) :
-                    // <a className='initials' href='/profile2'>{userInitials}</a>
+                    // <a className='initials' href='/profile'>{userInitials}</a>
                     <button
                         className='initials'
                         onClick={() => {
                             window.scrollTo({ top: 0, behavior: 'smooth' });
 
                             if (location.pathname === '/home') {
+                                setActiveButton('');
                                 setInfoPremium(false);
                                 setNavigateAway(false);
                                 setTimeout(() => {
@@ -497,11 +499,11 @@ function Layout({ usuario, setPlayerLoad, setHeaderLoad, setBannerload, setFilte
                                     setFilterLoad(false);
                                 }, 400);
                                 setTimeout(() => {
-                                    navigate('/profile2')
+                                    navigate('/profile')
                                 }, 600);
                             }
 
-                            if (location.pathname === '/profile2' && infoPremium) {
+                            if (location.pathname === '/profile' && infoPremium) {
                                 window.scroll({ top: 0, behavior: 'smooth' });
                                 // setTimeout(() => {
                                 setHeaderMountIn(false);
@@ -515,10 +517,11 @@ function Layout({ usuario, setPlayerLoad, setHeaderLoad, setBannerload, setFilte
                             }
 
                             if (location.pathname.includes('/player')) {
+                                setActiveButton('');
                                 setNavigateAway(false);
                                 setPlayerLoad(false);
                                 setTimeout(() => {
-                                    navigate('/profile2')
+                                    navigate('/profile')
                                 }, 200);
                             }
 
@@ -544,7 +547,7 @@ function Layout({ usuario, setPlayerLoad, setHeaderLoad, setBannerload, setFilte
                                             setContentMountIn(false)
                                         }, 300);
                                         setTimeout(() => {
-                                            navigate('/profile2')
+                                            navigate('/profile')
                                         }, 500);
                                     }
                                 });

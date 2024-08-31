@@ -80,6 +80,8 @@ function ContentPlayer({ setPlayerLoad, playerLoad, setReload, usuario }) {
 
     useEffect(async () => {
 
+        dispatch(getProgresoActual());
+
         setTimeout(() => {
             dispatch(get2UltimosProgresoActualPorEntrenamiento(currentEntrenamientoId));
         }, 500);
@@ -320,7 +322,7 @@ function ContentPlayer({ setPlayerLoad, playerLoad, setReload, usuario }) {
                                                     marginBottom: '8px',
                                                 }}
                                             >
-                                                {lastProgresses?.length > 1 ? 'Peso anterior: ' + lastProgresses[1]['pesoRutina' + (index + 1)] + ' kg' : ''}
+                                      {lastProgresses?.length > 1 ? 'Peso anterior: ' + (lastProgresses[1]['pesoRutina' + (index + 1)] ?? '') + ' kg' : ''}
                                             </Typography>
                                         </Grid>
     

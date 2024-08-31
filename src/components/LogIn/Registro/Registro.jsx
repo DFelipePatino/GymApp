@@ -23,6 +23,8 @@ import { Menu } from '@mui/base/Menu';
 import { MenuButton as BaseMenuButton } from '@mui/base/MenuButton';
 import { MenuItem as BaseMenuItem, menuItemClasses } from '@mui/base/MenuItem';
 import { styled } from '@mui/system';
+import ControlPointIcon from '@mui/icons-material/ControlPoint';
+import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 
 const red = {
     50: 'rgb(255, 235, 234)',
@@ -181,12 +183,33 @@ function Registro({ BackToTopButton, usuario, todasLasCategorias }) {
 
     const navigate = useNavigate();
 
+
+    const updateUser = async () => {
+        await getGoogle();
+    };
+
+    const localUserName = usuario?.nombres + ' ' + usuario?.apellidos;
+    const userInitials = localUserName?.split(' ').map((n) => n ? n[0].toUpperCase() : '').join('');
+
+
     const [windowSize, setWindowSize] = useState({
         width: window.innerWidth,
         height: window.innerHeight,
     });
 
+    async function handleReloadAndNavigate() {
+        await setReload(true)
+        setTimeout(() => {
+            navigate('/home');
+        }, 1500);
+    }
+
+
     useEffect(() => {
+
+        calculateAge(dob);
+
+
         const handleResize = () => {
             setWindowSize({
                 width: window.innerWidth,
@@ -214,20 +237,14 @@ function Registro({ BackToTopButton, usuario, todasLasCategorias }) {
 
     const typographyStyle = windowSize.width >= 360 ? { marginTop: '50px', color: 'rgb(146, 144, 144)' } : { color: 'rgb(146, 144, 144)' };
 
-    const handleNombreChange = (event) => {
+    const handleUsuarioEditedChange = (event) => {
         const { name, value } = event.target;
         setUserEdited(prevState => ({
             ...prevState,
             [name]: value
         }));
     };
-    const handleApellidoChange = (event) => {
-        const { name, value } = event.target;
-        setUserEdited(prevState => ({
-            ...prevState,
-            [name]: value
-        }));
-    };
+
     const handleEdadChange = (event) => {
         console.log(dob, 'dob');
 
@@ -284,13 +301,10 @@ function Registro({ BackToTopButton, usuario, todasLasCategorias }) {
         }));
     };
 
+
     const [headerMountIn, setHeaderMountIn] = useState(false)
     const [contentMountIn, setContentMountIn] = useState(false)
     const [activeButton, setActiveButton] = useState(usuario.genero);
-    console.log(usuario.genero);
-    console.log(usuario);
-
-
 
 
     const isoDate = usuario.fechaNacimiento;
@@ -303,7 +317,6 @@ function Registro({ BackToTopButton, usuario, todasLasCategorias }) {
     const dob = formattedDate
 
     const calculateAge = (dob, dob2) => {
-        console.log(dob2, 'dob2');
 
         if (dob2) {
             const birthDate = new Date(dob2);
@@ -314,8 +327,6 @@ function Registro({ BackToTopButton, usuario, todasLasCategorias }) {
             if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
                 return age - 1;
             }
-
-            console.log(age, 'age2');
             return age;
         }
         else if (dob) {
@@ -328,7 +339,6 @@ function Registro({ BackToTopButton, usuario, todasLasCategorias }) {
                 return age - 1;
             }
 
-            console.log(age, 'age');
             return age;
         };
     };
@@ -339,8 +349,19 @@ function Registro({ BackToTopButton, usuario, todasLasCategorias }) {
         fechaNacimiento: formattedDate,
         categorias: usuario.categorias ? usuario.categorias : [],
         genero: usuario.genero,
-        id: usuario.id
+        id: usuario.id,
+        talla: usuario.talla,
+        peso: usuario.peso,
+        patologias: usuario.patologias,
+        fracturas: usuario.fracturas,
+        cirugias: usuario.cirugias,
+        alergias: usuario.alergias,
+        frecuenciaEntrenamientoSemanal: usuario.frecuenciaEntrenamientoSemanal,
+        nivelExperiencia: usuario.nivelExperiencia
     })
+
+    console.log(userEdited.talla, 'talla');
+
 
     const isoDate2 = userEdited.fechaNacimiento;
     const date2 = new Date(isoDate2);
@@ -352,17 +373,28 @@ function Registro({ BackToTopButton, usuario, todasLasCategorias }) {
     const dob2 = formattedDate2
 
     const [edad, setEdad] = useState(calculateAge(dob, dob2));
-  console.log(windowSize.height, 'windowSize.height');
-  
+
+
+    const array1 = todasLasCategorias
+    console.log(array1, 'array1');
+
+    const array2 = userEdited.categorias
+    console.log(array2, 'array2');
+
+
+    const result = array1.filter(item1 =>
+        !array2.some(item2 => item1.nombre === item2.nombre)
+    );
+
 
     return (
 
         <div
-            style={{
-                backgroundImage: 'linear-gradient(to bottom right, rgb(0, 0, 0), rgb(0, 0, 0), rgb(159, 28, 23), rgb(146, 144, 144))',
-                height: windowSize.height,
-            }}
-        >
+        style={{
+            backgroundImage: 'linear-gradient(to bottom right, rgb(0, 0, 0), rgb(0, 0, 0), rgb(159, 28, 23), rgb(146, 144, 144))',
+            height: windowSize.height,
+        }}
+    >
 
             <Slide
                 direction="right"
@@ -372,7 +404,7 @@ function Registro({ BackToTopButton, usuario, todasLasCategorias }) {
 
 
                 <Box
-                    sx={{ height: windowSize.height }}
+                // sx={{ height: windowSize.height }}
                 >
 
 
@@ -380,47 +412,9 @@ function Registro({ BackToTopButton, usuario, todasLasCategorias }) {
                     <Grid container
                         justifyContent="space-around"
                         padding="15px"
-                        sx={{ height: windowSize.height }}
+                    // sx={{ height: windowSize.height }}
                     >
 
-                        <Typography
-                            style={typographyStyle}
-                            variant="h4"
-                            align="center">
-                            Bienvenid@!
-                            <br />
-                            Al mejor equipo de entrenamiento
-
-                        </Typography>
-                        {/* <p>Ayudanos con unos datos para conocerte mejor</p> */}
-
-                        {/* <FileUploadIcon
-                    style={{
-                        height: '50px',
-                        width: '50px',
-                        top: '65px',
-                        right: '19%',
-                        position: 'fixed',
-                        color: '#426E92',
-                        zIndex: '1',
-                    }}
-                    onClick={() => alert('Futuro cambio de imagen')}
-                /> */}
-                        <Avatar
-                            style={{
-                                width: '150px',
-                                height: '150px',
-                                // cursor: 'pointer',
-                                border: '3px solid rgb(159, 28, 23)',
-                                position: 'relative',
-                                backgroundColor: 'rgb(146, 144, 144)'
-                                // filter: 'blur(1px)'
-                            }}
-                        // onClick={() => alert('Futuro cambio de imagen')}
-                        >
-                            {/* <FileUploadIcon /> */}
-                            <img src="/onegym.jpeg" alt="Avatar" style={{ width: '100%', height: '100%' }} />
-                        </Avatar>
 
                         <Fade
                             in={contentMountIn}
@@ -434,7 +428,6 @@ function Registro({ BackToTopButton, usuario, todasLasCategorias }) {
                                     border: '3px solid rgb(159, 28, 23)',
                                     // width: '80%',
                                     margin: 'auto',
-                                    marginTop: '30px',
                                     padding: '15px',
                                     boxShadow: '0px 0px 10px 0px rgb(0, 0, 0)'
                                 }}
@@ -452,19 +445,21 @@ function Registro({ BackToTopButton, usuario, todasLasCategorias }) {
                                             aria-label="recipe"
                                             onClick={() => alert('Futuro cambio de imagen')}
                                         >
-                                            <img src={usuario.foto} alt="Avatar" style={{ width: '100%', height: '100%' }} />
+                                            <img src={usuario.foto} alt={userInitials}
+                                            // style={{ width: '100%', height: '100%' }} 
+                                            />
 
                                         </Avatar>
 
                                     }
                                     title={
                                         <Typography variant="h5" style={{ color: 'gray' }}>
-                                            Ayudanos a conocerte mejor
+                                            Edita tu perfil
                                         </Typography>
                                     }
                                     subheader={
                                         <Typography variant="subtitle1" style={{ color: 'gray' }}>
-                                            Confirma tus datos porfavor
+                                            Guarda antes de abandonar!
                                         </Typography>
                                     }
                                 />
@@ -539,7 +534,7 @@ function Registro({ BackToTopButton, usuario, todasLasCategorias }) {
                                                         name="nombres"
                                                         label="Nombres"
                                                         value={userEdited.nombres}
-                                                        onChange={handleNombreChange}
+                                                        onChange={handleUsuarioEditedChange}
                                                     />
                                                 </Grid>
 
@@ -549,7 +544,7 @@ function Registro({ BackToTopButton, usuario, todasLasCategorias }) {
                                                         name="apellidos"
                                                         label="Apellidos"
                                                         value={userEdited.apellidos}
-                                                        onChange={handleApellidoChange}
+                                                        onChange={handleUsuarioEditedChange}
                                                     />
                                                 </Grid>
 
@@ -584,20 +579,21 @@ function Registro({ BackToTopButton, usuario, todasLasCategorias }) {
                                                     <CssTextField
                                                         fullWidth
                                                         // type="number"
-                                                        name="dob"
+                                                        name="edad"
                                                         label="Edad"
                                                         value={edad}
                                                     // disabled // Add the disabled prop to make the field not editable
                                                     />
                                                     {/* </Menu> */}
                                                 </Grid>
+
                                                 <Grid item xs={6}>
                                                     <Button
                                                         variant="danger"
                                                         size="medium"
                                                         style={{
                                                             backgroundColor: activeButton === 'MUJER' ? 'rgb(159, 28, 23)' : 'rgb(146, 144, 144)',
-                                                            color: 'white',
+                                                            color: 'white'
                                                         }}
                                                         onClick={() => handleGeneroChange('MUJER')}
                                                     >
@@ -620,12 +616,17 @@ function Registro({ BackToTopButton, usuario, todasLasCategorias }) {
 
                                             </Grid>
 
+                                            <br />
+
                                             <Grid container
                                                 spacing={-1}
                                             >
 
-                                                <Grid item xs={6}>
+                                                <Grid item xs={12}>
+
+                                                    <ControlPointIcon sx={{ position: "absolute", color: "rgb(0, 128, 0)", top: "465px" }} />
                                                     <Menu>
+
                                                         {/* <InputLabel style={{ color: 'white' }} htmlFor="name-order-select">Mis objetivos</InputLabel>
                                                         <Select
                                                             sx={{
@@ -652,13 +653,13 @@ function Registro({ BackToTopButton, usuario, todasLasCategorias }) {
                                                             id="outlined-select-objetivos"
                                                             select
                                                             label="Objetivos disponibles"
-                                                            value={userEdited.categorias}
+                                                            value={result ? result : []}
                                                             onChange={handleObjetivosChange}
                                                         >
-                                                            {todasLasCategorias.map((categoria, index) => {
+                                                            {result?.map((categoria, index) => {
                                                                 return (
                                                                     <MenuItem key={index}
-                                                                        value={categoria.nombre}
+                                                                        value={categoria}
                                                                         sx={{
                                                                             backgroundColor: 'rgba(0, 128, 0, 0.1)',
                                                                             typography: 'body1',
@@ -676,7 +677,8 @@ function Registro({ BackToTopButton, usuario, todasLasCategorias }) {
                                                         </CssTextField>
                                                     </Menu>
                                                 </Grid>
-                                                <Grid item xs={6}>
+                                                <Grid item xs={12}>
+                                                    <RemoveCircleOutlineIcon sx={{ position: "absolute", color: "rgb(159, 28, 23)", top: "555px" }} />
                                                     <Menu>
                                                         {/* <InputLabel style={{ color: 'white' }} htmlFor="name-order-select">Mis objetivos</InputLabel>
                                                         <Select
@@ -704,7 +706,7 @@ function Registro({ BackToTopButton, usuario, todasLasCategorias }) {
                                                             id="outlined-select-objetivos"
                                                             select
                                                             label="Tus Objetivos"
-                                                            value={userEdited.categorias}
+                                                            value={userEdited.categorias || []}
                                                             onChange={handleObjetivosChange2}
                                                         >
                                                             {userEdited.categorias.map((categoria, index) => {
@@ -716,10 +718,9 @@ function Registro({ BackToTopButton, usuario, todasLasCategorias }) {
                                                                             typography: 'body1',
                                                                             padding: '10px',
                                                                         }}
-                              
                                                                     >
                                                                         <Typography sx={{ color: 'rgb(159, 28, 23) ' }}>
-                                                                            {categoria}
+                                                                            {categoria.nombre}
                                                                         </Typography>
                                                                     </MenuItem>
                                                                 );
@@ -733,14 +734,105 @@ function Registro({ BackToTopButton, usuario, todasLasCategorias }) {
 
                                             </Grid>
 
+                                            {(usuario.accountType === 'PREMIUM' || usuario.accountType === 'ADMIN') && (
+
+                                                <Grid container spacing={1} >
+
+                                                    <Grid item xs={12}>
+                                                        <CssTextField
+                                                            id="custom-css-outlined-input"
+                                                            fullWidth
+                                                            name="talla"
+                                                            label="Talla cm"
+                                                            value={userEdited.talla ? userEdited.talla : ''}
+                                                            onChange={handleUsuarioEditedChange}
+                                                        />
+                                                    </Grid>
+                                                    <Grid item xs={12}>
+                                                        <CssTextField
+                                                            id="custom-css-outlined-input"
+                                                            fullWidth
+                                                            name="peso"
+                                                            label="Peso km"
+                                                            value={userEdited.peso ? userEdited.peso : ''}
+                                                            onChange={handleUsuarioEditedChange}
+                                                        />
+                                                    </Grid>
+                                                    <Grid item xs={12}>
+                                                        <CssTextField
+                                                            id="custom-css-outlined-input"
+                                                            fullWidth
+                                                            name="patologias"
+                                                            label="Patologias"
+                                                            value={userEdited.patologias ? userEdited.patologias : ''}
+                                                            onChange={handleUsuarioEditedChange}
+                                                        />
+                                                    </Grid>
+                                                    <Grid item xs={12}>
+                                                        <CssTextField
+                                                            id="custom-css-outlined-input"
+                                                            fullWidth
+                                                            name="fracturas"
+                                                            label="Fracturas"
+                                                            value={userEdited.fracturas ? userEdited.fracturas : ''}
+                                                            onChange={handleUsuarioEditedChange}
+                                                        />
+                                                    </Grid>
+                                                    <Grid item xs={12}>
+                                                        <CssTextField
+                                                            id="custom-css-outlined-input"
+                                                            fullWidth
+                                                            name="cirugias"
+                                                            label="Cirugias"
+                                                            value={userEdited.cirugias ? userEdited.cirugias : ''}
+                                                            onChange={handleUsuarioEditedChange}
+                                                        />
+                                                    </Grid>
+                                                    <Grid item xs={12}>
+                                                        <CssTextField
+                                                            id="custom-css-outlined-input"
+                                                            fullWidth
+                                                            name="alergias"
+                                                            label="Alergias"
+                                                            value={userEdited.alergias ? userEdited.alergias : ''}
+                                                            onChange={handleUsuarioEditedChange}
+                                                        />
+                                                    </Grid>
+                                                    <Grid item xs={12}>
+                                                        <CssTextField
+                                                            id="custom-css-outlined-input"
+                                                            fullWidth
+                                                            name="frecuenciaEntrenamientoSemanal"
+                                                            label="Frecuencia"
+                                                            value={userEdited.frecuenciaEntrenamientoSemanal ? userEdited.frecuenciaEntrenamientoSemanal : ''}
+                                                            onChange={handleUsuarioEditedChange}
+                                                        />
+                                                    </Grid>
+                                                    <Grid item xs={12}>
+                                                        <CssTextField
+                                                            id="custom-css-outlined-input"
+                                                            fullWidth
+                                                            name="nivelExperiencia"
+                                                            label="Nivel Experiencia"
+                                                            value={userEdited.nivelExperiencia}
+                                                            onChange={handleUsuarioEditedChange}
+                                                        />
+                                                    </Grid>
+                                                </Grid>
+
+                                            )}
+
+
+
                                             <Grid container
                                                 spacing={2}
                                             >
 
                                                 <Grid item
-                                                    xs={6}
+                                                    xs={12}
                                                 >
                                                     <Button
+                                                        sx={{ marginTop: '10px' }}
                                                         fullWidth
                                                         variant="contained"
                                                         color="primary"
@@ -765,28 +857,38 @@ function Registro({ BackToTopButton, usuario, todasLasCategorias }) {
                                                                         const response = await putUsuario(userEdited);
                                                                         console.log('se envio');
                                                                         Swal.fire({
-                                                                            title: 'Bienvenido!',
+                                                                            title: 'Hecho!',
                                                                             text: 'Tu perfil ha sido actualizado con exito!',
                                                                             icon: 'success',
                                                                             color: 'rgb(255, 255, 255)',
                                                                             background: "rgb(0,0,0)",
                                                                             backdrop: `rgba(144, 238, 144, 0.4)`
                                                                         })
-                                                                        navigate('/home');
+                                                                            .finally(() => handleReloadAndNavigate());
+
+
                                                                     } catch (e) {
                                                                         console.error('Error:', e);
+                                                                        Swal.fire({
+                                                                            title: 'Error!',
+                                                                            text: 'Tu perfil no ha sido actualizado, intenta de nuevo!',
+                                                                            icon: 'error',
+                                                                            color: 'rgb(255, 255, 255)',
+                                                                            background: "rgb(0,0,0)",
+                                                                            backdrop: `rgba(159, 28, 23, 0.4)`
+                                                                        })
                                                                     }
                                                                 }
                                                                 if (result.isDismissed) {
                                                                     Swal.fire({
                                                                         title: 'Cancelado!',
-                                                                        text: 'Tu perfil no ha sido creado aun, continua con el proceso de registro!',
-                                                                        icon: 'success',
+                                                                        text: 'Tus cambios no han sido guardados, continua con el proceso de actualizacion!',
+                                                                        icon: 'warning',
                                                                         color: 'rgb(255, 255, 255)',
                                                                         background: "rgb(0,0,0)",
                                                                         backdrop: `rgba(159, 28, 23, 0.4)`
                                                                     })
-                                                                    // .finally(() => navigate('/'));
+                                                                    // .finally(() => navigate('/profile2'));
                                                                 }
                                                             })
                                                         }}
@@ -796,7 +898,7 @@ function Registro({ BackToTopButton, usuario, todasLasCategorias }) {
                                                 </Grid>
 
 
-                                                <Grid item
+                                                {/* <Grid item
                                                     xs={6}
                                                 >
                                                     <Button
@@ -819,14 +921,14 @@ function Registro({ BackToTopButton, usuario, todasLasCategorias }) {
                                                                 backdrop: `rgba(159, 28, 23, 0.4)`
                                                             }).then((result) => {
                                                                 if (result.isConfirmed) {
-                                                                    navigate('/');
+                                                                    navigate('/profile2');
                                                                 }
                                                             });
                                                         }}
                                                     >
                                                         Volver
                                                     </Button>
-                                                </Grid>
+                                                </Grid> */}
 
                                             </Grid>
                                         </form>
@@ -841,7 +943,7 @@ function Registro({ BackToTopButton, usuario, todasLasCategorias }) {
 
                         </Fade>
                     </Grid>
-                    <BackToTopButton />
+                    {/* <BackToTopButton /> */}
                 </Box>
             </Slide>
         </div >

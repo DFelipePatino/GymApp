@@ -1,29 +1,16 @@
 import React from 'react'
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Drawer, Typography } from '@mui/material'
-import { makeStyles } from '@mui/styles'
 import { getMetodo1 } from '../../redux/actions';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
-import DirectionsBikeIcon from '@mui/icons-material/DirectionsBike';
-import SelfImprovementIcon from '@mui/icons-material/SelfImprovement';
-import SportsGymnasticsIcon from '@mui/icons-material/SportsGymnastics';
-import SportsHandballIcon from '@mui/icons-material/SportsHandball';
-import SportsKabaddiIcon from '@mui/icons-material/SportsKabaddi';
 import WorkspacePremiumIcon from '@mui/icons-material/WorkspacePremium';
-import PropTypes from 'prop-types';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import CssBaseline from '@mui/material/CssBaseline';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
-import ChatIcon from '@mui/icons-material/Chat';
 import LogoutIcon from '@mui/icons-material/Logout';
 import ListItemText from '@mui/material/ListItemText';
 import HomeIcon from '@mui/icons-material/Home';
@@ -32,7 +19,6 @@ import Toolbar from '@mui/material/Toolbar';
 import "./Layout.css"
 import { iconStyles, iconStyles2 } from './Layout'
 import { useDispatch, useSelector } from 'react-redux';
-import { setHomeContent } from '../../redux/actions';
 import Swal from 'sweetalert2'
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 

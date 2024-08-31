@@ -51,7 +51,7 @@ const CssTextField = styled(TextField)({
 });
 
 
-function ContentPlayerCE({ setPlayerLoad, playerLoad, setReload, usuario, cardioState }) {
+function ContentPlayerCE({ setPlayerLoad, playerLoad, setReload, usuario, cardioState, WAButton }) {
 
     const dispatch = useDispatch();
 
@@ -63,6 +63,7 @@ function ContentPlayerCE({ setPlayerLoad, playerLoad, setReload, usuario, cardio
     const [urlVideo, setUrlVideo] = useState('');
 
     const [expanded, setExpanded] = React.useState(true);
+    const [isPlaying, setIsPlaying] = useState(false);
 
     const [expandedDescription, setExpandedDescription] = useState(
         []
@@ -197,12 +198,13 @@ function ContentPlayerCE({ setPlayerLoad, playerLoad, setReload, usuario, cardio
 
                             :
                             <ReactPlayer
-                                // ref={playerRef}
+                                //  ref={playerRef}
                                 url={urlVideo}
                                 controls={true}
                                 width={'100%'}
                                 height={'350px'}
-                                // light={true}
+                                playing={isPlaying}
+                                light={!isPlaying && <img style={{ height: "100%", width: "auto" }} src='/videoPreview.jpeg' alt='Thumbnail' />}
                                 style={{ background: 'linear-gradient(to bottom, rgb(0, 0, 0),rgb(159, 28, 23),rgb(0, 0, 0)' }}
                             />
 
@@ -263,6 +265,7 @@ function ContentPlayerCE({ setPlayerLoad, playerLoad, setReload, usuario, cardio
                     </Card>
                 </div>
             </Grow >
+            <WAButton />
         </div >
     );
 }

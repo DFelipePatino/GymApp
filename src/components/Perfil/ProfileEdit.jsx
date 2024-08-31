@@ -179,7 +179,7 @@ const CssTextField = styled(TextField)({
 });
 
 
-function ProfileEdit({ BackToTopButton, usuario, todasLasCategorias, setReload }) {
+function ProfileEdit({ WAButton, usuario, todasLasCategorias, setReload }) {
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -948,7 +948,7 @@ function ProfileEdit({ BackToTopButton, usuario, todasLasCategorias, setReload }
 
                         </Fade>
                     </Grid>
-                    {/* <BackToTopButton /> */}
+                    <WAButton />
                 </Box>
             </Slide>
         </div >

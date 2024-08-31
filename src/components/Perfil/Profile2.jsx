@@ -21,7 +21,7 @@ import CardDrawer from '../HomePage/CardDrawer/CardDrawer';
 
 
 function Profile2({ headerMountIn, setHeaderMountIn, setContentMountIn, navigateAway, setNavigateAway, usuario, reload, setInfoPremium, infoPremium, activeButton,
-    setActiveButton }) {
+    setActiveButton, WAButton }) {
 
     const navigate = useNavigate();
 
@@ -577,6 +577,7 @@ function Profile2({ headerMountIn, setHeaderMountIn, setContentMountIn, navigate
                         </div>
                     </div>
                 </Slide >
+                <WAButton />
             </div >
             {/* {showInstructions ? ( */}
 

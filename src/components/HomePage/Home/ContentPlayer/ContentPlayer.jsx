@@ -21,6 +21,8 @@ import PlaylistAddCheckCircleIcon from '@mui/icons-material/PlaylistAddCheckCirc
 import PlaylistAddCheckCircleOutlinedIcon from '@mui/icons-material/PlaylistAddCheckCircleOutlined';
 import Tooltip from '@mui/material/Tooltip';
 import { baseUrl } from '../../../../redux/actions';
+import WAButton from '../../../WAButton/WAButton';
+
 
 const CssTextField = styled(TextField)({
     '& label': {
@@ -293,20 +295,20 @@ function ContentPlayer({ setPlayerLoad, playerLoad, setReload, usuario }) {
                             <Typography style={{ color: 'white' }} paragraph>
                                 {rutina?.descripcion}
                             </Typography>
-    
+
                             <Divider flexItem
                                 sx={{
                                     weight: '1px',
                                     height: '0.5px',
                                     backgroundColor: 'rgb(159, 28, 23)',
                                 }} />
-    
+
                             {(usuario?.accountType !== "FREE" && usuario?.accountType !== "GENERAL") && (
                                 <>
                                     <Typography style={{ color: 'white' }} >
                                         Control de peso:
                                     </Typography>
-    
+
                                     <Grid container spacing={0}>
                                         <Grid item xs={12} sm={3}
                                             sx={{
@@ -322,10 +324,10 @@ function ContentPlayer({ setPlayerLoad, playerLoad, setReload, usuario }) {
                                                     marginBottom: '8px',
                                                 }}
                                             >
-                                      {lastProgresses?.length > 1 ? 'Peso anterior: ' + (lastProgresses[1]['pesoRutina' + (index + 1)] ?? '') + ' kg' : ''}
+                                                {lastProgresses?.length > 1 ? 'Peso anterior: ' + (lastProgresses[1]['pesoRutina' + (index + 1)] ?? '') + ' kg' : ''}
                                             </Typography>
                                         </Grid>
-    
+
                                         {Array.from({ length: rutina.cantidadPesos }, (_, iPeso) => (
                                             <Grid item xs={12} sm={6} key={iPeso}>
                                                 <CardActions>
@@ -339,7 +341,7 @@ function ContentPlayer({ setPlayerLoad, playerLoad, setReload, usuario }) {
                                                         helperText="Ingresa el peso que utilizaste"
                                                         FormHelperTextProps={{ style: { color: 'white' } }}
                                                     />
-    
+
                                                     <IconButton aria-label="enviar"
                                                         sx={{ color: 'rgb(0,128,0) ', marginBottom: '15px', display: 'flex', justifyContent: 'center' }}
                                                         onClick={() => {
@@ -363,7 +365,7 @@ function ContentPlayer({ setPlayerLoad, playerLoad, setReload, usuario }) {
                                     </Grid>
                                 </>
                             )}
-    
+
                             <Divider flexItem
                                 sx={{
                                     weight: '1px',
@@ -476,7 +478,7 @@ function ContentPlayer({ setPlayerLoad, playerLoad, setReload, usuario }) {
                                 width={'100%'}
                                 height={'350px'}
                                 playing={isPlaying}
-                                light={!isPlaying && <img style={{ height: "100%", width: "auto" }} src='/videoPreview.jpg' alt='Thumbnail' />}
+                                light={!isPlaying && <img style={{ height: "100%", width: "auto" }} src='/videoPreview.jpeg' alt='Thumbnail' />}
                                 style={{ background: 'linear-gradient(to bottom, rgb(0, 0, 0),rgb(159, 28, 23),rgb(0, 0, 0)' }}
                                 onBuffer={() => setfadeLoad(true)}
                                 onBufferEnd={() => setfadeLoad(false)}
@@ -627,6 +629,7 @@ function ContentPlayer({ setPlayerLoad, playerLoad, setReload, usuario }) {
                     </Card>
                 </div>
             </Grow >
+            <WAButton />
         </div >
     );
 }

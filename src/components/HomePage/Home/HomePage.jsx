@@ -20,7 +20,7 @@ import { Box } from '@mui/system';
 import { containerStyles } from '../Filter/filterStyles';
 
 
-function HomePage({ BackToTopButton, headerLoad, bannerLoad, filterLoad, setHeaderLoad, setBannerload, setFilterLoad, scrollToFilter1, filterRef1, scrollToCardio, filterRef2, scrollToEstiramiento, filterRef3, scrollToFilter4, filterRef4, scrollToTodos, filterRef5, reload, setInfoPremium, usuario }) {
+function HomePage({ WAButton, headerLoad, bannerLoad, filterLoad, setHeaderLoad, setBannerload, setFilterLoad, scrollToFilter1, filterRef1, scrollToCardio, filterRef2, scrollToEstiramiento, filterRef3, scrollToFilter4, filterRef4, scrollToTodos, filterRef5, reload, setInfoPremium, usuario }) {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -367,6 +367,8 @@ function HomePage({ BackToTopButton, headerLoad, bannerLoad, filterLoad, setHead
                 </div>
 
             </Grow >
+
+            <WAButton />
 
         </div >
     );

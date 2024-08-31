@@ -11,7 +11,7 @@ import ProfileCard from './components/Perfil/profileCard';
 import Chat from './components/Chat/Chat.jsx';
 import Layout from './components/Layout/Layout.jsx';
 import DropDownCategorias from './components/Perfil/DropDownCategorias.jsx';
-import BackToTopButton from './components/backToTopButton/BackToTopButton.jsx';
+import WAButton from './components/WAButton/WAButton.jsx';
 import ContentPlayer from './components/HomePage/Home/ContentPlayer/ContentPlayer.jsx';
 import { getMethods, getBanner, getCategories, getProgresoActual, getGoogle } from './redux/actions.js';
 import Testtt from './components/test/Testtt.jsx';
@@ -67,7 +67,7 @@ function App() {
   }
 
   // console.log(localStorage.getItem("id_token"), 'localUser.getItem("id_token")');
-  
+
 
 
   useEffect(async () => {
@@ -183,7 +183,7 @@ function App() {
         {/* <Route path='/testeo' element={<Testtt profilefoto={profilefoto} />} /> */}
 
         <Route path='/registro' element={<Registro
-          BackToTopButton={BackToTopButton}
+          WAButton={WAButton}
           usuario={usuario}
           todasLasCategorias={todasLasCategorias}
         />} />
@@ -196,7 +196,7 @@ function App() {
           setHeaderLoad={setHeaderLoad}
           setBannerload={setBannerload}
           setFilterLoad={setFilterLoad}
-          BackToTopButton={BackToTopButton}
+          WAButton={WAButton}
           localUser={localUser}
           scrollToFilter1={scrollToFilter1}
           scrollToCardio={scrollToCardio}
@@ -216,12 +216,14 @@ function App() {
           usuario={usuario}
           setReload={setReload}
           setPlayerLoad={setPlayerLoad}
-          playerLoad={playerLoad} />} />
+          playerLoad={playerLoad} />}
+          WAButton={WAButton} />
 
         <Route path='/playerCE' element={<ContentPlayerCE
           setReload={setReload}
           setPlayerLoad={setPlayerLoad}
-          playerLoad={playerLoad} />} />
+          playerLoad={playerLoad}
+          WAButton={WAButton} />} />
 
         {/* <Route path='/profile' element={<Profile
           localUser={localUser} />} /> */}
@@ -234,7 +236,7 @@ function App() {
           setContentMountIn={setContentMountIn}
           navigateAway={navigateAway}
           setNavigateAway={setNavigateAway}
-          BackToTopButton={BackToTopButton}
+          WAButton={WAButton}
           name={localUser}
           usuario={usuario}
           todasLasCategorias={todasLasCategorias}
@@ -250,7 +252,7 @@ function App() {
           contentMountIn={contentMountIn}
           setHeaderMountIn={setHeaderMountIn}
           setContentMountIn={setContentMountIn}
-          BackToTopButton={BackToTopButton}
+          WAButton={WAButton}
           profilePicture="/Perfil.png"
           localUser={localUser}
           usuario={usuario}

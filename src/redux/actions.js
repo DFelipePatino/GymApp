@@ -1,15 +1,5 @@
 import axios from "axios";
-import image1 from '/onegym.jpeg'
-import image2 from '/titan.png'
-import image3 from '/rope.jpeg'
-import image4 from '/f.png'
-import image5 from '/Screenshot1.png'
-import image6 from '/Screenshot2.png'
-import image7 from '/Screenshot3.png'
-import image8 from '/Screenshot4.png'
-import image9 from '/Screenshot5.png'
-import image10 from '/Screenshot6.png'
-import image11 from '/Screenshot7.png'
+
 
 
 import {

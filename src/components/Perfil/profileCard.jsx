@@ -1,5 +1,5 @@
 import React from 'react';
-import profilePic from "/Perfil.png"
+// import profilePic from "/Perfil.png"
 import './profileCard.css';
 
 const ProfileCard = () => {
@@ -8,7 +8,7 @@ const ProfileCard = () => {
             <div className='gradiant'> </div>
             <div className='profile'>
 
-                <img src={profilePic} alt="profilePic" />
+                {/* <img src={profilePic} alt="profilePic" /> */}
 
                 <div className='name'>
                     Name

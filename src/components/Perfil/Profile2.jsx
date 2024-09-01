@@ -20,8 +20,8 @@ import { toggleDrawer } from '../HomePage/CardDrawer/CardDrawer';
 import CardDrawer from '../HomePage/CardDrawer/CardDrawer';
 
 
-function Registro({ headerMountIn, setHeaderMountIn, setContentMountIn, navigateAway, setNavigateAway, usuario, reload, setInfoPremium, infoPremium, activeButton,
-    setActiveButton, WAButton }) {
+function Registro({ headerMountIn, setHeaderMountIn, setContentMountIn, navigateAway, setNavigateAway, usuario, reload, setInfoPremium, infoPremium
+    , WAButton }) {
 
     const navigate = useNavigate();
 
@@ -34,7 +34,7 @@ function Registro({ headerMountIn, setHeaderMountIn, setContentMountIn, navigate
 
 
     const [fadeLoad, setfadeLoad] = useState(true)
-    // const [activeButton, setActiveButton] = useState("");
+    const [activeButton, setActiveButton] = useState("");
     const [showInstructions, setShowInstructions] = useState(false);
     const [showPlanDeDieta, setShowPlanDeDieta] = useState(false);
     const [planLength, setPlanLength] = useState(false);

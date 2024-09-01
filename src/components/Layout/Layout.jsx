@@ -32,17 +32,12 @@ function Layout({ usuario, setPlayerLoad, setHeaderLoad, setBannerload, setFilte
     const location = useLocation();
     const navigate = useNavigate();
 
-    const resultsData = useSelector((state) => state.results.data);
     const currentIndex = useSelector((state) => state.rutinaID);
     const currentProgress = useSelector((state) => state.currentProgress);
 
-
     const localUserName = usuario?.nombres + ' ' + usuario?.apellidos;
-    // console.log(localUserName, 'localUserName en layout');
-
 
     const userInitials = localUserName?.split(' ').map((n) => n ? n[0].toUpperCase() : '').join('');
-    // console.log(userInitials, 'userInitials');
 
 
     const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -69,62 +64,23 @@ function Layout({ usuario, setPlayerLoad, setHeaderLoad, setBannerload, setFilte
         if (fn === 'clear') { localStorage.removeItem("homeContent") }
 
         switch (fn) {
-            case 'homeM1':
-                localStorage.setItem("homeContent", "Metodo 1");
-                dispatch(getMetodo1(currentIndex));
-                break;
-            case 'homeM2':
-                localStorage.setItem("homeContent", "Metodo 2");
-                dispatch(getMetodo1(currentIndex));
-                break;
-            case 'homeM3':
-                localStorage.setItem("homeContent", "Metodo 3");
-                dispatch(getMetodo1(currentIndex));
-                break;
-            case 'homeM4':
-                localStorage.setItem("homeContent", "Metodo 4");
-                dispatch(getMetodo1(currentIndex));
-                break;
-            case 'homeM5':
-                localStorage.setItem("homeContent", "Metodo 5");
-                dispatch(getMetodo1(currentIndex));
-                break;
-            case 'homeM6':
-                localStorage.setItem("homeContent", "Metodo 6");
-                dispatch(getMetodo1(currentIndex));
-                break;
-            case 'Tu Seleccion':
-                localStorage.setItem("homeContent", "Tu Seleccion");
-                scrollToFilter1();
-                dispatch(getMetodo1(currentIndex));
-                break;
-            case 'Estiramiento':
-                localStorage.setItem("homeContent", "Estiramiento");
-                scrollToEstiramiento();
-                // dispatch(getMetodo1(currentIndex));
-                break;
-            case 'Tips Alimentacion':
-                localStorage.setItem("homeContent", "Tips Alimentacion");
-                scrollToEstiramiento();
-                dispatch(getMetodo1(currentIndex));
-                break;
+
             case 'Cardio':
                 localStorage.setItem("homeContent", "Cardio");
                 scrollToCardio();
                 console.log('scrolling to filter 2 layout');
-
-                // dispatch(getMetodo1(currentIndex));
                 break;
+
+            case 'Estiramiento':
+                localStorage.setItem("homeContent", "Estiramiento");
+                scrollToEstiramiento();
+                break;
+
             case 'Todos':
                 localStorage.setItem("homeContent", "Todos");
                 scrollToTodos();
-                // dispatch(getMetodo1(currentIndex));
                 break;
-            case 'Mi entrenamiento actual':
-                // localStorage.setItem("homeContent", "Todos");
-                // scrollToTodos();
-                // dispatch(getMetodo1(currentIndex));
-                break;
+
             case 'Premium':
                 window.scroll({ top: 0, behavior: 'smooth' });
                 setHeaderMountIn(false);
@@ -135,6 +91,7 @@ function Layout({ usuario, setPlayerLoad, setHeaderLoad, setBannerload, setFilte
                     setHeaderMountIn(true)
                 }, 800);
                 break;
+
             case 'wa':
                 const whatsappUrl = 'https://api.whatsapp.com/send/?phone=%2B573107709118&text=Hola+David%2C+soy+usuario+One&type=phone_number&app_absent=0';
                 const anchor = document.createElement('a');
@@ -142,6 +99,7 @@ function Layout({ usuario, setPlayerLoad, setHeaderLoad, setBannerload, setFilte
                 anchor.target = '_blank';
                 anchor.click();
                 break;
+
             default:
                 localStorage.removeItem("homeContent")
                 break;
@@ -153,7 +111,6 @@ function Layout({ usuario, setPlayerLoad, setHeaderLoad, setBannerload, setFilte
         }
 
         if (location.pathname !== '/home') {
-            console.log('not home');
             navigate(route);
             handleDrawerClose()
 
@@ -192,6 +149,15 @@ function Layout({ usuario, setPlayerLoad, setHeaderLoad, setBannerload, setFilte
         //     id: '2'
         // },
         {
+            text: 'Todos',
+            icon: <KeyboardArrowRightIcon
+                style={{ color: 'rgb(156, 28, 23)', cursor: 'pointer' }}
+            />,
+            fn: "Todos",
+            route: '/home',
+            id: '6'
+        },
+        {
             text: 'Cardio',
             icon: <KeyboardArrowRightIcon
                 style={{ color: 'rgb(156, 28, 23)', cursor: 'pointer' }}
@@ -209,24 +175,7 @@ function Layout({ usuario, setPlayerLoad, setHeaderLoad, setBannerload, setFilte
             route: '/home',
             id: '4'
         },
-        // {
-        //     text: 'Tips Alimentacion',
-        //     icon: <KeyboardArrowRightIcon
-        //         style={{ color: 'rgb(156, 28, 23)', cursor: 'pointer' }}
-        //     />,
-        //     fn: "Tips Alimentacion",
-        //     route: '/home',
-        //     id: '5'
-        // },
-        {
-            text: 'Todos',
-            icon: <KeyboardArrowRightIcon
-                style={{ color: 'rgb(156, 28, 23)', cursor: 'pointer' }}
-            />,
-            fn: "Todos",
-            route: '/home',
-            id: '6'
-        },
+
     ];
 
     let drawer;
@@ -374,17 +323,11 @@ function Layout({ usuario, setPlayerLoad, setHeaderLoad, setBannerload, setFilte
 
             <Toolbar
                 style={{
-                    // backgroundColor: 'rgba(0, 0, 0, 0)',
-                    // backgroundColor: 'rgb(146, 144, 144)',
                     backgroundColor: 'rgb(0, 0, 0)',
-                    // backgroundColor: 'rgb(159, 28, 23)',
-                    // color: 'white',
                     color: 'rgb(159, 28, 23)',
-                    // color: 'rgb(146, 144, 144)',
+
                     display: 'flex',
                     justifyContent: 'space-between',
-                    /* position: sticky;
-                    top: 10px; */
                     alignItems: 'center',
                     padding: '0 20px',
                 }}
@@ -465,7 +408,6 @@ function Layout({ usuario, setPlayerLoad, setHeaderLoad, setBannerload, setFilte
                 {userInitials === "" ? (
                     <AccountCircleIcon style={ACI} />
                 ) :
-                    // <a className='initials' href='/profile'>{userInitials}</a>
                     <button
                         className='initials'
                         onClick={() => {
@@ -491,9 +433,7 @@ function Layout({ usuario, setPlayerLoad, setHeaderLoad, setBannerload, setFilte
 
                             if (location.pathname === '/profile' && infoPremium) {
                                 window.scroll({ top: 0, behavior: 'smooth' });
-                                // setTimeout(() => {
                                 setHeaderMountIn(false);
-                                // }, 200);
                                 setTimeout(() => {
                                     setInfoPremium(false)
                                 }, 400);
@@ -548,7 +488,6 @@ function Layout({ usuario, setPlayerLoad, setHeaderLoad, setBannerload, setFilte
             </Toolbar>
 
             <Drawer
-                // container={container}
                 variant="temporary"
                 open={mobileOpen}
                 onTransitionEnd={handleDrawerTransitionEnd}
@@ -563,9 +502,6 @@ function Layout({ usuario, setPlayerLoad, setHeaderLoad, setBannerload, setFilte
             >
                 {drawer}
             </Drawer>
-
-            {/* <div>{children}</div> */}
-
         </div >
     )
 }

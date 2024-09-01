@@ -1,0 +1,35 @@
+
+.main-layout {
+background-image: url(/back10.jpg);
+background-size: cover; /* Or use 'contain' or any other value as needed */
+background-attachment: fixed; /* Makes sure the background doesn't move with scroll */
+/* background-position: center; */
+min-height: 100vh; /* Ensures it takes the full height of the viewport initially */
+display: flex;
+flex-direction: column;
+/* margin-top: 56px; */
+}
+
+
+.main-layout {
+    transition: background 0.5s ease-in-out;
+  }
+  
+  .fade-enter {
+    opacity: 0;
+  }
+  
+  .fade-enter-active {
+    opacity: 1;
+    transition: opacity 0.5s ease-in;
+  }
+  
+  .fade-exit {
+    opacity: 1;
+  }
+  
+  .fade-exit-active {
+    opacity: 0;
+    transition: opacity 0.5s ease-out;
+  }
+  

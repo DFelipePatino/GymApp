@@ -54,15 +54,13 @@ const CssTextField = styled(TextField)({
 function ContentPlayer({ setPlayerLoad, playerLoad, setReload, usuario }) {
 
     const dispatch = useDispatch();
-
-    const location = useLocation();
     const navigate = useNavigate();
 
     const [fadeLoad, setfadeLoad] = useState(true);
     const [headerLoad, setHeaderLoad] = useState(false);
     const [urlVideo, setUrlVideo] = useState('');
 
-    const [expanded, setExpanded] = React.useState(true);
+    const [expanded, setExpanded] = React.useState(false);
     const [isPlaying, setIsPlaying] = useState(false);
 
 
@@ -166,7 +164,9 @@ function ContentPlayer({ setPlayerLoad, playerLoad, setReload, usuario }) {
     const handleExpandClick = () => {
         setExpanded(!expanded);
         if (expanded === false) {
-            window.scrollTo({ top: 600, behavior: 'smooth' });
+            setTimeout(() => {
+            window.scrollTo({ top: 600, behavior: 'smooth' })
+            } , 500);
         }
         else if (expanded === true) {
             window.scrollTo({ top: 100, behavior: 'smooth' });
@@ -256,8 +256,6 @@ function ContentPlayer({ setPlayerLoad, playerLoad, setReload, usuario }) {
 
     }
 
-
-    const prevPeso = 16;
 
 
     function loadRutinas() {
@@ -520,6 +518,7 @@ function ContentPlayer({ setPlayerLoad, playerLoad, setReload, usuario }) {
                                 <br />
 
                                 <Tooltip title="Finalizar entrenamiento">
+                                    <Typography sx={{ color: 'rgb(0, 128, 0)', fontSize: '0.8rem' }}>Finalizar</Typography>
                                     <IconButton aria-label="finalizar"
                                         sx={{ backgroundColor: 'rgb(0, 128, 0)', color: 'white', fontWeight: 'bold', margin: '4px' }}
                                         onClick={() => {
@@ -553,6 +552,7 @@ function ContentPlayer({ setPlayerLoad, playerLoad, setReload, usuario }) {
                                     } />
 
                                 <Tooltip title="Abandonar entrenamiento">
+                                    <Typography sx={{ color: 'rgb(159, 28, 23)', fontSize: '0.8rem' }}>Abandonar</Typography>
                                     <IconButton aria-label="abandonar"
                                         sx={{ backgroundColor: 'rgb(159, 28, 23)', color: 'white', fontWeight: 'bold', margin: '4px' }}
                                         onClick={() => {

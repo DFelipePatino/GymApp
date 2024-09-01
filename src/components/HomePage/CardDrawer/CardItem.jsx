@@ -33,7 +33,7 @@ import { defaultLayoutPlugin } from "@react-pdf-viewer/default-layout";
 import "@react-pdf-viewer/core/lib/styles/index.css";
 import "@react-pdf-viewer/default-layout/lib/styles/index.css";
 
-const CardItem = ({ setHeaderLoad, setBannerload, setFilterLoad, showInstructions, usuario, setShowPlanDeDieta, showPlanDeDieta }) => {
+const CardItem = ({  setBannerload, setFilterLoad, showInstructions, usuario, showPlanDeDieta }) => {
 
     const defaultLayoutPluginInstance = defaultLayoutPlugin();
 
@@ -215,7 +215,7 @@ const CardItem = ({ setHeaderLoad, setBannerload, setFilterLoad, showInstruction
                                 }}
                             >
                                 <h5 style={{ color: 'rgb(159, 28, 23)', margin: '0px' }}>Contenido</h5>
-                                <h6 style={{ color: 'rgb(256, 256, 256)', margin: '15px' }}>Ejercicios</h6>
+                                <h6 style={{ color: 'rgb(256, 256, 256)', marginTop: '12px', marginBottom: '8px' }}>Ejercicios</h6>
                                 <Grid container>
                                     {entrenamientoSeleccionado?.rutinas?.sort((a, b) => {
                                         return a.orden - b.orden;
@@ -223,11 +223,8 @@ const CardItem = ({ setHeaderLoad, setBannerload, setFilterLoad, showInstruction
                                         <Grid item key={index} xs={6} md={4} lg={4}>
                                             <Typography
                                                 // variant='contained'
-                                                style={{ fontSize: '0.8rem', textDecoration: 'underline', marginBottom: '10px', color: 'white' }}
+                                                style={{ fontSize: '0.8rem', marginBottom: '10px', color: 'white' }}
                                             >
-                                                <KeyboardArrowRightIcon
-                                                    style={{ color: 'rgb(256, 256, 256)', paddingBottom: '-20px', marginLeft: '-10px' }}
-                                                />
                                                 {rutina.nombre}
                                             </Typography>
                                         </Grid>
@@ -302,24 +299,7 @@ const CardItem = ({ setHeaderLoad, setBannerload, setFilterLoad, showInstruction
                                                 }}
                                             />
                                         </Link>
-                                        {/* <Link to={`http://${usuario.multimedia[0].ruta}`} target='blank'>
-                                    <ArrowOutwardIcon
-                                        style={{
-                                            position: 'absolute',
-                                            top: '-4%',
-                                            right: '-4%',
-                                            transform: 'translate(-50%, -50%)',
-                                            cursor: 'pointer',
-                                            fontSize: '48px',
-                                            color: 'red'
-                                        }}
-                                    />
-                                </Link> */}
-                                        {/* <div style={{ height: "750px" }}>
-                                            <Worker workerUrl={`https://unpkg.com/pdfjs-dist@3.11.174/build/pdf.worker.min.js`}>
-                                                <Viewer fileUrl={usuario.multimedia[0].ruta} plugins={[defaultLayoutPluginInstance]} />
-                                            </Worker>
-                                        </div> */}
+
 
                                         <div style={{ height: '600px', overflow: 'auto' }}>
                                             <CardMedia

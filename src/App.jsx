@@ -3,7 +3,6 @@ import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import LogIn from './components/LogIn/LogIn.jsx';
 import HomePage from './components/HomePage/Home/HomePage';
-import Profile from './components/Perfil/Profile.jsx';
 import Profile2 from './components/Perfil/Profile2.jsx';
 import ProfileEdit from './components/Perfil/ProfileEdit.jsx';
 import Registro from './components/LogIn/Registro/Registro.jsx';
@@ -13,8 +12,7 @@ import Layout from './components/Layout/Layout.jsx';
 import DropDownCategorias from './components/Perfil/DropDownCategorias.jsx';
 import WAButton from './components/WAButton/WAButton.jsx';
 import ContentPlayer from './components/HomePage/Home/ContentPlayer/ContentPlayer.jsx';
-import { getMethods, getBanner, getCategories, getProgresoActual, getGoogle } from './redux/actions.js';
-import Testtt from './components/test/Testtt.jsx';
+import { getCategories, getProgresoActual, getGoogle } from './redux/actions.js';
 import ContentPlayerCE from './components/HomePage/Home/ContentPlayer/ContentPlayerCE.jsx';
 
 function App() {
@@ -28,19 +26,19 @@ function App() {
   const [filterLoad, setFilterLoad] = useState(false)
   const [infoPremium, setInfoPremium] = useState(false)
   const [activeButton, setActiveButton] = useState("");
-
   const [headerMountIn, setHeaderMountIn] = useState(false)
   const [contentMountIn, setContentMountIn] = useState(false)
   const [navigateAway, setNavigateAway] = useState(false)
   const [reload, setReload] = useState(false)
+
+  console.log(infoPremium, 'infoPremium app');
+  
 
   const [playerLoad, setPlayerLoad] = useState(false)
 
   const localUser = localStorage.getItem("localUser");
 
   const todasLasCategorias = useSelector(state => state.allCategories)
-  const currentProgress = useSelector((state) => state.currentProgress);
-  const cardioState = useSelector((state) => state.cardio);
 
   let usuario = JSON.parse(localStorage.getItem("localUser"));
 
@@ -60,13 +58,9 @@ function App() {
   }
 
   const callActions = () => {
-    // dispatch(getMethods());
-    // dispatch(getBanner());
     dispatch(getCategories());
     dispatch(getProgresoActual());
   }
-
-  // console.log(localStorage.getItem("id_token"), 'localUser.getItem("id_token")');
 
 
 

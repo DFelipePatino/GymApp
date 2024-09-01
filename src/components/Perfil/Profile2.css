@@ -8,18 +8,7 @@
 }
 
 .profile2div {
-    /* background-image: url(/public/back.jpg); */
-    /* background-image: url(/public/back2.jpg); */
-    /* background-image: url(/public/back6.jpg); */
-    /* background-image: url(/public/back8.jpg);
-    /* background-color: lightgrey; */
-    background-image: url(/back10.jpg);
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-    margin-top: 56px;
-    /* justify-content: center; */
-
+    margin-top: 48px;
 }
 
 /* @media screen and (max-width: 935px) {
@@ -69,10 +58,9 @@
 
 .profile-image-container {
     display: flex;
-    /* justify-content: center; */
-    /* Center horizontally */
+    align-content: space-around;
+    flex-direction: column;
     align-items: center;
-    /* Center vertically */
 }
 
 
@@ -82,7 +70,7 @@
     margin-top: -100px;
     padding: 5px;
     background: rgb(159, 28, 23);
-    margin-left: 40%;
+    /* margin-left: 40%; */
 }
 
 
@@ -156,57 +144,7 @@
 
 
 
-@media screen and (max-width: 480px) {
-    .profile img {
-        margin-left: 28%;
-    }
-}
 
-@media screen and (max-width: 825px) {
-
-    .profile2div {
-
-        height: 155%;
-
-    }
-
-}
-
-
-@media screen and (max-width: 640px) {
-
-    .profile2div {
-        margin-top: 56px;
-        justify-content: center;
-        height: 145%;
-    }
-
-}
-
-@media screen and (max-width: 430px) {
-
-    .profile2div {
-
-        height: 200%;
-
-    }
-
-}
-
-@media screen and (max-width: 375px) {
-    .profile2div {
-
-        height: 240%;
-
-    }
-}
-
-@media screen and (orientation: landscape) {
-    .profile2div {
-        height: 370%;
-        /* display: flex; */
-    }
-}
 
 .MuiCardHeader-root {
     box-sizing: border-box;

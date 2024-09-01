@@ -20,7 +20,7 @@ import { Box } from '@mui/system';
 import { containerStyles } from '../Filter/filterStyles';
 
 
-function HomePage({ WAButton, headerLoad, bannerLoad, filterLoad, setHeaderLoad, setBannerload, setFilterLoad, scrollToFilter1, filterRef1, scrollToCardio, filterRef2, scrollToEstiramiento, filterRef3, scrollToFilter4, filterRef4, scrollToTodos, filterRef5, reload, setInfoPremium, usuario }) {
+function HomePage({ WAButton, bannerLoad, filterLoad, setHeaderLoad, setBannerload, setFilterLoad, scrollToFilter1, filterRef1, scrollToCardio, filterRef2, scrollToEstiramiento, filterRef3, scrollToFilter4, filterRef4, scrollToTodos, filterRef5, reload, setInfoPremium, usuario }) {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -96,9 +96,6 @@ function HomePage({ WAButton, headerLoad, bannerLoad, filterLoad, setHeaderLoad,
         dispatch(getCardio());
         dispatch(getEstiramientos());
 
-        // localStorage.removeItem('entrenamientoSeleccionado');
-        // localStorage.removeItem('CardIndex');
-
         if (!reLoad) {
 
             setTimeout(() => {
@@ -115,115 +112,32 @@ function HomePage({ WAButton, headerLoad, bannerLoad, filterLoad, setHeaderLoad,
             }, 300);
         }
 
-
-        if (homeContent === "Tu Seleccion") {
-            // dispatch(getMetodo1(0));
-            scrollToFilter1();
-        }
-
-        if (homeContent === "Metodo 1") {
-            localStorage.setItem("category", "Metodo 1");
-            // dispatch(getMetodo1(0));
-            scrollToFilter1();
-        }
-        if (homeContent === "Metodo 2") {
-            localStorage.setItem("category", "Metodo 2");
-            // dispatch(getMetodo1(1));
-            scrollToFilter1();
-        }
-        if (homeContent === "Metodo 3") {
-            localStorage.setItem("category", "Metodo 3");
-            // dispatch(getMetodo1(2));
-            scrollToFilter1();
-        }
-        if (homeContent === "Metodo 4") {
-            localStorage.setItem("category", "Metodo 4");
-            // dispatch(getMetodo1(3));
-            scrollToFilter1();
-        }
-        if (homeContent === "Metodo 5") {
-            localStorage.setItem("category", "Metodo 5");
-            // dispatch(getMetodo1(4));
-            scrollToFilter1();
-        }
-        if (homeContent === "Metodo 6") {
-            localStorage.setItem("category", "Metodo 6");
-            // dispatch(getMetodo1(5));
-            scrollToFilter1();
-        }
-
         if (homeContent === "Cardio") {
             // localStorage.setItem("category", "Metodo 6");
-            // dispatch(getMetodo1(5));
             scrollToCardio();
         }
 
         if (homeContent === "Estiramiento") {
             // localStorage.setItem("category", "Metodo 6");
-            // dispatch(getMetodo1(5));
             scrollToEstiramiento();
-        }
-
-        if (homeContent === "Tips Alimentacion") {
-            // localStorage.setItem("category", "Metodo 6");
-            // dispatch(getMetodo1(5));
-            scrollToFilter4();
         }
 
         if (homeContent === "Todos") {
             // localStorage.setItem("category", "Metodo 6");
-            // dispatch(getMetodo1(5));
-            scrollToTodos();
+                  scrollToTodos();
         }
 
-        // console.log('homeContent:', homeContent);
-        // console.log('lastCategory:', lastCategory);
-        // console.log('categoryToDispatch:', categoryToDispatch);
 
         if (homeContent === "goBack") {
             switch (lastCategory) {
-                // case 'Metodo 1':
-                //     dispatch(getMetodo1(0));
-                //     scrollToFilter1();
-                //     break;
-                // case 'Metodo 2':
-                //     dispatch(getMetodo1(0));
-                //     scrollToFilter1();
-                //     break;
-                // case 'Metodo 3':
-                //     dispatch(getMetodo1(0));
-                //     scrollToFilter1();
-                //     break;
-                // case 'Metodo 4':
-                //     dispatch(getMetodo1(0));
-                //     scrollToFilter1();
-                //     break;
-                // case 'Metodo 5':
-                //     dispatch(getMetodo1(0));
-                //     scrollToFilter1();
-                //     break;
-                // case 'Metodo 6':
-                //     dispatch(getMetodo1(0));
-                //     scrollToFilter1();
-                //     break;
-                case 'Tu Seleccion':
-                    dispatch(getMetodo1(0));
-                    scrollToFilter1();
-                    break;
+
                 case 'Cardio':
-                    // dispatch(getMetodo1(5));
                     scrollToCardio();
                     break;
                 case 'Estiramiento':
-                    // dispatch(getMetodo1(5));
                     scrollToEstiramiento();
                     break;
-                case 'Tips Alimentacion':
-                    // dispatch(getMetodo1(5));
-                    scrollToFilter4();
-                    break;
                 case 'Todos':
-                    // dispatch(getMetodo1(5));
                     scrollToTodos();
                     break;
                 default:

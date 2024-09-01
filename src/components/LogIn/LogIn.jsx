@@ -75,12 +75,12 @@ function LogIn() {
 
     async function handleCredentialResponse(response) {
 
-      
+
         setIsLoading(true);
 
         const id_token = response.credential;
         localStorage.setItem('id_token', id_token);
-   
+
         const registro = await fetch(`${baseUrl}/users`, {
             method: 'POST',
             headers: {
@@ -126,20 +126,20 @@ function LogIn() {
                 ...respuesta,
                 age: age
             };
-              
+
             localStorage.setItem('localUser', JSON.stringify(updatedRespuesta));
 
             setTimeout(() => {
-            setIsLoading(false)
+                setIsLoading(false)
             }, 2000);
 
             setTimeout(() => {
-            setFormShown(true)
+                setFormShown(true)
             }, 2500);
-            
+
             setTimeout(() => {
-            navigate('/home')
-            } , 3500);
+                navigate('/home')
+            }, 3500);
 
 
         }
@@ -149,7 +149,7 @@ function LogIn() {
     return (
         <div className='loginn'>
             <section className='titanimage'>
-                <img src="titan.png" alt="titan" />
+                <img src="/topImage.jpg" alt="titan" />
             </section>
             <section className='logoimage'>
                 <img src="onegym.jpeg" alt="one gym logo" />
@@ -231,7 +231,7 @@ function LogIn() {
             )}
 
             <section className='ropeimage'>
-                <img src="rope.jpeg" alt="rope guy" />
+                <img src="/bottomImage.jpg" />
             </section>
         </div>
     );

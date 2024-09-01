@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Card } from '@material-ui/core';
+import { Card, Typography } from '@material-ui/core';
 import './Profile2.css';
 import { Button, Divider, Fade, LinearProgress, Slide } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
@@ -20,11 +20,10 @@ import { toggleDrawer } from '../HomePage/CardDrawer/CardDrawer';
 import CardDrawer from '../HomePage/CardDrawer/CardDrawer';
 
 
-function Registro({ headerMountIn, setHeaderMountIn, setContentMountIn, navigateAway, setNavigateAway, usuario, reload, setInfoPremium, infoPremium
+function Profile2({ headerMountIn, setHeaderMountIn, setContentMountIn, navigateAway, setNavigateAway, usuario, reload, setInfoPremium, infoPremium
     , WAButton }) {
 
     const navigate = useNavigate();
-
 
     const localUserName = usuario?.nombres + ' ' + usuario?.apellidos;
     const tipoDeCuenta = usuario?.accountType === "GENERAL" ? 'BASIC' : usuario?.accountType;
@@ -93,6 +92,7 @@ function Registro({ headerMountIn, setHeaderMountIn, setContentMountIn, navigate
 
 
     const handlePlanChange = (button) => {
+        window.scroll({ top: 200, behavior: 'smooth' });
         planLengthAnimation();
         setPlanLength(true);
         setTimeout(() => {
@@ -100,10 +100,78 @@ function Registro({ headerMountIn, setHeaderMountIn, setContentMountIn, navigate
         }, 800);
     };
 
-    const handleClick = () => {
+    const handleClickInstructivo = () => {
+        setShowPlanDeDieta(false);
         setShowInstructions(true);
         toggleDrawer(true)();
     }
+
+    const handleClickPlanDeDieta = () => {
+        setShowInstructions(false);
+        setShowPlanDeDieta(true);
+        setTimeout(() => {
+            toggleDrawer(true)();
+        }
+            , 800);
+    }
+
+
+
+    const getLinkDetails = (buttonType, linkDuration) => {
+        const links = {
+            Premium: {
+                3: "https://checkout.bold.co/payment/LNK_RQR0AJZR11",
+                6: "https://checkout.bold.co/payment/LNK_CAQS6CWBIF",
+                12: "https://checkout.bold.co/payment/LNK_ZYU6G0PEA3",
+            },
+            Basic: {
+                1: "https://checkout.bold.co/payment/LNK_TRZQRYD07V",
+                6: "https://checkout.bold.co/payment/LNK_U3DQ8U24CM",
+                12: "https://checkout.bold.co/payment/LNK_JF0U1E5QXP",
+            },
+        };
+
+        const descriptions = {
+            Premium: {
+                3: "Premium de 3 meses",
+                6: "Premium de 6 meses",
+                12: "Premium de 12 meses",
+            },
+            Basic: {
+                1: "Básico de 1 mes",
+                6: "Básico de 6 meses",
+                12: "Básico de 12 meses",
+            },
+        };
+
+        return { url: links[buttonType][linkDuration], description: descriptions[buttonType][linkDuration] };
+    };
+
+    const renderLink = () => {
+        if (activeButton === "Premium" || activeButton === "Basic") {
+            const { url, description } = getLinkDetails(activeButton, showLink);
+            if (url) {
+                return (
+                    <Fade in={displayLink} timeout={400}>
+                        <div className="link">
+                            <a href={url} target="_blank" rel="noopener noreferrer">
+                                {description} <ArrowOutwardIcon />
+                            </a>
+                            <p>Click para ir a pagar</p>
+                        </div>
+                    </Fade>
+                );
+            }
+        }
+        return (
+            <div className="noLink">
+                <Typography >Aquí verás tu link de pago</Typography>
+            </div>
+        );
+    };
+
+
+
 
 
     return (
@@ -142,11 +210,9 @@ function Registro({ headerMountIn, setHeaderMountIn, setContentMountIn, navigate
                             </div>
 
 
-                            {infoPremium && usuario?.accountType !== "FREE" ? (
+                            {infoPremium ? (
 
                                 <>
-
-
                                     <div
                                         className='lastDiv'
                                     >
@@ -157,7 +223,7 @@ function Registro({ headerMountIn, setHeaderMountIn, setContentMountIn, navigate
                                             <Button
                                                 style={{ color: 'white' }}
                                                 onClick={() => {
-                                                    handleClick();
+                                                    handleClickInstructivo();
                                                 }}
                                             >
                                                 Instructivo
@@ -352,66 +418,8 @@ function Registro({ headerMountIn, setHeaderMountIn, setContentMountIn, navigate
 
                                         <br />}
 
-                                    {activeButton === "Premium" && showLink === 3 ? (
-                                        <Fade in={displayLink} timeout={400}>
+                                    {renderLink()}
 
-                                            <div className='link'>
-                                                <a href="https://checkout.bold.co/payment/LNK_RQR0AJZR11" target="_blank" rel="noopener noreferrer">Premium de 3 meses <ArrowOutwardIcon /> </a>
-                                                <p>Click para ir a pagar</p>
-                                            </div>
-                                        </Fade>
-
-                                    ) : activeButton === "Premium" && showLink === 6 ? (
-
-                                        <Fade in={displayLink} timeout={400}>
-                                            <div className='link'>
-                                                <a href="https://checkout.bold.co/payment/LNK_CAQS6CWBIF" target="_blank" rel="noopener noreferrer">Premium de 6 meses <ArrowOutwardIcon /></a>
-                                                <p>Click para ir a pagar</p>
-                                            </div>
-                                        </Fade>
-
-                                    ) : activeButton === "Premium" && showLink === 12 ? (
-
-                                        <Fade in={displayLink} timeout={400}>
-
-                                            <div className='link'>
-                                                <a href="https://checkout.bold.co/payment/LNK_ZYU6G0PEA3" target="_blank" rel="noopener noreferrer">Premium de 12 meses <ArrowOutwardIcon /></a>
-                                                <p>Click para ir a pagar</p>
-                                            </div>
-
-                                        </Fade>
-
-                                    ) : activeButton === "Basic" && showLink === 1 ? (
-
-                                        <Fade in={displayLink} timeout={400}>
-
-                                            <div className='link'>
-                                                <a href="https://checkout.bold.co/payment/LNK_TRZQRYD07V" target="_blank" rel="noopener noreferrer">Basico de 1 mese <ArrowOutwardIcon /></a>
-                                                <p>Click para ir a pagar</p>
-                                            </div>
-                                        </Fade>
-
-                                    ) : activeButton === "Basic" && showLink === 6 ? (
-                                        <Fade in={displayLink} timeout={400}>
-                                            <div className='link'>
-                                                <a href="https://checkout.bold.co/payment/LNK_U3DQ8U24CM" target="_blank" rel="noopener noreferrer">Basico de 6 meses <ArrowOutwardIcon /></a>
-                                                <p>Click para ir a pagar</p>
-                                            </div>
-                                        </Fade>
-
-                                    ) : activeButton === "Basic" && showLink === 12 ? (
-                                        <Fade in={displayLink} timeout={400}>
-                                            <div className='link'>
-                                                <a href="https://checkout.bold.co/payment/LNK_JF0U1E5QXP" target="_blank" rel="noopener noreferrer">Basico de 12 meses <ArrowOutwardIcon /></a>
-                                                <p>Click para ir a pagar</p>
-                                            </div>
-                                        </Fade>
-
-                                    ) :
-                                        <div className='noLink'>
-                                            <a rel="noopener noreferrer">Aqui verás tu link de pago </a>
-                                        </div>
-                                    }
                                     <br />
 
                                     <CardDrawer showInstructions={showInstructions} />
@@ -419,171 +427,168 @@ function Registro({ headerMountIn, setHeaderMountIn, setContentMountIn, navigate
                                 </>
 
 
-                            ) : (
+                            )
+                                : //aqui empieza el render del perfil y termina el render de la pasarela de pago
+                                (
 
-                                <>
-                                    <div className='description'>
-                                        <h2>Info:</h2>
-                                        {`Edad: ${usuario?.age}`}
-                                        <br />
-                                        {`Genero: ${usuario?.genero}`}
-                                        <br />
-                                        {`Email: ${usuario?.email}`}
-                                        <br />
-                                        <br />
-                                        {`Suscripcion: ${tipoDeCuenta}`}
-                                        <br />
-                                        {`Estado: ${usuario?.state}`}
-                                        <br />
-                                        {`Valido hasta: ${formattedExpitarion}`}
-                                        <br />
-                                        <br />
-
-                                        {usuario?.accountType === "PREMIUM" ? (
-                                            <>
-                                                {`Talla: ${usuario?.talla ? usuario?.talla + " cm" : ''}`}
-                                                <br />
-                                                {`Peso: ${usuario?.peso ? usuario?.peso + " kg" : ''}`}
-                                                <br />
-                                                {`Patologias: ${usuario?.patologias ? usuario?.patologias : ''}`}
-                                                <br />
-                                                {`Fracturas: ${usuario?.fracturas ? usuario?.fracturas : ''}`}
-                                                <br />
-                                                {`Cirugias: ${usuario?.cirugias ? usuario?.cirugias : ''}`}
-                                                <br />
-                                                {`Alergias: ${usuario?.alergias ? usuario?.alergias : ''}`}
-                                                <br />
-                                                {`Frecuencia entrenamiento: ${usuario?.frecuenciaEntrenamientoSemanal ? usuario?.frecuenciaEntrenamientoSemanal : ''}`}
-                                                <br />
-                                                {`Experiencia: ${usuario?.nivelExperiencia ? usuario?.nivelExperiencia : ''}`}
-                                                <br />
-                                                <br />
-
-                                                <CardDrawer usuario={usuario} showPlanDeDieta={showPlanDeDieta} setShowPlanDeDieta={setShowPlanDeDieta} />
-
-                                                <Button
-                                                    style={buttonStyle}
-                                                    variant='contained'
-                                                    onClick={() => {
-                                                        setShowPlanDeDieta(true);
-                                                        setTimeout(() => {
-                                                            toggleDrawer(true)();
-                                                        }
-                                                            , 800);
-                                                    }}
-                                                >
-                                                    <PictureAsPdfTwoToneIcon style={{ marginRight: '10px' }} />
-                                                    Plan de dieta
-                                                    <br />
-                                                </Button>
-
-                                                <br />
-                                                <Button
-                                                    style={{ backgroundColor: 'rgb(0, 128, 0)', color: 'white' }}
-                                                    variant='contained'
-                                                    onClick={() => {
-                                                        const whatsappUrl = 'https://api.whatsapp.com/send/?phone=%2B573107709118&text=Hola+David%2C+soy+usuario+One+Premium&type=phone_number&app_absent=0';
-                                                        const anchor = document.createElement('a');
-                                                        anchor.href = whatsappUrl;
-                                                        anchor.target = '_blank';
-                                                        anchor.click();
-                                                    }}
-                                                >
-                                                    <WhatsAppIcon style={{ marginRight: '10px' }} />
-                                                    Contactanos
-                                                </Button>
-                                                <br />
-                                                <br />
-
-
-                                            </>
-                                        )
-                                            : (null)
-                                        }
-
-
-                                        <Divider
-                                            sx={{
-                                                weight: '1px',
-                                                height: '0.5px',
-                                                backgroundColor: 'rgb(159, 28, 23)',
-                                            }} />
-
-                                        <h2>Objetivos:</h2>
-                                        {usuario?.categorias?.length > 0 ? (
-                                            usuario.categorias.map((categoria, index) => (
-                                                <div key={index}>
-                                                    {'* ' + (categoria?.nombre || 'Loading')}
-                                                </div>
-                                            ))
-                                        ) : (
-                                            <div>Aqui verás tus objetivos</div>
-                                        )}
-                                    </div>
-
-
-                                    <div className='contact'>
-
-                                        {usuario?.accountType ? (<Button
-                                            style={buttonStyle}
-                                            variant='contained'
-                                            onClick={() => {
-                                                window.scroll({ top: 0, behavior: 'smooth' });
-                                                setHeaderMountIn(false);
-                                                setTimeout(() => {
-                                                    setInfoPremium(true)
-                                                }, 400);
-                                                setTimeout(() => {
-                                                    setHeaderMountIn(true)
-                                                }, 800);
-
-                                            }}
-                                        >
-                                            <WorkspacePremiumIcon />
-                                            Premium
-                                        </Button>) : (null)}
-
-
-
-
-                                        <Button
-                                            style={buttonStyle}
-                                            variant='contained'
-                                            onClick={() => {
-                                                window.scroll({ top: 0, behavior: 'smooth' });
-                                                setTimeout(() => {
-                                                    setNavigateAway(true);
-                                                }, 200);
-                                                setTimeout(() => {
-                                                    setHeaderMountIn(false)
-                                                }, 250);
-                                                setTimeout(() => {
-                                                    setContentMountIn(false)
-                                                }, 300);
-                                                setTimeout(() => {
-                                                    navigate('/profileedit')
-                                                    // navigate('/registro')
-                                                }, 600);
-                                            }}
-                                        >
-                                            Editar
+                                    <>
+                                        <div className='description'>
+                                            <h2>Info:</h2>
+                                            {`Edad: ${usuario?.age}`}
                                             <br />
-                                            <EditIcon />
-                                        </Button>
-                                    </div>
-                                </>
-                            )}
+                                            {`Genero: ${usuario?.genero}`}
+                                            <br />
+                                            {`Email: ${usuario?.email}`}
+                                            <br />
+                                            <br />
+                                            {`Suscripcion: ${tipoDeCuenta}`}
+                                            <br />
+                                            {`Estado: ${usuario?.state}`}
+                                            <br />
+                                            {`Valido hasta: ${formattedExpitarion}`}
+                                            <br />
+                                            <br />
+
+                                            {usuario?.accountType === "PREMIUM" ? (
+                                                <>
+                                                    {`Talla: ${usuario?.talla ? usuario?.talla + " cm" : ''}`}
+                                                    <br />
+                                                    {`Peso: ${usuario?.peso ? usuario?.peso + " kg" : ''}`}
+                                                    <br />
+                                                    {`Patologias: ${usuario?.patologias ? usuario?.patologias : ''}`}
+                                                    <br />
+                                                    {`Fracturas: ${usuario?.fracturas ? usuario?.fracturas : ''}`}
+                                                    <br />
+                                                    {`Cirugias: ${usuario?.cirugias ? usuario?.cirugias : ''}`}
+                                                    <br />
+                                                    {`Alergias: ${usuario?.alergias ? usuario?.alergias : ''}`}
+                                                    <br />
+                                                    {`Frecuencia entrenamiento: ${usuario?.frecuenciaEntrenamientoSemanal ? usuario?.frecuenciaEntrenamientoSemanal : ''}`}
+                                                    <br />
+                                                    {`Experiencia: ${usuario?.nivelExperiencia ? usuario?.nivelExperiencia : ''}`}
+                                                    <br />
+                                                    <br />
+
+                                                    <CardDrawer usuario={usuario} showPlanDeDieta={showPlanDeDieta} />
+
+                                                    <Button
+                                                        style={buttonStyle}
+                                                        variant='contained'
+                                                        onClick={() => {
+                                                            handleClickPlanDeDieta()
+                                                        }}
+
+                                                    >
+                                                        <PictureAsPdfTwoToneIcon style={{ marginRight: '10px' }} />
+                                                        Plan de dieta
+                                                        <br />
+                                                    </Button>
+
+                                                    <br />
+                                                    <Button
+                                                        style={{ backgroundColor: 'rgb(0, 128, 0)', color: 'white' }}
+                                                        variant='contained'
+                                                        onClick={() => {
+                                                            const whatsappUrl = 'https://api.whatsapp.com/send/?phone=%2B573107709118&text=Hola+David%2C+soy+usuario+One+Premium&type=phone_number&app_absent=0';
+                                                            const anchor = document.createElement('a');
+                                                            anchor.href = whatsappUrl;
+                                                            anchor.target = '_blank';
+                                                            anchor.click();
+                                                        }}
+                                                    >
+                                                        <WhatsAppIcon style={{ marginRight: '10px' }} />
+                                                        Contactanos
+                                                    </Button>
+                                                    <br />
+                                                    <br />
+
+
+                                                </>
+                                            )
+                                                : (null)
+                                            }
+
+
+                                            <Divider
+                                                sx={{
+                                                    weight: '1px',
+                                                    height: '0.5px',
+                                                    backgroundColor: 'rgb(159, 28, 23)',
+                                                }} />
+
+                                            <h2>Objetivos:</h2>
+                                            {usuario?.categorias?.length > 0 ? (
+                                                usuario.categorias.map((categoria, index) => (
+                                                    <div key={index}>
+                                                        {'* ' + (categoria?.nombre || 'Loading')}
+                                                    </div>
+                                                ))
+                                            ) : (
+                                                <div>Aqui verás tus objetivos</div>
+                                            )}
+                                        </div>
+
+
+                                        <div className='contact'>
+
+                                            <Button
+                                                style={buttonStyle}
+                                                variant='contained'
+                                                onClick={() => {
+                                                    window.scroll({ top: 0, behavior: 'smooth' });
+                                                    setHeaderMountIn(false);
+                                                    setTimeout(() => {
+                                                        setInfoPremium(true)
+                                                    }, 400);
+                                                    setTimeout(() => {
+                                                        setHeaderMountIn(true)
+                                                    }, 800);
+
+                                                }}
+                                            >
+                                                <WorkspacePremiumIcon />
+                                                Premium
+                                            </Button>
+
+
+
+
+                                            <Button
+                                                style={buttonStyle}
+                                                variant='contained'
+                                                onClick={() => {
+                                                    window.scroll({ top: 0, behavior: 'smooth' });
+                                                    setTimeout(() => {
+                                                        setNavigateAway(true);
+                                                    }, 200);
+                                                    setTimeout(() => {
+                                                        setHeaderMountIn(false)
+                                                    }, 250);
+                                                    setTimeout(() => {
+                                                        setContentMountIn(false)
+                                                    }, 300);
+                                                    setTimeout(() => {
+                                                        navigate('/profileedit')
+                                                        // navigate('/registro')
+                                                    }, 600);
+                                                }}
+                                            >
+                                                Editar
+                                                <br />
+                                                <EditIcon />
+                                            </Button>
+                                        </div>
+                                    </>
+                                )}
 
                         </div>
                     </div>
                 </Slide >
                 <WAButton />
             </div >
-            {/* {showInstructions ? ( */}
 
-            {/* ) : null} */}
         </div >
     );
 }
 
-export default Registro;
+export default Profile2;

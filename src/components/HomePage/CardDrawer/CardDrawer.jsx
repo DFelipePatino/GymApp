@@ -1,18 +1,10 @@
 import * as React from 'react';
 import CardItem from '../CardDrawer/CardItem';
-import { getCrdItem2View } from '../../../redux/actions';
-import PropTypes from 'prop-types';
 import { Global } from '@emotion/react';
 import { styled } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
 import { grey } from '@mui/material/colors';
-import Button from '@mui/material/Button';
-import Box from '@mui/material/Box';
-import Skeleton from '@mui/material/Skeleton';
 import Typography from '@mui/material/Typography';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
-import { Card, CardHeader } from '@mui/material';
-import { useDispatch } from 'react-redux';
 
 const drawerBleeding = 56;
 
@@ -42,23 +34,12 @@ export const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
 };
 
-function CardDrawer({ inOutStatus, setHeaderLoad, setBannerload, setFilterLoad, showInstructions, usuario, showPlanDeDieta, setShowPlanDeDieta }) {
+function CardDrawer({ setHeaderLoad, setBannerload, setFilterLoad, showInstructions, usuario, showPlanDeDieta }) {
 
     [open, setOpen] = React.useState(false);
 
-    // console.log(showInstructions, 'showInstructions en cardDrawer');
-
-
-    // console.log(open, 'open en cardDrawer');
-
-    // const toggleDrawer = (a, dia) => () => {
-    //     console.log(dia, 'dia en toggleDrawer');
-    //     dispatch(getCrdItem2View(dia));
-    // };
-
     return (
         <Root>
-            {/* <CssBaseline /> */}
             <Global
                 styles={{
                     '.MuiDrawer-root > .MuiPaper-root': {
@@ -67,11 +48,9 @@ function CardDrawer({ inOutStatus, setHeaderLoad, setBannerload, setFilterLoad, 
                     },
                 }}
             />
-            {/* <Box sx={{ textAlign: 'center', pt: 1 }}>
 
-            </Box> */}
             <SwipeableDrawer
-                // container={container}
+
                 anchor="bottom"
                 open={open}
                 onClose={toggleDrawer(false)}
@@ -86,15 +65,11 @@ function CardDrawer({ inOutStatus, setHeaderLoad, setBannerload, setFilterLoad, 
                     sx={{
                         position: 'absolute',
                         top: -drawerBleeding,
-                        // borderTopLeftRadius: 8,
-                        // borderTopRightRadius: 8,
                         visibility: 'visible',
                         top: -20,
                         right: 0,
                         left: 0,
                         backgroundColor: 'rgb(159, 28, 23)',
-                        // backgroundColor: 'rgb(146, 144, 144)',
-                        // backgroundColor: 'rgba(0, 0, 0)',
 
                     }}
                 >
@@ -107,9 +82,6 @@ function CardDrawer({ inOutStatus, setHeaderLoad, setBannerload, setFilterLoad, 
                         pb: 2,
                         height: '100%',
                         overflow: 'auto',
-                        // backgroundColor: 'rgb(159, 28, 23)',
-                        // backgroundColor: 'rgba(146, 144, 144)',
-                        // backgroundColor: 'rgb(0, 0, 0)',
                         backgroundImage: 'url(/backCardItem.jpg)',
                         display: 'flex',
                         justifyContent: 'center',
@@ -119,7 +91,7 @@ function CardDrawer({ inOutStatus, setHeaderLoad, setBannerload, setFilterLoad, 
 
 
 
-                    <CardItem toggleDrawer={toggleDrawer} setHeaderLoad={setHeaderLoad} setBannerload={setBannerload} setFilterLoad={setFilterLoad} showInstructions={showInstructions} usuario={usuario} setShowPlanDeDieta={setShowPlanDeDieta} showPlanDeDieta={showPlanDeDieta} />
+                    <CardItem toggleDrawer={toggleDrawer} setHeaderLoad={setHeaderLoad} setBannerload={setBannerload} setFilterLoad={setFilterLoad} showInstructions={showInstructions} usuario={usuario} showPlanDeDieta={showPlanDeDieta} />
 
 
 

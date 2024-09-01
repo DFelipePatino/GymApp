@@ -53,30 +53,14 @@ const CssTextField = styled(TextField)({
 
 function ContentPlayerCE({ setPlayerLoad, playerLoad, setReload, usuario, cardioState, WAButton }) {
 
-    const dispatch = useDispatch();
-
     const location = useLocation();
     const navigate = useNavigate();
 
     const [fadeLoad, setfadeLoad] = useState(true);
-    const [headerLoad, setHeaderLoad] = useState(false);
     const [urlVideo, setUrlVideo] = useState('');
-
     const [expanded, setExpanded] = React.useState(true);
     const [isPlaying, setIsPlaying] = useState(false);
-
-    const [expandedDescription, setExpandedDescription] = useState(
-        []
-    );
-
     const [cardio, setCardio] = useState(location.state.cardioEstiramiento);
-
-    const user = useSelector((state) => state.user);
-    const currentEntrenamientoId = useParams().entrenamientoId;
-
-    const currentProgressState = useSelector((state) => state.currentProgress);
-
-    //    const playerRef = useRef(null);
 
     const homeContent = localStorage.getItem("homeContent");
 

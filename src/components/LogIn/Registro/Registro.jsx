@@ -401,25 +401,16 @@ function Registro({ WAButton, usuario, todasLasCategorias, setReload }) {
                 timeout={500}
                 mountOnEnter unmountOnExit>
 
-
-                <Box
-                // sx={{ height: windowSize.height }}
-                >
-
-
-
+                <Box >
                     <Grid container
                         justifyContent="space-around"
                         padding="15px"
-                    // sx={{ height: windowSize.height }}
+
                     >
-
-
                         <Fade
                             in={contentMountIn}
                             timeout={800}
                         >
-
                             <Card
                                 sx={{
                                     backgroundColor: 'rgb(0,0,0)',
@@ -442,10 +433,8 @@ function Registro({ WAButton, usuario, todasLasCategorias, setReload }) {
                                             cursor: 'pointer',
                                         }}
                                             aria-label="recipe"
-                                            onClick={() => alert('Futuro cambio de imagen')}
                                         >
                                             <img src={usuario.foto} alt={userInitials}
-                                            // style={{ width: '100%', height: '100%' }} 
                                             />
 
                                         </Avatar>
@@ -679,7 +668,7 @@ function Registro({ WAButton, usuario, todasLasCategorias, setReload }) {
                                                 <Grid item xs={12}>
                                                     <RemoveCircleOutlineIcon sx={{ position: "absolute", color: "rgb(159, 28, 23)", top: "500px" }} />
                                                     <Menu>
-                                                 
+
                                                         <CssTextField
                                                             fullWidth
                                                             id="outlined-select-objetivos"

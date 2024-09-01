@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-// import './Registro.css';
+import { useDispatch } from 'react-redux';
+// import '../Login.css';
 import FileUploadIcon from '@mui/icons-material/FileUpload';
 import Swal from 'sweetalert2'
 import {
@@ -15,16 +16,14 @@ import {
     FormControl,
     InputLabel
 } from '@mui/material';
+import ControlPointIcon from '@mui/icons-material/ControlPoint';
+import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import { useNavigate } from 'react-router-dom';
-import DropDownCategorias from '../../Perfil/DropDownCategorias';
-import { putUsuario } from '../../../redux/actions'
-import { Dropdown } from '@mui/base/Dropdown';
+import { putUsuario, getGoogle } from '../../../redux/actions';
 import { Menu } from '@mui/base/Menu';
 import { MenuButton as BaseMenuButton } from '@mui/base/MenuButton';
 import { MenuItem as BaseMenuItem, menuItemClasses } from '@mui/base/MenuItem';
 import { styled } from '@mui/system';
-import ControlPointIcon from '@mui/icons-material/ControlPoint';
-import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 
 const red = {
     50: 'rgb(255, 235, 234)',
@@ -179,10 +178,10 @@ const CssTextField = styled(TextField)({
 });
 
 
-function Registro({ BackToTopButton, usuario, todasLasCategorias }) {
+function Registro({ WAButton, usuario, todasLasCategorias, setReload }) {
 
     const navigate = useNavigate();
-
+    const dispatch = useDispatch();
 
     const updateUser = async () => {
         await getGoogle();
@@ -390,11 +389,11 @@ function Registro({ BackToTopButton, usuario, todasLasCategorias }) {
     return (
 
         <div
-        style={{
-            backgroundImage: 'linear-gradient(to bottom right, rgb(0, 0, 0), rgb(0, 0, 0), rgb(159, 28, 23), rgb(146, 144, 144))',
-            height: windowSize.height,
-        }}
-    >
+            style={{
+                backgroundImage: 'linear-gradient(to bottom right, rgb(0, 0, 0), rgb(0, 0, 0), rgb(159, 28, 23), rgb(146, 144, 144))',
+                height: windowSize.height,
+            }}
+        >
 
             <Slide
                 direction="right"
@@ -624,7 +623,7 @@ function Registro({ BackToTopButton, usuario, todasLasCategorias }) {
 
                                                 <Grid item xs={12}>
 
-                                                    <ControlPointIcon sx={{ position: "absolute", color: "rgb(0, 128, 0)", top: "465px" }} />
+                                                    <ControlPointIcon sx={{ position: "absolute", color: "rgb(0, 128, 0)", top: "410px" }} />
                                                     <Menu>
 
                                                         {/* <InputLabel style={{ color: 'white' }} htmlFor="name-order-select">Mis objetivos</InputLabel>
@@ -678,29 +677,9 @@ function Registro({ BackToTopButton, usuario, todasLasCategorias }) {
                                                     </Menu>
                                                 </Grid>
                                                 <Grid item xs={12}>
-                                                    <RemoveCircleOutlineIcon sx={{ position: "absolute", color: "rgb(159, 28, 23)", top: "555px" }} />
+                                                    <RemoveCircleOutlineIcon sx={{ position: "absolute", color: "rgb(159, 28, 23)", top: "500px" }} />
                                                     <Menu>
-                                                        {/* <InputLabel style={{ color: 'white' }} htmlFor="name-order-select">Mis objetivos</InputLabel>
-                                                        <Select
-                                                            sx={{
-                                                                backgroundColor: black[500],
-                                                                border: '3px solid rgb(159, 28, 23)',
-                                                                color: grey[100],
-                                                                '&:focus': {
-                                                                    outline: `3px solid ${green[200]}`,
-                                                                    backgroundColor: grey,
-                                                                    color: green[900],
-                                                                },
-                                                                typography: 'body1',
-                                                                // padding: '10px',
-                                                            }}
-                                                            value={userEdited.categorias}
-                                                            onChange={handleObjetivosChange}
-                                                            fullWidth
-                                                            renderValue={(selected) => (
-                                                                <Typography>{selected}</Typography>
-                                                            )}
-                                                        > */}
+                                                 
                                                         <CssTextField
                                                             fullWidth
                                                             id="outlined-select-objetivos"
@@ -943,7 +922,7 @@ function Registro({ BackToTopButton, usuario, todasLasCategorias }) {
 
                         </Fade>
                     </Grid>
-                    {/* <BackToTopButton /> */}
+                    <WAButton />
                 </Box>
             </Slide>
         </div >

@@ -20,7 +20,7 @@ import { toggleDrawer } from '../HomePage/CardDrawer/CardDrawer';
 import CardDrawer from '../HomePage/CardDrawer/CardDrawer';
 
 
-function Profile2({ headerMountIn, setHeaderMountIn, setContentMountIn, navigateAway, setNavigateAway, usuario, reload, setInfoPremium, infoPremium, activeButton,
+function Registro({ headerMountIn, setHeaderMountIn, setContentMountIn, navigateAway, setNavigateAway, usuario, reload, setInfoPremium, infoPremium, activeButton,
     setActiveButton, WAButton }) {
 
     const navigate = useNavigate();
@@ -586,4 +586,4 @@ function Profile2({ headerMountIn, setHeaderMountIn, setContentMountIn, navigate
     );
 }
 
-export default Profile2;
+export default Registro;

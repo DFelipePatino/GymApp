@@ -183,6 +183,7 @@ function App() {
         {/* <Route path='/testeo' element={<Testtt profilefoto={profilefoto} />} /> */}
 
         <Route path='/registro' element={<Registro
+          setReload={setReload}
           WAButton={WAButton}
           usuario={usuario}
           todasLasCategorias={todasLasCategorias}

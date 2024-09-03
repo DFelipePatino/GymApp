@@ -1,7 +1,6 @@
 import React from 'react'
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Drawer, Typography } from '@mui/material'
-import { getMetodo1 } from '../../redux/actions';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import WorkspacePremiumIcon from '@mui/icons-material/WorkspacePremium';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
@@ -209,7 +208,7 @@ function Layout({ usuario, setPlayerLoad, setHeaderLoad, setBannerload, setFilte
                             {
                                 text: 'Premium', icon: <WorkspacePremiumIcon
                                     style={iconStyles2}
-                                />, route: '/profile', shouldClearLocal: false, id: '10', fn: 'Premium'
+                                />, route: '/paytoupgrade', shouldClearLocal: false, id: '10', fn: 'Premium'
                             },
 
                             { type: 'divider', id: 'divider-5' },
@@ -252,9 +251,6 @@ function Layout({ usuario, setPlayerLoad, setHeaderLoad, setBannerload, setFilte
             <div>
                 <Toolbar />
                 <List>
-
-
-
 
                     <Divider
                         style={{
@@ -382,7 +378,7 @@ function Layout({ usuario, setPlayerLoad, setHeaderLoad, setBannerload, setFilte
                             });
                         }
 
-                        if (location.pathname === '/profile') {
+                        if (location.pathname === '/profile' || location.pathname === '/paytoupgrade') {
                             // setNavigateAway(true);
                             setTimeout(() => {
                                 setHeaderMountIn(false);
@@ -415,7 +411,6 @@ function Layout({ usuario, setPlayerLoad, setHeaderLoad, setBannerload, setFilte
 
                             if (location.pathname === '/home') {
                                 setActiveButton('');
-                                setInfoPremium(false);
                                 setNavigateAway(false);
                                 setTimeout(() => {
                                     setHeaderLoad(false);
@@ -442,13 +437,21 @@ function Layout({ usuario, setPlayerLoad, setHeaderLoad, setBannerload, setFilte
                                 }, 800);
                             }
 
-                            if (location.pathname.includes('/player')) {
+                            if (location.pathname.includes('/player') || location.pathname === '/paytoupgrade') {
                                 setActiveButton('');
                                 setNavigateAway(false);
                                 setPlayerLoad(false);
                                 setTimeout(() => {
-                                    navigate('/profile')
+                                    setHeaderMountIn(false);
                                 }, 200);
+                                setTimeout(() => {
+                                    setContentMountIn(false)
+                                }, 300);
+
+                                setTimeout(() => {
+                                    navigate('/profile')
+                                }, 500);
+
                             }
 
                             if (location.pathname === '/profileedit') {

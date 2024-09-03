@@ -1,20 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import './ProfileEdit.css';
-import FileUploadIcon from '@mui/icons-material/FileUpload';
 import Swal from 'sweetalert2'
 import {
     Typography, Avatar, Grid, Box, Container, TextField, Button,
-    Grow,
     Slide,
     Fade,
     Card,
     CardContent,
-    CardHeader,
-    IconButton,
-    Select,
-    FormControl,
-    InputLabel
+    CardHeader
 } from '@mui/material';
 import ControlPointIcon from '@mui/icons-material/ControlPoint';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
@@ -122,35 +116,7 @@ const MenuItem = styled(BaseMenuItem)(
     `,
 );
 
-const MenuButton = styled(BaseMenuButton)(
-    ({ theme }) => `
-    font-family: 'IBM Plex Sans', sans-serif;
-    font-weight: 600;
-    font-size: 0.875rem;
-    line-height: 1.5;
-    padding: 8px 16px;
-    border-radius: 20px;
-    color: white;
-    transition: all 150ms ease;
-    cursor: pointer;
-    background: black;
-    border: 2px solid rgb(159, 28, 23);
-    color: white;
-    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-  
-    &:hover {
-      background: red[900];
-      border-color: red;
-    }
-  
-  
-  
-    &:focus-visible {
-      box-shadow: 0 0 0 4px ${theme.palette.mode === 'dark' ? red[300] : red[200]};
-      outline: none;
-    }
-    `,
-);
+
 
 const CssTextField = styled(TextField)({
     '& label': {
@@ -390,14 +356,6 @@ function ProfileEdit({ WAButton, usuario, todasLasCategorias, setReload }) {
     return (
 
         <div
-            // style={{
-            //     // height: windowSize.height, 
-            //     backgroundImage: 'url(/back10.jpg)',
-            //     marginTop: '56px',
-            //     backgroundSize: 'cover',
-            //     backgroundRepeat: 'no-repeat',
-            //     backgroundPosition: 'center'
-            // }}
             className='profileEditDiv'
         >
 
@@ -409,15 +367,11 @@ function ProfileEdit({ WAButton, usuario, todasLasCategorias, setReload }) {
 
 
                 <Box
-                // sx={{ height: windowSize.height }}
                 >
-
-
-
                     <Grid container
                         justifyContent="space-around"
                         padding="15px"
-                    // sx={{ height: windowSize.height }}
+
                     >
 
 
@@ -428,7 +382,7 @@ function ProfileEdit({ WAButton, usuario, todasLasCategorias, setReload }) {
 
                             <Card
                                 sx={{
-                                    backgroundColor: 'rgb(0,0,0)',
+                                    backgroundColor: 'rgb(0, 0, 0, 0.7)',
                                     borderRadius: '30px',
                                     border: '3px solid rgb(159, 28, 23)',
                                     // width: '80%',

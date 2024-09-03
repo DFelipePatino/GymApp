@@ -28,18 +28,11 @@ function HomePage({ WAButton, bannerLoad, filterLoad, setHeaderLoad, setBannerlo
     const reLoad = reload;
 
     const metodoSelected = useSelector((state) => state.metodoSelected);
-
-
-
     const homeContent = localStorage.getItem("homeContent")
     const lastCategory = localStorage.getItem("category")
     const categoryToDispatch = localStorage.getItem("categorytoDispatch")
 
-
-
     const [mostrarElementos, setMostrarElementos] = useState(true);
-    const [userFisrtName, setUserFirstName] = useState("")
-    const [lastNameLetter, setLastLetterName] = useState('')
     const [fadeLoad, setfadeLoad] = useState(true)
     const [inOutStatus1, setInOutStatus1] = useState(false);
     const [inOutStatus2, setInOutStatus2] = useState(false);
@@ -179,7 +172,8 @@ function HomePage({ WAButton, bannerLoad, filterLoad, setHeaderLoad, setBannerlo
                     style={dynamicStyle}
                 >
                     <Banner
-                        setInfoPremium={setInfoPremium} />
+                        setBannerload={setBannerload}
+                        setFilterLoad={setFilterLoad} />
                 </div>
             </Grow>
 

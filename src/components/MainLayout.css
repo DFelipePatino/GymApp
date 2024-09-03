@@ -10,7 +10,7 @@ flex-direction: column;
 /* margin-top: 56px; */
 }
 
-
+/* 
 .main-layout {
     transition: background 0.5s ease-in-out;
   }
@@ -31,5 +31,5 @@ flex-direction: column;
   .fade-exit-active {
     opacity: 0;
     transition: opacity 0.5s ease-out;
-  }
+  } */
   

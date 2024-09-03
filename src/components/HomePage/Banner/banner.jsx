@@ -1,58 +1,76 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Carousel from 'react-material-ui-carousel';
 import { Paper } from '@mui/material';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Container from '@mui/material/Container';
 import './banner.css';
 import { navButtonsWrapperProps1, navButtonsProps1, bannerContainerStyles } from './bannerStyles';
-import { useSelector, useDispatch } from 'react-redux';
-import { getImageObject } from '../../../redux/actions';
+import { useSelector } from 'react-redux';
 import Image from '../../Multimedia/Image';
 
-function Banner({ setInfoPremium }) {
+function Banner({ setBannerload, setFilterLoad }) {
+
+    const navigate = useNavigate();
+
     const allBanners = useSelector(state => state.banner);
+  
+    const handleClick = (event) => {
+        event.preventDefault(); 
+
+        setTimeout(() => {
+            setBannerload(false);
+        }, 300);
+
+        setTimeout(() => {
+            setFilterLoad(false);
+        }, 400);
+
+        setTimeout(() => {
+            navigate('/paytoupgrade'); 
+        }, 500); 
+    };
 
     return (
         <Container style={bannerContainerStyles}>
- 
-                <Carousel
-                    className="carousel"
-                    navButtonsAlwaysInvisible={false}
-                    animation="fade"
-                    autoPlay={true}
-                    stopAutoPlayOnHover={true}
-                    interval={5000}
-                    indicators={false}
-                    cycleNavigation={true}
-                    swipe={true}
-                    navButtonsProps={navButtonsProps1}
-                    navButtonsWrapperProps={navButtonsWrapperProps1}
-                >
-                    {allBanners.map((item, i) => (
-                        <Paper className="paper" key={i}>
-                            {item.enlace === "Premium" ? (
-                                <Link to={'/profile'}
-                                    onClick={() => setInfoPremium(true)}
-                                >
 
-                                    <Image
-                                        id={item.multimedia[0]?.id}
-                                        width='110%'
-                                    />
+            <Carousel
+                className="carousel"
+                navButtonsAlwaysInvisible={false}
+                animation="fade"
+                autoPlay={true}
+                stopAutoPlayOnHover={true}
+                interval={7000}
+                indicators={false}
+                cycleNavigation={true}
+                swipe={true}
+                navButtonsProps={navButtonsProps1}
+                navButtonsWrapperProps={navButtonsWrapperProps1}
+            >
+                {allBanners.map((item, i) => (
+                    <Paper className="paper" key={i}>
+                        {item.enlace === "Premium" ? (
+                           <Link to={'/paytoupgrade'} onClick={handleClick}>
 
-                                </Link>
-                            ) : (
-                                <Link to={item.enlace} target="_blank">
-                                    <Image
-                                        id={item.multimedia[0]?.id}
-                                        width='110%'
-                                    />
-                                </Link>
-                            )}
-                        </Paper>
-                    ))}
-                </Carousel>
-          
+
+                                <Image
+                                    id={item.multimedia[0]?.id}
+                                    width='110%'
+                                />
+
+                            </Link>
+                        ) : (
+                            <Link to={item.enlace} target="_blank">
+                                <Image
+                                    id={item.multimedia[0]?.id}
+                                    width='110%'
+                                />
+                            </Link>
+                        )}
+                    </Paper>
+                ))}
+            </Carousel>
+
         </Container>
     );
 }

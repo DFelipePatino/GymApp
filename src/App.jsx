@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import LogIn from './components/LogIn/LogIn.jsx';
+import Payment from './components/Payment/Payment.jsx';
 import HomePage from './components/HomePage/Home/HomePage';
 import Profile2 from './components/Perfil/Profile2.jsx';
 import ProfileEdit from './components/Perfil/ProfileEdit.jsx';
@@ -30,10 +31,6 @@ function App() {
   const [contentMountIn, setContentMountIn] = useState(false)
   const [navigateAway, setNavigateAway] = useState(false)
   const [reload, setReload] = useState(false)
-
-  console.log(infoPremium, 'infoPremium app');
-  
-
   const [playerLoad, setPlayerLoad] = useState(false)
 
   const localUser = localStorage.getItem("localUser");
@@ -174,7 +171,11 @@ function App() {
 
         <Route path='/' element={<LogIn />} />
 
-        {/* <Route path='/testeo' element={<Testtt profilefoto={profilefoto} />} /> */}
+        <Route path='/paytoupgrade' element={<Payment
+          headerMountIn={headerMountIn}
+          setHeaderMountIn={setHeaderMountIn}
+        />}
+        />
 
         <Route path='/registro' element={<Registro
           setReload={setReload}

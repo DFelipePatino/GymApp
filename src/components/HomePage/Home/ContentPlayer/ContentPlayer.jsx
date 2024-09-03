@@ -407,7 +407,7 @@ function ContentPlayer({ setPlayerLoad, playerLoad, setReload, usuario }) {
             >
                 <div className='mediaPlayer'>
                     <Card
-                        style={{ width: '94%', height: 'auto', backgroundColor: 'rgb(0, 0, 0)', radius: '1px, solid, rgb(159, 28, 23)' }}
+                        style={{ width: '94%', height: 'auto', backgroundColor: 'rgb(0, 0, 0, 0.7)', radius: '1px, solid, rgb(159, 28, 23)' }}
                     >
                         <CardHeader
                             action={

@@ -1,27 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { Card, Typography } from '@material-ui/core';
-import './Profile2.css';
 import { Button, Divider, Fade, LinearProgress, Slide } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import PictureAsPdfTwoToneIcon from '@mui/icons-material/PictureAsPdfTwoTone';
-import ListAltIcon from '@mui/icons-material/ListAlt';
 import EditIcon from '@mui/icons-material/Edit';
-import { cardHeaderStyle, buttonStyle, infoCardsIconStyle } from './Profile2'
-import { Box } from '@mui/system';
 import WorkspacePremiumIcon from '@mui/icons-material/WorkspacePremium';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
-import Radio from '@mui/material/Radio';
-import RadioGroup from '@mui/material/RadioGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import FormControl from '@mui/material/FormControl';
-import FormLabel from '@mui/material/FormLabel';
-import ArrowOutwardIcon from '@mui/icons-material/ArrowOutward';
+import { cardHeaderStyle, buttonStyle } from './Profile2'
+import { Box } from '@mui/system';
 import { toggleDrawer } from '../HomePage/CardDrawer/CardDrawer';
 import CardDrawer from '../HomePage/CardDrawer/CardDrawer';
+import './Profile2.css';
 
 
-function Profile2({ headerMountIn, setHeaderMountIn, setContentMountIn, navigateAway, setNavigateAway, usuario, reload, setInfoPremium, infoPremium
-    , WAButton }) {
+function Profile2({ headerMountIn, setHeaderMountIn, setContentMountIn, navigateAway, setNavigateAway, usuario, reload, WAButton }) {
 
     const navigate = useNavigate();
 
@@ -33,13 +24,8 @@ function Profile2({ headerMountIn, setHeaderMountIn, setContentMountIn, navigate
 
 
     const [fadeLoad, setfadeLoad] = useState(true)
-    const [activeButton, setActiveButton] = useState("");
     const [showInstructions, setShowInstructions] = useState(false);
     const [showPlanDeDieta, setShowPlanDeDieta] = useState(false);
-    const [planLength, setPlanLength] = useState(false);
-    const [showLink, setShowLink] = useState(false);
-    const [selectedValue, setSelectedValue] = React.useState('a');
-    const [displayLink, setDisplayLink] = useState(false);
 
     const reLoad = reload
 
@@ -77,34 +63,6 @@ function Profile2({ headerMountIn, setHeaderMountIn, setContentMountIn, navigate
     }, [navigateAway, setHeaderMountIn, setContentMountIn, reLoad]);
 
 
-    const planLengthAnimation = () => {
-        setDisplayLink(false);
-        setTimeout(() => {
-            setDisplayLink(true);
-        }, 800);
-    };
-
-
-    const handleChange = (event) => {
-        setSelectedValue(event.target.value);
-        planLengthAnimation();
-    };
-
-
-    const handlePlanChange = (button) => {
-        window.scroll({ top: 200, behavior: 'smooth' });
-        planLengthAnimation();
-        setPlanLength(true);
-        setTimeout(() => {
-            setActiveButton(button);
-        }, 800);
-    };
-
-    const handleClickInstructivo = () => {
-        setShowPlanDeDieta(false);
-        setShowInstructions(true);
-        toggleDrawer(true)();
-    }
 
     const handleClickPlanDeDieta = () => {
         setShowInstructions(false);
@@ -114,64 +72,6 @@ function Profile2({ headerMountIn, setHeaderMountIn, setContentMountIn, navigate
         }
             , 800);
     }
-
-
-
-    const getLinkDetails = (buttonType, linkDuration) => {
-        const links = {
-            Premium: {
-                3: "https://checkout.bold.co/payment/LNK_RQR0AJZR11",
-                6: "https://checkout.bold.co/payment/LNK_CAQS6CWBIF",
-                12: "https://checkout.bold.co/payment/LNK_ZYU6G0PEA3",
-            },
-            Basic: {
-                1: "https://checkout.bold.co/payment/LNK_TRZQRYD07V",
-                6: "https://checkout.bold.co/payment/LNK_U3DQ8U24CM",
-                12: "https://checkout.bold.co/payment/LNK_JF0U1E5QXP",
-            },
-        };
-
-        const descriptions = {
-            Premium: {
-                3: "Premium de 3 meses",
-                6: "Premium de 6 meses",
-                12: "Premium de 12 meses",
-            },
-            Basic: {
-                1: "Básico de 1 mes",
-                6: "Básico de 6 meses",
-                12: "Básico de 12 meses",
-            },
-        };
-
-        return { url: links[buttonType][linkDuration], description: descriptions[buttonType][linkDuration] };
-    };
-
-    const renderLink = () => {
-        if (activeButton === "Premium" || activeButton === "Basic") {
-            const { url, description } = getLinkDetails(activeButton, showLink);
-            if (url) {
-                return (
-                    <Fade in={displayLink} timeout={400}>
-                        <div className="link">
-                            <a href={url} target="_blank" rel="noopener noreferrer">
-                                {description} <ArrowOutwardIcon />
-                            </a>
-                            <p>Click para ir a pagar</p>
-                        </div>
-                    </Fade>
-                );
-            }
-        }
-        return (
-            <div className="noLink">
-                <Typography >Aquí verás tu link de pago</Typography>
-            </div>
-        );
-    };
-
-
-
 
 
     return (
@@ -210,376 +110,152 @@ function Profile2({ headerMountIn, setHeaderMountIn, setContentMountIn, navigate
                             </div>
 
 
-                            {infoPremium ? (
 
-                                <>
-                                    <div
-                                        className='lastDiv'
-                                    >
-                                        <Card style={infoCardsIconStyle}>
-                                            {/* <PictureAsPdfTwoToneIcon /> */}
-                                            <ListAltIcon />
-                                            {/* <Link to={userForTesting.DietPlan} target='blank'> */}
-                                            <Button
-                                                style={{ color: 'white' }}
-                                                onClick={() => {
-                                                    handleClickInstructivo();
-                                                }}
-                                            >
-                                                Instructivo
-                                            </Button>
-                                            {/* </Link> */}
-                                        </Card>
-
-                                    </div>
-
-                                    <Divider
-                                        sx={{
-                                            weight: '1px',
-                                            height: '0.5px',
-                                            backgroundColor: 'rgb(159, 28, 23)',
-                                        }} />
-
+                            <>
+                                <div className='description'>
+                                    <h2>Info:</h2>
+                                    {`Edad: ${usuario?.age}`}
+                                    <br />
+                                    {`Genero: ${usuario?.genero}`}
+                                    <br />
+                                    {`Email: ${usuario?.email}`}
+                                    <br />
+                                    <br />
+                                    {`Suscripcion: ${tipoDeCuenta}`}
+                                    <br />
+                                    {`Estado: ${usuario?.state}`}
+                                    <br />
+                                    {`Valido hasta: ${formattedExpitarion}`}
+                                    <br />
                                     <br />
 
-
-                                    <FormLabel id="form-control"
-                                        sx={{ color: 'white', display: 'flex', justifyContent: 'center' }}
-                                    >Selecciona tu tipo de plan:
-                                    </FormLabel>
-
-                                    <div className='contact'
-                                    >
-                                        <Button
-                                            style={{
-                                                fontSize: '16px',
-                                                paddingTop: '8px',
-                                                paddingBottom: '10px',
-                                                borderRadius: '40px',
-                                                display: 'flex',
-                                                justifyContent: 'center',
-                                                backgroundColor: activeButton === 'Premium' ? 'rgb(159, 28, 23)' : 'rgb(146, 144, 144)',
-                                                color: 'white'
-                                            }}
-                                            onClick={() => handlePlanChange('Premium')}
-                                            variant='contained'
-                                        >
-                                            {/* <ArrowBackIosNewIcon /> */}
-                                            Premium
-                                        </Button>
-
-                                        <Button
-                                            style={{
-                                                fontSize: '16px',
-                                                paddingTop: '8px',
-                                                paddingBottom: '10px',
-                                                borderRadius: '40px',
-                                                display: 'flex',
-                                                justifyContent: 'center',
-                                                backgroundColor: activeButton === 'Basic' ? 'rgb(159, 28, 23)' : 'rgb(146, 144, 144)',
-                                                color: 'white'
-                                            }}
-                                            onClick={() => handlePlanChange('Basic')}
-                                            variant='contained'
-                                        >
-                                            {/* <ArrowBackIosNewIcon /> */}
-                                            Basico
-                                        </Button>
-
-
-                                    </div>
-
-                                    <br />
-                                    <Divider
-                                        sx={{
-                                            weight: '1px',
-                                            height: '0.5px',
-                                            backgroundColor: 'rgb(159, 28, 23)',
-                                        }} />
-
-                                    {activeButton !== "" ? (
-
-
-                                        <div
-                                            className='lastDiv'
-                                        >
-                                            <Fade in={planLength} timeout={800}>
-
-                                                <FormControl>
-                                                    <FormLabel id="form-control"
-                                                        sx={{ color: 'white' }}
-                                                    >Selecciona la duracion {<br />} del plan {activeButton}:
-                                                    </FormLabel>
-                                                    <br />
-
-                                                    <RadioGroup
-                                                        row
-                                                        aria-labelledby="form-control"
-                                                        name="position"
-                                                        defaultValue="3"
-                                                        style={{
-                                                            display: 'flex',
-                                                            flexDirection: 'row',
-                                                            justifyContent: 'space-around',
-                                                            flexWrap: 'nowrap'
-                                                        }}
-                                                    >
-                                                        {activeButton === 'Basic' ? (
-                                                            <FormControlLabel
-                                                                value="1"
-                                                                control={<Radio
-                                                                    onClick={() =>
-                                                                        setTimeout(() => {
-                                                                            setShowLink(1)
-                                                                        }, 600)}
-
-                                                                    sx={{
-                                                                        color: "rgb(256, 256, 256)",
-                                                                        '&.Mui-checked': {
-                                                                            color: "rgb(159, 28, 23)",
-                                                                        },
-                                                                    }}
-                                                                />}
-                                                                label="1"
-                                                                labelPlacement="top"
-                                                                checked={selectedValue === '1'}
-                                                                onChange={handleChange}
-                                                            />
-                                                        ) : null}
-
-                                                        {activeButton === 'Premium' ? (
-                                                            <FormControlLabel
-                                                                value="3"
-                                                                control={<Radio
-                                                                    onClick={() =>
-                                                                        setTimeout(() => {
-                                                                            setShowLink(3)
-                                                                        }, 600)}
-                                                                    sx={{
-                                                                        color: "rgb(256, 256, 256)",
-                                                                        '&.Mui-checked': {
-                                                                            color: "rgb(159, 28, 23)",
-                                                                        },
-                                                                    }}
-                                                                />}
-                                                                label="3"
-                                                                labelPlacement="top"
-                                                                checked={selectedValue === '3'}
-                                                                onChange={handleChange}
-                                                            />
-                                                        ) : null}
-
-                                                        <FormControlLabel
-                                                            value="6"
-                                                            control={<Radio
-                                                                onClick={() =>
-                                                                    setTimeout(() => {
-                                                                        setShowLink(6)
-                                                                    }, 600)}
-                                                                sx={{
-                                                                    color: "rgb(256, 256, 256)",
-                                                                    '&.Mui-checked': {
-                                                                        color: "rgb(159, 28, 23)",
-                                                                    },
-                                                                }}
-                                                            />}
-                                                            label="6"
-                                                            labelPlacement="top"
-                                                            checked={selectedValue === '6'}
-                                                            onChange={handleChange}
-                                                        />
-                                                        <FormControlLabel
-                                                            value="12"
-                                                            control={<Radio
-                                                                onClick={() =>
-                                                                    setTimeout(() => {
-                                                                        setShowLink(12)
-                                                                    }, 600)}
-                                                                sx={{
-                                                                    color: "rgb(256, 256, 256)",
-                                                                    '&.Mui-checked': {
-                                                                        color: "rgb(159, 28, 23)",
-                                                                    },
-                                                                }}
-                                                            />}
-                                                            label="12"
-                                                            labelPlacement="top"
-                                                            checked={selectedValue === '12'}
-                                                            onChange={handleChange}
-                                                        />
-
-                                                    </RadioGroup>
-                                                </FormControl>
-
-                                            </Fade>
-                                        </div >
-
-                                    ) :
-
-                                        <br />}
-
-                                    {renderLink()}
-
-                                    <br />
-
-                                    <CardDrawer showInstructions={showInstructions} />
-
-                                </>
-
-
-                            )
-                                : //aqui empieza el render del perfil y termina el render de la pasarela de pago
-                                (
-
-                                    <>
-                                        <div className='description'>
-                                            <h2>Info:</h2>
-                                            {`Edad: ${usuario?.age}`}
+                                    {usuario?.accountType === "PREMIUM" ? (
+                                        <>
+                                            {`Talla: ${usuario?.talla ? usuario?.talla + " cm" : ''}`}
                                             <br />
-                                            {`Genero: ${usuario?.genero}`}
+                                            {`Peso: ${usuario?.peso ? usuario?.peso + " kg" : ''}`}
                                             <br />
-                                            {`Email: ${usuario?.email}`}
+                                            {`Patologias: ${usuario?.patologias ? usuario?.patologias : ''}`}
                                             <br />
+                                            {`Fracturas: ${usuario?.fracturas ? usuario?.fracturas : ''}`}
                                             <br />
-                                            {`Suscripcion: ${tipoDeCuenta}`}
+                                            {`Cirugias: ${usuario?.cirugias ? usuario?.cirugias : ''}`}
                                             <br />
-                                            {`Estado: ${usuario?.state}`}
+                                            {`Alergias: ${usuario?.alergias ? usuario?.alergias : ''}`}
                                             <br />
-                                            {`Valido hasta: ${formattedExpitarion}`}
+                                            {`Frecuencia entrenamiento: ${usuario?.frecuenciaEntrenamientoSemanal ? usuario?.frecuenciaEntrenamientoSemanal : ''}`}
+                                            <br />
+                                            {`Experiencia: ${usuario?.nivelExperiencia ? usuario?.nivelExperiencia : ''}`}
                                             <br />
                                             <br />
 
-                                            {usuario?.accountType === "PREMIUM" ? (
-                                                <>
-                                                    {`Talla: ${usuario?.talla ? usuario?.talla + " cm" : ''}`}
-                                                    <br />
-                                                    {`Peso: ${usuario?.peso ? usuario?.peso + " kg" : ''}`}
-                                                    <br />
-                                                    {`Patologias: ${usuario?.patologias ? usuario?.patologias : ''}`}
-                                                    <br />
-                                                    {`Fracturas: ${usuario?.fracturas ? usuario?.fracturas : ''}`}
-                                                    <br />
-                                                    {`Cirugias: ${usuario?.cirugias ? usuario?.cirugias : ''}`}
-                                                    <br />
-                                                    {`Alergias: ${usuario?.alergias ? usuario?.alergias : ''}`}
-                                                    <br />
-                                                    {`Frecuencia entrenamiento: ${usuario?.frecuenciaEntrenamientoSemanal ? usuario?.frecuenciaEntrenamientoSemanal : ''}`}
-                                                    <br />
-                                                    {`Experiencia: ${usuario?.nivelExperiencia ? usuario?.nivelExperiencia : ''}`}
-                                                    <br />
-                                                    <br />
-
-                                                    <CardDrawer usuario={usuario} showPlanDeDieta={showPlanDeDieta} />
-
-                                                    <Button
-                                                        style={buttonStyle}
-                                                        variant='contained'
-                                                        onClick={() => {
-                                                            handleClickPlanDeDieta()
-                                                        }}
-
-                                                    >
-                                                        <PictureAsPdfTwoToneIcon style={{ marginRight: '10px' }} />
-                                                        Plan de dieta
-                                                        <br />
-                                                    </Button>
-
-                                                    <br />
-                                                    <Button
-                                                        style={{ backgroundColor: 'rgb(0, 128, 0)', color: 'white' }}
-                                                        variant='contained'
-                                                        onClick={() => {
-                                                            const whatsappUrl = 'https://api.whatsapp.com/send/?phone=%2B573107709118&text=Hola+David%2C+soy+usuario+One+Premium&type=phone_number&app_absent=0';
-                                                            const anchor = document.createElement('a');
-                                                            anchor.href = whatsappUrl;
-                                                            anchor.target = '_blank';
-                                                            anchor.click();
-                                                        }}
-                                                    >
-                                                        <WhatsAppIcon style={{ marginRight: '10px' }} />
-                                                        Contactanos
-                                                    </Button>
-                                                    <br />
-                                                    <br />
-
-
-                                                </>
-                                            )
-                                                : (null)
-                                            }
-
-
-                                            <Divider
-                                                sx={{
-                                                    weight: '1px',
-                                                    height: '0.5px',
-                                                    backgroundColor: 'rgb(159, 28, 23)',
-                                                }} />
-
-                                            <h2>Objetivos:</h2>
-                                            {usuario?.categorias?.length > 0 ? (
-                                                usuario.categorias.map((categoria, index) => (
-                                                    <div key={index}>
-                                                        {'* ' + (categoria?.nombre || 'Loading')}
-                                                    </div>
-                                                ))
-                                            ) : (
-                                                <div>Aqui verás tus objetivos</div>
-                                            )}
-                                        </div>
-
-
-                                        <div className='contact'>
+                                            <CardDrawer usuario={usuario} showPlanDeDieta={showPlanDeDieta} />
 
                                             <Button
                                                 style={buttonStyle}
                                                 variant='contained'
                                                 onClick={() => {
-                                                    window.scroll({ top: 0, behavior: 'smooth' });
-                                                    setHeaderMountIn(false);
-                                                    setTimeout(() => {
-                                                        setInfoPremium(true)
-                                                    }, 400);
-                                                    setTimeout(() => {
-                                                        setHeaderMountIn(true)
-                                                    }, 800);
-
+                                                    handleClickPlanDeDieta()
                                                 }}
+
                                             >
-                                                <WorkspacePremiumIcon />
-                                                Premium
-                                            </Button>
-
-
-
-
-                                            <Button
-                                                style={buttonStyle}
-                                                variant='contained'
-                                                onClick={() => {
-                                                    window.scroll({ top: 0, behavior: 'smooth' });
-                                                    setTimeout(() => {
-                                                        setNavigateAway(true);
-                                                    }, 200);
-                                                    setTimeout(() => {
-                                                        setHeaderMountIn(false)
-                                                    }, 250);
-                                                    setTimeout(() => {
-                                                        setContentMountIn(false)
-                                                    }, 300);
-                                                    setTimeout(() => {
-                                                        navigate('/profileedit')
-                                                        // navigate('/registro')
-                                                    }, 600);
-                                                }}
-                                            >
-                                                Editar
+                                                <PictureAsPdfTwoToneIcon style={{ marginRight: '10px' }} />
+                                                Plan de dieta
                                                 <br />
-                                                <EditIcon />
                                             </Button>
-                                        </div>
-                                    </>
-                                )}
+
+                                            <br />
+                                            <Button
+                                                style={{ backgroundColor: 'rgb(0, 128, 0)', color: 'white' }}
+                                                variant='contained'
+                                                onClick={() => {
+                                                    const whatsappUrl = 'https://api.whatsapp.com/send/?phone=%2B573107709118&text=Hola+David%2C+soy+usuario+One+Premium&type=phone_number&app_absent=0';
+                                                    const anchor = document.createElement('a');
+                                                    anchor.href = whatsappUrl;
+                                                    anchor.target = '_blank';
+                                                    anchor.click();
+                                                }}
+                                            >
+                                                <WhatsAppIcon style={{ marginRight: '10px' }} />
+                                                Contactanos
+                                            </Button>
+                                            <br />
+                                            <br />
+
+
+                                        </>
+                                    )
+                                        : (null)
+                                    }
+
+
+                                    <Divider
+                                        sx={{
+                                            weight: '1px',
+                                            height: '0.5px',
+                                            backgroundColor: 'rgb(159, 28, 23)',
+                                        }} />
+
+                                    <h2>Objetivos:</h2>
+                                    {usuario?.categorias?.length > 0 ? (
+                                        usuario.categorias.map((categoria, index) => (
+                                            <div key={index}>
+                                                {'* ' + (categoria?.nombre || 'Loading')}
+                                            </div>
+                                        ))
+                                    ) : (
+                                        <div>Aqui verás tus objetivos</div>
+                                    )}
+                                </div>
+
+
+                                <div className='contact'>
+
+                                    <Button
+                                        style={buttonStyle}
+                                        variant='contained'
+                                        onClick={() => {
+                                            window.scroll({ top: 0, behavior: 'smooth' });
+                                            setHeaderMountIn(false);
+                                            setTimeout(() => {
+                                                navigate('/paytoupgrade')
+                                            }, 400);
+                                            setTimeout(() => {
+                                                setHeaderMountIn(true)
+                                            }, 800);
+
+                                        }}
+                                    >
+                                        <WorkspacePremiumIcon />
+                                        Premium
+                                    </Button>
+
+                                    <Button
+                                        style={buttonStyle}
+                                        variant='contained'
+                                        onClick={() => {
+                                            window.scroll({ top: 0, behavior: 'smooth' });
+                                            setTimeout(() => {
+                                                setNavigateAway(true);
+                                            }, 200);
+                                            setTimeout(() => {
+                                                setHeaderMountIn(false)
+                                            }, 250);
+                                            setTimeout(() => {
+                                                setContentMountIn(false)
+                                            }, 300);
+                                            setTimeout(() => {
+                                                navigate('/profileedit')
+                                                // navigate('/registro')
+                                            }, 600);
+                                        }}
+                                    >
+                                        Editar
+                                        <br />
+                                        <EditIcon />
+                                    </Button>
+                                </div>
+                            </>
 
                         </div>
                     </div>
